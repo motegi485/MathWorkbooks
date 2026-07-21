@@ -1,0 +1,2687 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>情報系のための微分積分・最適化 問題集 — 基礎から大学院レベルまで</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  chtml: { matchFontHeight: true }
+};
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+:root{
+  --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
+  --accent:#1f4e8c; --accent-soft:#eef2f8;
+  --lv1:#2f7d4f; --lv2:#1f4e8c; --lv3:#a83232;
+  --rule:#d8d8d2;
+  --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --sans:"Yu Gothic Medium","Yu Gothic","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.95;font-feature-settings:"palt";}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.15rem 5rem}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.5;letter-spacing:.02em}
+/* --- 表紙 --- */
+header.book{padding:4.2rem 0 2.2rem;border-bottom:3px double var(--accent)}
+header.book .series{color:var(--accent);font-family:var(--sans);font-weight:700;
+  letter-spacing:.35em;font-size:.8rem;margin:0 0 .9rem}
+header.book h1{font-size:2.05rem;margin:0 0 .5rem}
+header.book .subtitle{color:var(--sub);margin:0 0 1.4rem;font-size:1.02rem}
+header.book .meta{font-size:.82rem;color:var(--sub);line-height:2}
+/* --- 目次 --- */
+nav.toc{margin:2.2rem 0;padding:1.3rem 1.5rem;background:var(--card);
+  border:1px solid var(--rule);border-radius:6px}
+nav.toc h2{font-size:1.05rem;margin:0 0 .7rem;color:var(--accent)}
+nav.toc ol{margin:0;padding-left:1.4rem}
+nav.toc li{margin:.28rem 0;font-size:.95rem}
+nav.toc .cnt{color:var(--sub);font-size:.8rem;margin-left:.5em}
+/* --- 章トビラ --- */
+header.chap{margin:4.5rem 0 1.6rem;padding-top:2.2rem;border-top:1px solid var(--rule)}
+header.chap .chnum{font-family:var(--serif);color:var(--accent);font-size:1rem;
+  letter-spacing:.25em;margin:0}
+header.chap h2{font-size:1.75rem;margin:.15rem 0 .2rem}
+header.chap .chsub{color:var(--sub);margin:0;font-size:.98rem}
+/* --- 説明ボックス類 --- */
+.why,.learn,.keybox,.howto{margin:1.4rem 0;padding:1.1rem 1.35rem;border-radius:6px;
+  background:var(--card);border:1px solid var(--rule)}
+.why{border-left:4px solid var(--accent)}
+.why h3,.learn h3,.keybox h3,.howto h3{margin:0 0 .55rem;font-size:1.02rem;color:var(--accent)}
+.learn ul,.keybox ul{margin:.2rem 0;padding-left:1.35rem}
+.learn li,.keybox li{margin:.3rem 0}
+.keybox{background:var(--accent-soft);border-color:transparent}
+.keybox b.term{color:var(--accent)}
+/* --- 問題カード --- */
+section.prob,section.sol{margin:1.7rem 0;padding:1.15rem 1.35rem 1.05rem;
+  background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
+  border-radius:6px}
+section.prob{border-left-color:var(--accent)}
+.phead{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.5rem}
+.pnum{font-family:var(--serif);font-weight:700;font-size:1.08rem;color:var(--accent)}
+.lv{font-size:.72rem;font-weight:700;color:#fff;border-radius:3px;padding:.12rem .5rem;letter-spacing:.05em}
+.lv1{background:var(--lv1)}.lv2{background:var(--lv2)}.lv3{background:var(--lv3)}
+.ptag{font-size:.78rem;color:var(--sub)}
+section.prob p,section.sol p{margin:.55rem 0}
+ol.sublist{padding-left:1.6rem;margin:.4rem 0}
+ol.sublist li{margin:.35rem 0}
+/* --- 解説の段階 --- */
+section.sol{border-left-color:var(--accent)}
+section.sol h4{font-family:var(--sans);font-size:.85rem;letter-spacing:.15em;
+  color:#fff;background:var(--accent);display:inline-block;
+  padding:.14rem .8rem;border-radius:3px;margin:1.05rem 0 .35rem}
+section.sol h4.alt{background:var(--sub)}
+.note{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:var(--accent-soft);
+  border-radius:5px;font-size:.94rem}
+.note b:first-child{color:var(--accent)}
+.warn{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:#faf1ee;
+  border-left:3px solid var(--lv3);border-radius:0 5px 5px 0;font-size:.94rem}
+.warn b:first-child{color:var(--lv3)}
+/* --- 表 --- */
+table{border-collapse:collapse;margin:1rem 0;font-size:.93rem;width:100%}
+th,td{border:1px solid var(--rule);padding:.42rem .7rem;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+/* --- 章末 --- */
+.check{margin:2.2rem 0 0;padding:1rem 1.3rem;border:1px dashed var(--accent);border-radius:6px}
+.check h3{margin:0 0 .5rem;font-size:.98rem;color:var(--accent)}
+.check ul{margin:0;padding-left:1.35rem}
+footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
+  color:var(--sub);font-size:.82rem;line-height:1.9}
+mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+@media (max-width:520px){
+  body{font-size:15.5px}
+  header.book h1{font-size:1.65rem}
+  .wrap{padding:0 .9rem 4rem}
+  section.prob,section.sol{padding:1rem 1rem .9rem}
+}
+@media print{
+  body{background:#fff}
+  header.chap{break-before:page;border-top:none}
+  section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
+  nav.toc a{color:var(--ink)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="book">
+<p class="series">情報系のための微分積分・最適化</p>
+<h1>問題集</h1>
+<p class="subtitle">基礎から大学院レベルまで — 独学のための全19章・159問</p>
+<p class="meta">対象:情報系の大学生・大学院進学をめざす人(微分積分・最適化を未学習の状態からの独学を想定)<br>
+構成:序章+全19章159問(★基礎 48問/★★標準 76問/★★★応用 35問)+付録 主要公式集<br>
+姉妹編『解答解説集』とセットで学習してください。</p>
+</header>
+<nav class="toc">
+<h2>目次</h2>
+<ol>
+<li><a href="#ch0">序章 微分積分・最適化への招待</a><span class="cnt">なぜ学ぶのか・本書の使い方</span></li>
+<li><a href="#ch1">第1章 関数と極限</a><span class="cnt">「限りなく近づく」を扱う言葉/9問</span></li>
+<li><a href="#ch2">第2章 微分の基礎</a><span class="cnt">瞬間の変化率と一次近似/9問</span></li>
+<li><a href="#ch3">第3章 微分で関数を読む</a><span class="cnt">増減・極値・凸性/9問</span></li>
+<li><a href="#ch4">第4章 テイラー展開</a><span class="cnt">多項式で関数を近似する/8問</span></li>
+<li><a href="#ch5">第5章 積分の基礎</a><span class="cnt">累積を測る・微分との往復/8問</span></li>
+<li><a href="#ch6">第6章 積分の技法と広義積分</a><span class="cnt">計算力と無限への拡張/9問</span></li>
+<li><a href="#ch7">第7章 偏微分と勾配</a><span class="cnt">多変数関数の微分/9問</span></li>
+<li><a href="#ch8">第8章 ヘッセ行列と2次近似</a><span class="cnt">曲がり方を行列で読む/8問</span></li>
+<li><a href="#ch9">第9章 多変数関数の極値</a><span class="cnt">停留点の分類と最小二乗法/8問</span></li>
+<li><a href="#ch10">第10章 重積分</a><span class="cnt">多変数の積分とヤコビアン/8問</span></li>
+<li><a href="#ch11">第11章 最適化問題の定式化</a><span class="cnt">「最良」を数学の言葉にする/8問</span></li>
+<li><a href="#ch12">第12章 凸集合と凸関数</a><span class="cnt">局所解=大域解となる世界/9問</span></li>
+<li><a href="#ch13">第13章 勾配降下法</a><span class="cnt">機械学習を支える反復法/9問</span></li>
+<li><a href="#ch14">第14章 ニュートン法</a><span class="cnt">2次収束の高速アルゴリズム/8問</span></li>
+<li><a href="#ch15">第15章 等式制約とラグランジュ乗数</a><span class="cnt">制約の上での最適化/8問</span></li>
+<li><a href="#ch16">第16章 不等式制約とKKT条件</a><span class="cnt">現代最適化の中心定理/8問</span></li>
+<li><a href="#ch17">第17章 双対性</a><span class="cnt">裏側から見る最適化/8問</span></li>
+<li><a href="#ch18">第18章 機械学習と最適化</a><span class="cnt">SGD・正則化・損失最小化/8問</span></li>
+<li><a href="#ch19">第19章 厳密な解析学への入口</a><span class="cnt">ε-δ論法と一様収束/8問</span></li>
+<li><a href="#appendix">付録 主要公式集</a><span class="cnt">微分・積分・テイラー展開・凸性と最適化</span></li>
+</ol>
+</nav>
+<header class="chap" id="ch0">
+<p class="chnum">序章</p>
+<h2>微分積分・最適化への招待</h2>
+<p class="chsub">— なぜ学ぶのか・本書の使い方</p>
+</header>
+
+<h3>微分積分とは何か</h3>
+<p>微分積分は、<b>変化するもの</b>を扱う数学です。微分は「いま、どちらへ、どれくらいの勢いで変化しているか」(瞬間の変化率)を取り出し、積分は「変化を積み重ねた結果、全体としてどれだけになったか」(累積)を測ります。この2つが互いに逆の操作である — これが微積分学の基本定理であり、17世紀にニュートンとライプニッツが見つけて以来、科学と工学の共通言語になりました。本書ではもう1つの顔を強調します:<b>微分とは「複雑な関数を、その場その場で一次関数(まっすぐな関数)で近似すること」</b>です。曲がったものをまっすぐなもので置き換えられるからこそ、線形代数の道具がそのまま使え、計算機に乗るのです。</p>
+
+<h3>最適化とは何か</h3>
+<p>最適化は、「候補の中から<b>一番よいものを選ぶ</b>」問題を数学として定式化し、解く分野です。何を最小(最大)にしたいのか(目的関数)、何が許されるのか(制約)を式で書き、微分の情報 — 勾配 — を頼りに最良の点へ向かいます。機械学習の「学習」の正体は、損失関数という目的関数の最小化そのものです。微分積分が「変化を読む」道具だとすれば、最適化は「変化を読んで最良を探す」技術。この2つは一続きの物語であり、だから本書は1冊にまとめています。</p>
+
+<div class="why">
+<h3>情報系のどこに現れるか</h3>
+<p>情報系の中核技術は、ほとんどが微分積分と最適化の上に建っています。</p>
+<ul>
+<li><b>機械学習・深層学習</b> — 学習=損失関数の最小化(第11・18章)。誤差逆伝播法は連鎖律(第2・7章)、学習の1歩1歩は勾配降下法(第13章)。学習率の設定やなぜ学習が進む/進まないかは、凸性(第12章)と収束解析(第13章)の言葉で理解できます。</li>
+<li><b>統計・データサイエンス</b> — 正規分布の確率は積分(第6・10章)、最尤推定は対数尤度の最大化(第9・18章)。姉妹編『確率・統計』の土台の半分は本書です。</li>
+<li><b>コンピュータグラフィックス・物理シミュレーション</b> — 運動は微分方程式、レンダリング方程式は積分。曲面の法線・接平面は勾配(第7章)。</li>
+<li><b>信号処理・音声・画像</b> — フーリエ変換は積分(第6章)、エッジ検出は微分(勾配)そのもの(第7章)。</li>
+<li><b>アルゴリズムと計算量</b> — \(O(n\log n)\) と \(O(n^2)\) の優劣は増大度の比較=極限の問題(第1章)。和を積分で評価する技法(第5章)は計算量解析の常套手段。</li>
+<li><b>オペレーションズ・リサーチ(OR)</b> — 配送計画・スケジューリング・資源配分は制約付き最適化(第15〜17章)。線形計画とその双対性はネットワークやゲーム理論にも顔を出します。</li>
+<li><b>制御・ロボティクス</b> — 状態の時間変化は微分、最適制御はラグランジュ乗数(第15章)の無限次元版です。</li>
+</ul>
+</div>
+
+<h3>本書の構成 — 学習マップ</h3>
+<p>「一変数 → 多変数 → 最適化 → 大学院への接続」の4部構成で、高校数学の直後から大学院基礎までを一本道でつなぎます。</p>
+<table>
+<tr><th>部</th><th>章</th><th>テーマ</th><th>おおよその水準</th></tr>
+<tr><td>第I部 一変数の微分積分</td><td>1〜6章</td><td>極限・微分・テイラー展開・積分・広義積分</td><td>学部1年前期</td></tr>
+<tr><td>第II部 多変数の微分積分</td><td>7〜10章</td><td>偏微分・勾配・ヘッセ行列・極値・重積分</td><td>学部1年後期〜2年</td></tr>
+<tr><td>第III部 最適化</td><td>11〜17章</td><td>定式化・凸性・勾配降下法・ニュートン法・ラグランジュ乗数・KKT・双対性</td><td>学部2〜3年・院試の主戦場</td></tr>
+<tr><td>第IV部 大学院への接続</td><td>18〜19章</td><td>機械学習の最適化(SGD・正則化)・厳密な解析学(ε-δ・一様収束)</td><td>学部3年〜大学院基礎</td></tr>
+</table>
+
+<div class="howto">
+<h3>本書の使い方</h3>
+<ul>
+<li><b>1問につきまず15分、自力で考える。</b>手が止まっても、その15分が解説の吸収率を数倍にします。</li>
+<li>解けなければ『解答解説集』の<b>「方針」だけを読んで</b>もう一度自力で。それでも詰まったら「解答」へ。</li>
+<li>解説を読んだ問題は、<b>翌日以降に何も見ずにノートへ再現</b>する(写経ではなく再構成)。</li>
+<li>難易度は ★基礎(定義の確認と計算練習)/★★標準(定期試験・院試の基礎)/★★★応用(院試・研究への接続)。<b>1周目は★と★★だけでも構いません。</b>★★★は2周目で。</li>
+<li>各章末の「到達確認」に自分の言葉で答えられたら次章へ。</li>
+<li>第II部以降は姉妹編『線形代数』の知識(ベクトル・行列・固有値・正定値性)を使う場面があります。該当箇所で参照先を示すので、必要になったときに戻って確認すれば十分です。</li>
+</ul>
+</div>
+
+<h3>記号表</h3>
+<table>
+<tr><th>記号</th><th>意味</th></tr>
+<tr><td>\(\displaystyle\lim_{x\to a}f(x)\)</td><td>\(x\) を \(a\) に限りなく近づけたときの \(f(x)\) の極限</td></tr>
+<tr><td>\(f'(x),\ \dfrac{df}{dx}\)</td><td>\(f\) の導関数(微分)。\(f''\) は2階導関数</td></tr>
+<tr><td>\(\dfrac{\partial f}{\partial x},\ f_x\)</td><td>偏導関数(\(x\) 以外の変数を止めて \(x\) で微分)</td></tr>
+<tr><td>\(\nabla f\)</td><td>勾配(偏導関数を並べたベクトル)。「ナブラ」と読む</td></tr>
+<tr><td>\(\nabla^2 f,\ H\)</td><td>ヘッセ行列(2階偏導関数を並べた対称行列)</td></tr>
+<tr><td>\(\displaystyle\int_a^b f(x)\,dx\)</td><td>定積分(\(a\) から \(b\) までの累積)。\(\int f(x)\,dx\) は不定積分(原始関数)</td></tr>
+<tr><td>\(e,\ \exp x,\ \log x\)</td><td>ネイピア数 \(e=2.718\dots\)、指数関数 \(e^x\)、自然対数(底 \(e\)。\(\ln\) と同じ)</td></tr>
+<tr><td>\(O(g(n)),\ o(g(n))\)</td><td>ランダウ記号(増大・微小の程度の比較。第4章で定義)</td></tr>
+<tr><td>\(\displaystyle\min_{\mathbf{x}} f(\mathbf{x}),\ \operatorname*{argmin}_{\mathbf{x}} f(\mathbf{x})\)</td><td>\(f\) の最小値/最小値を与える点 \(\mathbf{x}\)</td></tr>
+<tr><td>\(\text{s.t.}\)</td><td>「〜という制約のもとで」(subject to)</td></tr>
+<tr><td>\(\mathbf{x},\ \|\mathbf{x}\|\)</td><td>ベクトル(太字・列ベクトル)とそのユークリッドノルム \(\sqrt{x_1^2+\cdots+x_n^2}\)</td></tr>
+<tr><td>\(A^\top,\ \mathbf{x}^\top\mathbf{y}\)</td><td>転置。\(\mathbf{x}^\top\mathbf{y}=\sum_i x_iy_i\) は内積</td></tr>
+<tr><td>\(f\colon\mathbb{R}^n\to\mathbb{R}\)</td><td>\(n\) 変数の実数値関数</td></tr>
+</table>
+
+<h3>前提知識</h3>
+<p>高校数学の「関数(2次関数・指数・対数・三角関数)」「数列」と、ごく基本的な式変形を仮定します。高校で微分積分を学んでいなくても問題ありません — 第1章の極限から定義し直します。第II部以降ではベクトル・行列の基本(内積・行列積・固有値・正定値性)を使いますが、必要な事実はその都度まとめ直します(詳しくは姉妹編『線形代数』第1・2・7・9章)。</p>
+
+<header class="chap" id="ch1">
+<p class="chnum">第1章</p>
+<h2>関数と極限</h2>
+<p class="chsub">— 「限りなく近づく」を扱う言葉</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>微分は「限りなく短い時間での変化率」、積分は「限りなく細かい短冊の面積の合計」— 微分積分のすべての概念は<b>極限</b>という操作の上に建っています。極限は「無限に近づくとき、値はどこに落ち着くか」を扱う言葉であり、これは情報系では日常語です:アルゴリズムの計算量 \(O(n\log n)\) は \(n\to\infty\) での増大度の比較、反復法が「収束する」とは近似列が極限を持つこと、数値計算の誤差評価も極限の言葉で書かれます。この章では、極限の直感的な意味・計算技術・連続性という3点セットを、あとで全編を支える土台として固めます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>関数・合成関数の記法を正しく使え、数列と関数の極限を「不定形の解消」(約分・有理化)で計算できる</li>
+<li>はさみうちの原理を使って、直接計算できない極限を評価できる</li>
+<li>重要極限 \(\displaystyle\lim_{x\to0}\frac{\sin x}{x}=1\) と \(e\) の定義を、導出とともに説明できる</li>
+<li>連続性と中間値の定理を理解し、二分法(数値求根)の正しさを保証する定理として位置づけられる</li>
+<li>\(\log n \ll n^a \ll c^n \ll n!\) という増大度の階層を、極限の計算として証明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">極限</b>:\(x\) が \(a\) と異なる値をとりながら \(a\) に限りなく近づくとき \(f(x)\) が一定値 \(L\) に限りなく近づくなら \(\displaystyle\lim_{x\to a}f(x)=L\) と書く(厳密な定義は第19章)</li>
+<li><b class="term">はさみうちの原理</b>:\(g(x)\le f(x)\le h(x)\) かつ \(\lim g=\lim h=L\) ならば \(\lim f=L\)</li>
+<li><b class="term">重要極限</b>:\(\displaystyle\lim_{x\to0}\frac{\sin x}{x}=1\)(角はラジアン)、\(\displaystyle\lim_{n\to\infty}\Bigl(1+\frac1n\Bigr)^n=e=2.718\dots\)</li>
+<li><b class="term">連続</b>:\(\displaystyle\lim_{x\to a}f(x)=f(a)\) が成り立つこと(極限値と関数値が一致)</li>
+<li><b class="term">中間値の定理</b>:連続関数 \(f\) が \(f(a)\lt0\lt f(b)\) を満たせば、\(a\) と \(b\) の間に \(f(c)=0\) となる \(c\) が存在する</li>
+</ul>
+</div>
+
+<section class="prob" id="q1-1">
+<div class="phead"><span class="pnum">問 1.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">関数と合成</span></div>
+<p>\(f(x)=x^2-2x+3\)、\(g(x)=2x-1\) とする。</p>
+<ol class="sublist">
+<li>\(f(0)\)、\(f(2)\)、\(f(a+1)\) を求めよ。</li>
+<li>合成関数 \((f\circ g)(x)=f(g(x))\) と \((g\circ f)(x)=g(f(x))\) をそれぞれ求め、両者が一致しないことを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-2">
+<div class="phead"><span class="pnum">問 1.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">数列の極限</span></div>
+<p>次の極限を求めよ。</p>
+<ol class="sublist">
+<li>\(\displaystyle\lim_{n\to\infty}\frac{3n^2+2n}{n^2+1}\)</li>
+<li>\(\displaystyle\lim_{n\to\infty}\bigl(\sqrt{n+1}-\sqrt{n}\bigr)\)</li>
+<li>\(\displaystyle\lim_{n\to\infty}\frac{1+2+\cdots+n}{n^2}\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-3">
+<div class="phead"><span class="pnum">問 1.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">関数の極限 — 不定形の解消</span></div>
+<p>次の極限を求めよ(いずれも、そのまま代入すると \(\frac00\) の不定形になることを確かめてから計算すること)。</p>
+<ol class="sublist">
+<li>\(\displaystyle\lim_{x\to2}\frac{x^2-4}{x-2}\)</li>
+<li>\(\displaystyle\lim_{x\to0}\frac{\sqrt{1+x}-1}{x}\)</li>
+<li>\(\displaystyle\lim_{x\to3}\frac{x^2-2x-3}{x^2-9}\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-4">
+<div class="phead"><span class="pnum">問 1.4</span><span class="lv lv1">★ 基礎</span><span class="ptag">片側極限と極限の不存在</span></div>
+<p>\(x\ne0\) で定義された関数 \(f(x)=\dfrac{|x|}{x}\) について、右極限 \(\displaystyle\lim_{x\to0+}f(x)\) と左極限 \(\displaystyle\lim_{x\to0-}f(x)\) を求めよ。また \(\displaystyle\lim_{x\to0}f(x)\) は存在するか、理由とともに答えよ。</p>
+</section>
+
+<section class="prob" id="q1-5">
+<div class="phead"><span class="pnum">問 1.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">はさみうちの原理</span></div>
+<p>はさみうちの原理を使って、次の極限を求めよ。</p>
+<ol class="sublist">
+<li>\(\displaystyle\lim_{x\to0}x^2\sin\frac1x\)</li>
+<li>\(\displaystyle\lim_{n\to\infty}\frac{\sin n}{n}\)</li>
+</ol>
+<p>(注意:\(\sin\frac1x\) は \(x\to0\) で振動して極限を持たない。それでも全体の極限が定まる理由を明確にすること。)</p>
+</section>
+
+<section class="prob" id="q1-6">
+<div class="phead"><span class="pnum">問 1.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">重要極限 sin x/x</span></div>
+<ol class="sublist">
+<li>\(0\lt x\lt\dfrac\pi2\) のとき、単位円の扇形と2つの三角形の面積を比較して、不等式 \(\sin x\lt x\lt\tan x\) を示せ。</li>
+<li>(1) を用いて \(\displaystyle\lim_{x\to0}\frac{\sin x}{x}=1\) を証明せよ。</li>
+<li>(2) を用いて \(\displaystyle\lim_{x\to0}\frac{1-\cos x}{x^2}\) と \(\displaystyle\lim_{x\to0}\frac{\tan x}{x}\) を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-7">
+<div class="phead"><span class="pnum">問 1.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">ネイピア数 e と関連する極限</span></div>
+<p>ネイピア数 \(e\) は \(\displaystyle e=\lim_{n\to\infty}\Bigl(1+\frac1n\Bigr)^n\) で定義され、より一般に \(\displaystyle\lim_{t\to0}(1+t)^{1/t}=e\) が成り立つ(この事実は認めてよい)。これを用いて次の極限を求めよ。</p>
+<ol class="sublist">
+<li>\(\displaystyle\lim_{n\to\infty}\Bigl(1+\frac2n\Bigr)^n\)</li>
+<li>\(\displaystyle\lim_{x\to0}\frac{\log(1+x)}{x}\)</li>
+<li>\(\displaystyle\lim_{x\to0}\frac{e^x-1}{x}\)&nbsp;(ヒント:\(t=e^x-1\) と置換して (2) に帰着させる)</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-8">
+<div class="phead"><span class="pnum">問 1.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">中間値の定理と二分法</span></div>
+<p>\(f(x)=x^3+x-1\) について答えよ。</p>
+<ol class="sublist">
+<li>方程式 \(f(x)=0\) が区間 \((0,1)\) に少なくとも1つ解を持つことを、中間値の定理を用いて示せ。</li>
+<li>区間を半分に割って符号を調べる操作(二分法)を2回行い、解の存在範囲を幅 \(\dfrac14\) の区間まで絞り込め。</li>
+<li>この方程式の実数解がただ1つであることを示せ。(ヒント:\(f\) が狭義単調増加であることを使う。微分を知っていれば使ってよいし、\(a\lt b\Rightarrow f(a)\lt f(b)\) を直接示してもよい。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-9">
+<div class="phead"><span class="pnum">問 1.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">増大度の比較(計算量の階層)</span></div>
+<p>正の数列 \((a_n)\) に対して、次の<b>比の補題</b>が成り立つ。</p>
+<p class="note"><b>比の補題</b>:\(\displaystyle\lim_{n\to\infty}\frac{a_{n+1}}{a_n}=r\) かつ \(0\le r\lt1\) ならば、\(\displaystyle\lim_{n\to\infty}a_n=0\)。</p>
+<ol class="sublist">
+<li>比の補題を証明せよ。(ヒント:\(r\lt s\lt1\) となる \(s\) を1つとると、十分大きな \(n\) に対して \(a_{n+1}\le s\,a_n\) が成り立つ。等比数列と比較する。)</li>
+<li>比の補題を用いて \(\displaystyle\lim_{n\to\infty}\frac{n^{100}}{2^n}=0\) を示せ。</li>
+<li>同様に \(\displaystyle\lim_{n\to\infty}\frac{2^n}{n!}=0\) を示せ。</li>
+<li>以上の結果が、アルゴリズムの計算量の階層 \(O(n^{100})\) と \(O(2^n)\)、\(O(2^n)\) と \(O(n!)\) の優劣についてそれぞれ何を意味するか、1〜2文で述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>\(\frac00\) の不定形が「情報が足りない」状態であり、式変形で情報を引き出してから極限をとる、という流れを説明できる</li>
+<li>はさみうちの原理を、「振動する部分を絶対値で抑える」使い方とともに説明できる</li>
+<li>\(\lim_{x\to0}\frac{\sin x}{x}=1\) の幾何的な導出を再現できる</li>
+<li>中間値の定理が二分法(数値求根・二分探索の連続版)の正しさをどう保証しているか説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch2">
+<p class="chnum">第2章</p>
+<h2>微分の基礎</h2>
+<p class="chsub">— 瞬間の変化率と一次近似</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>微分係数 \(f'(a)\) には2つの読み方があります。1つは「\(x=a\) での瞬間の変化率」(速度・傾き)。もう1つが本書の主役で、「\(f\) を \(a\) の近くで一次関数 \(f(a)+f'(a)(x-a)\) に置き換えたときの係数」— つまり<b>微分とは局所的な線形近似</b>だという見方です。ニューラルネットの学習は「損失関数を今いる場所で線形近似し、下る方向へ一歩動く」ことの繰り返しで、その導関数を機械的に計算する連鎖律こそが誤差逆伝播法(バックプロパゲーション)の数学的正体です。この章では、定義から出発して微分の計算規則一式を証明つきで手に入れます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>微分係数を定義(差分商の極限)から計算でき、「接線の傾き」「線形近似の係数」として解釈できる</li>
+<li>べき・三角・指数・対数の導関数を、第1章の重要極限を使って導出できる</li>
+<li>積・商・合成(連鎖律)・逆関数の微分公式を証明つきで使いこなせる</li>
+<li>一次近似 \(f(a+h)\approx f(a)+f'(a)h\) で数値を素早く見積もり、誤差の大きさも意識できる</li>
+<li>「連続だが微分不可能」な関数を例示でき、微分可能性の意味を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">微分係数</b>:\(\displaystyle f'(a)=\lim_{h\to0}\frac{f(a+h)-f(a)}{h}\)(この極限が存在するとき \(f\) は \(a\) で微分可能)</li>
+<li><b class="term">基本導関数</b>:\((x^\alpha)'=\alpha x^{\alpha-1}\)、\((\sin x)'=\cos x\)、\((\cos x)'=-\sin x\)、\((e^x)'=e^x\)、\((\log x)'=\dfrac1x\)</li>
+<li><b class="term">積・商</b>:\((fg)'=f'g+fg'\)、\(\Bigl(\dfrac fg\Bigr)'=\dfrac{f'g-fg'}{g^2}\)</li>
+<li><b class="term">連鎖律</b>:\(\{f(g(x))\}'=f'(g(x))\,g'(x)\)(外の微分 \(\times\) 中の微分)</li>
+<li><b class="term">一次近似</b>:\(h\) が小さいとき \(f(a+h)\approx f(a)+f'(a)\,h\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q2-1">
+<div class="phead"><span class="pnum">問 2.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">定義から微分する</span></div>
+<p>微分の定義 \(\displaystyle f'(x)=\lim_{h\to0}\frac{f(x+h)-f(x)}{h}\) に従って、次の関数の導関数を求めよ(公式は使わないこと)。</p>
+<ol class="sublist">
+<li>\(f(x)=x^2\)</li>
+<li>\(f(x)=\dfrac1x\)&nbsp;(\(x\ne0\))</li>
+<li>\(f(x)=\sqrt{x}\)&nbsp;(\(x\gt0\)。ヒント:分子を有理化する)</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-2">
+<div class="phead"><span class="pnum">問 2.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">べき乗の微分と線形性</span></div>
+<p>公式 \((x^\alpha)'=\alpha x^{\alpha-1}\) と微分の線形性 \((af+bg)'=af'+bg'\) を用いて、次の導関数を求めよ。</p>
+<ol class="sublist">
+<li>\(f(x)=3x^4-5x^2+2x-7\)</li>
+<li>\(g(x)=\dfrac1{x^3}\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-3">
+<div class="phead"><span class="pnum">問 2.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">sin と e^x の微分の導出</span></div>
+<p>第1章の重要極限を使って、次を微分の定義から導け。</p>
+<ol class="sublist">
+<li>\((\sin x)'=\cos x\)&nbsp;(ヒント:加法定理で \(\sin(x+h)\) を展開し、\(\displaystyle\lim_{h\to0}\frac{\sin h}h=1\) と \(\displaystyle\lim_{h\to0}\frac{\cos h-1}h=0\) を使う。後者は問1.6(3)から従うことも確かめよ)</li>
+<li>\((e^x)'=e^x\)&nbsp;(ヒント:\(e^{x+h}=e^xe^h\) と問1.7(3)を使う)</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-4">
+<div class="phead"><span class="pnum">問 2.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">積の公式の証明と適用</span></div>
+<ol class="sublist">
+<li>積の微分公式 \((f(x)g(x))'=f'(x)g(x)+f(x)g'(x)\) を、微分の定義から証明せよ。(ヒント:分子に \(f(x+h)g(x)\) を引いて足す。)</li>
+<li>この公式を用いて \(y=x^2e^x\) の導関数を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-5">
+<div class="phead"><span class="pnum">問 2.5</span><span class="lv lv1">★ 基礎</span><span class="ptag">商の公式</span></div>
+<p>商の微分公式を用いて、次の導関数を求めよ。</p>
+<ol class="sublist">
+<li>\(y=\tan x=\dfrac{\sin x}{\cos x}\)</li>
+<li>\(y=\dfrac{x}{x^2+1}\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-6">
+<div class="phead"><span class="pnum">問 2.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">連鎖律(合成関数の微分)</span></div>
+<p>連鎖律を用いて、次の導関数を求めよ。それぞれ「外の関数」「中の関数」が何かを明示すること。</p>
+<ol class="sublist">
+<li>\(y=(3x^2+1)^5\)</li>
+<li>\(y=e^{-x^2}\)</li>
+<li>\(y=\log(x^2+1)\)</li>
+<li>\(y=\sin 2x\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-7">
+<div class="phead"><span class="pnum">問 2.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">逆関数の微分</span></div>
+<p>逆関数の微分公式:\(y=f^{-1}(x)\) のとき \(\dfrac{dy}{dx}=\dfrac1{f'(y)}\)(分母は \(y\) の式になることに注意)を用いて、次を導け。</p>
+<ol class="sublist">
+<li>\(y=\log x\)(\(x\gt0\)。\(e^y=x\) の逆関数)の導関数が \(\dfrac1x\) であること</li>
+<li>\(y=\arctan x\)(\(\tan y=x\)、\(-\frac\pi2\lt y\lt\frac\pi2\))の導関数が \(\dfrac1{1+x^2}\) であること</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-8">
+<div class="phead"><span class="pnum">問 2.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">一次近似で数を見積もる</span></div>
+<ol class="sublist">
+<li>\(f(x)=\sqrt x\) の \(x=100\) における一次近似(接線)を求め、それを使って \(\sqrt{101}\) の近似値を計算せよ。真の値 \(\sqrt{101}=10.049875\dots\) と比べて、誤差はどの程度か。</li>
+<li>同じ考え方で \((1+x)^\alpha\approx1+\alpha x\)(\(x\) が小さいとき)を導き、\(1.02^{10}\) の近似値を求めよ。真の値 \(1.02^{10}=1.218994\dots\) と比べると誤差はどの程度か。(1) より誤差が大きくなる理由も考察せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-9">
+<div class="phead"><span class="pnum">問 2.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">微分可能性 — 連続だが微分できない関数</span></div>
+<ol class="sublist">
+<li>\(f(x)=|x|\) は \(x=0\) で連続だが微分可能でないことを、右極限・左極限を計算して示せ。</li>
+<li>次の関数を考える。\[g(x)=\begin{cases}x^2\sin\dfrac1x &amp; (x\ne0)\\[2pt] 0 &amp; (x=0)\end{cases}\]\(g\) は \(x=0\) でも微分可能であり \(g'(0)=0\) となることを、定義に従って示せ。</li>
+<li>\(x\ne0\) での \(g'(x)\) を計算し、\(\displaystyle\lim_{x\to0}g'(x)\) が存在しないことを示せ。(つまり「微分可能」でも「導関数が連続」とは限らない。)</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>微分係数の定義を書け、「接線の傾き」と「線形近似の係数」という2つの解釈を説明できる</li>
+<li>連鎖律を「外の微分 \(\times\) 中の微分」として、具体例つきで説明できる</li>
+<li>\(\sqrt{101}\) のような値を一次近似で暗算でき、近似である(誤差がある)ことも意識できる</li>
+<li>「連続 \(\Rightarrow\) 微分可能」が成り立たない反例を挙げられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch3">
+<p class="chnum">第3章</p>
+<h2>微分で関数を読む</h2>
+<p class="chsub">— 増減・極値・凸性</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>導関数の<b>符号</b>は関数の増減を、2階導関数の符号は「曲がり方」(凸性)を教えてくれます。つまり微分は、関数のグラフを描かずともその形を読み取る道具です。「損失関数が最小になる場所を探す」機械学習も、「応答時間を最小化するパラメータを選ぶ」システム設計も、原理はこの章の1変数の極値問題 — 「微分してゼロと置き、増減で確認する」— の多変数版にすぎません。さらにここで証明する不等式 \(e^x\ge1+x\)、\(\log x\le x-1\) は、情報理論(KLダイバージェンスの非負性)や機械学習の理論証明で最も頻繁に引用される不等式です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>増減表を書いて極値・最大最小を求められ、閉区間では「停留点と端点の比較」が必要な理由を説明できる</li>
+<li>平均値の定理を証明・適用でき、それを使って不等式を証明できる</li>
+<li>ロピタルの定理を(適用条件を確認した上で)使って不定形の極限を計算できる</li>
+<li>2階導関数から凸性・変曲点を判定し、関数のグラフの概形を描ける</li>
+<li>「2乗誤差の最小化は平均、絶対誤差の最小化は中央値」を証明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">増減</b>:区間で \(f'\gt0\) なら狭義単調増加、\(f'\lt0\) なら狭義単調減少</li>
+<li><b class="term">極値の必要条件</b>:微分可能な \(f\) が \(x=a\) で極値をとるなら \(f'(a)=0\)(逆は不成立)</li>
+<li><b class="term">2階条件</b>:\(f'(a)=0\) かつ \(f''(a)\gt0\) なら極小、\(f''(a)\lt0\) なら極大</li>
+<li><b class="term">平均値の定理</b>:\(f\) が \([a,b]\) で連続、\((a,b)\) で微分可能なら \(\dfrac{f(b)-f(a)}{b-a}=f'(c)\) となる \(c\in(a,b)\) が存在</li>
+<li><b class="term">凸性</b>:区間で \(f''\ge0\) なら下に凸(convex)、\(f''\le0\) なら上に凸(concave)。符号が切り替わる点が変曲点</li>
+<li><b class="term">ロピタルの定理</b>:\(\frac00\) または \(\frac\infty\infty\) 型で \(\displaystyle\lim\frac{f'(x)}{g'(x)}\) が存在すれば \(\displaystyle\lim\frac{f(x)}{g(x)}=\lim\frac{f'(x)}{g'(x)}\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q3-1">
+<div class="phead"><span class="pnum">問 3.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">増減表と極値</span></div>
+<p>\(f(x)=x^3-3x\) について、増減表を作り、極大値・極小値をすべて求めよ。また、2階導関数による判定(2階条件)でも同じ結論が得られることを確かめよ。</p>
+</section>
+
+<section class="prob" id="q3-2">
+<div class="phead"><span class="pnum">問 3.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">閉区間での最大・最小</span></div>
+<p>\(f(x)=x^3-6x^2+9x+1\) の、閉区間 \([0,4]\) における最大値と最小値を求めよ。(注意:候補は「\(f'=0\) となる内点」と「区間の端点」の両方。)</p>
+</section>
+
+<section class="prob" id="q3-3">
+<div class="phead"><span class="pnum">問 3.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">実数全体での最大・最小</span></div>
+<p>\(f(x)=\dfrac{x}{x^2+1}\) について答えよ(導関数は問2.5(2)で計算済み)。</p>
+<ol class="sublist">
+<li>増減を調べ、極値をすべて求めよ。</li>
+<li>\(x\to\pm\infty\) での極限を求め、\(f\) の実数全体における最大値・最小値を決定せよ。(閉区間の場合と違い、最大・最小が存在すること自体に理由が必要なことに注意。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-4">
+<div class="phead"><span class="pnum">問 3.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">平均値の定理</span></div>
+<ol class="sublist">
+<li>ロルの定理「\(f\) が \([a,b]\) で連続、\((a,b)\) で微分可能、かつ \(f(a)=f(b)\) ならば、\(f'(c)=0\) となる \(c\in(a,b)\) が存在する」を認めて、平均値の定理を証明せよ。(ヒント:\(f\) から「両端を結ぶ直線」を引いた関数にロルの定理を使う。)</li>
+<li>\(f(x)=x^3\)、区間 \([0,2]\) に対して、平均値の定理の結論を満たす \(c\) を具体的に求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-5">
+<div class="phead"><span class="pnum">問 3.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">微分による不等式の証明</span></div>
+<p>次の不等式を、微分(増減)を用いて証明せよ。等号成立条件も述べること。</p>
+<ol class="sublist">
+<li>すべての実数 \(x\) に対して \(e^x\ge1+x\)</li>
+<li>すべての \(x\gt0\) に対して \(\log x\le x-1\)</li>
+</ol>
+<p>(この2つは同じ内容の言い換えであることにも触れよ。)</p>
+</section>
+
+<section class="prob" id="q3-6">
+<div class="phead"><span class="pnum">問 3.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">ロピタルの定理</span></div>
+<p>ロピタルの定理を用いて次の極限を求めよ。各問で「どの不定形か」「適用条件を満たすか」を確認してから使うこと。</p>
+<ol class="sublist">
+<li>\(\displaystyle\lim_{x\to0}\frac{e^x-1-x}{x^2}\)</li>
+<li>\(\displaystyle\lim_{x\to\infty}\frac{\log x}{x}\)</li>
+<li>\(\displaystyle\lim_{x\to0+}x\log x\)&nbsp;(ヒント:まず商の形 \(\dfrac{\log x}{1/x}\) に書き直す)</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-7">
+<div class="phead"><span class="pnum">問 3.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">凸性・変曲点とグラフの概形</span></div>
+<p>\(f(x)=x\,e^{-x}\) について、次の手順でグラフの概形を描け。</p>
+<ol class="sublist">
+<li>\(f'(x)\) を求め、増減と極値を調べよ。</li>
+<li>\(f''(x)\) を求め、凸性(上に凸/下に凸)と変曲点を調べよ。</li>
+<li>\(x\to\infty\) と \(x\to-\infty\) での挙動を調べ、以上を増減・凹凸表にまとめてグラフの概形を描け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-8">
+<div class="phead"><span class="pnum">問 3.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">増大度の階層の完成</span></div>
+<p>問1.9で保留した部分を証明し、増大度の階層を完成させる。</p>
+<ol class="sublist">
+<li>任意の \(a\gt0\) に対して \(\displaystyle\lim_{x\to\infty}\frac{\log x}{x^a}=0\) を示せ。</li>
+<li>任意の自然数 \(k\) に対して \(\displaystyle\lim_{x\to\infty}\frac{x^k}{e^x}=0\) を示せ。(ヒント:ロピタルの定理を繰り返し適用する。)</li>
+<li>(1) を使って \(\displaystyle\lim_{n\to\infty}\frac{n\log n}{n^{1.1}}=0\) を示せ。これはソートアルゴリズムの計算量 \(O(n\log n)\) について何を意味するか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-9">
+<div class="phead"><span class="pnum">問 3.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">2乗誤差は平均、絶対誤差は中央値</span></div>
+<p>データ \(x_1,x_2,\dots,x_n\) を1つの数 \(\theta\) で代表させたい。</p>
+<ol class="sublist">
+<li>2乗誤差の和 \(f(\theta)=\displaystyle\sum_{i=1}^n(\theta-x_i)^2\) を最小にする \(\theta\) が標本平均 \(\bar x=\dfrac1n\sum_i x_i\) であることを、微分を用いて証明せよ(それが最小である理由も述べること)。</li>
+<li>データが \(1,\ 2,\ 4\) のとき、絶対誤差の和 \(g(\theta)=|\theta-1|+|\theta-2|+|\theta-4|\) を最小にする \(\theta\) と最小値を求めよ。(ヒント:\(g\) は区分的に一次関数。各区間で傾きを調べる。)</li>
+<li>(2) の議論を一般化すると、絶対誤差の和を最小にするのはデータの<b>中央値</b>であることが分かる。\(n\) が奇数の場合についてこれを証明せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>「\(f'(a)=0\)」が極値の必要条件にすぎない(十分でない)ことを、反例つきで説明できる</li>
+<li>平均値の定理を「不等式製造機」として使う流れ(差をとる→増減→端で値0)を再現できる</li>
+<li>ロピタルの定理の適用条件を言え、適用できない例に注意を払える</li>
+<li>\(e^x\ge1+x\) のグラフ上の意味(接線がグラフの下にある=凸性)を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch4">
+<p class="chnum">第4章</p>
+<h2>テイラー展開</h2>
+<p class="chsub">— 多項式で関数を近似する</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>コンピュータが直接計算できるのは、足し算と掛け算 — つまり多項式だけです。では \(e^x\) や \(\sin x\) はどう計算されているのか?答えがテイラー展開:「滑らかな関数は、微分係数を係数に持つ多項式でいくらでも精密に近似できる」。一次近似(第2章)を高次へ押し上げたこの道具は、関数電卓の中身であると同時に、<b>誤差を式で書ける</b>(剰余項)という点で数値計算の理論の背骨です。さらに、機械学習の最適化理論は「損失関数を2次のテイラー展開で近似する」ことの繰り返し(第8・13・14章)であり、ランダウ記号 \(O(\cdot)\) はアルゴリズム解析と共通の言葉。この章は本書の前半と後半をつなぐ蝶番です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>テイラー多項式を定義から計算でき、主要な展開(\(e^x,\sin,\cos,\log(1+x),\frac1{1-x}\))を自力で導出できる</li>
+<li>ランダウ記号 \(o(\cdot),O(\cdot)\) の定義を述べ、展開の誤差の「オーダー」を表現できる</li>
+<li>ラグランジュ剰余項を使って近似誤差を<b>証明つきで</b>上から評価できる(必要な項数の見積もり)</li>
+<li>テイラー展開で不定形の極限を機械的に計算できる</li>
+<li>数値微分の誤差次数の解析など、計算機科学への応用ができる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">テイラー多項式</b>(\(a\) を中心とする \(n\) 次):\(\displaystyle T_n(x)=\sum_{k=0}^n\frac{f^{(k)}(a)}{k!}(x-a)^k\)。\(a=0\) のときマクローリン展開と呼ぶ</li>
+<li><b class="term">テイラーの定理</b>:\(f(x)=T_n(x)+R_{n+1}\)、剰余項は \(R_{n+1}=\dfrac{f^{(n+1)}(c)}{(n+1)!}(x-a)^{n+1}\)(\(c\) は \(a\) と \(x\) の間のある点)</li>
+<li><b class="term">基本展開</b>:\(e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\cdots\)、\(\sin x=x-\frac{x^3}{3!}+\frac{x^5}{5!}-\cdots\)、\(\cos x=1-\frac{x^2}{2!}+\frac{x^4}{4!}-\cdots\)、\(\log(1+x)=x-\frac{x^2}2+\frac{x^3}3-\cdots\)、\(\frac1{1-x}=1+x+x^2+\cdots\)(\(|x|\lt1\))</li>
+<li><b class="term">ランダウ記号</b>(\(x\to0\)):\(f=o(g)\) は \(\frac fg\to0\)(\(g\) より高位の微小)、\(f=O(g)\) は \(\bigl|\frac fg\bigr|\) が \(0\) の近くで有界</li>
+</ul>
+</div>
+
+<section class="prob" id="q4-1">
+<div class="phead"><span class="pnum">問 4.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">テイラー多項式の計算</span></div>
+<ol class="sublist">
+<li>\(f(x)=e^x\) の \(x=0\) を中心とする3次のテイラー多項式 \(T_3(x)\) を、定義(微分係数を計算して係数を作る)から求めよ。</li>
+<li>\(T_3\) を使って \(e^{0.1}\) の近似値を小数第7位まで計算せよ。真の値は \(e^{0.1}=1.1051709\dots\) である。誤差はどの程度か。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-2">
+<div class="phead"><span class="pnum">問 4.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">主要なマクローリン展開の導出</span></div>
+<p>次の展開を導出せよ((1)(2) は微分係数の計算から、(3) は等比数列の和の公式から)。</p>
+<ol class="sublist">
+<li>\(\sin x=x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\cdots\)(5次の項まで)</li>
+<li>\(\log(1+x)=x-\dfrac{x^2}2+\dfrac{x^3}3-\dfrac{x^4}4+\cdots\)(4次の項まで)</li>
+<li>\(\dfrac1{1-x}=1+x+x^2+x^3+\cdots\)(\(|x|\lt1\)。有限和 \(1+x+\cdots+x^n\) の公式から極限をとって示せ)</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-3">
+<div class="phead"><span class="pnum">問 4.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">ランダウ記号に慣れる</span></div>
+<p>\(x\to0\) の文脈で答えよ。</p>
+<ol class="sublist">
+<li>定義に基づいて \(x^3=o(x^2)\) を示せ。</li>
+<li>\(\sin x=x+o(x)\) を示せ。(これは「\(x=0\) 付近で \(\sin x\) と \(x\) の差は \(x\) より高位の微小」という主張である。)</li>
+<li>\(x^2+3x^3=O(x^2)\) を示せ。また \(x^2+3x^3=o(x^2)\) は成り立つか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-4">
+<div class="phead"><span class="pnum">問 4.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">テイラーの定理(2次の場合)の証明</span></div>
+<p>\(f\) を2回微分可能とする。\(a\lt x\) を固定するとき、</p>
+<p>\[f(x)=f(a)+f'(a)(x-a)+\frac{f''(c)}{2}(x-a)^2\]</p>
+<p>を満たす \(c\in(a,x)\) が存在することを、次の手順で証明せよ。</p>
+<ol class="sublist">
+<li>定数 \(M\) を \(f(x)=f(a)+f'(a)(x-a)+\dfrac M2(x-a)^2\) が成り立つように定める(\(x,a\) は固定なので \(M\) は決まる)。補助関数 \(\varphi(t)=f(x)-f(t)-f'(t)(x-t)-\dfrac M2(x-t)^2\) が \(\varphi(a)=\varphi(x)=0\) を満たすことを確かめよ。</li>
+<li>ロルの定理を \(\varphi\) に適用し、\(M=f''(c)\) となる \(c\in(a,x)\) が存在することを示せ。</li>
+<li>検算:\(f(x)=e^x\)、\(a=0\)、\(x=1\) の場合にこの定理が主張する \(c\) を実際に求め、\(0\lt c\lt1\) を確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-5">
+<div class="phead"><span class="pnum">問 4.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">剰余項による誤差保証</span></div>
+<ol class="sublist">
+<li>\(\sin x\) を3次のテイラー多項式 \(x-\dfrac{x^3}6\) で近似する。\(x=0.5\) のときの近似値を計算し、ラグランジュ剰余項を使って誤差が \(\dfrac{0.5^5}{5!}\) 以下であることを証明せよ。実際の誤差(真の値 \(\sin0.5=0.4794255\dots\))と比較せよ。</li>
+<li>\(e=\displaystyle\sum_{k=0}^\infty\frac1{k!}\) を部分和 \(\displaystyle\sum_{k=0}^n\frac1{k!}\) で近似するとき、誤差を \(10^{-6}\) 未満にするには \(n\) をいくつにすればよいか。剰余項の評価 \(0\lt R\lt\dfrac{3}{(n+1)!}\) を導いてから答えよ(\(e\lt3\) は使ってよい)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-6">
+<div class="phead"><span class="pnum">問 4.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">テイラー展開による極限計算</span></div>
+<p>テイラー展開(+ランダウ記号)を用いて次の極限を求めよ。</p>
+<ol class="sublist">
+<li>\(\displaystyle\lim_{x\to0}\frac{x-\sin x}{x^3}\)</li>
+<li>\(\displaystyle\lim_{x\to0}\frac{\cos x-e^{-x^2/2}}{x^4}\)&nbsp;(ロピタルの定理で解こうとすると微分が4回必要になる。展開の方が圧倒的に速いことを体感せよ。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-7">
+<div class="phead"><span class="pnum">問 4.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">テイラー級数の収束と、その限界</span></div>
+<ol class="sublist">
+<li>任意に固定した実数 \(x\) に対して、\(e^x\) のマクローリン展開の剰余項が \(|R_{n+1}|\le e^{|x|}\dfrac{|x|^{n+1}}{(n+1)!}\) を満たすことを示し、\(n\to\infty\) で \(R_{n+1}\to0\) となること(したがって級数 \(\sum\frac{x^k}{k!}\) がすべての実数 \(x\) で \(e^x\) に収束すること)を証明せよ。(ヒント:\(\frac{|x|^{n}}{n!}\to0\) は問1.9(3)と同じ「比の補題」で示せる。)</li>
+<li>一方、次の関数を考える。\[f(x)=\begin{cases}e^{-1/x^2} &amp; (x\ne0)\\ 0 &amp; (x=0)\end{cases}\]\(f'(0)=0\) を定義から示せ。さらに \(f''(0)=0\) も示せ。(実はすべての \(n\) で \(f^{(n)}(0)=0\) となることが知られている。)</li>
+<li>(2) の関数のマクローリン級数は恒等的に \(0\) である。これは「テイラー級数が収束しても、元の関数に一致するとは限らない」ことを意味する。この例が教えてくれる教訓を1〜2文で述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-8">
+<div class="phead"><span class="pnum">問 4.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">数値微分の誤差次数(勾配チェックの原理)</span></div>
+<p>コンピュータで微分を近似する2つの公式、<b>前進差分</b> \(D_f=\dfrac{f(x+h)-f(x)}{h}\) と<b>中心差分</b> \(D_c=\dfrac{f(x+h)-f(x-h)}{2h}\) を考える。</p>
+<ol class="sublist">
+<li>\(f(x\pm h)\) をテイラー展開して、\(D_f=f'(x)+\dfrac{f''(x)}2h+O(h^2)\) および \(D_c=f'(x)+\dfrac{f'''(x)}6h^2+O(h^4)\) を示せ。(中心差分では \(h\) の1次の項が打ち消し合うことに注目。)</li>
+<li>\(f(x)=\sin x\)、\(x=1\)、\(h=0.1\) として両方の近似値と真値 \(f'(1)=\cos1=0.540302\dots\) との誤差を計算し、(1) の理論(前進は \(O(h)\)、中心は \(O(h^2)\))と整合することを確かめよ。</li>
+<li>\(h\) を10分の1にすると、それぞれの誤差はおよそ何分の1になると予想されるか。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>テイラー多項式の係数がなぜ \(\frac{f^{(k)}(a)}{k!}\) なのか(\(k\) 回微分して \(x=a\) を代入すると一致する)を説明できる</li>
+<li>「近似値」と「誤差の保証」を分けて考え、剰余項で後者を証明できる</li>
+<li>\(o(x^2)\) と \(O(x^2)\) の違いを定義に基づいて説明できる</li>
+<li>中心差分が前進差分より1桁精度の次数が高い理由(奇数次の項の相殺)を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch5">
+<p class="chnum">第5章</p>
+<h2>積分の基礎</h2>
+<p class="chsub">— 足し合わせの極限と微積分学の基本定理</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>積分の本質は「細かく刻んで足し合わせる」こと — 面積はその代表例にすぎません。確率(密度関数の下の面積)、期待値、信号のエネルギー、アルゴリズムの平均計算量:情報系で出会う「連続的な合計」はすべて積分です。そして驚くべきことに、この「足し合わせ」は微分の逆演算として計算できる(<b>微積分学の基本定理</b>)。バラバラに見えた微分と積分が1本の定理でつながる瞬間は、微分積分学のクライマックスです。さらにこの章の最後では、離散の和 \(\sum\frac1k\) を積分で挟んで評価する技法 — アルゴリズム解析(クイックソートの平均計算量など)の常套手段 — を学びます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>定積分を「リーマン和の極限」として定義から計算でき、その図形的意味を説明できる</li>
+<li>微積分学の基本定理を証明し、「積分は微分の逆」である理由を説明できる</li>
+<li>基本的な原始関数を求め、定積分を計算できる</li>
+<li>置換積分・部分積分の基礎的な使い方を身につける(技法の深掘りは第6章)</li>
+<li>積分の不等式・対称性を使って、計算せずに値を評価・簡約できる</li>
+<li>和を積分で挟んで評価する(調和数 \(H_n=\Theta(\log n)\) の証明)</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">定積分</b>:区間 \([a,b]\) を \(n\) 等分し、\(\displaystyle\int_a^bf(x)\,dx=\lim_{n\to\infty}\sum_{k=1}^nf(x_k)\,\Delta x\)(\(\Delta x=\frac{b-a}n\))。連続関数ならこの極限は必ず存在する</li>
+<li><b class="term">微積分学の基本定理</b>:\(f\) が連続なら \(S(x)=\displaystyle\int_a^xf(t)\,dt\) は微分可能で \(S'(x)=f(x)\)。したがって \(F'=f\) なる \(F\)(原始関数)を1つ見つければ \(\displaystyle\int_a^bf(x)\,dx=F(b)-F(a)\)</li>
+<li><b class="term">基本積分</b>:\(\displaystyle\int x^\alpha dx=\frac{x^{\alpha+1}}{\alpha+1}+C\ (\alpha\ne-1)\)、\(\displaystyle\int\frac{dx}x=\log|x|+C\)、\(\displaystyle\int e^{ax}dx=\frac{e^{ax}}a+C\)、\(\displaystyle\int\frac{dx}{1+x^2}=\arctan x+C\)</li>
+<li><b class="term">線形性・単調性</b>:\(\int(af+bg)=a\int f+b\int g\)。\(f\le g\) なら \(\int_a^bf\le\int_a^bg\)</li>
+<li><b class="term">置換積分</b>:\(\displaystyle\int f(g(x))g'(x)\,dx=\int f(u)\,du\)(\(u=g(x)\))。<b class="term">部分積分</b>:\(\displaystyle\int f'g\,dx=fg-\int fg'\,dx\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q5-1">
+<div class="phead"><span class="pnum">問 5.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">リーマン和から定積分へ</span></div>
+<p>区間 \([0,1]\) を \(n\) 等分し、各小区間の右端での値を使ったリーマン和により、定積分 \(\displaystyle\int_0^1x^2\,dx\) を定義から計算せよ。すなわち</p>
+<p>\[\lim_{n\to\infty}\sum_{k=1}^n\Bigl(\frac kn\Bigr)^2\cdot\frac1n\]</p>
+<p>を求めよ。(公式 \(\displaystyle\sum_{k=1}^nk^2=\frac{n(n+1)(2n+1)}6\) は使ってよい。)</p>
+</section>
+
+<section class="prob" id="q5-2">
+<div class="phead"><span class="pnum">問 5.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">原始関数(不定積分)</span></div>
+<p>次の不定積分を求めよ。求めたら微分して戻ることを必ず確認せよ。</p>
+<ol class="sublist">
+<li>\(\displaystyle\int x^3\,dx\)</li>
+<li>\(\displaystyle\int\frac{dx}x\)&nbsp;(\(x\gt0\))</li>
+<li>\(\displaystyle\int e^{2x}\,dx\)</li>
+<li>\(\displaystyle\int\cos3x\,dx\)</li>
+<li>\(\displaystyle\int\frac{dx}{1+x^2}\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-3">
+<div class="phead"><span class="pnum">問 5.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">定積分の計算</span></div>
+<ol class="sublist">
+<li>\(\displaystyle\int_1^2(x^2-2x+3)\,dx\)</li>
+<li>\(\displaystyle\int_0^\pi\sin x\,dx\)&nbsp;(結果の図形的意味も述べよ。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-4">
+<div class="phead"><span class="pnum">問 5.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">微積分学の基本定理の証明</span></div>
+<p>\(f\) を連続関数とし、\(S(x)=\displaystyle\int_a^xf(t)\,dt\) とおく。</p>
+<ol class="sublist">
+<li>\(h\gt0\) に対して \(S(x+h)-S(x)=\displaystyle\int_x^{x+h}f(t)\,dt\) であることを、積分の区間加法性から説明せよ。</li>
+<li>\([x,x+h]\) 上の \(f\) の最小値を \(m_h\)、最大値を \(M_h\) とするとき、\(m_h\le\dfrac{S(x+h)-S(x)}h\le M_h\) を示せ。</li>
+<li>\(f\) の連続性を使って \(h\to0+\) の極限をとり、\(S'(x)=f(x)\) を結論せよ(\(h\lt0\) 側も同様でよい)。さらに、この定理から公式 \(\displaystyle\int_a^bf(x)\,dx=F(b)-F(a)\)(\(F\) は \(f\) の任意の原始関数)が従うことを説明せよ。</li>
+<li>実例確認:\(f(t)=t^2\)、\(a=0\) のとき \(S(x)\) を具体的に計算し、確かに \(S'(x)=x^2\) となることを見よ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-5">
+<div class="phead"><span class="pnum">問 5.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">計算しない積分 — 不等式と対称性</span></div>
+<ol class="sublist">
+<li>単調性(\(f\le g\Rightarrow\int f\le\int g\))を使って、次を証明せよ。\[\frac1{\sqrt2}\ \le\ \int_0^1\frac{dx}{\sqrt{1+x^2}}\ \le\ 1\]&nbsp;(この積分の正確な値 \(\log(1+\sqrt2)=0.8814\dots\) は第6章で求める。値を知らなくても範囲は保証できる、というのが本問の主旨。)</li>
+<li>奇関数 \(f\)(\(f(-x)=-f(x)\))に対して \(\displaystyle\int_{-a}^af(x)\,dx=0\) が成り立つ理由を説明し、それを使って \(\displaystyle\int_{-1}^1\bigl(3x^2+x^3e^{x^2}\bigr)\,dx\) を計算せよ。(\(x^3e^{x^2}\) の原始関数を求める必要はない。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-6">
+<div class="phead"><span class="pnum">問 5.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">置換積分の基礎</span></div>
+<p>次の積分を置換積分で求めよ。「何を \(u\) と置いたか」「\(du\) がどう対応するか」を明記すること。</p>
+<ol class="sublist">
+<li>\(\displaystyle\int2x\,e^{x^2}\,dx\)</li>
+<li>\(\displaystyle\int_0^1\frac{x}{1+x^2}\,dx\)&nbsp;(定積分では積分区間も変換されることに注意。)</li>
+<li>\(\displaystyle\int\tan x\,dx\)&nbsp;(ヒント:\(\tan x=\dfrac{\sin x}{\cos x}\) で、分子が分母の微分(の \(-1\) 倍)になっている。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-7">
+<div class="phead"><span class="pnum">問 5.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">部分積分の基礎</span></div>
+<p>次の積分を部分積分で求めよ。</p>
+<ol class="sublist">
+<li>\(\displaystyle\int x\,e^x\,dx\)</li>
+<li>\(\displaystyle\int_0^\pi x\sin x\,dx\)</li>
+<li>\(\displaystyle\int\log x\,dx\)&nbsp;(ヒント:\(\log x=1\cdot\log x\) とみて、\(1\) の方を積分する側に選ぶ。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-8">
+<div class="phead"><span class="pnum">問 5.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">和を積分で評価する — 調和数と O(log n)</span></div>
+<p>調和数 \(H_n=1+\dfrac12+\dfrac13+\cdots+\dfrac1n\) は、クイックソートの平均比較回数(\(\approx2n\,H_n\))やクーポンコレクター問題(\(n\,H_n\))など、アルゴリズム解析の至る所に現れる。</p>
+<ol class="sublist">
+<li>\(y=\dfrac1x\) のグラフと、幅1の長方形の面積比較(区分求積の図)を利用して、次の不等式を証明せよ。\[\log(n+1)\ \le\ H_n\ \le\ 1+\log n\]</li>
+<li>(1) から \(H_n=\Theta(\log n)\)、より精密に \(\dfrac{H_n}{\log n}\to1\)(\(n\to\infty\))を導け。</li>
+<li>\(n=100\) のとき \(H_{100}=5.187\dots\) である。(1) の上下界の値を計算し、実際に挟めていることを確認せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>定積分の定義(リーマン和の極限)を、図を描きながら説明できる</li>
+<li>微積分学の基本定理の主張と証明の流れ(面積の増分を挟み撃ち)を再現できる</li>
+<li>置換積分が連鎖律の逆、部分積分が積の微分公式の逆であることを説明できる</li>
+<li>「和 \(\sum f(k)\) を積分 \(\int f\) で挟む」図を描いて、評価の向きを間違えずに使える</li>
+</ul>
+</div>
+
+<header class="chap" id="ch6">
+<p class="chnum">第6章</p>
+<h2>積分の技法と広義積分</h2>
+<p class="chsub">— 部分分数・漸化式から ∞ の積分へ</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>積分の計算力そのものは、今やコンピュータが肩代わりしてくれます。それでもこの章の技法を学ぶ理由は2つ。第一に、置換・部分分数・漸化式は「複雑な問題を既知の形に変換する」設計パターンの宝庫であり、数理的な問題解決の型として一生ものだから。第二に、確率・統計・機械学習で日常的に使う対象 — 正規分布(ガウス積分)、ガンマ関数(階乗の連続化)、指数分布の期待値 — がすべて<b>無限区間の積分(広義積分)</b>で定義されており、「その積分はそもそも収束するのか」を判定する眼がなければ、期待値が存在しない分布(裾の重い分布)に足をすくわれるからです。院試でも最頻出の章です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>部分分数分解で有理関数を積分できる(\(\log\) と \(\arctan\) が現れる仕組みの理解)</li>
+<li>三角関数の積分・置換の定石(\(x=\sin\theta\)、\(x=\tan\theta\))を使いこなせる</li>
+<li>部分積分の反復から漸化式を導ける(ウォリスの公式)</li>
+<li>広義積分を極限として定義し、\(p\) 積分と比較判定法で収束・発散を判定できる</li>
+<li>ガンマ関数 \(\Gamma(s)\) の基本性質(\(\Gamma(n+1)=n!\))を証明できる</li>
+<li>ガウス積分と正規分布・指数分布の基本計算(規格化・期待値)ができる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">部分分数分解</b>:有理関数は \(\dfrac{A}{x-a}\)、\(\dfrac{Bx+C}{x^2+px+q}\) 型の和に分解でき、それぞれ \(\log\)、\(\log+\arctan\) で積分できる</li>
+<li><b class="term">広義積分</b>:\(\displaystyle\int_a^\infty f=\lim_{R\to\infty}\int_a^Rf\)。有限の極限が存在するとき「収束する」という(端点で非有界な場合も同様に極限で定義)</li>
+<li><b class="term">p 積分</b>:\(\displaystyle\int_1^\infty\frac{dx}{x^p}\) は \(p\gt1\) で収束・\(p\le1\) で発散。\(\displaystyle\int_0^1\frac{dx}{x^p}\) は \(p\lt1\) で収束・\(p\ge1\) で発散</li>
+<li><b class="term">比較判定法</b>:\(0\le f\le g\) で \(\int g\) が収束すれば \(\int f\) も収束。\(0 \le g\le f\) で \(\int g\) が発散すれば \(\int f\) も発散</li>
+<li><b class="term">ガンマ関数</b>:\(\Gamma(s)=\displaystyle\int_0^\infty x^{s-1}e^{-x}dx\)(\(s\gt0\))。\(\Gamma(s+1)=s\,\Gamma(s)\)、\(\Gamma(n+1)=n!\)、\(\Gamma\bigl(\frac12\bigr)=\sqrt\pi\)</li>
+<li><b class="term">ガウス積分</b>:\(\displaystyle\int_{-\infty}^\infty e^{-x^2}dx=\sqrt\pi\)(証明は第10章)</li>
+</ul>
+</div>
+
+<section class="prob" id="q6-1">
+<div class="phead"><span class="pnum">問 6.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">部分分数分解による積分</span></div>
+<ol class="sublist">
+<li>\(\dfrac1{x^2-1}\) を \(\dfrac{A}{x-1}+\dfrac{B}{x+1}\) の形に分解し、\(\displaystyle\int\frac{dx}{x^2-1}\) を求めよ。</li>
+<li>\(\displaystyle\int\frac{2x+3}{x^2+1}\,dx\) を求めよ。(ヒント:分子を「分母の微分 \(2x\)」の部分と「定数」の部分に分ける。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-2">
+<div class="phead"><span class="pnum">問 6.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">三角関数の積分</span></div>
+<ol class="sublist">
+<li>半角の公式 \(\sin^2x=\dfrac{1-\cos2x}2\) を使って \(\displaystyle\int\sin^2x\,dx\) を求めよ。</li>
+<li>\(\displaystyle\int_0^{2\pi}\sin^2x\,dx\) を計算せよ。(この値は交流電力や信号の平均パワーの計算そのものである。)</li>
+<li>\(\displaystyle\int\sin x\cos x\,dx\) を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-3">
+<div class="phead"><span class="pnum">問 6.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">置換の定石 — 三角置換</span></div>
+<ol class="sublist">
+<li>\(x=\sin\theta\) の置換で \(\displaystyle\int\frac{dx}{\sqrt{1-x^2}}=\arcsin x+C\) を導け。</li>
+<li>\(\displaystyle\int_0^1\sqrt{1-x^2}\,dx\) を置換で計算し、結果が四分円の面積 \(\dfrac\pi4\) と一致することを確かめよ。</li>
+<li>\(\displaystyle\int_0^1\frac{dx}{\sqrt{1+x^2}}\) を求めよ。(ヒント:\(F(x)=\log\bigl(x+\sqrt{1+x^2}\bigr)\) を微分してみよ。)これで問5.5(1)で挟み込んだ積分の正確な値が確定する。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-4">
+<div class="phead"><span class="pnum">問 6.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">漸化式 — ウォリスの積分</span></div>
+<p>\(I_n=\displaystyle\int_0^{\pi/2}\sin^nx\,dx\)(\(n\ge0\))とおく。</p>
+<ol class="sublist">
+<li>\(I_0\) と \(I_1\) を計算せよ。</li>
+<li>部分積分(\(\sin^nx=\sin^{n-1}x\cdot\sin x\) と分けて \(\sin x\) を積分側に)により、漸化式 \(I_n=\dfrac{n-1}n\,I_{n-2}\)(\(n\ge2\))を導け。</li>
+<li>漸化式を使って \(I_2,\ I_3,\ I_4\) を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-5">
+<div class="phead"><span class="pnum">問 6.5</span><span class="lv lv1">★ 基礎</span><span class="ptag">広義積分の定義と p 積分</span></div>
+<p>広義積分は「有限区間で積分してから極限をとる」ことで定義される。定義に従って次を調べよ。</p>
+<ol class="sublist">
+<li>\(\displaystyle\int_1^\infty\frac{dx}{x^2}\)&nbsp;(収束するなら値も求めよ)</li>
+<li>\(\displaystyle\int_1^\infty\frac{dx}x\)</li>
+<li>\(\displaystyle\int_0^1\frac{dx}{\sqrt x}\)&nbsp;(被積分関数が \(x=0\) で非有界であることに注意)</li>
+<li>一般の \(p\gt0\) について、\(\displaystyle\int_1^\infty\frac{dx}{x^p}\) と \(\displaystyle\int_0^1\frac{dx}{x^p}\) の収束・発散を \(p\) の値で分類せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-6">
+<div class="phead"><span class="pnum">問 6.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">比較判定法</span></div>
+<p>被積分関数の原始関数が求まらなくても、収束・発散は判定できる。</p>
+<ol class="sublist">
+<li>\(x\ge1\) で \(e^{-x^2}\le e^{-x}\) が成り立つことを示し、これを使って \(\displaystyle\int_1^\infty e^{-x^2}dx\) が収束することを証明せよ。(\(e^{-x^2}\) の原始関数は初等関数では書けないことが知られている。それでも収束は言える。)</li>
+<li>\(\displaystyle\int_1^\infty\frac{dx}{1+x^3}\) の収束・発散を判定せよ。</li>
+<li>\(\displaystyle\int_1^\infty\frac{dx}{\sqrt{x^2+1}}\) の収束・発散を判定せよ。(ヒント:\(x\ge1\) では \(x^2+1\le2x^2\)。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-7">
+<div class="phead"><span class="pnum">問 6.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">ガンマ関数 — 階乗の連続化</span></div>
+<p>\(s\gt0\) に対して \(\Gamma(s)=\displaystyle\int_0^\infty x^{s-1}e^{-x}\,dx\) と定める(この広義積分は \(s\gt0\) で収束することが比較判定法で示せる)。</p>
+<ol class="sublist">
+<li>\(\Gamma(1)\) を計算せよ。</li>
+<li>部分積分により、関数等式 \(\Gamma(s+1)=s\,\Gamma(s)\) を証明せよ。(広義積分なので、境界項は極限として処理すること。\(\displaystyle\lim_{R\to\infty}R^se^{-R}=0\) は問3.8の増大度の階層から従う。)</li>
+<li>(1)(2) から、自然数 \(n\) に対して \(\Gamma(n+1)=n!\) を数学的帰納法で示せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-8">
+<div class="phead"><span class="pnum">問 6.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ガウス積分と正規分布</span></div>
+<p>ガウス積分 \(I=\displaystyle\int_{-\infty}^\infty e^{-x^2}dx\) は確率・統計・機械学習の心臓部である。値 \(I=\sqrt\pi\) の証明は重積分を使うので第10章に譲り、ここではその周辺を固める。</p>
+<ol class="sublist">
+<li>\(I\) が収束することを証明せよ。(ヒント:\([-1,1]\) と、その外側に分けて考える。外側は問6.6(1)。)</li>
+<li>置換 \(u=x^2\) により \(\displaystyle\int_0^\infty e^{-x^2}dx=\frac12\,\Gamma\Bigl(\frac12\Bigr)\) を示せ。これと \(I=\sqrt\pi\) から \(\Gamma\bigl(\frac12\bigr)=\sqrt\pi\) を導け。</li>
+<li>\(I=\sqrt\pi\) を使って、標準正規分布の密度が全区間で \(1\) に積分されること、すなわち \(\displaystyle\int_{-\infty}^\infty\frac1{\sqrt{2\pi}}e^{-x^2/2}dx=1\) を示せ。(これが密度の係数に \(\sqrt{2\pi}\) が付く理由である。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-9">
+<div class="phead"><span class="pnum">問 6.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">指数分布 — サーバ応答時間のモデル</span></div>
+<p>パラメータ \(\lambda\gt0\) の指数分布は、密度関数 \(f(x)=\lambda e^{-\lambda x}\)(\(x\ge0\))を持ち、リクエストの到着間隔や機器の故障までの時間のモデルとして使われる。</p>
+<ol class="sublist">
+<li>\(\displaystyle\int_0^\infty\lambda e^{-\lambda x}dx=1\) を確かめよ(密度として正しく規格化されている)。</li>
+<li>期待値 \(E[X]=\displaystyle\int_0^\infty x\,\lambda e^{-\lambda x}dx\) を部分積分で計算せよ。</li>
+<li>\(E[X^2]=\displaystyle\int_0^\infty x^2\lambda e^{-\lambda x}dx\) を計算し、分散 \(V[X]=E[X^2]-\bigl(E[X]\bigr)^2\) を求めよ。(ガンマ関数 \(\Gamma(n+1)=n!\) を使うと一瞬で終わることも確認せよ。)</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>有理関数の積分がなぜ必ず「有理関数 \(+\log+\arctan\)」で書けるのか、分解の型から説明できる</li>
+<li>\(p\) 積分の収束条件(\(\infty\) 側は \(p\gt1\)、\(0\) 側は \(p\lt1\))を導出でき、「どちら側の広義積分か」を意識できる</li>
+<li>比較判定法を「不等式で挟んで既知の \(p\) 積分・指数積分に帰着」として使える</li>
+<li>\(\Gamma(n+1)=n!\) の証明(部分積分+帰納法)を再現できる</li>
+<li>正規分布の \(\sqrt{2\pi}\)、指数分布の \(E[X]=\frac1\lambda\) を自力で導出できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch7">
+<p class="chnum">第7章</p>
+<h2>偏微分と勾配</h2>
+<p class="chsub">— 多変数の世界への第一歩</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>ここから舞台は多変数に移ります。ニューラルネットの損失関数は数百万〜数十億個のパラメータの関数 \(L(w_1,\dots,w_n)\) — 1変数の微分だけでは太刀打ちできません。鍵になるのが<b>勾配ベクトル</b> \(\nabla f\):各変数で偏微分した値を並べたベクトルで、「関数が最も急に増える方向」を指します。だから \(-\nabla f\) の方向に進めば損失は最も急に減る — これが勾配降下法(第13章)であり、深層学習の学習則の正体です。この章では偏微分・勾配・方向微分・多変数の連鎖律という基本装備を、1変数の知識の自然な拡張として整えます。1変数との「ずれ」(偏微分可能でも連続とは限らない!)にも正面から向き合います。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>偏微分を「他の変数を定数と見て微分」として計算でき、幾何的意味(断面の傾き)を説明できる</li>
+<li>勾配ベクトル \(\nabla f\) を計算し、「最急上昇方向」「大きさ=最大の増加率」として解釈できる</li>
+<li>接平面(1次近似)を書け、多変数の連鎖律を使える</li>
+<li>方向微分を \(\nabla f\cdot\boldsymbol u\) で計算し、コーシー・シュワルツの不等式で最急方向を証明できる</li>
+<li>「勾配は等高線と直交する」を証明でき、等高線図から勾配の向きを読める</li>
+<li>偏微分可能・全微分可能・連続・\(C^1\) の関係(1変数との違い)を反例つきで説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">偏微分</b>:\(\dfrac{\partial f}{\partial x}(a,b)=\displaystyle\lim_{h\to0}\frac{f(a+h,b)-f(a,b)}h\)(\(y=b\) を固定した断面の微分)。\(f_x\) とも書く</li>
+<li><b class="term">勾配</b>:\(\nabla f=\Bigl(\dfrac{\partial f}{\partial x_1},\dots,\dfrac{\partial f}{\partial x_n}\Bigr)\)。最急上昇方向を向き、大きさ \(\|\nabla f\|\) は最大の増加率</li>
+<li><b class="term">全微分(1次近似)</b>:\(f(a+h,b+k)\approx f(a,b)+f_x(a,b)\,h+f_y(a,b)\,k\)。グラフでは接平面</li>
+<li><b class="term">連鎖律</b>:\(z=f(x(t),y(t))\) のとき \(\dfrac{dz}{dt}=f_x\dfrac{dx}{dt}+f_y\dfrac{dy}{dt}=\nabla f\cdot\boldsymbol r'(t)\)</li>
+<li><b class="term">方向微分</b>:単位ベクトル \(\boldsymbol u\) 方向の変化率は \(D_{\boldsymbol u}f=\nabla f\cdot\boldsymbol u\)</li>
+<li><b class="term">シュワルツの定理</b>:\(f\) が \(C^2\)(2階偏導関数が連続)なら \(f_{xy}=f_{yx}\)(偏微分の順序交換可)</li>
+</ul>
+</div>
+
+<section class="prob" id="q7-1">
+<div class="phead"><span class="pnum">問 7.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">偏微分の計算</span></div>
+<p>次の関数の偏導関数 \(f_x=\dfrac{\partial f}{\partial x}\)、\(f_y=\dfrac{\partial f}{\partial y}\) をすべて求めよ。</p>
+<ol class="sublist">
+<li>\(f(x,y)=x^2y^3\)</li>
+<li>\(f(x,y)=e^{xy}\)</li>
+<li>\(f(x,y)=\log(x^2+y^2)\)&nbsp;(\((x,y)\ne(0,0)\))</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-2">
+<div class="phead"><span class="pnum">問 7.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">勾配ベクトル</span></div>
+<ol class="sublist">
+<li>\(f(x,y)=x^2+2y^2\) の勾配 \(\nabla f\) を求め、点 \((1,1)\) での値を計算せよ。</li>
+<li>\(f(x,y,z)=xyz\) の勾配を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-3">
+<div class="phead"><span class="pnum">問 7.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">高階偏導関数と順序交換</span></div>
+<p>\(f(x,y)=x^3y^2+x\sin y\) について、\(f_{xy}=\dfrac{\partial}{\partial y}\Bigl(\dfrac{\partial f}{\partial x}\Bigr)\) と \(f_{yx}=\dfrac{\partial}{\partial x}\Bigl(\dfrac{\partial f}{\partial y}\Bigr)\) を別々に計算し、一致することを確かめよ。また、一致が保証されるための条件(シュワルツの定理)を述べよ。</p>
+</section>
+
+<section class="prob" id="q7-4">
+<div class="phead"><span class="pnum">問 7.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">接平面と1次近似</span></div>
+<p>\(f(x,y)=x^2+y^2\) について答えよ。</p>
+<ol class="sublist">
+<li>点 \((1,2)\) におけるグラフ \(z=f(x,y)\) の接平面の方程式を求めよ。</li>
+<li>接平面(1次近似)を使って \(f(1.1,\ 1.9)\) の近似値を求め、真の値と比較して誤差を計算せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-5">
+<div class="phead"><span class="pnum">問 7.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">多変数の連鎖律</span></div>
+<p>\(z=x^2y\)、\(x=\cos t\)、\(y=\sin t\) とする。</p>
+<ol class="sublist">
+<li>連鎖律 \(\dfrac{dz}{dt}=\dfrac{\partial z}{\partial x}\dfrac{dx}{dt}+\dfrac{\partial z}{\partial y}\dfrac{dy}{dt}\) を使って \(\dfrac{dz}{dt}\) を求めよ。</li>
+<li>先に \(z=\cos^2t\,\sin t\) と代入してから \(t\) で微分し、(1) と一致することを確かめよ。</li>
+<li>この連鎖律が「勾配と速度ベクトルの内積 \(\dfrac{dz}{dt}=\nabla z\cdot\boldsymbol r'(t)\)」と書けることを確認せよ(\(\boldsymbol r(t)=(\cos t,\sin t)\))。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-6">
+<div class="phead"><span class="pnum">問 7.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">方向微分と最急上昇方向</span></div>
+<p>\(f(x,y)=x^2+2y^2\) の点 \((1,1)\) における振る舞いを調べる(\(\nabla f(1,1)\) は問7.2で計算済み)。</p>
+<ol class="sublist">
+<li>\(x\) 軸正方向 \(\boldsymbol u_1=(1,0)\)、および斜め方向 \(\boldsymbol u_2=\dfrac1{\sqrt2}(1,1)\) への方向微分をそれぞれ求めよ。</li>
+<li>方向微分 \(D_{\boldsymbol u}f=\nabla f\cdot\boldsymbol u\)(\(\|\boldsymbol u\|=1\))が最大になるのは \(\boldsymbol u\) が \(\nabla f\) と同じ向きのときであり、そのときの値が \(\|\nabla f\|\) であることを、コーシー・シュワルツの不等式を用いて証明せよ。</li>
+<li>点 \((1,1)\) における最急上昇方向(単位ベクトル)と、最大の増加率を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-7">
+<div class="phead"><span class="pnum">問 7.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">勾配は等高線と直交する</span></div>
+<ol class="sublist">
+<li>曲線 \(\boldsymbol r(t)=(x(t),y(t))\) が \(f\) の等高線上を動く(つまり \(f(x(t),y(t))=\) 一定)とき、連鎖律を使って \(\nabla f\cdot\boldsymbol r'(t)=0\)、すなわち勾配が等高線の接ベクトルと直交することを証明せよ。</li>
+<li>楕円 \(x^2+2y^2=3\)(\(f(x,y)=x^2+2y^2\) の等高線)上の点 \((1,1)\) で、陰関数微分により接線の傾きを求め、接ベクトルと \(\nabla f(1,1)\) が実際に直交していることを内積で確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-8">
+<div class="phead"><span class="pnum">問 7.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">偏微分可能でも連続とは限らない</span></div>
+<p>次の関数を考える。</p>
+<p>\[f(x,y)=\begin{cases}\dfrac{xy}{x^2+y^2} &amp; \bigl((x,y)\ne(0,0)\bigr)\\[4pt] 0 &amp; \bigl((x,y)=(0,0)\bigr)\end{cases}\]</p>
+<ol class="sublist">
+<li>原点における偏微分係数 \(f_x(0,0)\)、\(f_y(0,0)\) を定義から計算し、どちらも存在する(値 \(0\))ことを示せ。</li>
+<li>直線 \(y=0\) に沿って原点に近づいたときと、直線 \(y=x\) に沿って近づいたときの \(f\) の極限をそれぞれ求め、\(f\) が原点で連続で<b>ない</b>ことを示せ。</li>
+<li>1変数では「微分可能 \(\Rightarrow\) 連続」だった(第2章)。多変数で偏微分可能性が連続性すら保証しない理由を、偏微分が「軸方向しか見ていない」ことに触れて説明せよ。また、\(C^1\)(偏導関数が存在して連続)ならば全微分可能(したがって連続)となることが知られている。多変数関数のクラスの階層を整理せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-9">
+<div class="phead"><span class="pnum">問 7.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">線形モデルの学習 — 損失の勾配と正規方程式</span></div>
+<p>データ \((x_i,y_i)\)、\(i=1,\dots,n\) に直線 \(\hat y=wx+b\) を当てはめたい。二乗誤差損失を</p>
+<p>\[L(w,b)=\sum_{i=1}^n\bigl(wx_i+b-y_i\bigr)^2\]</p>
+<p>と定める(問3.9の2変数版)。</p>
+<ol class="sublist">
+<li>偏導関数 \(\dfrac{\partial L}{\partial w}\)、\(\dfrac{\partial L}{\partial b}\) を求めよ(連鎖律を使う)。</li>
+<li>\(\nabla L=\boldsymbol0\) と置いて得られる連立1次方程式(<b>正規方程式</b>)を、\(\sum x_i\)、\(\sum y_i\)、\(\sum x_i^2\)、\(\sum x_iy_i\) を用いて書き下せ。</li>
+<li>データ \((1,2),(2,3),(3,5)\) に対して正規方程式を解き、最適な \(w,b\) と最小損失を求めよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>\(\nabla f\) の「向き」と「大きさ」がそれぞれ何を意味するか、証明つきで説明できる</li>
+<li>等高線図を見て、各点での勾配ベクトルのおおよその向きを描き込める</li>
+<li>多変数の連鎖律を「勾配と速度の内積」として書け、誤差逆伝播との関係を一言で言える</li>
+<li>「偏微分可能 \(\Rightarrow\) 連続」が偽である反例を再現でき、\(C^1\Rightarrow\) 全微分可能 \(\Rightarrow\) 連続の階層を言える</li>
+<li>二乗損失の勾配をゼロと置くと連立1次方程式(正規方程式)になる、という構図を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch8">
+<p class="chnum">第8章</p>
+<h2>ヘッセ行列と2次近似</h2>
+<p class="chsub">— 曲がり方を行列で捉える</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>勾配(1次の情報)は「どちらへ進めば下るか」を教えてくれますが、「谷がどんな形か — 丸いのか、細長いのか、実は峠なのか」は教えてくれません。それを担うのが2階偏導関数を並べた<b>ヘッセ行列</b>です。1変数で \(f''\) の符号が凸性を決めたように、多変数ではヘッセ行列の<b>固有値の符号</b>が曲面の形を決めます。ここで『線形代数』で学んだ対称行列・固有値・2次形式が全面的に合流し、「損失関数の等高線が細長い楕円だと学習が遅い(条件数)」「ニュートン法は2次近似を一撃で最小化する」といった最適化の核心(第13・14章)への扉が開きます。この章は微分積分と線形代数の結婚式です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>ヘッセ行列を計算でき、\(C^2\) なら対称行列になる理由(シュワルツの定理)を言える</li>
+<li>2次形式 \(\boldsymbol x^\top A\boldsymbol x\) と対称行列の対応を書け、正定値・負定値・不定値を固有値と首座小行列式で判定できる</li>
+<li>多変数の2次テイラー展開 \(f(\boldsymbol a+\boldsymbol h)\approx f+\nabla f\cdot\boldsymbol h+\frac12\boldsymbol h^\top H\boldsymbol h\) を書き、具体例で計算できる</li>
+<li>2次関数 \(\frac12\boldsymbol x^\top A\boldsymbol x-\boldsymbol b^\top\boldsymbol x\) の勾配・ヘッセ行列・最小点を閉じた形で求められる</li>
+<li>2次モデルの最小化(ニュートン法の1歩)を実行できる</li>
+<li>ヘッセ行列の固有値と等高線(楕円)の形・条件数の関係を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">ヘッセ行列</b>:\(H=\nabla^2f=\Bigl(\dfrac{\partial^2f}{\partial x_i\partial x_j}\Bigr)_{ij}\)。\(f\) が \(C^2\) なら対称</li>
+<li><b class="term">2次テイラー展開</b>:\(f(\boldsymbol a+\boldsymbol h)=f(\boldsymbol a)+\nabla f(\boldsymbol a)^\top\boldsymbol h+\dfrac12\boldsymbol h^\top H(\boldsymbol a)\,\boldsymbol h+o(\|\boldsymbol h\|^2)\)</li>
+<li><b class="term">正定値</b>:対称行列 \(A\) が正定値 \(\iff\) すべての \(\boldsymbol x\ne\boldsymbol0\) で \(\boldsymbol x^\top A\boldsymbol x\gt0\iff\) 固有値がすべて正 \(\iff\) 首座小行列式がすべて正(シルベスターの判定法)</li>
+<li><b class="term">2次関数の公式</b>:\(f(\boldsymbol x)=\dfrac12\boldsymbol x^\top A\boldsymbol x-\boldsymbol b^\top\boldsymbol x\)(\(A\) 対称)なら \(\nabla f=A\boldsymbol x-\boldsymbol b\)、\(\nabla^2f=A\)。\(A\) が正定値なら唯一の最小点は \(A\boldsymbol x=\boldsymbol b\) の解</li>
+<li><b class="term">条件数</b>:\(\kappa=\dfrac{\lambda_{\max}}{\lambda_{\min}}\)(正定値行列)。等高線の楕円の細長さ(軸比 \(\sqrt\kappa\))を表す</li>
+</ul>
+</div>
+
+<section class="prob" id="q8-1">
+<div class="phead"><span class="pnum">問 8.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">ヘッセ行列の計算</span></div>
+<p>\(f(x,y)=x^3+y^3-3xy\) のヘッセ行列 \(H(x,y)\) を求め、点 \((1,1)\) での値を書け。対称行列になっていることも確認せよ。(この関数の極値判定は問9.2で行う。)</p>
+</section>
+
+<section class="prob" id="q8-2">
+<div class="phead"><span class="pnum">問 8.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">2次形式と対称行列</span></div>
+<ol class="sublist">
+<li>2次形式 \(Q(x,y)=x^2+4xy+y^2\) を \(\boldsymbol v^\top A\boldsymbol v\)(\(\boldsymbol v=(x,y)^\top\)、\(A\) は対称行列)の形に書け。</li>
+<li>\(A\) の固有値を求め、\(Q\) が正の値も負の値もとる(不定値である)ことを確かめよ。実際に \(Q\gt0\) となる \((x,y)\) と \(Q\lt0\) となる \((x,y)\) を1組ずつ挙げよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-3">
+<div class="phead"><span class="pnum">問 8.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">正定値性の判定</span></div>
+<p>次の対称行列が正定値か・負定値か・不定値かを判定せよ。首座小行列式(シルベスターの判定法)と固有値の両方で確かめること。</p>
+<ol class="sublist">
+<li>\(A=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 3\end{pmatrix}\)</li>
+<li>\(B=\begin{pmatrix}1 &amp; 2\\ 2 &amp; 1\end{pmatrix}\)</li>
+<li>\(C=\begin{pmatrix}2 &amp; -1 &amp; 0\\ -1 &amp; 2 &amp; -1\\ 0 &amp; -1 &amp; 2\end{pmatrix}\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-4">
+<div class="phead"><span class="pnum">問 8.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">多変数の2次テイラー展開</span></div>
+<p>\(f(x,y)=e^x\cos y\) を原点 \((0,0)\) のまわりで2次までテイラー展開せよ。すなわち \(f(0,0)\)、\(\nabla f(0,0)\)、ヘッセ行列 \(H(0,0)\) を計算し、</p>
+<p>\[f(x,y)\approx f(0,0)+\nabla f(0,0)^\top\begin{pmatrix}x\\ y\end{pmatrix}+\frac12\begin{pmatrix}x &amp; y\end{pmatrix}H(0,0)\begin{pmatrix}x\\ y\end{pmatrix}\]</p>
+<p>の右辺を具体的な多項式として書き下せ。(検算:1変数の展開 \(e^x\approx1+x+\frac{x^2}2\)、\(\cos y\approx1-\frac{y^2}2\) の積を2次まで取ると一致するはずである。)</p>
+</section>
+
+<section class="prob" id="q8-5">
+<div class="phead"><span class="pnum">問 8.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">2次関数 — 最適化の「水素原子」</span></div>
+<p>対称行列 \(A\) とベクトル \(\boldsymbol b\) に対し、\(f(\boldsymbol x)=\dfrac12\boldsymbol x^\top A\boldsymbol x-\boldsymbol b^\top\boldsymbol x\) とおく。</p>
+<ol class="sublist">
+<li>\(\nabla f(\boldsymbol x)=A\boldsymbol x-\boldsymbol b\)、\(\nabla^2f=A\) を示せ。(2変数 \(A=\begin{pmatrix}a_{11} &amp; a_{12}\\ a_{12} &amp; a_{22}\end{pmatrix}\) で成分計算してよい。)</li>
+<li>\(A=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 3\end{pmatrix}\)、\(\boldsymbol b=\begin{pmatrix}1\\ 2\end{pmatrix}\) のとき、\(\nabla f=\boldsymbol0\) となる点 \(\boldsymbol x^*\) を求めよ。この点が大域的な最小点である理由を、問8.3(1)の結果を引いて述べよ。</li>
+<li>最小値 \(f(\boldsymbol x^*)\) を計算せよ。また一般に \(f(\boldsymbol x^*)=-\dfrac12\boldsymbol b^\top\boldsymbol x^*\) となることを示せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-6">
+<div class="phead"><span class="pnum">問 8.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">2次モデルの最小化 — ニュートン法の1歩</span></div>
+<p>\(f(x,y)=x^4+y^2-2x\) を、点 \(\boldsymbol x_0=(1,1)\) のまわりの2次テイラー近似(2次モデル)で置き換えて最小化してみる。</p>
+<ol class="sublist">
+<li>\(\boldsymbol g=\nabla f(1,1)\) とヘッセ行列 \(H=\nabla^2f(1,1)\) を計算せよ。</li>
+<li>2次モデル \(m(\boldsymbol h)=f(\boldsymbol x_0)+\boldsymbol g^\top\boldsymbol h+\dfrac12\boldsymbol h^\top H\boldsymbol h\) を最小にする変位が \(\boldsymbol h^*=-H^{-1}\boldsymbol g\) で与えられることを、問8.5(1) を利用して示し、具体的に計算せよ。</li>
+<li>新しい点 \(\boldsymbol x_1=\boldsymbol x_0+\boldsymbol h^*\) を求めよ。\(f\) の真の最小点を求めて比較し、1歩でどれだけ近づいたかを確認せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-7">
+<div class="phead"><span class="pnum">問 8.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">固有値・等高線・条件数</span></div>
+<ol class="sublist">
+<li>\(f(x,y)=\dfrac12(x^2+9y^2)\) の等高線 \(f=c\)(\(c\gt0\))が楕円であることを示し、長半径と短半径の比が \(3=\sqrt{9}\)、すなわちヘッセ行列の固有値比(条件数 \(\kappa\))の平方根になることを確かめよ。</li>
+<li>\(g(\boldsymbol x)=\dfrac12\boldsymbol x^\top A\boldsymbol x\)、\(A=\begin{pmatrix}5 &amp; 4\\ 4 &amp; 5\end{pmatrix}\) について、\(A\) の固有値と固有ベクトルを求めよ。等高線はどの方向に長軸・短軸を持つ楕円か。</li>
+<li>一般に、正定値行列 \(A\) の直交対角化 \(A=P\,\mathrm{diag}(\lambda_1,\dots,\lambda_n)\,P^\top\) を使って、等高線 \(\frac12\boldsymbol x^\top A\boldsymbol x=c\) が「固有ベクトル方向を軸とし、半軸長が \(\sqrt{2c/\lambda_i}\) の楕円(楕円体)」であることを示せ。固有値が大きい方向ほど楕円が「狭い」ことに注意せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-8">
+<div class="phead"><span class="pnum">問 8.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">log-sum-exp — ソフトマックスの数学</span></div>
+<p>\(f(x,y)=\log(e^x+e^y)\) は、分類モデルの損失(ソフトマックス交差エントロピー)の心臓部に現れる関数である。\(p=\dfrac{e^x}{e^x+e^y}\) とおく。</p>
+<ol class="sublist">
+<li>\(\nabla f=(p,\ 1-p)\) を示せ。(勾配の成分が「ソフトマックス確率」になっている。)</li>
+<li>ヘッセ行列が \(H=p(1-p)\begin{pmatrix}1 &amp; -1\\ -1 &amp; 1\end{pmatrix}\) となることを示し、その固有値を求めよ。</li>
+<li>\(H\) は半正定値(すべての \(\boldsymbol v\) で \(\boldsymbol v^\top H\boldsymbol v\ge0\))だが正定値ではないことを確かめ、固有値 \(0\) の方向 \((1,1)\) の意味を、恒等式 \(f(x+c,\,y+c)=f(x,y)+c\) と関連づけて説明せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>ヘッセ行列が対称になる理由と、対称だから固有値が実数で直交対角化できる(線形代数との接続)を言える</li>
+<li>正定値の3つの同値な特徴づけ(2次形式・固有値・首座小行列式)を行き来できる</li>
+<li>2次テイラー展開を行列・ベクトル記法で書け、1変数の \(f+f'h+\frac{f''}2h^2\) との対応を説明できる</li>
+<li>\(\nabla f=A\boldsymbol x-\boldsymbol b\)、「2次関数の最小化 \(=\) 連立1次方程式」という対応を説明できる</li>
+<li>「固有値の大きい方向は谷が急」「条件数が大きいと等高線が細長い」を式で裏づけられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch9">
+<p class="chnum">第9章</p>
+<h2>多変数関数の極値</h2>
+<p class="chsub">— 勾配ゼロ+ヘッセ行列で地形を分類する</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>「損失関数を最小化する」— 機械学習の合言葉を数学として実行する章です。手順は1変数(第3章)と同じ2段構え:まず \(\nabla f=\boldsymbol0\) で候補(停留点)を絞り、次にヘッセ行列(第8章)で「谷底か・峠か・山頂か」を判定する。多変数ならではの新顔が<b>鞍点</b> — ある方向には谷、別の方向には山という地形で、深層学習の損失地形では極小点よりはるかに多く存在することが知られています。判定法の背後にあるのは2次テイラー展開と2次形式の符号:第8章で鍛えた道具がそのまま検定器になります。最後は最適化のベンチマークとして名高いローゼンブロック関数で、第13章(勾配降下法)への橋を架けます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>停留点(\(\nabla f=\boldsymbol0\))をすべて求め、極値の<b>候補</b>と<b>確定</b>を区別できる</li>
+<li>ヘッセ行列の定値性(固有値・首座小行列式・\(D=f_{xx}f_{yy}-f_{xy}^2\))で極小・極大・鞍点を判定できる</li>
+<li>判定不能な退化ケース(\(D=0\))を認識し、直接評価で決着をつけられる</li>
+<li>「局所的な極小」と「大域的な最小」の違いを例で説明できる</li>
+<li>有界閉領域では内部の停留点と境界を別々に調べて最大・最小を確定できる</li>
+<li>最小二乗の解が大域的最小である理由(ヘッセ行列の正定値性)を証明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">1次の必要条件</b>:内点 \(\boldsymbol a\) で極値なら \(\nabla f(\boldsymbol a)=\boldsymbol0\)(逆は不成立 — 停留点は候補にすぎない)</li>
+<li><b class="term">2次の判定法</b>:停留点で \(H=\nabla^2f(\boldsymbol a)\) が「正定値 \(\Rightarrow\) 極小」「負定値 \(\Rightarrow\) 極大」「正負の固有値が混在 \(\Rightarrow\) 鞍点(極値でない)」</li>
+<li><b class="term">2変数の速算</b>:\(D=f_{xx}f_{yy}-f_{xy}^2\)。\(D\gt0\) かつ \(f_{xx}\gt0\) なら極小、\(D\gt0\) かつ \(f_{xx}\lt0\) なら極大、\(D\lt0\) なら鞍点、\(D=0\) は判定不能</li>
+<li><b class="term">根拠</b>:2次テイラー展開 \(f(\boldsymbol a+\boldsymbol h)-f(\boldsymbol a)=\frac12\boldsymbol h^\top H\boldsymbol h+o(\|\boldsymbol h\|^2)\) — 増分の符号を2次形式が支配する</li>
+<li><b class="term">有界閉領域の最大最小</b>:連続関数は必ず最大・最小を達成(ワイエルシュトラス)。候補 \(=\)「内部の停留点」\(\cup\)「境界上の候補」</li>
+</ul>
+</div>
+
+<section class="prob" id="q9-1">
+<div class="phead"><span class="pnum">問 9.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">停留点と平方完成</span></div>
+<p>\(f(x,y)=x^2+y^2-2x+4y+5\) について答えよ。</p>
+<ol class="sublist">
+<li>停留点(\(\nabla f=\boldsymbol0\) となる点)を求めよ。</li>
+<li>ヘッセ行列を求めて極小・極大・鞍点を判定し、極値を求めよ。</li>
+<li>平方完成によって同じ結論(しかも<b>大域的</b>最小であること)を確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-2">
+<div class="phead"><span class="pnum">問 9.2</span><span class="lv lv2">★★ 標準</span><span class="ptag">停留点の分類 — 問8.1の続き</span></div>
+<p>\(f(x,y)=x^3+y^3-3xy\) について答えよ(ヘッセ行列は問8.1で計算済み)。</p>
+<ol class="sublist">
+<li>停留点をすべて求めよ。</li>
+<li>各停留点をヘッセ行列の固有値で分類し、極値があればその値を求めよ。</li>
+<li>(2) で見つけた極小は大域的な最小か?理由とともに答えよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-3">
+<div class="phead"><span class="pnum">問 9.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">凸2次関数の極値</span></div>
+<p>\(f(x,y)=x^2+xy+y^2-3x\) の停留点を求め、\(D=f_{xx}f_{yy}-f_{xy}^2\) 判定法で分類し、極値を求めよ。さらに、この \(f\) を問8.5の形 \(\frac12\boldsymbol x^\top A\boldsymbol x-\boldsymbol b^\top\boldsymbol x\) に書き直し、公式 \(\boldsymbol x^*=A^{-1}\boldsymbol b\)、\(f(\boldsymbol x^*)=-\frac12\boldsymbol b^\top\boldsymbol x^*\) で答えが再現されることを確かめよ。</p>
+</section>
+
+<section class="prob" id="q9-4">
+<div class="phead"><span class="pnum">問 9.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">鞍点の解剖</span></div>
+<p>\(f(x,y)=x^2-y^2\) の原点について答えよ。</p>
+<ol class="sublist">
+<li>原点が停留点であることを確かめ、ヘッセ行列の固有値から鞍点であると判定せよ。</li>
+<li>\(x\) 軸に制限した \(f(x,0)\) と \(y\) 軸に制限した \(f(0,y)\) の振る舞いを調べ、「ある方向には極小、別の方向には極大」であることを直接確かめよ。</li>
+<li>等高線 \(f=c\)(\(c\gt0\)、\(c=0\)、\(c\lt0\) の3通り)がどんな曲線になるか述べ、鞍点のまわりの等高線の特徴を説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-5">
+<div class="phead"><span class="pnum">問 9.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">判定不能なとき — D=0 の世界</span></div>
+<p>次の3つの関数はいずれも原点が停留点で、ヘッセ行列が零行列(したがって \(D=0\)、判定法は沈黙する)。それぞれ原点が極小・極大・鞍点のどれかを、関数の符号を直接調べて判定せよ。</p>
+<ol class="sublist">
+<li>\(f(x,y)=x^4+y^4\)</li>
+<li>\(g(x,y)=-(x^4+y^4)\)</li>
+<li>\(h(x,y)=x^4-y^4\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-6">
+<div class="phead"><span class="pnum">問 9.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">最小二乗は本当に「最小」か — 問7.9の完結</span></div>
+<p>問7.9の損失 \(L(w,b)=\sum_{i=1}^n(wx_i+b-y_i)^2\) について答えよ。</p>
+<ol class="sublist">
+<li>ヘッセ行列 \(\nabla^2L\) を \(\sum x_i^2\)、\(\sum x_i\)、\(n\) で表せ(データによらず定数行列になることに注意)。</li>
+<li>データ \((1,2),(2,3),(3,5)\) に対して \(\nabla^2L\) を数値で書き、正定値であることを確かめよ。これにより問7.9で求めた \((w,b)=\bigl(\frac32,\frac13\bigr)\) が唯一の大域的最小点であると結論せよ(2次関数なので2次テイラー展開が厳密に成り立つことを使ってよい)。</li>
+<li>一般のデータで \(\nabla^2L\) が正定値になる条件が「\(x_1,\dots,x_n\) がすべては等しくない」ことであるのを、\(\det\nabla^2L=4\bigl(n\sum x_i^2-(\sum x_i)^2\bigr)\) とコーシー・シュワルツの不等式(またはこの量が \(x_i\) の分散の \(4n^2\) 倍であること)から示せ。全データの \(x_i\) が同じ値だと何が起きるか、モデルの言葉で解釈せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-7">
+<div class="phead"><span class="pnum">問 9.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">有界閉領域での最大・最小</span></div>
+<p>円板 \(D=\{(x,y)\mid x^2+y^2\le4\}\) 上で \(f(x,y)=x^2+y^2-2x\) の最大値と最小値を求めたい。</p>
+<ol class="sublist">
+<li>\(D\) の内部にある停留点と、そこでの \(f\) の値を求めよ。</li>
+<li>境界 \(x^2+y^2=4\) を \(x=2\cos\theta\)、\(y=2\sin\theta\) とパラメータ表示し、境界上の \(f\) を \(\theta\) の1変数関数として最大・最小を求めよ。</li>
+<li>(1)(2) を突き合わせて、\(D\) 上の最大値・最小値と、それを与える点を確定せよ。また、「有界閉集合上の連続関数は必ず最大・最小を達成する」という定理(ワイエルシュトラス)が、この手順の正当性をどう支えているかを一言で述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-8">
+<div class="phead"><span class="pnum">問 9.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ローゼンブロック関数 — 最適化のベンチマーク</span></div>
+<p>最適化アルゴリズムの性能試験に使われる有名なテスト関数(バナナ関数)</p>
+<p>\[f(x,y)=(1-x)^2+100\,(y-x^2)^2\]</p>
+<p>を解析する。</p>
+<ol class="sublist">
+<li>停留点が \((1,1)\) ただ1つであることを示せ。</li>
+<li>\(f\) が「2乗の和」の形であることを使って、\((1,1)\) が大域的最小点(最小値 \(0\))であることをヘッセ行列を使わずに示せ。</li>
+<li>\((1,1)\) でのヘッセ行列を計算し、その行列式・トレース・固有値(小数で可)・条件数 \(\kappa\) を求めよ。\(\kappa\) の値から、勾配降下法にとってこの関数がなぜ「意地悪」なのかを、問8.7の言葉(等高線の細長さ)で説明せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>「停留点 \(=\) 候補、ヘッセ行列 \(=\) 判定」という2段構えを、2次テイラー展開を根拠に説明できる</li>
+<li>\(D\) 判定法の4分類(極小・極大・鞍点・判定不能)を固有値の言葉に翻訳できる</li>
+<li>鞍点で何が起きているかを、軸方向への制限と等高線の絵で説明できる</li>
+<li>局所最小と大域最小の違い、および大域性を保証する追加の根拠(平方完成・2乗和・凸性)を挙げられる</li>
+<li>有界閉領域の問題を「内部+境界」に分解する手順を実行できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch10">
+<p class="chnum">第10章</p>
+<h2>重積分</h2>
+<p class="chsub">— 面で足し合わせる・座標を取り替える</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>確率変数が2つ以上あれば、確率は「密度の2重積分」になります。同時分布・周辺化・期待値 — 確率統計と機械学習(特にベイズ推論)の計算は本質的に重積分です。計算の武器は2つ:<b>累次積分</b>(1変数積分を入れ子で繰り返す:多重ループそのもの)と<b>変数変換</b>(座標を取り替えて積分を簡単にする:ヤコビアンが「面積の換算率」)。この章のクライマックスは、第6章から予告してきたガウス積分 \(\int_{-\infty}^\infty e^{-x^2}dx=\sqrt\pi\) の証明 — 1次元では歯が立たなかった積分が、2次元に持ち上げて極座標で回すと一瞬で落ちる、数学で最も鮮やかな手品の1つです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>長方形・一般領域上の2重積分を累次積分(逐次積分)で計算できる</li>
+<li>積分領域の図を描いて、積分順序を正しく交換できる</li>
+<li>極座標変換(\(dA=r\,dr\,d\theta\))を使いこなし、\(r\) の由来を説明できる</li>
+<li>一般の変数変換とヤコビアン(面積拡大率)を使って積分を計算できる</li>
+<li>ガウス積分 \(\int e^{-x^2}dx=\sqrt\pi\) を証明できる(第6章の宿題の完済)</li>
+<li>重積分を確率(2次元の分布・重心・期待値)の計算に応用できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">2重積分</b>:\(\displaystyle\iint_Df\,dA=\lim\sum f(x_i,y_j)\,\Delta A\)(小さなタイルの上の値 \(\times\) 面積の総和)</li>
+<li><b class="term">累次積分(フビニの定理)</b>:連続関数なら \(\displaystyle\iint_{[a,b]\times[c,d]}f\,dA=\int_a^b\!\!\Bigl(\int_c^df\,dy\Bigr)dx=\int_c^d\!\!\Bigl(\int_a^bf\,dx\Bigr)dy\)</li>
+<li><b class="term">一般領域</b>:\(D=\{(x,y)\mid a\le x\le b,\ g_1(x)\le y\le g_2(x)\}\) なら内側の積分区間が \(x\) に依存する。順序交換は<b>領域の図</b>を描いてから</li>
+<li><b class="term">極座標</b>:\(x=r\cos\theta\)、\(y=r\sin\theta\)、\(dA=r\,dr\,d\theta\)(\(r\) を忘れない!)</li>
+<li><b class="term">変数変換</b>:\((x,y)=T(u,v)\) のとき \(dA=\Bigl|\det\dfrac{\partial(x,y)}{\partial(u,v)}\Bigr|\,du\,dv\)(ヤコビアン \(=\) 局所的な面積拡大率)</li>
+</ul>
+</div>
+
+<section class="prob" id="q10-1">
+<div class="phead"><span class="pnum">問 10.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">長方形領域の累次積分</span></div>
+<p>長方形 \(D=[0,1]\times[0,2]\) 上の2重積分 \(\displaystyle\iint_D(x+y^2)\,dA\) を、(a) \(y\) から先に積分する順序、(b) \(x\) から先に積分する順序、の両方で計算し、一致することを確かめよ(フビニの定理の実地確認)。</p>
+</section>
+
+<section class="prob" id="q10-2">
+<div class="phead"><span class="pnum">問 10.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">三角形領域の累次積分</span></div>
+<p>三角形 \(D=\{(x,y)\mid0\le x\le1,\ 0\le y\le x\}\)(頂点 \((0,0),(1,0),(1,1)\))上で \(\displaystyle\iint_Dxy\,dA\) を計算せよ。まず領域の図を描き、内側の積分区間が \(x\) に依存することを確認してから計算すること。</p>
+</section>
+
+<section class="prob" id="q10-3">
+<div class="phead"><span class="pnum">問 10.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">積分順序の交換</span></div>
+<p>次の累次積分は、このままの順序では計算できない(\(e^{x^2}\) の原始関数が初等関数で書けないため)。</p>
+<p>\[\int_0^1\!\!\int_y^1e^{x^2}\,dx\,dy\]</p>
+<ol class="sublist">
+<li>積分領域を \(xy\) 平面に図示せよ。</li>
+<li>積分順序を交換して計算せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-4">
+<div class="phead"><span class="pnum">問 10.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">極座標変換</span></div>
+<ol class="sublist">
+<li>極座標 \(x=r\cos\theta\)、\(y=r\sin\theta\) の変換のヤコビアン(ヤコビ行列の行列式)を計算し、\(dA=r\,dr\,d\theta\) を導け。</li>
+<li>半径 \(R\) の円板 \(D_R=\{x^2+y^2\le R^2\}\) の面積を極座標で計算し、\(\pi R^2\) を再現せよ。</li>
+<li>\(\displaystyle\iint_{D_R}(x^2+y^2)\,dA\) を計算せよ。(慣性モーメントの計算に相当する。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-5">
+<div class="phead"><span class="pnum">問 10.5</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ガウス積分 √π の証明 — 第6章の宿題</span></div>
+<p>\(I=\displaystyle\int_{-\infty}^\infty e^{-x^2}dx\) の値を確定させる(収束は問6.8(1)で証明済み)。</p>
+<ol class="sublist">
+<li>\(I^2\) が2重積分 \(\displaystyle\iint_{\mathbb R^2}e^{-(x^2+y^2)}\,dA\) に等しいことを、累次積分の形に書いて説明せよ。</li>
+<li>この2重積分を極座標で計算し、値が \(\pi\) であることを示せ。</li>
+<li>以上から \(I=\sqrt\pi\) を結論せよ。また、この論法で「半径 \(R\) の円板上の積分 \(\le\) 一辺 \(2R\) の正方形上の積分 \(\le\) 半径 \(\sqrt2R\) の円板上の積分」という挟み込みが極限操作の正当化に使えることを説明せよ(厳密派向けの補足。この不等式が成り立つ理由:被積分関数が正で、領域が入れ子だから)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-6">
+<div class="phead"><span class="pnum">問 10.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">重心 — 一様分布の期待値</span></div>
+<p>問10.2の三角形 \(D\)(頂点 \((0,0),(1,0),(1,1)\))に一様な密度で質量が分布しているとする(確率の言葉なら:\(D\) 上の一様分布に従う点 \((X,Y)\))。</p>
+<ol class="sublist">
+<li>\(D\) の面積を2重積分で求めよ。</li>
+<li>重心(期待値)\(\bar x=\dfrac1{|D|}\displaystyle\iint_Dx\,dA\)、\(\bar y=\dfrac1{|D|}\displaystyle\iint_Dy\,dA\) を計算せよ。</li>
+<li>結果が「3頂点の座標の平均」と一致することを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-7">
+<div class="phead"><span class="pnum">問 10.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">一般の変数変換とヤコビアン</span></div>
+<p>写像 \(T(u,v)=(2u+v,\ u+v)\) は単位正方形 \([0,1]^2\) を、頂点 \((0,0),(2,1),(3,2),(1,1)\) の平行四辺形 \(P\) に写す。</p>
+<ol class="sublist">
+<li>\(T\) のヤコビ行列とその行列式を計算せよ。\(P\) の面積はいくらか。</li>
+<li>\(x-y\) を \(u,v\) で表し、変数変換公式を使って \(\displaystyle\iint_P(x-y)\,dA\) を計算せよ。</li>
+<li>この変換で「\(uv\) 平面の面積 \(1\) の正方形が \(xy\) 平面で面積 \(|\det J|\) の平行四辺形に写る」ことと、『線形代数』で学んだ「行列式 \(=\) 面積拡大率」の関係を一言で述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-8">
+<div class="phead"><span class="pnum">問 10.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">2次元標準正規分布 — 原点からの距離</span></div>
+<p>独立な標準正規変数のペア \((X,Y)\) の同時密度は \(f(x,y)=\dfrac1{2\pi}e^{-(x^2+y^2)/2}\) である(独立なので1次元密度の積)。</p>
+<ol class="sublist">
+<li>\(\displaystyle\iint_{\mathbb R^2}f\,dA=1\) を確かめよ(問6.8(3)を使ってよい)。</li>
+<li>点 \((X,Y)\) が原点中心・半径 \(R\) の円板に入る確率を極座標で計算し、\(P\bigl(X^2+Y^2\le R^2\bigr)=1-e^{-R^2/2}\) を示せ。\(R=1\) のときの数値も求めよ。</li>
+<li>\(E[X^2+Y^2]\) を極座標で計算せよ。(答えの値は「各座標の分散 \(1\) の和」という確率論の知識とも整合するはずである。)</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>2重積分を「タイル張りの総和の極限」として説明し、累次積分(多重ループ)との関係を言える</li>
+<li>順序交換のとき、不等式ではなく<b>領域の図</b>から新しい積分区間を読み取れる</li>
+<li>\(dA=r\,dr\,d\theta\) の \(r\) がどこから来るか(ヤコビアン/微小扇形の面積)を2通りで説明できる</li>
+<li>ガウス積分の証明(2乗して極座標)を白紙から再現できる</li>
+<li>「同時密度の積分 \(=\) 確率」「\(x\) を掛けて積分 \(=\) 期待値」という確率との対応を使える</li>
+</ul>
+</div>
+
+<header class="chap" id="ch11">
+<p class="chnum">第11章</p>
+<h2>最適化問題の定式化</h2>
+<p class="chsub">— 「よい」を数式にする技術</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>第III部の主役は最適化です。機械学習は「損失最小化」、統計推定は「尤度最大化」、運用計画は「コスト最小化」— 現代の情報技術は、現実の課題を \(\min_{x\in S}f(x)\) という形式に<b>翻訳</b>したうえで解いています。この翻訳(定式化)の巧拙が、そもそも解けるか・解が意味を持つかを決めます。この章では、目的関数・制約・実行可能集合という語彙を整え、「最小値は存在するか(ワイエルシュトラス+coercivity — 第3章の宿題)」「最小点は一意か」「最大化と最小化・対数変換など、問題をどう変形してよいか」を訓練します。地味に見えて、院試の論述でも実務のモデリングでも、いちばん差がつく部分です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>\(\min\)(最小値)と \(\mathrm{argmin}\)(最小点の集合)、\(\inf\) と \(\min\) の違いを正確に使い分けられる</li>
+<li>最大化 \(\leftrightarrow\) 最小化、単調変換(対数)による問題の同値変形ができる</li>
+<li>制約つき問題を「目的関数+実行可能集合」の標準形に書き下せる</li>
+<li>最小値の存在を、ワイエルシュトラスの定理と coercivity(強圧性)で保証できる</li>
+<li>解の非一意性・非存在の具体例を挙げ、その帰結を説明できる</li>
+<li>正則化・最尤推定を最適化問題として定式化できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">標準形</b>:\(\displaystyle\min_{\boldsymbol x}f(\boldsymbol x)\ \text{subject to}\ g_i(\boldsymbol x)\le0\ (i=1,\dots,m),\ h_j(\boldsymbol x)=0\ (j=1,\dots,\ell)\)。制約を満たす点の集合が<b>実行可能集合</b> \(S\)</li>
+<li><b class="term">min と argmin</b>:\(\min f\) は達成される最小の<b>値</b>、\(\mathrm{argmin}\,f\) は最小を与える<b>点の集合</b>。\(\inf\)(下限)は常に存在するが、達成されるとは限らない</li>
+<li><b class="term">同値変形</b>:\(\mathrm{argmax}\,f=\mathrm{argmin}(-f)\)。\(\varphi\) が狭義単調増加なら \(\mathrm{argmax}\,f=\mathrm{argmax}\,\varphi(f)\)(対数変換が代表)</li>
+<li><b class="term">存在定理</b>:(i) \(S\) が有界閉集合で \(f\) が連続なら最小値が存在(ワイエルシュトラス)。(ii) \(S=\mathbb R^n\) でも、\(f\) が連続かつ <b>coercive</b>(\(\|\boldsymbol x\|\to\infty\) で \(f\to\infty\))なら最小値が存在</li>
+<li><b class="term">一意性</b>:一般には保証されない。狭義凸性(第12章)が一意性の代表的な十分条件</li>
+</ul>
+</div>
+
+<section class="prob" id="q11-1">
+<div class="phead"><span class="pnum">問 11.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">min・argmin・inf の使い分け</span></div>
+<ol class="sublist">
+<li>\(f(x)=(x-2)^2+1\)(\(x\in\mathbb R\))について、\(\min f\) と \(\mathrm{argmin}\,f\) を求めよ。</li>
+<li>\(g(x)=\dfrac1x\)(\(x\gt0\))について、\(\inf g\) を求め、\(\min g\)(最小値)が存在しないことを説明せよ。</li>
+<li>「\(\inf\) は必ず存在するが \(\min\) は存在するとは限らない」— この区別が最適化アルゴリズムの停止条件を考えるうえでなぜ重要か、一言で述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-2">
+<div class="phead"><span class="pnum">問 11.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">最大化・最小化・対数変換</span></div>
+<p>\(f(x)=xe^{-x}\)(\(x\gt0\))を最大化したい。</p>
+<ol class="sublist">
+<li>\(f'(x)=0\) を解いて最大点を直接求めよ(2階微分で最大であることも確認)。</li>
+<li>\(-\log f(x)\) を計算し、これを<b>最小化</b>しても同じ最大点が得られることを確かめよ。</li>
+<li>なぜ狭義単調増加な変換(\(\log\) など)は \(\mathrm{argmax}\) を変えないのか、理由を1〜2行で述べよ。積の形の目的関数に対して対数変換が計算上ありがたい理由も述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-3">
+<div class="phead"><span class="pnum">問 11.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">実行可能集合と線形計画の顔見せ</span></div>
+<p>制約 \(x+y\le1\)、\(x\ge0\)、\(y\ge0\) を考える。</p>
+<ol class="sublist">
+<li>実行可能集合 \(S\) を図示し、どんな図形か述べよ。</li>
+<li>\(S\) 上で目的関数 \(f(x,y)=x+y\) を<b>最大化</b>せよ。最大値と、それを与える点をすべて求めよ(\(\mathrm{argmax}\) が1点にならないことに注意)。</li>
+<li>制約を \(x\le0\) かつ \(x\ge1\) に変えると何が起きるか。「実行不能(infeasible)」という概念を説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-4">
+<div class="phead"><span class="pnum">問 11.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">最小値の存在 — coercivity(第3章の宿題)</span></div>
+<ol class="sublist">
+<li>\(f(x)=x^4-3x\) は \(\mathbb R\) 全体で最小値を持つ。まず \(x\to\pm\infty\) で \(f\to+\infty\)(coercive)であることを確かめ、「coercive かつ連続なら \(\mathbb R\) 上で最小値が存在する」ことを、十分大きい閉区間 \([-R,R]\) にワイエルシュトラスの定理を適用する形で証明せよ。</li>
+<li>(1) の \(f\) の最小点と最小値を実際に計算せよ(小数第3位まで)。</li>
+<li>\(g(x)=e^x\) と \(h(x)=x^3\) はいずれも \(\mathbb R\) 上で最小値を持たない。それぞれ「何が」欠けているのか(\(\inf\) は存在するが達成されない/そもそも下に有界でない)を区別して述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-5">
+<div class="phead"><span class="pnum">問 11.5</span><span class="lv lv1">★ 基礎</span><span class="ptag">argmin は1点とは限らない</span></div>
+<p>\(f(x)=x^4-2x^2\)(二重井戸ポテンシャル)について、停留点をすべて求めて分類し、\(\min f\) と \(\mathrm{argmin}\,f\) を求めよ。大域的最小点が2つあることを確認し、「最適解の非一意性」が機械学習の文脈でどんな現象に対応するか、例を1つ挙げよ。</p>
+</section>
+
+<section class="prob" id="q11-6">
+<div class="phead"><span class="pnum">問 11.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">正則化 — 目的関数を設計する</span></div>
+<p>問7.9のデータ \((1,2),(2,3),(3,5)\) に対し、リッジ回帰の目的関数</p>
+<p>\[L_\lambda(w,b)=\sum_{i=1}^3(wx_i+b-y_i)^2+\lambda w^2\qquad(\lambda\ge0)\]</p>
+<p>を考える(切片 \(b\) には罰則をかけない流儀とする)。</p>
+<ol class="sublist">
+<li>\(\lambda=1\) のとき \(\nabla L_\lambda=\boldsymbol0\) を解き、最適な \((w,b)\) を求めよ。無正則化(\(\lambda=0\)、問7.9)の答え \(w=\frac32\) と比べてどう変化したか。</li>
+<li>一般の \(\lambda\) について解くと \(w(\lambda)=\dfrac3{\lambda+2}\) となることを示せ。\(\lambda\to0\) と \(\lambda\to\infty\) の極限を調べ、\(\lambda\) が「データへの適合」と「係数を小さく保つこと」のトレードオフを調整するツマミであることを説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-7">
+<div class="phead"><span class="pnum">問 11.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">変形して解く — 代入と不等式</span></div>
+<p>制約つき問題「\(xy=1\)、\(x\gt0\)、\(y\gt0\) のもとで \(x+y\) を最小化せよ」を、2通りの方法で解け。</p>
+<ol class="sublist">
+<li><b>代入法</b>:制約から \(y=\frac1x\) と解いて1変数問題 \(\min_{x\gt0}\bigl(x+\frac1x\bigr)\) に変換し、微分で解け。</li>
+<li><b>不等式法</b>:相加相乗平均の不等式 \(\dfrac{x+y}2\ge\sqrt{xy}\) を使って、微分を使わずに同じ結論を導け(等号条件まで確認すること)。</li>
+<li>2つの方法の長所を比較せよ(適用範囲・大域性の保証・計算の手間などの観点から)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-8">
+<div class="phead"><span class="pnum">問 11.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">最尤推定 — 統計を最適化として解く</span></div>
+<p>コインを10回投げたら表が7回出た。表の出る確率 \(p\in[0,1]\) の最尤推定を、最適化問題として定式化して解く。尤度は \(L(p)=p^7(1-p)^3\)(表7回・裏3回の並び1通り分。定数倍は \(\mathrm{argmax}\) に影響しないので省く)。</p>
+<ol class="sublist">
+<li>対数尤度 \(\ell(p)=\log L(p)\) を書き、\(\ell'(p)=0\) を解いて \(\hat p\) を求めよ。</li>
+<li>\(\ell''(\hat p)\lt0\) と、境界値 \(L(0)=L(1)=0\) を確認して、\(\hat p\) が \([0,1]\) 上の大域的最大点であると結論せよ(有界閉区間なので最大値の存在はワイエルシュトラスが保証している — 内部の停留点と境界の比較で確定、という問9.7の手順の1変数版)。</li>
+<li>\(\hat p\) の値は「表の相対頻度」と一致する。一般に \(n\) 回中 \(k\) 回表なら \(\hat p=k/n\) となることを、同じ計算で示せ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>\(\min\)・\(\mathrm{argmin}\)・\(\inf\) の3語を、例を添えて正しく説明できる</li>
+<li>「最大化は \(-f\) の最小化」「対数変換は argmax を保つ」を理由つきで使える</li>
+<li>存在保証の2大定理(有界閉+連続/coercive+連続)を使い分けられる</li>
+<li>正則化パラメータ \(\lambda\) の役割を、閉じた式 \(w(\lambda)\) の挙動で説明できる</li>
+<li>「解けない・解が1つでない・解が存在しない」問題の実例をそれぞれ挙げられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch12">
+<p class="chnum">第12章</p>
+<h2>凸集合と凸関数</h2>
+<p class="chsub">— 「解ける最適化」の共通言語</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>最適化の世界には有名な標語があります —「問題の難しさの本当の分水嶺は、線形か非線形かではなく、<b>凸か非凸か</b>である」。凸な問題では、局所的な最小がそのまま大域的な最小になり(この章で証明します)、勾配降下法のような素朴なアルゴリズムにも強力な収束保証がつきます(第13章)。最小二乗・リッジ回帰・ロジスティック回帰・SVM — 機械学習の古典的名作が軒並み「うまく解ける」のは、すべて凸性のおかげです。この章では凸集合・凸関数の定義から出発し、3つの判定法(弦・接線・2階微分)、イェンゼンの不等式、凸性を保つ演算、そして強凸性までを一気に整備します。第I部で証明した不等式たち(\(e^x\ge1+x\) など)が、凸性の言葉で再統一される快感も味わってください。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>凸集合を定義に基づいて判定でき、代表例(半平面・円板・多面体)と反例を挙げられる</li>
+<li>凸関数の3つの同値な特徴づけ(弦の不等式・1階条件・2階条件)を使い分けられる</li>
+<li>イェンゼンの不等式を証明の道具として使える(相加相乗平均・分散の非負性)</li>
+<li>凸性を保つ演算(非負和・アフィン合成・max)で複合関数の凸性を機械的に判定できる</li>
+<li>「凸なら局所最小 \(=\) 大域最小」「狭義凸なら最小点は一意」を証明できる</li>
+<li>強凸性の定義と役割(一意性・2次成長・収束レートの土台)を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">凸集合</b>:\(S\) が凸 \(\iff\) 任意の \(\boldsymbol x,\boldsymbol y\in S\) と \(t\in[0,1]\) で \(t\boldsymbol x+(1-t)\boldsymbol y\in S\)(2点を結ぶ線分がはみ出さない)</li>
+<li><b class="term">凸関数(弦)</b>:\(f\bigl(t\boldsymbol x+(1-t)\boldsymbol y\bigr)\le t\,f(\boldsymbol x)+(1-t)\,f(\boldsymbol y)\)(グラフが弦の下)。等号が \(t\in(0,1)\)、\(\boldsymbol x\ne\boldsymbol y\) で決して成立しないとき<b>狭義凸</b></li>
+<li><b class="term">1階条件</b>:\(f\) が微分可能なら、凸 \(\iff f(\boldsymbol y)\ge f(\boldsymbol x)+\nabla f(\boldsymbol x)^\top(\boldsymbol y-\boldsymbol x)\)(グラフが接線・接平面の上)</li>
+<li><b class="term">2階条件</b>:\(f\) が \(C^2\) なら、凸 \(\iff f''\ge0\)(多変数では \(\nabla^2f\) が半正定値)。\(\nabla^2f\succ O\)(正定値)なら狭義凸</li>
+<li><b class="term">イェンゼンの不等式</b>:\(f\) 凸、\(\lambda_i\ge0\)、\(\sum\lambda_i=1\) なら \(f\bigl(\sum\lambda_i x_i\bigr)\le\sum\lambda_i f(x_i)\)(確率版:\(f(E[X])\le E[f(X)]\))</li>
+<li><b class="term">強凸性</b>:\(f-\dfrac\mu2\|\boldsymbol x\|^2\) が凸(\(\mu\gt0\))のとき \(\mu\)-強凸。1変数では \(f''\ge\mu\)、多変数では \(\nabla^2f\succeq\mu I\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q12-1">
+<div class="phead"><span class="pnum">問 12.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">凸集合の判定</span></div>
+<ol class="sublist">
+<li>半平面 \(S=\{(x,y)\mid ax+by\le c\}\) が凸集合であることを、定義に従って証明せよ。</li>
+<li>単位円板 \(D=\{\boldsymbol x\in\mathbb R^2\mid\|\boldsymbol x\|\le1\}\) が凸であることを、三角不等式を使って証明せよ。</li>
+<li>\(\mathbb R\) の部分集合 \([0,1]\cup[2,3]\) が凸で<b>ない</b>ことを、はみ出す点を具体的に挙げて示せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-2">
+<div class="phead"><span class="pnum">問 12.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">弦の不等式による判定</span></div>
+<ol class="sublist">
+<li>\(f(x)=x^2\) が弦の不等式を満たす(凸である)ことを、\(t\,x^2+(1-t)\,y^2-\bigl(tx+(1-t)y\bigr)^2=t(1-t)(x-y)^2\ge0\) を確かめることで証明せよ。</li>
+<li>\(f(x)=|x|\) が凸であることを、三角不等式から示せ。(この関数は \(x=0\) で微分できない — 凸性は微分可能性を要求しないことに注意。)</li>
+<li>\(f(x)=x^3\) は \(\mathbb R\) 上で凸でない。弦の不等式が破れる具体的な \(x,y,t\) を1組挙げて確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-3">
+<div class="phead"><span class="pnum">問 12.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">2階条件による判定</span></div>
+<p>2階微分(多変数ならヘッセ行列)を計算して、次の関数の凸性を判定せよ。</p>
+<ol class="sublist">
+<li>\(f(x)=e^x\)&nbsp;(\(\mathbb R\) 上)</li>
+<li>\(f(x)=-\log x\)&nbsp;(\(x\gt0\))</li>
+<li>\(f(x)=x^4\) と \(f(x)=x^3\)&nbsp;(\(\mathbb R\) 上)— 凸性の有無が分かれる理由を2階微分の符号で述べよ。</li>
+<li>\(f(x,y)=x^2+y^2\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-4">
+<div class="phead"><span class="pnum">問 12.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">1階条件 — 接線はいつもグラフの下</span></div>
+<ol class="sublist">
+<li>微分可能な凸関数 \(f\) に対する1階条件 \(f(y)\ge f(x)+f'(x)(y-x)\) の幾何的意味(グラフと接線の位置関係)を述べよ。</li>
+<li>\(f(x)=e^x\) についてこの不等式を書き下すと \(e^y\ge e^x(1+y-x)\) となる。これが問3.5で証明した \(e^t\ge1+t\)(\(t=y-x\))と同値であることを確かめよ。</li>
+<li>逆に、1階条件を \(x\) と \(y\) を入れ替えて2本書き、足し合わせることで「凸関数の勾配は単調:\(\bigl(f'(y)-f'(x)\bigr)(y-x)\ge0\)」を導け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-5">
+<div class="phead"><span class="pnum">問 12.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">イェンゼンの不等式とその応用</span></div>
+<ol class="sublist">
+<li>凸関数の弦の不等式(2点版)から、3点版 \(f(\lambda_1x_1+\lambda_2x_2+\lambda_3x_3)\le\lambda_1f(x_1)+\lambda_2f(x_2)+\lambda_3f(x_3)\)(\(\lambda_i\ge0\)、\(\sum\lambda_i=1\))を導け。(ヒント:\(\lambda_2x_2+\lambda_3x_3=(\lambda_2+\lambda_3)\cdot\frac{\lambda_2x_2+\lambda_3x_3}{\lambda_2+\lambda_3}\) と2点にまとめて帰納的に。)</li>
+<li>\(-\log\) が凸であることを使い、イェンゼンの不等式から相加相乗平均 \(\dfrac{x+y}2\ge\sqrt{xy}\)(\(x,y\gt0\))を導け(問11.7で使った不等式の証明がこれで完結する)。</li>
+<li>確率版 \(f(E[X])\le E[f(X)]\) を \(f(x)=x^2\) に適用すると何が得られるか。分散の言葉で解釈せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-6">
+<div class="phead"><span class="pnum">問 12.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">凸性を保つ演算 — 部品から組み立てる</span></div>
+<ol class="sublist">
+<li>凸関数の非負係数の和 \(\alpha f+\beta g\)(\(\alpha,\beta\ge0\))が凸であることを、弦の不等式から示せ。</li>
+<li>凸関数とアフィン写像の合成 \(f(a x+b)\) が凸であることを示せ。これと (1) を使って、最小二乗損失 \(L(w)=\sum_i(a_iw-b_i)^2\) が \(w\) の凸関数であることを「部品の組み立て」として説明せよ。</li>
+<li>凸関数の各点最大 \(h(x)=\max\{f(x),\,g(x)\}\) が凸であることを示せ。(ヒント:\(f,g\le h\) の弦の評価をそれぞれ書き、\(\max\) をとる。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-7">
+<div class="phead"><span class="pnum">問 12.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">凸なら局所=大域 — この章の主定理</span></div>
+<ol class="sublist">
+<li>凸関数 \(f\) の局所的最小点 \(\boldsymbol x^*\) は大域的最小点であることを、背理法で証明せよ。(ヒント:もし \(f(\boldsymbol y)\lt f(\boldsymbol x^*)\) なる \(\boldsymbol y\) があれば、線分 \(t\boldsymbol y+(1-t)\boldsymbol x^*\) 上で弦の不等式を使うと、\(\boldsymbol x^*\) のいくらでも近くに \(f\) の値が \(f(\boldsymbol x^*)\) より小さい点が作れて、局所最小性に矛盾する。)</li>
+<li>狭義凸関数の大域的最小点は(存在すれば)一意であることを、2点あると仮定して中点で矛盾を導く形で証明せよ。</li>
+<li>微分可能な凸関数では「\(\nabla f(\boldsymbol x^*)=\boldsymbol0\iff\boldsymbol x^*\) は大域的最小点」が成り立つ。\(\Leftarrow\) は1次の必要条件(第9章)。\(\Rightarrow\) を1階条件(問12.4)から1行で導け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-8">
+<div class="phead"><span class="pnum">問 12.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">log-sum-exp — なめらかな max(問8.8の完結)</span></div>
+<p>\(f(x,y)=\log(e^x+e^y)\) について答えよ。</p>
+<ol class="sublist">
+<li>問8.8で計算したヘッセ行列が半正定値であったことから、\(f\) が凸である(ただし狭義凸ではない)と結論せよ。</li>
+<li>不等式 \(\max(x,y)\ \le\ f(x,y)\ \le\ \max(x,y)+\log2\) を証明せよ。(ヒント:\(e^{\max}\le e^x+e^y\le2e^{\max}\)。)</li>
+<li>温度つき版 \(f_\tau(x,y)=\tau\log\bigl(e^{x/\tau}+e^{y/\tau}\bigr)\)(\(\tau\gt0\))に (2) を適用して \(\max\le f_\tau\le\max+\tau\log2\) を示し、\(\tau\to0+\) で \(f_\tau\to\max(x,y)\) を結論せよ。この「なめらかな max」が機械学習でありがたい理由を一言で述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-9">
+<div class="phead"><span class="pnum">問 12.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">強凸性 — 凸性に「底の硬さ」を足す</span></div>
+<p>\(\mu\gt0\) に対し、\(f\) が <b>\(\mu\)-強凸</b>であるとは \(g(\boldsymbol x)=f(\boldsymbol x)-\dfrac\mu2\|\boldsymbol x\|^2\) が凸であることをいう(1変数・\(C^2\) なら \(f''\ge\mu\) と同値)。</p>
+<ol class="sublist">
+<li>\(f(x)=x^2\) は \(\mu=2\) の強凸であること、\(f(x)=e^x\) は凸だがどんな \(\mu\gt0\) についても強凸で<b>ない</b>ことを、2階微分で確かめよ。</li>
+<li>リッジつき最小二乗 \(L_\lambda(\boldsymbol\theta)=\sum_i(\text{残差}_i)^2+\lambda\|\boldsymbol\theta\|^2\) のヘッセ行列が「もとのヘッセ行列 \(+\,2\lambda I\)」になることを示し、\(L_\lambda\) が \(2\lambda\)-強凸であると結論せよ(もとの損失のヘッセ行列は半正定値であることを使ってよい)。</li>
+<li>\(\mu\)-強凸で微分可能な \(f\) の最小点 \(\boldsymbol x^*\) では、1階条件(を \(g\) に適用すること)から2次成長</p>
+<p>\[f(\boldsymbol y)\ \ge\ f(\boldsymbol x^*)+\frac\mu2\|\boldsymbol y-\boldsymbol x^*\|^2\]</p>
+<p>が成り立つことを示せ。この不等式が「最小点の近くで関数が放物線以上に持ち上がる(底が平らでない)」ことを意味し、最小点の一意性がただちに従うことを確認せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>凸性の3つの特徴づけ(弦・接線・2階)を図で説明し、状況に応じて使い分けられる</li>
+<li>「凸なら局所=大域」「狭義凸なら一意」の証明を白紙から再現できる</li>
+<li>与えられた損失関数を、凸性を保つ演算の組み立てとして凸と判定できる</li>
+<li>イェンゼンの不等式から相加相乗平均と分散の非負性を導ける</li>
+<li>強凸性が何を追加で保証するか(2次成長・一意性)を式で言える</li>
+</ul>
+</div>
+
+<header class="chap" id="ch13">
+<p class="chnum">第13章</p>
+<h2>勾配降下法</h2>
+<p class="chsub">— 最急降下の力学と収束理論</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>深層学習の学習ループの中心で回っているのは、たった1行の更新式 \(\boldsymbol x_{k+1}=\boldsymbol x_k-\eta\nabla f(\boldsymbol x_k)\) です。このシンプルな反復が「いつ・どれくらい速く」収束するのか — それを厳密に答えるのがこの章です。鍵になる仮定は2つ:曲率の<b>上限</b>を与える \(L\)-平滑性(暴れすぎない)と、<b>下限</b>を与える \(\mu\)-強凸性(底が平らすぎない)。この2つから降下補題と線形収束レート \(\bigl(\frac{\kappa-1}{\kappa+1}\bigr)^k\) が導かれ、第8・9章で測った条件数 \(\kappa=L/\mu\) が「学習の遅さ」を支配する定数として主役に躍り出ます。学習率の選び方・ジグザグの正体・モメンタムの加速まで、実験(数値)と理論(証明)の両輪で走ります。すべての数値例は実際に反復を回して検証済みです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>勾配降下法の更新を手計算・実装でき、2次関数では挙動を厳密に解析できる</li>
+<li>学習率の安定条件(\(\eta\lt2/L\))・最適値・発散の仕組みを固有値の言葉で説明できる</li>
+<li>ジグザグ現象を「異方的な曲率+共通の学習率」の帰結として定量的に説明できる</li>
+<li>\(L\)-平滑性から降下補題を証明し、「1歩あたり \(\frac1{2L}\|\nabla f\|^2\) 下がる」を導ける</li>
+<li>強凸性を加えて線形収束レート(条件数依存)を導出・数値検証できる</li>
+<li>モメンタム(heavy ball)がレートを \(\frac{\kappa-1}{\kappa+1}\) から \(\frac{\sqrt\kappa-1}{\sqrt\kappa+1}\) へ改善することを実験で確かめられる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">勾配降下法</b>:\(\boldsymbol x_{k+1}=\boldsymbol x_k-\eta\nabla f(\boldsymbol x_k)\)(\(\eta\gt0\) は学習率/ステップ幅)</li>
+<li><b class="term">L-平滑</b>:\(\|\nabla f(\boldsymbol x)-\nabla f(\boldsymbol y)\|\le L\|\boldsymbol x-\boldsymbol y\|\)。\(C^2\) なら \(\nabla^2f\preceq LI\)(曲率の上限)と同値</li>
+<li><b class="term">降下補題</b>:\(L\)-平滑なら \(f(\boldsymbol y)\le f(\boldsymbol x)+\nabla f(\boldsymbol x)^\top(\boldsymbol y-\boldsymbol x)+\dfrac L2\|\boldsymbol y-\boldsymbol x\|^2\)。特に \(\eta=\frac1L\) の1歩で \(f(\boldsymbol x_{k+1})\le f(\boldsymbol x_k)-\dfrac1{2L}\|\nabla f(\boldsymbol x_k)\|^2\)</li>
+<li><b class="term">2次関数の厳密解</b>:\(f=\frac12\boldsymbol x^\top A\boldsymbol x\) では誤差の各固有成分が毎歩 \((1-\eta\lambda_i)\) 倍。安定条件は \(\eta\lt\dfrac2{\lambda_{\max}}=\dfrac2L\)</li>
+<li><b class="term">線形収束</b>:\(\mu\)-強凸+\(L\)-平滑なら、最適な \(\eta=\frac2{\mu+L}\) で \(\|\boldsymbol x_k-\boldsymbol x^*\|\le\Bigl(\dfrac{\kappa-1}{\kappa+1}\Bigr)^k\|\boldsymbol x_0-\boldsymbol x^*\|\)(\(\kappa=L/\mu\))</li>
+<li><b class="term">モメンタム</b>:\(\boldsymbol x_{k+1}=\boldsymbol x_k-\eta\nabla f(\boldsymbol x_k)+\beta(\boldsymbol x_k-\boldsymbol x_{k-1})\)。2次関数での最良レートは \(\dfrac{\sqrt\kappa-1}{\sqrt\kappa+1}\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q13-1">
+<div class="phead"><span class="pnum">問 13.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">更新式を手で回す</span></div>
+<p>\(f(x,y)=x^2+2y^2\)、初期点 \(\boldsymbol x_0=(1,1)\)、学習率 \(\eta=0.1\) で勾配降下法を2歩実行し、\(\boldsymbol x_1\)、\(\boldsymbol x_2\) と各点での \(f\) の値を求めよ。値が単調に減少していることを確かめよ。</p>
+</section>
+
+<section class="prob" id="q13-2">
+<div class="phead"><span class="pnum">問 13.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">1次元2次関数 — 完全に解ける場合</span></div>
+<p>\(f(x)=\dfrac a2x^2\)(\(a\gt0\))に勾配降下法を適用する。</p>
+<ol class="sublist">
+<li>更新式が \(x_{k+1}=(1-\eta a)\,x_k\)、したがって \(x_k=(1-\eta a)^k\,x_0\) となることを示せ。</li>
+<li>\(x_k\to0\)(収束)となるための \(\eta\) の条件を求めよ。また \(0\lt\eta\lt\frac1a\)(単調収束)、\(\frac1a\lt\eta\lt\frac2a\)(符号を交互に変えながら収束)、\(\eta\gt\frac2a\)(発散)の3つの動作モードを説明せよ。</li>
+<li>\(\eta=\frac1a\) のとき何が起きるか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-3">
+<div class="phead"><span class="pnum">問 13.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">異方性とジグザグ — 条件数の呪い</span></div>
+<p>\(f(x,y)=\dfrac12(x^2+9y^2)\)(固有値 \(\mu=1\)、\(L=9\)、条件数 \(\kappa=9\)。問8.7の関数)に勾配降下法を適用する。</p>
+<ol class="sublist">
+<li>更新が座標ごとに分離し、\(x_{k+1}=(1-\eta)x_k\)、\(y_{k+1}=(1-9\eta)y_k\) となることを示せ。両座標が収束するための条件を求めよ。</li>
+<li>収束の速さは遅い方の係数 \(\rho(\eta)=\max\{|1-\eta|,\ |1-9\eta|\}\) で決まる。\(\rho(\eta)\) を最小にする \(\eta^*\) と、そのときの \(\rho^*\) を求め、\(\rho^*=\dfrac{\kappa-1}{\kappa+1}\) となることを確かめよ。</li>
+<li>\(\eta=\eta^*=0.2\)、\(\boldsymbol x_0=(1,1)\) で3歩計算せよ(検証済みの値:\((0.8,-0.8)\to(0.64,0.64)\to(0.512,-0.512)\))。\(y\) 座標の符号が毎歩反転する(等高線の谷を横切ってジグザグする)理由を係数 \(1-9\eta^*=-0.8\) から説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-4">
+<div class="phead"><span class="pnum">問 13.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">降下補題 — 1歩でどれだけ下がるか</span></div>
+<p>\(f\) を \(L\)-平滑(勾配が \(L\)-リプシッツ連続)とする。</p>
+<ol class="sublist">
+<li>微積分学の基本定理を線分 \(\boldsymbol x+t(\boldsymbol y-\boldsymbol x)\)(\(t\in[0,1]\))に沿って使い、</p>
+<p>\[f(\boldsymbol y)-f(\boldsymbol x)-\nabla f(\boldsymbol x)^\top(\boldsymbol y-\boldsymbol x)=\int_0^1\bigl(\nabla f(\boldsymbol x+t(\boldsymbol y-\boldsymbol x))-\nabla f(\boldsymbol x)\bigr)^\top(\boldsymbol y-\boldsymbol x)\,dt\]</p>
+<p>と書き、コーシー・シュワルツの不等式と \(L\)-平滑性で右辺を評価して<b>降下補題</b> \(f(\boldsymbol y)\le f(\boldsymbol x)+\nabla f(\boldsymbol x)^\top(\boldsymbol y-\boldsymbol x)+\dfrac L2\|\boldsymbol y-\boldsymbol x\|^2\) を証明せよ。</li>
+<li>\(\boldsymbol y=\boldsymbol x-\eta\nabla f(\boldsymbol x)\)(勾配降下の1歩)を代入して</p>
+<p>\[f(\boldsymbol x_{k+1})\ \le\ f(\boldsymbol x_k)-\eta\Bigl(1-\frac{L\eta}2\Bigr)\|\nabla f(\boldsymbol x_k)\|^2\]</p>
+<p>を導け。特に \(\eta=\frac1L\) のとき \(f(\boldsymbol x_{k+1})\le f(\boldsymbol x_k)-\dfrac1{2L}\|\nabla f(\boldsymbol x_k)\|^2\) となることを確かめよ。</li>
+<li>\(f=\frac a2x^2\)(1変数)では (1) の不等式が等号で成り立つことを確かめよ(2次関数は「最悪ケースぴったり」の関数である)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-5">
+<div class="phead"><span class="pnum">問 13.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">凸性なしで言えること — 勾配ノルムの収束</span></div>
+<p>\(f\) は \(L\)-平滑で下に有界(\(f\ge f^*\))とし、\(\eta=\frac1L\) で \(K\) 歩の勾配降下を行う。</p>
+<ol class="sublist">
+<li>問13.4(2) の不等式を \(k=0,\dots,K-1\) について足し合わせ(望遠鏡和)、</p>
+<p>\[\frac1{2L}\sum_{k=0}^{K-1}\|\nabla f(\boldsymbol x_k)\|^2\ \le\ f(\boldsymbol x_0)-f^*\]</p>
+<p>を導け。</li>
+<li>(1) から \(\displaystyle\min_{0\le k\lt K}\|\nabla f(\boldsymbol x_k)\|^2\le\frac{2L\bigl(f(\boldsymbol x_0)-f^*\bigr)}K\) を導け。この結論は凸性を一切使っていない — 非凸(深層学習)でも「勾配は \(O(1/\sqrt K)\) の速さで小さくできる」ことを意味する。ただし「勾配が小さい点」は最小点とは限らない(第9章)。この限界にも言及せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-6">
+<div class="phead"><span class="pnum">問 13.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">強凸なら直線的に速い — 線形収束</span></div>
+<p>\(f=\dfrac12(x^2+9y^2)\)(\(\mu=1\)、\(L=9\)、\(\kappa=9\))で線形収束を確かめる。</p>
+<ol class="sublist">
+<li>\(\eta=\frac1L=\frac19\) のとき、問13.3(1) の座標分離を使って \(f(\boldsymbol x_{k+1})\le\bigl(1-\frac\mu L\bigr)f(\boldsymbol x_k)\) が成り立つことを示せ。(各座標の係数の2乗 \((1-\eta\lambda_i)^2\) を \(1-\frac\mu L=\frac89\) と比較すればよい。)</li>
+<li>\(\eta=\frac2{\mu+L}=0.2\) のとき、距離の縮小率が毎歩ちょうど \(\frac{\kappa-1}{\kappa+1}=0.8\) になることを、問13.3(3) の数値で確認せよ。一般の(2次とは限らない)\(\mu\)-強凸・\(L\)-平滑関数でも同じレートの上界が成り立つことが知られている(証明は成書に譲る)。</li>
+<li>誤差を \(10^{-6}\) 倍にするのに必要な歩数が \(k\approx\dfrac{\log10^6}{\log(1/0.8)}\approx62\) 歩であることを確かめ、一般に必要歩数が \(O\bigl(\kappa\log\frac1\varepsilon\bigr)\) とスケールする(\(\kappa\) に比例して遅くなる)ことを、\(\log\frac{\kappa+1}{\kappa-1}\approx\frac2\kappa\)(\(\kappa\) 大)から説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-7">
+<div class="phead"><span class="pnum">問 13.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">学習率を上げすぎると</span></div>
+<p>問13.6と同じ \(f\) で、\(\eta=0.25\)、\(\boldsymbol x_0=(1,1)\) とする。</p>
+<ol class="sublist">
+<li>安定条件 \(\eta\lt\frac2L=\frac29=0.222\) が破れていることを確かめ、\(y\) 座標が \(y_k=(-1.25)^k\) で振動しながら発散することを示せ(\(y_6\approx3.81\) まで具体的に)。\(x\) 座標はどうなるか。</li>
+<li>「損失が振動・発散したら学習率を下げる」という実務の経験則を、この解析で裏づけよ。また、\(L\) が事前に分からないときに使われるバックトラッキング(直線探索:大きめの \(\eta\) から出発し、降下補題型の減少条件を満たすまで \(\eta\) を半分にする)の考え方を説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-8">
+<div class="phead"><span class="pnum">問 13.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ローゼンブロックの谷での苦闘 — 問9.8の実験編</span></div>
+<p>ローゼンブロック関数 \(f=(1-x)^2+100(y-x^2)^2\) に、初期点 \((-1.2,\ 1)\)、学習率 \(\eta=10^{-3}\) で勾配降下法を適用した(検証済みの実測値:\(f_0=24.2\)、\(k=100\) で \(f\approx3.80\)、\(k=1000\) で \(f\approx0.454\)、\(k=5000\) で \(f\approx0.00376\)、\(\boldsymbol x_{5000}\approx(0.939,\ 0.881)\)、最適点までの距離 \(\approx0.134\))。</p>
+<ol class="sublist">
+<li>最初の100歩で \(f\) が \(24.2\to3.80\) と急落したあと、次の900歩で \(3.80\to0.454\) までしか進まない。この2段階(谷への急降下 \(\to\) 谷底に沿った匍匐前進)を、等高線の形(問9.8:放物線状の細い谷、\(\kappa\approx2508\))で説明せよ。</li>
+<li>最小点近傍での理論レート \(\frac{\kappa-1}{\kappa+1}\approx0.9992\) を使うと、誤差を1桁縮めるのに約 \(\dfrac{\log10}{-\log0.9992}\approx2900\) 歩必要になることを確かめ、実測(5000歩で距離 \(0.134\)、未到達)と整合することを見よ。</li>
+<li>学習率を上げれば速くなるか?谷を横切る方向の曲率(\(\lambda_{\max}\approx1000\))から安定限界が \(\eta\lt2/\lambda_{\max}\approx0.002\) 程度であることを見積もり、「上げられない」理由を述べよ。この八方塞がりを破る道を2つ挙げよ(曲率情報を使う:第14章/座標ごとに学習率を変える・モメンタム:問13.9)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-9">
+<div class="phead"><span class="pnum">問 13.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">モメンタム — 重い球は谷で振動しない</span></div>
+<p>モメンタム(heavy ball)法は、更新に「前回の移動の継続」を加える:</p>
+<p>\[\boldsymbol x_{k+1}=\boldsymbol x_k-\eta\nabla f(\boldsymbol x_k)+\beta(\boldsymbol x_k-\boldsymbol x_{k-1})\]</p>
+<p>問13.6の \(f=\frac12(x^2+9y^2)\)(\(\mu=1\)、\(L=9\))に、2次関数に対する最適パラメータ \(\eta=\dfrac4{(\sqrt L+\sqrt\mu)^2}=0.25\)、\(\beta=\Bigl(\dfrac{\sqrt\kappa-1}{\sqrt\kappa+1}\Bigr)^2=0.25\) を用いる。</p>
+<ol class="sublist">
+<li>理論上の漸近レートは \(\sqrt\beta=\dfrac{\sqrt\kappa-1}{\sqrt\kappa+1}=\dfrac{3-1}{3+1}=0.5\) である。素の勾配降下法の \(0.8\)(問13.6)と比較し、60歩後の誤差の理論比 \(0.5^{60}\) vs \(0.8^{60}\) を概算せよ。</li>
+<li>実測(検証済み):60歩後の距離は、モメンタムありで約 \(8\times10^{-17}\)、素の勾配降下(\(\eta=0.2\))で約 \(2.2\times10^{-6}\) — 約10桁の差がついた。1歩あたりの縮小率の実測平均も約 \(0.51\) で理論値 \(0.5\) と一致する。なぜ「慣性」がジグザグを打ち消すのか、\(y\) 方向の振動(問13.3)が逆向きの移動の平均化で相殺される、という観点から直感的に説明せよ。</li>
+<li>レートの改善が「\(\kappa\) 依存 \(\to\sqrt\kappa\) 依存」(必要歩数 \(O(\kappa\log\frac1\varepsilon)\to O(\sqrt\kappa\log\frac1\varepsilon)\))であることの実用上の意味を、\(\kappa=10^4\) の場合の歩数比で述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>2次関数での勾配降下法の完全解(固有成分ごとの等比数列)を導け、安定条件 \(\eta\lt2/L\) を説明できる</li>
+<li>降下補題の証明(線分に沿う積分+コーシー・シュワルツ)を再現できる</li>
+<li>「凸なし:勾配ノルム \(O(1/\sqrt K)\)」「強凸:線形収束 \(\bigl(\frac{\kappa-1}{\kappa+1}\bigr)^k\)」の2大結果を仮定つきで言える</li>
+<li>ジグザグ・発散・条件数の呪いを、固有値と学習率の積で定量的に説明できる</li>
+<li>モメンタムの効果(\(\kappa\to\sqrt\kappa\))を実験数値つきで語れる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch14">
+<p class="chnum">第14章</p>
+<h2>ニュートン法</h2>
+<p class="chsub">— 曲率を使って一気に踏み込む</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>勾配降下法の弱点は条件数でした(第13章)。ニュートン法はヘッセ行列 — 曲率の情報 — を使って各方向の歩幅を自動調整し、条件数の呪いを原理的に消し去ります。その代償は「1歩ごとに連立1次方程式 \(H\boldsymbol h=-\boldsymbol g\) を解く」計算コストと、「最小点の近くでしか無敵ではない」という気難しさ。この章では、桁数が毎歩<b>倍増</b>する2次収束の証明と体感(\(\sqrt2\) の計算・除算なしの逆数計算)、多変数版(問8.6の完結)、失敗モードのカタログ(重根・周期・鞍点行き)、そして実務の救済策(ヘッセ修正)までを一気通貫で扱います。仕上げは、勾配降下法が5000歩かけても届かなかったローゼンブロックの谷を、ニュートン法が7歩で踏破する実験 — 第13章との対比が最高の見せ場です。数値実験はすべて実際に反復を回して検証済みです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>方程式求解のニュートン法と最適化のニュートン法(\(f'\) に適用)の関係を説明できる</li>
+<li>2次収束(誤差が毎歩2乗になる \(=\) 正しい桁数が倍増する)を証明・数値確認できる</li>
+<li>多変数のニュートン更新 \(\boldsymbol x_{k+1}=\boldsymbol x_k-H^{-1}\boldsymbol g\) を、2次モデルの最小化として導出・実行できる</li>
+<li>失敗モード(重根での失速・周期・鞍点や最大点への収束・非単調性)を具体例で挙げられる</li>
+<li>ヘッセ修正 \(H+\lambda I\) がなぜ・どのように降下方向を回復するかを説明できる</li>
+<li>勾配降下法との使い分け(1歩のコスト vs 歩数、\(\kappa\) 依存性)を定量的に議論できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">方程式のニュートン法</b>:\(g(x)=0\) を解くために接線で近似して \(x_{k+1}=x_k-\dfrac{g(x_k)}{g'(x_k)}\)</li>
+<li><b class="term">最適化のニュートン法</b>:\(\nabla f=\boldsymbol0\) に適用。1変数 \(x_{k+1}=x_k-\dfrac{f'(x_k)}{f''(x_k)}\)、多変数 \(\boldsymbol x_{k+1}=\boldsymbol x_k-\bigl(\nabla^2f(\boldsymbol x_k)\bigr)^{-1}\nabla f(\boldsymbol x_k)\)(実装は逆行列でなく連立1次方程式 \(H\boldsymbol h=-\boldsymbol g\) を解く)</li>
+<li><b class="term">2次モデルの視点</b>:各点で作る2次近似(お椀)の底へジャンプする(問8.6)。2次関数なら1歩で厳密解</li>
+<li><b class="term">2次収束</b>:単根・\(f''\) 連続・十分近くから出発なら \(|e_{k+1}|\le M|e_k|^2\) — 正しい桁数が毎歩ほぼ倍増</li>
+<li><b class="term">弱点</b>:遠くからは暴れうる(非単調・発散・周期)/\(H\) が正定値でないと降下方向にならない/1歩が \(O(n^3)\) と高価</li>
+<li><b class="term">ヘッセ修正</b>:\((H+\lambda I)\boldsymbol h=-\boldsymbol g\)。\(\lambda\) を大きくすると勾配降下方向に近づき、降下性を回復(レーベンバーグ・マーカート法の心臓部)</li>
+</ul>
+</div>
+
+<section class="prob" id="q14-1">
+<div class="phead"><span class="pnum">問 14.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">√2 を手で求める</span></div>
+<p>方程式 \(x^2-2=0\)(正の解 \(\sqrt2=1.41421356\dots\))にニュートン法を適用する。</p>
+<ol class="sublist">
+<li>更新式が \(x_{k+1}=\dfrac{x_k}2+\dfrac1{x_k}\) となることを導け。</li>
+<li>\(x_0=1\) から3歩、分数のまま計算せよ(\(x_1=\frac32\)、\(x_2=\frac{17}{12}\)、\(x_3=\frac{577}{408}\) となる)。\(x_3\) と \(\sqrt2\) の差はどのくらいか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-2">
+<div class="phead"><span class="pnum">問 14.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">最適化版の1歩 — 除算のいらない逆数計算</span></div>
+<p>\(f(x)=x-\log x\)(\(x\gt0\)、最小点 \(x^*=1\))の最小化にニュートン法を使う。</p>
+<ol class="sublist">
+<li>\(f'\)、\(f''\) を計算し、更新式が \(x_{k+1}=2x_k-x_k^2\) と<b>割り算を含まない</b>形になることを示せ。</li>
+<li>\(x_0=0.5\) から4歩計算せよ(\(0.75\to0.9375\to0.99609375\to0.99998474\dots\) となる)。</li>
+<li>誤差 \(e_k=1-x_k\) が厳密に \(e_{k+1}=e_k^2\) を満たすことを代数的に示し、(2) の数値(正しい桁数が毎歩倍増)と整合することを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-3">
+<div class="phead"><span class="pnum">問 14.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">2次収束の証明</span></div>
+<ol class="sublist">
+<li>\(g(x)=x^2-2\) のニュートン更新について、誤差の厳密な恒等式</p>
+<p>\[x_{k+1}-\sqrt2=\frac{(x_k-\sqrt2)^2}{2x_k}\]</p>
+<p>を代数計算で示せ。(一般の \(g\) では、テイラー展開から \(e_{k+1}\approx\dfrac{g''(x^*)}{2g'(x^*)}e_k^2\) となる — 分母に \(g'(x^*)\ne0\)(単根)が必要なことに注意。)</li>
+<li>問14.1の数値で \(e_{k+1}/e_k^2\) を計算し、\(k\) とともに理論値 \(\dfrac1{2\sqrt2}\approx0.354\) に近づくことを確かめよ。</li>
+<li>「誤差が2乗になる \(=\) 正しい有効桁数がほぼ倍増する」ことを、\(e_k=10^{-d}\) と置いて説明せよ。倍精度(約16桁)に到達するまでに必要な歩数の目安を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-4">
+<div class="phead"><span class="pnum">問 14.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">多変数ニュートン法 — 問8.6の完結</span></div>
+<p>\(f(x,y)=x^4+y^2-2x\)(真の最小点 \(\boldsymbol x^\dagger=(2^{-1/3},0)\approx(0.7937,0)\))について、問8.6では \((1,1)\) から1歩進めて \(\boldsymbol x_1=\bigl(\frac56,0\bigr)\) を得た。</p>
+<ol class="sublist">
+<li>\(\boldsymbol x_1\) における勾配とヘッセ行列を計算し、2歩目 \(\boldsymbol x_2\) を分数のまま求めよ(\(\boldsymbol x_2=\bigl(\frac{179}{225},0\bigr)\approx(0.79556,0)\) となる)。</li>
+<li>誤差 \(e_k=|x_k-2^{-1/3}\,|\)(\(x\) 座標のみ。\(y\) は1歩目で厳密に \(0\))を \(k=1,2\) で数値計算し、\(e_2\approx1.2\,e_1^2\) となること(2次収束)を確かめよ。3歩目の誤差はどの程度になると予想されるか。</li>
+<li>この反復で解いている連立1次方程式 \(H\boldsymbol h=-\boldsymbol g\) の次元は、パラメータ数 \(n\) の機械学習モデルではどのくらいのコスト(記憶量・計算量)になるか。ニュートン法が深層学習でそのまま使われない理由を1行で述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-5">
+<div class="phead"><span class="pnum">問 14.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">失敗モードのカタログ</span></div>
+<p>ニュートン法の「近くでは無敵、遠くでは無保証」を反例で体感する。</p>
+<ol class="sublist">
+<li><b>重根で失速</b>:\(g(x)=x^3\)(根 \(x=0\) は3重根)へのニュートン法の更新式を求め、\(x_{k+1}=\frac23x_k\)(公比 \(\frac23\) の<b>線形</b>収束に退化)となることを示せ。2次収束の証明(問14.3)のどの仮定が破れているか。</li>
+<li><b>周期に捕まる</b>:\(g(x)=x^3-2x+2\) に \(x_0=0\) からニュートン法を適用すると \(x_1=1\)、\(x_2=0\)、以後 \(0\to1\to0\to\cdots\) の2周期に永久に捕まることを確かめよ。</li>
+<li><b>最大点にも吸い寄せられる</b>:最適化版ニュートン法を \(f(x)=-x^2\) に適用すると、どの初期点からでも1歩で \(x=0\)(<b>最大点</b>)に到達することを確かめよ。ニュートン法が本質的に解いているのはどんな問題で、なぜ最小と最大を区別できないのか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-6">
+<div class="phead"><span class="pnum">問 14.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">ヘッセ修正 — 鞍点行きを阻止する</span></div>
+<p>鞍点関数 \(f(x,y)=x^2-y^2\) の点 \((1,1)\) でニュートン法の1歩を考える。</p>
+<ol class="sublist">
+<li>\(\boldsymbol g=\nabla f(1,1)\) と \(H=\nabla^2f(1,1)\) を求め、純粋なニュートン方向 \(\boldsymbol h_N=-H^{-1}\boldsymbol g\) を計算せよ。行き先はどこか。また \(\boldsymbol g^\top\boldsymbol h_N\) を計算し、\(\boldsymbol h_N\) が降下方向(\(\boldsymbol g^\top\boldsymbol h\lt0\))ですらないことを確かめよ。</li>
+<li>修正ヘッセ行列 \(H+3I\) を使った方向 \(\boldsymbol h_M=-(H+3I)^{-1}\boldsymbol g\) を計算し、(i) \(H+3I\) が正定値であること、(ii) \(\boldsymbol g^\top\boldsymbol h_M\lt0\)(降下方向)であること、(iii) 実際に \(f\) の値が下がることを確かめよ。</li>
+<li>\((H+\lambda I)\boldsymbol h=-\boldsymbol g\) の解は、\(\lambda\to0\) と \(\lambda\to\infty\) でそれぞれどんな方向に近づくか。「\(\lambda\) はニュートン法と勾配降下法を連続的につなぐツマミ」であることを説明せよ(一般に \(\lambda\gt\max(0,-\lambda_{\min}(H))\) なら \(H+\lambda I\succ O\) で降下方向が保証される)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-7">
+<div class="phead"><span class="pnum">問 14.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ローゼンブロック7歩踏破 — 第13章との対決</span></div>
+<p>ローゼンブロック関数(問9.8・問13.8)に、初期点 \((-1.2,1)\) から<b>純粋な</b>ニュートン法を適用した(検証済みの実測値:\(f_0=24.2\)、\(k=2\) で \(f\approx1.4\times10^3\) と一時<b>悪化</b>、\(k=5\) で \(f\approx1.9\times10^{-11}\)、\(k=6\) で \(f\approx3.4\times10^{-20}\)、\(k=7\) で \((1,1)\) に倍精度で厳密収束)。</p>
+<ol class="sublist">
+<li>勾配降下法(問13.8:5000歩で距離 \(0.134\)、未到達)との歩数差を確認し、その理由を「ニュートン法は座標を曲率で割り直すので条件数 \(\kappa\approx2508\) が実効的に消える」という観点から説明せよ。</li>
+<li>\(k=2\) で \(f\) が \(24.2\) から約 \(1412\) へ<b>一時的に大きく悪化</b>している。ニュートン法が降下法でない(値の単調減少を保証しない)ことをこの実測が示している。それでも最終的に収束したのはなぜか(2次収束の局所性)。また、実務でこの非単調性を抑える標準的な工夫を2つ挙げよ。</li>
+<li>1歩あたりのコスト(勾配のみ vs 勾配+ヘッセ行列+連立1次方程式)も含めて、「勾配降下法とニュートン法のどちらを使うべきか」の判断基準を、次元 \(n\)・要求精度・条件数の観点で整理せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-8">
+<div class="phead"><span class="pnum">問 14.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ロジスティック回帰をニュートン法で解く</span></div>
+<p>1パラメータのロジスティック回帰:データ \((x_i,y_i)\)(\(y_i\in\{+1,-1\}\))に対し、損失(負の対数尤度)</p>
+<p>\[L(w)=\sum_i\log\bigl(1+e^{-y_iwx_i}\bigr)\]</p>
+<p>を最小化する。\(\sigma(z)=\dfrac1{1+e^{-z}}\) として \(L'(w)=\sum_i\bigl(-y_ix_i\bigr)\,\sigma(-y_iwx_i)\)、\(L''(w)=\sum_ix_i^2\,\sigma(y_iwx_i)\bigl(1-\sigma(y_iwx_i)\bigr)\gt0\)(\(L\) は凸)である。</p>
+<ol class="sublist">
+<li><b>分離可能データ</b> \((1,+1),(2,+1),(-1,-1)\)(\(w\gt0\) で全部正解できる)では、すべての \(w\) で \(L'(w)\lt0\)、かつ \(w\to\infty\) で \(L\to0\)(検証済み:\(L(10)\approx9\times10^{-5}\))— つまり \(\inf L=0\) は達成されず<b>最小点が存在しない</b>ことを説明せよ(問11.4の「coercive でない」病理の実例。パラメータは無限に発散し、正則化が処方箋になる)。</li>
+<li><b>非分離データ</b>(上に誤分類点 \((1,-1)\) を追加)では最小点が存在する。\(L'(0)=-\dfrac32\)、\(L''(0)=\dfrac74\) を計算し、ニュートン法の1歩目が \(w_1=\dfrac67\) となることを確かめよ。</li>
+<li>実測(検証済み)では \(w_1=6/7\approx0.857\) から \(w^*\approx1.0457268824\)(\(L^*\approx2.06569\))へ、勾配の大きさが \(0.199\to1.4\times10^{-2}\to9.6\times10^{-5}\to4.3\times10^{-9}\to\) 機械精度、とわずか5歩で収束した。指数(桁)の変化を追って2次収束を確認せよ。統計ソフトがロジスティック回帰を一瞬で解ける理由(IRLS \(=\) ニュートン法)にも触れよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>ニュートン法を「接線で解く」「2次モデルの底へ跳ぶ」の2つの絵で説明できる</li>
+<li>2次収束の誤差公式を導出し、「桁数倍増」を数値で確認できる</li>
+<li>失敗モード(重根・周期・鞍点/最大点行き・非単調)を例つきで列挙できる</li>
+<li>ヘッセ修正 \(H+\lambda I\) の役割(正定値化・GDとの補間)を説明できる</li>
+<li>GD とニュートン法のコスト・収束・適用場面の比較表を自力で書ける</li>
+</ul>
+</div>
+
+<header class="chap" id="ch15">
+<p class="chnum">第15章</p>
+<h2>等式制約とラグランジュ乗数</h2>
+<p class="chsub">— 制約の上での最適化と、勾配の平行条件</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>現実の最適化には、ほぼ必ず制約が付きます — 予算はちょうど使い切る、確率は合計1、パラメータはノルム1に正規化。制約 \(g(\boldsymbol x)=0\) の上での最適化を扱う王道がラグランジュ乗数法で、その核心はたった1つの幾何:<b>最適点では \(f\) の等高線と制約曲線が接し、したがって \(\nabla f\parallel\nabla g\)</b>。問7.7で証明した「勾配は等高線に垂直」が、そのままこの条件の根拠になります。しかも乗数 \(\lambda\) はただの補助変数ではなく、「制約を1単位緩めたら最適値がどれだけ変わるか」という感度(経済学のシャドープライス)そのもの。最大エントロピー分布・固有値・レイリー商 — 情報系の重要概念が続々とこの枠組みから導かれ、第16章(不等式制約・KKT)と第17章(双対性)への滑走路になります。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>ラグランジュ条件 \(\nabla f=\lambda\nabla g\) を等高線の接触の絵で説明・導出できる</li>
+<li>ラグランジュ関数 \(\mathcal L=f-\lambda g\)(または \(f+\lambda g\))の停留条件として機械的に立式・求解できる</li>
+<li>代入法(制約の消去)とラグランジュ法を使い分け、答えを相互検算できる</li>
+<li>乗数 \(\lambda\) を「最適値の制約レベルに対する微分(感度)」として解釈・検証できる</li>
+<li>最大エントロピー・レイリー商(2次形式の最大最小 \(=\) 固有値)を導出できる</li>
+<li>方法の限界(候補にすぎない・正則性条件の破れ)を反例つきで説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">問題の形</b>:\(\min\)(または \(\max\))\(f(\boldsymbol x)\) subject to \(g(\boldsymbol x)=0\)</li>
+<li><b class="term">ラグランジュ条件(1次の必要条件)</b>:最適点 \(\boldsymbol x^*\) で \(\nabla g(\boldsymbol x^*)\ne\boldsymbol0\) なら、ある \(\lambda\) が存在して \(\nabla f(\boldsymbol x^*)=\lambda\,\nabla g(\boldsymbol x^*)\)</li>
+<li><b class="term">幾何</b>:制約曲線に沿って動いても \(f\) が1次で変化しない \(\iff\) \(\nabla f\) が制約の接方向と直交 \(\iff\) \(f\) の等高線が制約曲線に<b>接する</b>(問7.7:勾配 \(\perp\) 等高線)</li>
+<li><b class="term">ラグランジュ関数</b>:\(\mathcal L(\boldsymbol x,\lambda)=f(\boldsymbol x)-\lambda\,g(\boldsymbol x)\) とおくと、条件は \(\nabla_{\boldsymbol x}\mathcal L=\boldsymbol0\) かつ \(\dfrac{\partial\mathcal L}{\partial\lambda}=-g=0\)(制約の復元)</li>
+<li><b class="term">乗数の意味</b>:制約を \(g(\boldsymbol x)=0\to g(\boldsymbol x)=c-c_0\) と緩めたときの最適値 \(V(c)\) に対し \(\lambda=\dfrac{dV}{dc}\)(感度・シャドープライス)</li>
+<li><b class="term">注意</b>:得られるのは<b>候補</b>(必要条件)。最大か最小かは値の比較や2次条件・凸性で確定。\(\nabla g=\boldsymbol0\) の点(正則性の破れ)は別枠で検討</li>
+</ul>
+</div>
+
+<section class="prob" id="q15-1">
+<div class="phead"><span class="pnum">問 15.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">代入法とラグランジュ法の顔合わせ</span></div>
+<p>「和が \(10\) の2つの正の数 \(x,y\) で、積 \(xy\) を最大にせよ」を2通りで解け。</p>
+<ol class="sublist">
+<li><b>代入法</b>:\(y=10-x\) を代入して1変数の最大化として解け。</li>
+<li><b>ラグランジュ法</b>:\(f=xy\)、\(g=x+y-10\) として条件 \(\nabla f=\lambda\nabla g\) を連立し、同じ答えが出ることを確かめよ(\(\lambda\) の値も求めること)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-2">
+<div class="phead"><span class="pnum">問 15.2</span><span class="lv lv2">★★ 標準</span><span class="ptag">等高線の接触 — 問7.7の伏線回収</span></div>
+<p>単位円 \(x^2+y^2=1\) 上で \(f(x,y)=x+y\) の最大値・最小値を求める。</p>
+<ol class="sublist">
+<li>ラグランジュ条件を連立して停留点をすべて求め、最大値・最小値を確定せよ。</li>
+<li>最大点において、\(f\) の等高線(直線 \(x+y=c\))が円に<b>接している</b>ことを図で説明し、「\(\nabla f\parallel\nabla g\)」がこの接触の言い換えである理由を、問7.7(勾配は等高線に垂直)を使って述べよ。</li>
+<li>もし最適点で等高線が制約曲線を<b>横切って</b>いたら何がまずいのか(制約の上を少し動くだけで \(f\) を改善できてしまう)を説明し、これが必要条件の直感的な証明になっていることを確認せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-3">
+<div class="phead"><span class="pnum">問 15.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">直線への最近点</span></div>
+<p>直線 \(x+2y=5\) 上の点で、原点に最も近い点を求めたい。\(f(x,y)=x^2+y^2\)(距離の2乗)を最小化する問題としてラグランジュ法で解き、最近点・最短距離・乗数 \(\lambda\) を求めよ。答えを「点と直線の距離の公式」\(d=\dfrac{|c|}{\sqrt{a^2+b^2}}\) で検算せよ。</p>
+</section>
+
+<section class="prob" id="q15-4">
+<div class="phead"><span class="pnum">問 15.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">乗数の正体 — 感度・シャドープライス</span></div>
+<p>問15.3の制約を一般化し、\(x+2y=c\) 上での \(x^2+y^2\) の最小値を \(V(c)\) とする。</p>
+<ol class="sublist">
+<li>ラグランジュ法を \(c\) を残したまま解き、最適点 \(\bigl(\frac c5,\frac{2c}5\bigr)\)、乗数 \(\lambda(c)=\frac{2c}5\)、最適値 \(V(c)=\dfrac{c^2}5\) を導け。</li>
+<li>\(V'(c)\) を計算し、すべての \(c\) で \(V'(c)=\lambda(c)\) が成り立つこと(特に \(c=5\) では \(V'(5)=2=\lambda\))を確かめよ。</li>
+<li>この一致(包絡線定理)の意味 —「乗数 \(\lambda\) は、制約レベルを1単位動かしたときの最適値の変化率」— を、資源配分の言葉(予算をあと1円増やせたら目的はいくら改善するか \(=\) その資源の影の価格)で説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-5">
+<div class="phead"><span class="pnum">問 15.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">複数の候補を仕分ける</span></div>
+<p>円 \(x^2+y^2=2\) 上で \(f(x,y)=xy\) の最大値・最小値を求める。</p>
+<ol class="sublist">
+<li>ラグランジュ条件を連立し、停留点が4つ(\((\pm1,\pm1)\) の同符号・異符号の組)あることを示せ。各点の \(f\) の値と \(\lambda\) の値を求め、最大値・最小値を確定せよ。</li>
+<li>「有界閉集合(円周)上の連続関数は最大・最小を達成する」(ワイエルシュトラス)から、候補の中の最大・最小がそのまま答えになる理由を述べよ(問9.7と同じ論法)。</li>
+<li>別解として、相加相乗平均型の不等式 \(xy\le\dfrac{x^2+y^2}2\)(\((x-y)^2\ge0\) から)を使うと最大値が一撃で出ることを確かめ、等号条件がラグランジュ法の答えと一致することを見よ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-6">
+<div class="phead"><span class="pnum">問 15.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">最大エントロピー分布</span></div>
+<p>3値の確率分布 \((p_1,p_2,p_3)\)(\(p_i\gt0\)、\(p_1+p_2+p_3=1\))のエントロピー</p>
+<p>\[H(p)=-\sum_{i=1}^3p_i\log p_i\]</p>
+<p>を最大化する。</p>
+<ol class="sublist">
+<li>ラグランジュ関数 \(\mathcal L=H+\lambda\bigl(\sum p_i-1\bigr)\) の停留条件から、\(-\log p_i-1+\lambda=0\)、すなわち<b>すべての \(p_i\) が等しい</b>ことを導き、最適解が一様分布 \(p_i=\frac13\)、最大値が \(\log3\) であることを示せ。</li>
+<li>この停留点が最大である根拠を述べよ。(ヒント:各項 \(-p\log p\) は \(p\) について凹(2階微分 \(-1/p\lt0\))なので \(H\) は凹関数 — 凹関数の停留点は大域的最大(問12.7の最大版)。)</li>
+<li>一般の \(n\) 値でも同じ計算で「制約なしの知識状態では一様分布が最もエントロピーが高い(\(H\le\log n\))」となる。この事実が情報理論・機械学習でどう使われているか、例を1つ挙げよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-7">
+<div class="phead"><span class="pnum">問 15.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">2次形式の最大最小 = 固有値 — レイリー商</span></div>
+<p>\(A=\begin{pmatrix}5 &amp; 4\\ 4 &amp; 5\end{pmatrix}\)(問8.7の行列)に対し、単位円 \(\|\boldsymbol x\|^2=x^2+y^2=1\) 上で2次形式 \(f(\boldsymbol x)=\boldsymbol x^\top A\boldsymbol x\) の最大値・最小値を求める。</p>
+<ol class="sublist">
+<li>\(\nabla f=2A\boldsymbol x\)、\(\nabla g=2\boldsymbol x\) を使ってラグランジュ条件を書くと、固有値方程式 \(A\boldsymbol x=\lambda\boldsymbol x\) そのものになることを示せ。<b>乗数 \(\lambda\) の候補は \(A\) の固有値に他ならない</b>。</li>
+<li>連立を解いて停留点(\(\pm\frac1{\sqrt2}(1,1)\) と \(\pm\frac1{\sqrt2}(1,-1)\))と各点での \(f\) の値を求め、最大値 \(9\)・最小値 \(1\)(\(=\) 最大・最小固有値)を確定せよ。問8.7の等高線の絵(\((1,1)\) 方向が急)と整合することを確認せよ。</li>
+<li>一般の対称行列で「単位球面上の \(\boldsymbol x^\top A\boldsymbol x\) の最大 \(=\lambda_{\max}\)、最小 \(=\lambda_{\min}\)」(レイリー商の原理)が成り立つ。この事実が使われている場面を1つ挙げよ(例:PCA の第1主成分 \(=\) 分散 \(\boldsymbol w^\top\Sigma\boldsymbol w\) を \(\|\boldsymbol w\|=1\) で最大化)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-8">
+<div class="phead"><span class="pnum">問 15.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">問9.7の再訪と、方法が黙る場所</span></div>
+<ol class="sublist">
+<li>問9.7の境界(円 \(x^2+y^2=4\) 上での \(f=x^2+y^2-2x\) の最適化)を、パラメータ表示の代わりにラグランジュ法で解け。\(y\) の式から場合分け(\(y=0\) または \(\lambda=1\))が生じ、候補が \((\pm2,0)\) の2点に絞られること、値(\(0\) と \(8\))が問9.7と一致することを確かめよ。内部の停留点 \((1,0)\)(\(f=-1\))と合わせて大域的最小・最大を再確定せよ。</li>
+<li>ラグランジュ条件は \(\nabla g(\boldsymbol x^*)\ne\boldsymbol0\)(正則性)を前提とする。反例:曲線 \(g(x,y)=x^3-y^2=0\)(原点に尖点をもつ)上で \(f(x,y)=x\) を最小化すると、曲線は \((t^2,t^3)\) と径数表示できて \(x=t^2\ge0\)、最小は原点 \((0,0)\) で達成される。ところがラグランジュ系 \(\ 1=3\lambda x^2\)、\(0=-2\lambda y\)、\(x^3=y^2\ \) には実数解が<b>1つもない</b>(検証済み)ことを確かめ、原点で何が起きているか(\(\nabla g(0,0)=\boldsymbol0\) で「\(\lambda\nabla g\)」がどんな \(\lambda\) でも \(\nabla f=(1,0)\) を表せない)を説明せよ。</li>
+<li>(2) の教訓を実務の手順に落とせ:ラグランジュ法で候補を洗うときは、(i) 停留点、(ii) \(\nabla g=\boldsymbol0\) となる制約上の点(正則性の破れ)、(iii)(領域に端があれば)端点、をすべてリストアップして比較する。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>\(\nabla f=\lambda\nabla g\) を「等高線と制約の接触」の絵つきで導出できる</li>
+<li>ラグランジュ関数の停留条件から機械的に連立を立て、候補を漏れなく列挙・比較できる</li>
+<li>乗数 \(\lambda=V'(c)\)(感度)の意味を例つきで説明できる</li>
+<li>最大エントロピー \(=\) 一様分布、2次形式の最大最小 \(=\) 固有値、を白紙から導ける</li>
+<li>方法の前提(必要条件にすぎない・正則性)と、破れたときの対処を言える</li>
+</ul>
+</div>
+
+<header class="chap" id="ch16">
+<p class="chnum">第16章</p>
+<h2>不等式制約とKKT条件</h2>
+<p class="chsub">— 「縛られているか、いないか」を数式で判定する</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>現実の制約の多くは不等式です — 予算は「以下」、確率は「\(0\) 以上」、電力は「上限まで」。不等式制約 \(g(\boldsymbol x)\le0\) の難しさは、最適点でその制約が<b>効いている(有効:境界上)か、効いていない(無効:内側)か</b>が事前に分からないこと。この二択を1組の条件式に畳み込んだのが KKT 条件で、鍵は相補性 \(\mu\,g(\boldsymbol x)=0\)(乗数か制約か、どちらかは必ずゼロ)と乗数の符号 \(\mu\ge0\)(ニセの境界解を弾くフィルタ)。SVM のサポートベクトル、通信の注水定理、射影(clip 関数)— 情報系の名場面がすべてこの条件の上に立っています。第15章のラグランジュ法に「不等式対応」を実装するアップデート、それがこの章です。例によって全計算は SymPy で検証済みです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>有効制約・無効制約を判別し、「無制約で解いてみて制約に反したら境界へ」の手順を実行できる</li>
+<li>KKT の4条件(停留性・主実行可能性・双対実行可能性 \(\mu\ge0\)・相補性)を書き下し、使える</li>
+<li>乗数の符号条件 \(\mu\ge0\) の幾何的な意味(勾配の向きの整合)を説明できる</li>
+<li>有効集合の場合分け(総当たり)で小規模問題を確実に解ける</li>
+<li>等式・不等式が混在する問題、箱制約(clip)への射影を KKT で処理できる</li>
+<li>注水定理(water-filling)を KKT から導出できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">問題の形</b>:\(\min f(\boldsymbol x)\) s.t. \(g_i(\boldsymbol x)\le0\ (i=1,\dots,m)\)、\(h_j(\boldsymbol x)=0\ (j=1,\dots,\ell)\)</li>
+<li><b class="term">KKT条件</b>(適当な正則性のもとでの1次の必要条件):最適点 \(\boldsymbol x^*\) に対しある \(\mu_i,\lambda_j\) が存在して
+<br>(i) <b>停留性</b> \(\nabla f+\sum_i\mu_i\nabla g_i+\sum_j\lambda_j\nabla h_j=\boldsymbol0\)
+<br>(ii) <b>主実行可能性</b> \(g_i(\boldsymbol x^*)\le0\)、\(h_j(\boldsymbol x^*)=0\)
+<br>(iii) <b>双対実行可能性</b> \(\mu_i\ge0\)
+<br>(iv) <b>相補性</b> \(\mu_i\,g_i(\boldsymbol x^*)=0\)(各 \(i\))</li>
+<li><b class="term">相補性の読み方</b>:\(g_i\lt0\)(無効:内側)なら \(\mu_i=0\)(その制約は答えに寄与しない)。\(\mu_i\gt0\) なら \(g_i=0\)(有効:境界上でぴったり縛っている)</li>
+<li><b class="term">符号の意味</b>:\(\mu_i\ge0\) は「\(f\) をさらに下げる方向が、実行可能領域の外側を向いている」こと — 内側に下り坂が残っている偽の境界解を \(\mu\lt0\) が検出・棄却する</li>
+<li><b class="term">凸問題では</b>:\(f,g_i\) が凸・\(h_j\) がアフィンなら、KKT は(正則性のもとで)必要かつ<b>十分</b> — KKT を満たす点は大域的最適</li>
+</ul>
+</div>
+
+<section class="prob" id="q16-1">
+<div class="phead"><span class="pnum">問 16.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">有効か、無効か</span></div>
+<p>\(f(x)=(x-2)^2\) を、次のそれぞれの制約のもとで最小化せよ。各場合について、制約が有効(境界で達成)か無効(内点で達成)かを判定し、乗数 \(\mu\) の値と相補性 \(\mu\,g=0\) の成立を確認せよ。</p>
+<ol class="sublist">
+<li>制約 \(x\le3\)(すなわち \(g(x)=x-3\le0\))</li>
+<li>制約 \(x\le1\)(すなわち \(g(x)=x-1\le0\))。停留性 \(f'(x)+\mu g'(x)=0\) から \(\mu\) を求めること。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-2">
+<div class="phead"><span class="pnum">問 16.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">KKT条件を1問通しで</span></div>
+<p>\(\min\ x^2+y^2\) subject to \(x+y\ge1\) を解く。制約を標準形 \(g(x,y)=1-x-y\le0\) に直したうえで、次の手順で進めよ。</p>
+<ol class="sublist">
+<li>無制約の最小点 \((0,0)\) が制約を満たさないことを確かめ、制約が有効(\(g=0\) 上に解がある)と判断せよ。</li>
+<li>KKT の停留性 \(\nabla f+\mu\nabla g=\boldsymbol0\) と \(g=0\) を連立して解き、\(\bigl(\frac12,\frac12\bigr)\)、\(\mu=1\)、最小値 \(\frac12\) を得よ。4条件(停留性・主実行可能性・\(\mu\ge0\)・相補性)がすべて成立していることを1つずつ確認せよ。</li>
+<li>この問題は凸(目的が凸・制約がアフィン)なので、KKT を満たす点は大域的最小である(keybox 最終項)。幾何的には「原点から直線 \(x+y=1\) への最近点」— 問15.3 と同じ絵になっていることを確認せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-3">
+<div class="phead"><span class="pnum">問 16.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">μ≥0 はニセ解の検出器</span></div>
+<p>乗数の符号条件が何を守っているかを、対比で確かめる。</p>
+<ol class="sublist">
+<li>\(f(x)=(x-2)^2\)、制約 \(x\le1\)(問16.1(2))では、境界 \(x=1\) で \(f'(1)=-2\lt0\):実行可能領域の<b>内側</b>(\(x\) を減らす向き)へ動くと \(f\) は増える(下り坂は外側 \(x\to2\) にしかない)。この状況が \(\mu=2\gt0\) に対応していることを説明せよ。</li>
+<li>今度は \(f(x)=(x+2)^2\)、制約 \(x\le1\) で、あえて「制約が有効(\(x=1\))」と仮定して停留性を解くと \(\mu=-6\lt0\) となることを確かめよ。実際には内側に下り坂があり(\(x=1\) から \(x\) を減らすと \(f\) は減る)、真の解は内点 \(x=-2\)(制約は無効)である。\(\mu\lt0\) が「この境界解はニセ物(内側で改善できる)」というシグナルになっていることを説明せよ。</li>
+<li>以上を一般化して、\(\min f\) s.t. \(g\le0\) の有効な境界解では \(-\nabla f=\mu\nabla g\)(\(\mu\ge0\))、すなわち「\(f\) の下り方向 \(-\nabla f\) が、制約の外向き法線 \(\nabla g\) と同じ側を向く」ことが最適性の幾何であると述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-4">
+<div class="phead"><span class="pnum">問 16.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">解いてみて、ダメなら境界へ</span></div>
+<p>\(\min\ (x-3)^2+(y-2)^2\) subject to \(x+y\le2\) を解け。手順:(i) 無制約の最小点が実行可能か確認、(ii) 不能なら制約を有効(\(x+y=2\))として KKT を連立、(iii) \(\mu\ge0\) を確認して確定。最小値が「点 \((3,2)\) と直線 \(x+y=2\) の距離の2乗」に一致することも検算せよ。</p>
+</section>
+
+<section class="prob" id="q16-5">
+<div class="phead"><span class="pnum">問 16.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">箱制約への射影 = clip 関数</span></div>
+<p>\(\min\ (x-3)^2+(y+1)^2\) subject to \(0\le x\le1\)、\(0\le y\le1\)(4本の不等式制約 \(g_1=x-1\le0\)、\(g_2=-x\le0\)、\(g_3=y-1\le0\)、\(g_4=-y\le0\))。</p>
+<ol class="sublist">
+<li>この問題は「点 \((3,-1)\) を箱 \([0,1]^2\) に射影せよ」と読める。座標ごとに区間へ切り詰める(clip する)と答えは \((1,0)\) — まずこれを直感で受け入れよ。</li>
+<li>\((1,0)\) で KKT がすべて成立することを確認せよ:有効なのは \(g_1\)(\(x=1\))と \(g_4\)(\(y=0\))で、停留性から \(\mu_1=4\)、\(\mu_4=2\)、無効な \(g_2,g_3\) は \(\mu_2=\mu_3=0\)。4本の相補性 \(\mu_ig_i=0\) を1本ずつ検査せよ。</li>
+<li>一般に「箱への射影 \(=\) 座標ごとの clip」となる理由を、目的関数と制約が座標ごとに分離することから説明せよ。深層学習・強化学習でパラメータや行動を <code>clip()</code> で区間に収める操作が、実は最適化(射影)として正当化されることに触れよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-6">
+<div class="phead"><span class="pnum">問 16.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">等式と不等式の混在</span></div>
+<p>\(\min\ x^2+y^2\) subject to \(x+y=2\)(等式)、\(x\ge\dfrac32\)(不等式 \(g=\frac32-x\le0\))。</p>
+<ol class="sublist">
+<li>等式だけで解く(問15.3型)と \((1,1)\) になるが、これは \(x\ge\frac32\) に反することを確かめよ。</li>
+<li>不等式を有効(\(x=\frac32\))として、ラグランジュ関数 \(\mathcal L=x^2+y^2+\lambda(2-x-y)+\mu\bigl(\frac32-x\bigr)\) の停留条件と2つの制約を連立し、解 \(\bigl(\frac32,\frac12\bigr)\)、\(\lambda=1\)、\(\mu=2\gt0\)、最小値 \(\frac52\) を求めよ。等式の乗数 \(\lambda\) には符号条件がなく、不等式の乗数 \(\mu\) にだけ \(\mu\ge0\) が課される理由(等式は両側から縛る/不等式は片側)を一言で述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-7">
+<div class="phead"><span class="pnum">問 16.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">有効集合の総当たり — 唯一の生き残りを探す</span></div>
+<p>\(\min\ (x-2)^2+(y-1)^2\) subject to \(x+y\le2\)、\(y\ge0\)(\(g_1=x+y-2\le0\)、\(g_2=-y\le0\))。有効集合(どの制約が \(=0\) か)は \(2^2=4\) 通り。全ケースを検討し、KKT の全条件を満たすのがただ1つであることを確かめよ。</p>
+<ol class="sublist">
+<li><b>ケースA(両方無効)</b>:無制約最小 \((2,1)\) — 主実行可能性を検査せよ。</li>
+<li><b>ケースB(\(g_1\) のみ有効)</b>:停留性+\(x+y=2\) を解き、\(\bigl(\frac32,\frac12\bigr)\)、\(\mu_1=1\) を得よ。残る条件(\(y\ge0\)、\(\mu_1\ge0\)、相補性)を検査せよ。</li>
+<li><b>ケースC(\(g_2\) のみ有効)</b>と<b>ケースD(両方有効)</b>:それぞれ解いて、乗数に負(\(\mu_2=-2\))が現れて棄却されることを確かめよ。</li>
+<li>生き残ったケースBの \(f=\frac12\) が、棄却された候補 \((2,0)\) の \(f=1\) より小さいことを確認し、「凸問題なので KKT を満たした1点が大域的最小」と結論せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-8">
+<div class="phead"><span class="pnum">問 16.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">注水定理 — 通信路への電力配分</span></div>
+<p>雑音レベル \(n_1=1\)(良い通信路)と \(n_2=4\)(悪い通信路)の2本に合計電力 \(P\) を配分し、総伝送容量(定数を除き)</p>
+<p>\[\max\ \log(n_1+p_1)+\log(n_2+p_2)\quad\text{s.t.}\quad p_1+p_2=P,\ p_1\ge0,\ p_2\ge0\]</p>
+<p>を最大化する。</p>
+<ol class="sublist">
+<li>KKT の停留条件から、電力を割り当てる通信路では限界効用 \(\dfrac1{n_i+p_i}\) が共通の値になる、すなわち \(n_i+p_i=w\)(共通の「水位」\(w\))となることを導け。各通信路の解が \(p_i=\max(0,\ w-n_i)\)(水位より低い器にだけ水が入る)という<b>注水(water-filling)</b>の形になることを説明せよ。</li>
+<li>\(P=1\) のとき:両方に注ぐ仮定(\(2w-5=1\))は \(p_2=-1\lt0\) で破綻する。\(p_2=0\)、\(p_1=1\) とし、\(p_2=0\) 側の乗数が \(\mu_2=\dfrac12-\dfrac14=\dfrac14\ge0\) で KKT が成立する(<b>全電力を良い通信路へ</b>)ことを確認せよ。</li>
+<li>\(P=4\) のとき:水位 \(w=\dfrac92\) で \(p=(3.5,\ 0.5)\)、両方に正の電力が入り、限界効用が \(\dfrac29\) で一致することを確認せよ。1変数化(\(p_2=P-p_1\))した数値最大化でも同じ答えになる(検証済み)。電力が乏しいときは良い通信路に集中し、豊富になると悪い通信路にもこぼれ出す — この閾値挙動を「水位」の絵で説明せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>KKT の4条件を暗唱でなく「有効/無効の二択を畳み込んだ形」として説明できる</li>
+<li>相補性 \(\mu g=0\) と符号条件 \(\mu\ge0\) の役割(場合分けの自動化・ニセ解の棄却)を例つきで言える</li>
+<li>「無制約で解く \(\to\) 反したら境界で解く \(\to\) 符号を検査」の実務手順を回せる</li>
+<li>有効集合の総当たりを整然と実行し、唯一の生き残りを特定できる</li>
+<li>clip \(=\) 箱への射影、注水定理 \(=\) KKT、という応用の翻訳ができる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch17">
+<p class="chnum">第17章</p>
+<h2>双対性</h2>
+<p class="chsub">— 下から支える影の問題</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>問11.7で「不等式による下界は最適値の<b>証明書</b>になる」と学びました。その下界を<b>系統的に製造する工場</b>が双対性です。制約を「破ったら罰金 \(\mu\)」として目的関数に混ぜ込み(ラグランジュ関数)、罰金率ごとの最良値 \(q(\mu)\) を計算すると、それは<b>いつでも</b>主問題の最適値の下界(弱双対)。しかも \(q\) は主問題が非凸でも常に凹 — 下界探しはいつも「解ける」問題になります。凸問題では下界が最適値にぴったり届き(強双対)、その等号から KKT の相補性が自動的に転がり出る。線形計画の双対・SVM の双対形式・最大エントロピーと log-sum-exp の表裏関係 — 情報系の理論の背骨がここで1本につながります。第III部の最終章にして、第15・16章の乗数たちが「もう1つの最適化問題の変数」として主役に昇格する回です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>ラグランジュ双対関数 \(q(\lambda,\mu)=\inf_{\boldsymbol x}\mathcal L\) を具体的な問題で計算できる</li>
+<li>弱双対 \(q\le p^*\) を証明でき、「双対の値 \(=\) 最適値の証明書つき下界」として使える</li>
+<li>双対関数が(主問題の凸性と無関係に)常に凹であることを示せる</li>
+<li>凸問題での強双対(\(p^*=d^*\))を確認し、等号の連鎖から相補性を導ける</li>
+<li>線形計画の主問題と双対問題を書き下し、最適値の一致と相補性を検証できる</li>
+<li>最大エントロピーの双対として log-sum-exp(対数分配関数)が現れることを計算で体験する</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">主問題</b>:\(p^*=\min f(\boldsymbol x)\) s.t. \(g_i\le0\)、\(h_j=0\)。<b class="term">ラグランジュ関数</b>:\(\mathcal L(\boldsymbol x,\lambda,\mu)=f+\sum_j\lambda_jh_j+\sum_i\mu_ig_i\)</li>
+<li><b class="term">双対関数</b>:\(q(\lambda,\mu)=\displaystyle\inf_{\boldsymbol x}\mathcal L(\boldsymbol x,\lambda,\mu)\)(\(\boldsymbol x\) は制約なしで動かす)。<b class="term">双対問題</b>:\(d^*=\max_{\mu\ge0,\ \lambda}q(\lambda,\mu)\)</li>
+<li><b class="term">弱双対</b>:常に \(q(\lambda,\mu)\le p^*\)(\(\mu\ge0\) なら)。したがって \(d^*\le p^*\)。差 \(p^*-d^*\) を<b>双対ギャップ</b>という</li>
+<li><b class="term">qは常に凹</b>:\(\mathcal L\) は \((\lambda,\mu)\) についてアフィン、その各点下限 \(q\) はアフィン関数族の下側包絡 — 主問題が非凸でも双対問題は凹最大化(\(=\)凸最適化)</li>
+<li><b class="term">強双対</b>:凸問題+スレーター条件(不等式を厳密に満たす内点の存在)なら \(p^*=d^*\)(ギャップ0)</li>
+<li><b class="term">等号の連鎖</b>:\(p^*=d^*\) が両方で達成されると \(f(\boldsymbol x^*)=q(\mu^*)\le\mathcal L(\boldsymbol x^*,\mu^*)\le f(\boldsymbol x^*)\) — 全部等号になり、相補性 \(\mu_i^*g_i(\boldsymbol x^*)=0\) が従う</li>
+</ul>
+</div>
+
+<section class="prob" id="q17-1">
+<div class="phead"><span class="pnum">問 17.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">双対関数を作ってみる</span></div>
+<p>主問題 \(\min\ x^2\) subject to \(x\ge1\)(標準形 \(g=1-x\le0\)、最適解 \(x^*=1\)、\(p^*=1\))について:</p>
+<ol class="sublist">
+<li>ラグランジュ関数 \(\mathcal L(x,\mu)=x^2+\mu(1-x)\) を \(x\) について最小化し、双対関数 \(q(\mu)=\mu-\dfrac{\mu^2}4\) を導け。</li>
+<li>双対問題 \(\max_{\mu\ge0}q(\mu)\) を解き、\(\mu^*=2\)、\(d^*=1\) を求めよ。\(p^*=d^*\)(強双対・ギャップ0)を確認せよ。</li>
+<li>\(\mu^*=2\) が問16.1(2) の KKT 乗数と一致することを確認せよ — 双対問題の最適変数は KKT の乗数そのものである。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-2">
+<div class="phead"><span class="pnum">問 17.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">弱双対の証明 — 2行で出る不朽の不等式</span></div>
+<ol class="sublist">
+<li>任意の実行可能な \(\boldsymbol x\)(\(g_i(\boldsymbol x)\le0\)、\(h_j(\boldsymbol x)=0\))と任意の \(\mu\ge0\)、\(\lambda\) に対して \(\mathcal L(\boldsymbol x,\lambda,\mu)\le f(\boldsymbol x)\) を示せ(各罰金項の符号を見るだけである)。</li>
+<li>(1) と \(q=\inf_{\boldsymbol x}\mathcal L\) から、弱双対 \(q(\lambda,\mu)\le p^*\) を導け。</li>
+<li>問17.1の \(q(\mu)=\mu-\frac{\mu^2}4\) について \(q(0)=0\)、\(q(1)=\frac34\)、\(q(3)=\frac34\) を計算し、どれも \(p^*=1\) 以下 — 「どんな \(\mu\ge0\) を選んでも、その場で下界の証明書が1枚発行される」ことを確認せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-3">
+<div class="phead"><span class="pnum">問 17.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">下界の証明書 — 問11.7の完遂</span></div>
+<p>等式制約の問題 \(\min\ x^2+y^2\) subject to \(x+y=2\)(問15.3型:最適解 \((1,1)\)、\(p^*=2\))について:</p>
+<ol class="sublist">
+<li>\(\mathcal L=x^2+y^2+\lambda(2-x-y)\) を \((x,y)\) について最小化し、\(q(\lambda)=2\lambda-\dfrac{\lambda^2}2\) を導け。</li>
+<li>双対問題を解いて \(\lambda^*=2\)、\(d^*=2=p^*\) を確認せよ。また途中の値、たとえば \(q(1)=\dfrac32\) が「最適値は \(\frac32\) 以上」という<b>証明書</b>になっている(実際の最適値 \(2\) と矛盾しない)ことを見よ。</li>
+<li>問11.7では相加相乗平均という「うまい不等式」を人力で見つけて下界を作った。双対性はその作業を「\(\mathcal L\) を最小化して \(q\) を読む」という機械的手続きに置き換える — 両者の関係を1〜2行で述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-4">
+<div class="phead"><span class="pnum">問 17.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">双対はいつも凹 — 非凸の海に浮かぶ凸の島</span></div>
+<ol class="sublist">
+<li>固定した \(\boldsymbol x\) に対し \(\mathcal L(\boldsymbol x,\lambda,\mu)\) は \((\lambda,\mu)\) の<b>アフィン関数</b>であることを確認し、「アフィン関数の族の各点での下限(\(\inf_{\boldsymbol x}\))は凹関数」(問12.6(3) の max 則の min・凹版)から、\(q\) が主問題の凸性と無関係に常に凹であることを示せ。</li>
+<li>非凸な主問題 \(\min\ -x^2\) subject to \(x^2\le1\)(最適解 \(x=\pm1\)、\(p^*=-1\))で双対を計算せよ:\(\mathcal L=(\mu-1)x^2-\mu\) の \(x\) についての下限が、\(\mu\ge1\) なら \(-\mu\)、\(\mu\lt1\) なら \(-\infty\) となることを確かめ、\(d^*=\max_{\mu\ge1}(-\mu)=-1=p^*\) を得よ(この例では非凸でもギャップ0)。</li>
+<li>「主問題がどれほど扱いにくくても、双対問題は常に凸最適化(凹関数の最大化)として解ける」— この事実の実用上の価値(組合せ最適化のラグランジュ緩和、分枝限定法の下界計算など、<b>厳密に解けない問題の品質保証つき近似</b>)を説明せよ。ただし非凸ではギャップが正になりうる(下界が最適値に届かない)ことにも言及せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-5">
+<div class="phead"><span class="pnum">問 17.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">線形計画の双対 — 献立問題</span></div>
+<p>栄養素を最低限満たす最安の献立:食品 \(x,y\)(単価 \(2,3\))で、栄養素Aを \(4\) 以上(\(x+y\ge4\))、栄養素Bを \(6\) 以上(\(x+2y\ge6\))摂る。</p>
+<p>\[\text{(主)}\quad\min\ 2x+3y\quad\text{s.t.}\quad x+y\ge4,\ x+2y\ge6,\ x\ge0,\ y\ge0\]</p>
+<ol class="sublist">
+<li>実行可能領域の頂点 \((2,2)\)、\((6,0)\)、\((0,4)\) でのコストを比較し、\(p^*=10\)(\((2,2)\) で達成)を求めよ(問11.3:線形計画の最適は頂点)。</li>
+<li>双対問題は「栄養素の単価 \(u,v\) を設定して総価値 \(4u+6v\) を最大化する。ただしどの食品についても、含まれる栄養素の価値が食品の単価を超えない(\(u+v\le2\)、\(u+2v\le3\)、\(u,v\ge0\))」となる。双対の頂点 \((1,1)\)、\((2,0)\)、\((0,\frac32)\) の値を比較し、\(d^*=10\)(\((1,1)\) で達成)を確認せよ — 主・双対の最適値が一致した(LP の強双対)。</li>
+<li>相補性を検査せよ:主最適 \((2,2)\) では両方の栄養制約がぴったり等号、双対最適 \((1,1)\) では両方の食品制約がぴったり等号 — 「使われる食品の価格式は等号/余っている栄養素の影の価格は \(0\)」という対応を、この例の数値で述べよ。双対変数 \(u,v\) の意味(栄養素1単位の影の価格:制約を1緩めたときのコスト削減量、問15.4)も述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-6">
+<div class="phead"><span class="pnum">問 17.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">等号の連鎖 — 強双対から相補性が転がり出る</span></div>
+<p>強双対が成り立ち、主最適 \(\boldsymbol x^*\)・双対最適 \(\mu^*\ge0\) で \(f(\boldsymbol x^*)=q(\mu^*)\) が達成されているとする(等式制約は省き \(g_i\le0\) のみとする)。</p>
+<ol class="sublist">
+<li>定義から次の連鎖が成り立つことを1つずつ確認せよ:</p>
+<p>\[f(\boldsymbol x^*)=q(\mu^*)=\inf_{\boldsymbol x}\mathcal L(\boldsymbol x,\mu^*)\ \le\ \mathcal L(\boldsymbol x^*,\mu^*)=f(\boldsymbol x^*)+\sum_i\mu_i^*g_i(\boldsymbol x^*)\ \le\ f(\boldsymbol x^*)\]</p>
+<p>(最後の \(\le\) は弱双対の証明(問17.2(1))と同じ符号勘定。)</li>
+<li>両端が同じ \(f(\boldsymbol x^*)\) なので、間の不等号はすべて<b>等号</b>である。後半の等号から \(\sum_i\mu_i^*g_i(\boldsymbol x^*)=0\)、さらに各項が \(\le0\) であることから<b>各 \(i\) で \(\mu_i^*g_i(\boldsymbol x^*)=0\)(相補性)</b>を導け。前半の等号「\(\boldsymbol x^*\) が \(\mathcal L(\cdot,\mu^*)\) の最小点」から停留性 \(\nabla f+\sum\mu_i^*\nabla g_i=\boldsymbol0\) も従うことを述べよ — KKT 条件(第16章)が双対性から再導出された。</li>
+<li>問17.1の数値で連鎖を検算せよ:\(f(1)=1\)、\(\mathcal L(1,2)=1+2\cdot0=1\)、\(q(2)=1\) — すべて等しく、\(\mu^*g(x^*)=2\cdot0=0\)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-7">
+<div class="phead"><span class="pnum">問 17.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">最小ノルム解の双対 — 問15.3を裏から見る</span></div>
+<p>\(\min\ \|\boldsymbol x\|^2=x^2+y^2\) subject to \(\boldsymbol a^\top\boldsymbol x=x+2y=1\)(\(\boldsymbol a=(1,2)\)、\(\|\boldsymbol a\|^2=5\))。</p>
+<ol class="sublist">
+<li>\(\mathcal L=x^2+y^2+\lambda(1-x-2y)\) を \((x,y)\) で最小化して \(\boldsymbol x=\dfrac\lambda2\boldsymbol a\)、\(q(\lambda)=\lambda-\dfrac54\lambda^2\) を導け。</li>
+<li>双対を解いて \(\lambda^*=\dfrac25\)、\(d^*=\dfrac15\) を求め、主問題の解 \(\boldsymbol x^*=\dfrac{\boldsymbol a}{\|\boldsymbol a\|^2}=\bigl(\frac15,\frac25\bigr)\)、\(p^*=\dfrac15\) と一致することを確かめよ(問15.3で \(c=1\) とした問題である)。</li>
+<li>一般の \(\boldsymbol a\) で「主変数が双対変数から \(\boldsymbol x=\frac\lambda2\boldsymbol a\) と復元される」ことに注目せよ:\(n\) 次元の主問題が、制約の本数(ここでは1個)だけの双対変数の問題に圧縮された。制約が少なく変数が多い問題では双対側が圧倒的に小さい — SVM の双対形式(パラメータ次元でなくデータ数の問題になり、カーネル法が可能になる)がまさにこの構図であることに触れよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-8">
+<div class="phead"><span class="pnum">問 17.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">最大エントロピーの双対 = log-sum-exp</span></div>
+<p>値 \(x_1=-1\)、\(x_2=0\)、\(x_3=1\) をとる確率分布 \(p=(p_1,p_2,p_3)\) で、平均を \(m=\dfrac12\) に固定してエントロピー \(H(p)=-\sum p_i\log p_i\) を最大化する(問15.6の「平均制約つき」版)。</p>
+<ol class="sublist">
+<li>制約 \(\sum p_i=1\)(乗数 \(\alpha\))と \(\sum p_ix_i=m\)(乗数 \(\beta\))でラグランジュ停留条件を書き、解が<b>ボルツマン分布</b> \(p_i=\dfrac{e^{\beta x_i}}Z\)、\(Z(\beta)=\sum_ie^{\beta x_i}=e^{-\beta}+1+e^\beta\) の形になることを導け(第15章の予告の実現)。</li>
+<li>\(\beta\) は平均制約から決まる:条件が \(A'(\beta)=m\)(ここで \(A(\beta)=\log Z(\beta)\) は<b>対数分配関数</b> — 3項版の log-sum-exp、問8.8・12.8の主役)となることを示し、\(s=e^\beta\) とおいて方程式 \(s^2-s-3=0\)、すなわち \(s=\dfrac{1+\sqrt{13}}2\approx2.303\)、\(\beta^*\approx0.834\) を導け。数値で \(p\approx(0.116,\ 0.268,\ 0.616)\)、平均 \(=\dfrac12\) を確認せよ。</li>
+<li>このとき最大エントロピーの値が \(H^*=A(\beta^*)-\beta^*m\approx0.9013\) と、対数分配関数のルジャンドル変換の形で書けることを数値で確認せよ(検証済み:両辺とも \(0.9013\dots\) で一致)。「主問題(エントロピー最大化)の値 \(=\) 双対問題(\(A(\beta)-\beta m\) の最小化)の値」という強双対の実例であり、指数型分布族の最尤推定・変分推論で毎日使われる表裏一体構造 — エントロピーと log-sum-exp は互いのルジャンドル変換 — の最小例であることを述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>双対関数の作り方(\(\mathcal L\) を \(\boldsymbol x\) で最小化)を具体例で実行できる</li>
+<li>弱双対の2行証明を再現し、「双対の値 \(=\) 下界の証明書」と言い換えられる</li>
+<li>\(q\) が常に凹である理由(アフィン族の下側包絡)を説明できる</li>
+<li>強双対の等号連鎖から相補性・停留性(KKT)を導出できる</li>
+<li>LP 双対・最小ノルム・最大エントロピーの3実例で \(p^*=d^*\) を確かめた計算を再現できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch18">
+<p class="chnum">第18章</p>
+<h2>機械学習と最適化</h2>
+<p class="chsub">— SGD・適応学習率・損失設計・正則化の総合演習</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>第IV部は総仕上げです。深層学習の現場で回っているのは、第13章の勾配降下法そのものではなく、その<b>確率版</b> — 毎回データの一部だけで勾配を見積もる SGD(確率的勾配降下法)。「一部だけ見た勾配は当てになるのか(不偏性)」「どれくらいばらつくのか(分散とバッチサイズ)」「なぜ学習率を減衰させるのか(ノイズ床)」「Adam は何をしているのか(座標ごとの適応 \(=\) 第14章の対角前処理)」「なぜ 0-1 損失でなく交差エントロピーを最小化するのか(凸代理損失)」「正則化はテスト誤差をどう動かすか(過学習のU字カーブ)」— 実務で毎日出会う疑問のすべてが、本書で積んだ道具(期待値・分散・凸性・収束理論・KKT)で正面から答えられます。この章の実験はすべて乱数シードを固定して実行・検証済み:数値は再現可能な事実です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>経験損失最小化(ERM)を定式化し、全勾配が標本勾配の平均であることを使える</li>
+<li>SGD の不偏性を証明し、分散とバッチサイズの関係(\(\propto1/B\))を導ける</li>
+<li>定数学習率の「ノイズ床」と減衰学習率の収束を、厳密な漸化式と実験の両方で説明できる</li>
+<li>座標ごとの適応学習率(AdaGrad/Adam の骨格)を対角前処理として理解できる</li>
+<li>0-1損失の最適化がなぜ不可能で、凸代理損失が何を保証するかを説明できる</li>
+<li>GD vs SGD の実験比較、正則化と汎化(U字カーブ)の実験を読み解ける</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">経験損失最小化(ERM)</b>:\(L(\boldsymbol\theta)=\dfrac1n\sum_{i=1}^n\ell(\boldsymbol\theta;z_i)\)。勾配も平均:\(\nabla L=\dfrac1n\sum\nabla\ell_i\)</li>
+<li><b class="term">SGD</b>:一様ランダムな \(i\)(またはサイズ \(B\) のミニバッチ)で \(\boldsymbol\theta\leftarrow\boldsymbol\theta-\eta\,\widehat{\nabla L}\)。<b>不偏</b>:\(E[\widehat{\nabla L}]=\nabla L\)。<b>分散</b>:復元抽出で \(\mathrm{Var}/B\)</li>
+<li><b class="term">ノイズ床</b>:定数 \(\eta\) では誤差はゼロに行かず、定常分散 \(\approx\dfrac{\eta\sigma^2}{2-\eta}\)(\(\eta\) に比例)の球の中で踊り続ける。減衰 \(\eta_k\sim1/k\) なら \(E[\text{誤差}^2]\sim\sigma^2/k\to0\)</li>
+<li><b class="term">適応学習率</b>:座標ごとに歩幅を変える \(=\) 対角行列 \(D\) による前処理 \(\boldsymbol\theta\leftarrow\boldsymbol\theta-D\nabla L\)。\(D\approx(\mathrm{diag}\,\nabla^2f)^{-1}\) なら対角ニュートン(Adam・RMSProp はこの発想の勾配統計版)</li>
+<li><b class="term">凸代理損失</b>:0-1損失は勾配がほぼ至る所ゼロで最適化不能。ヒンジ・ロジスティック(交差エントロピー)は 0-1 の<b>凸な上界</b> — 代理を下げれば本命も抑えられる</li>
+<li><b class="term">正則化と汎化</b>:\(\lambda\) を増やすと訓練誤差は単調増加、テスト誤差はU字(過学習 \(\to\) 適正 \(\to\) 過小適合)</li>
+</ul>
+</div>
+
+<section class="prob" id="q18-1">
+<div class="phead"><span class="pnum">問 18.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">経験損失と勾配の分解</span></div>
+<p>問7.9のデータ \((1,2),(2,3),(3,5)\) の最小二乗を、標本平均の形 \(L(w,b)=\dfrac13\sum_{i=1}^3(wx_i+b-y_i)^2\) で書く(\(\frac13\) 倍は argmin を変えない:問11.2)。標本ごとの損失 \(\ell_i=(wx_i+b-y_i)^2\) の勾配 \(\nabla\ell_i\) を計算し、恒等式 \(\nabla L=\dfrac13\sum_i\nabla\ell_i\) — 「全勾配は標本勾配の平均」— を確かめよ。この恒等式が、なぜミニバッチ学習の出発点になるのかを一言で述べよ。</p>
+</section>
+
+<section class="prob" id="q18-2">
+<div class="phead"><span class="pnum">問 18.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">SGD は当てずっぽうではない — 不偏性</span></div>
+<p>点 \((w,b)=(1,1)\) において、問18.1の3つの標本勾配を数値で求めよ(\((0,0)\)、\((0,0)\)、\((-6,-2)\) となる)。添字 \(i\) を \(\{1,2,3\}\) から一様ランダムに選んだときの \(\nabla\ell_i\) の期待値を計算し、それが全勾配 \(\nabla L(1,1)=\bigl(-2,-\frac23\bigr)\) に一致すること(<b>不偏性</b> \(E[\nabla\ell_I]=\nabla L\))を確かめよ。一般のデータでもこの不偏性が成り立つ理由を、期待値の定義から1行で示せ。</p>
+</section>
+
+<section class="prob" id="q18-3">
+<div class="phead"><span class="pnum">問 18.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">ばらつきはバッチで割れる</span></div>
+<p>問18.2の設定(点 \((1,1)\)、\(w\) 成分のみ:標本勾配の値は \(0,0,-6\))で:</p>
+<ol class="sublist">
+<li>一様ランダムな1標本勾配の期待値と分散を厳密に計算せよ(期待値 \(-2\)、分散 \(8\))。</li>
+<li><b>復元抽出</b>のミニバッチ(サイズ \(B\)、独立に \(B\) 回選んで平均)の分散が \(\dfrac{\mathrm{Var}}B\) になることを、独立確率変数の平均の分散の公式から導け。\(B=2,3\) の値を求めよ。</li>
+<li><b>非復元抽出</b>(同じ標本を2度選ばない)では分散が \(\mathrm{Var}\cdot\dfrac{n-B}{B(n-1)}\) に縮む(有限母集団修正)。\(B=2\) で分散 \(2\)(復元の \(4\) より小)、\(B=n=3\) で分散 \(0\)(全バッチ \(=\) 決定的な全勾配)となることを確かめよ(\(B=2\) はモンテカルロでも検証済み)。「バッチを大きくするほど勾配は静かになるが、1歩が高くつく」というトレードオフを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-4">
+<div class="phead"><span class="pnum">問 18.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">ノイズ床と学習率減衰 — なぜ \(\eta\) を下げるのか</span></div>
+<p>ノイズつき1次元問題:\(f(x)=\dfrac{x^2}2\)(最小点 \(0\))で、勾配の観測に雑音が乗る:\(\hat g_k=x_k+\xi_k\)、\(\xi_k\sim\mathcal N(0,\sigma^2)\) 独立。更新は \(x_{k+1}=x_k-\eta_k\hat g_k\)。</p>
+<ol class="sublist">
+<li><b>定数 \(\eta\)</b>:2次モーメント \(m_k=E[x_k^2]\) が漸化式 \(m_{k+1}=(1-\eta)^2m_k+\eta^2\sigma^2\) に従うことを示し、不動点(定常分散)が \(m^*=\dfrac{\eta\sigma^2}{2-\eta}\) となることを導け。\(\eta=0.1\)、\(\sigma=1\) では \(m^*=\dfrac1{19}\approx0.053\) — シミュレーション(2000本、3000歩)でも \(0.05\) 台に張りつくことが確認済みである。「定数学習率では最適点の \(\sqrt{\eta}\) スケールの<b>ノイズ床</b>より下に行けない(が、\(\eta\) を下げれば床も下がる)」と読み替えよ。</li>
+<li><b>減衰 \(\eta_k=\dfrac1{k+1}\)</b>:更新式の両辺に \(k+1\) を掛けると恒等式 \((k+1)x_{k+1}=kx_k-\xi_k\) が成り立つことを示し、望遠鏡式に畳んで \(x_K=-\dfrac1K\sum_{k=0}^{K-1}\xi_k\)(初期値の寄与は \(0\))— <b>SGD の軌道が雑音の標本平均そのもの</b>になることを導け。したがって \(E[x_K^2]=\dfrac{\sigma^2}K\to0\)(シミュレーションでも \(K=5000\) で \(\approx10^{-4}\) を確認済み)。</li>
+<li>実務の学習率スケジュール(最初は大きく・後で小さく)を、(1)(2) の対比 —「大きい \(\eta\) で素早く床まで降り、床に着いたら \(\eta\) を絞って床自体を下げる」— として説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-5">
+<div class="phead"><span class="pnum">問 18.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">Adam の骨格 — 座標ごとの歩幅</span></div>
+<p>問13.3の異方的2次関数 \(f=\dfrac12(x^2+9y^2)\)(共通の学習率では最良でも縮小率 \(0.8\))を再訪する。</p>
+<ol class="sublist">
+<li>座標ごとに歩幅を変える更新 \(\boldsymbol x\leftarrow\boldsymbol x-D\nabla f\)、\(D=\mathrm{diag}\bigl(1,\frac19\bigr)\)(各座標の曲率の逆数)を \((1,1)\) から1歩実行し、厳密に \((0,0)\) に到達することを確かめよ(検証済み)。これは各座標に問13.2(3) の「\(\eta=1/a\) の一撃」を同時適用したことに相当する。</li>
+<li>\(D=(\mathrm{diag}\,\nabla^2f)^{-1}\) の更新は「対角近似ニュートン法」である。フルニュートン(問14.4:記憶 \(O(n^2)\)・求解 \(O(n^3)\))と比べたとき、対角前処理のコストが \(O(n)\) で済むことを述べよ。</li>
+<li>実際の AdaGrad/RMSProp/Adam は曲率の代わりに<b>勾配の2乗の(移動)平均</b> \(v_i\) を蓄え、座標ごとに \(\eta/\sqrt{v_i}\) で割る。「大きな勾配が出続ける座標は歩幅を絞り、小さな勾配の座標は相対的に大股にする」— この規則が (1) の前処理の勾配統計による近似(かつノイズにも頑健なスケール調整)になっていることを説明せよ。深層学習で Adam が既定値として強い理由を、条件数(第13章)とノイズ(問18.4)の両面から一言ずつ述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-6">
+<div class="phead"><span class="pnum">問 18.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">損失は設計するもの — 0-1損失と凸代理</span></div>
+<p>2値分類のマージンを \(m=y\,f(\boldsymbol x)\)(正しく分類なら \(m\gt0\))とする。本当に最小化したいのは誤分類率、すなわち <b>0-1損失</b> \(\ell_{01}(m)=\boldsymbol1[m\le0]\) だが:</p>
+<ol class="sublist">
+<li>\(\ell_{01}\) は \(m=0\) 以外で微分がゼロ(平坦)であることを述べ、勾配法がなぜ1歩も動けないかを説明せよ。</li>
+<li>ヒンジ損失 \(\ell_{\mathrm h}(m)=\max(0,1-m)\) と(2を底にした)ロジスティック損失 \(\ell_{\log}(m)=\log_2(1+e^{-m})\) が、いずれも 0-1損失の<b>上界</b>(すべての \(m\) で \(\ell\ge\ell_{01}\)、\(m=0\) では両者とも値 \(1\) で接する)であることを確かめよ(格子点での数値検証済み)。上界であることの御利益 —「代理損失を \(\varepsilon\) まで下げれば誤分類率も \(\varepsilon\) 以下」— を述べよ。</li>
+<li>両者が凸であることを示せ(ヒンジ:アフィン関数の max(問12.6(3))。ロジスティック:2階微分が \(\sigma(m)\bigl(1-\sigma(m)\bigr)\gt0\)(検証済み))。「最小化したい損失(0-1)」と「最小化できる損失(凸代理)」を分けて設計する、という機械学習の基本思想をまとめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-7">
+<div class="phead"><span class="pnum">問 18.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">GD vs SGD 対決実験 — 同じデータ接触量で比べる</span></div>
+<p>合成データ:\(n=200\)、\(x_i\sim\mathrm{Unif}[-1,1]\)、\(y_i=2x_i+1+\varepsilon_i\)(\(\varepsilon_i\sim\mathcal N(0,0.3^2)\)、シード固定)。最小二乗損失の最適値は \(L_{\min}\approx0.0896\)。学習率はすべて \(0.1\)、初期値 \((0,0)\)。「1エポック \(=\) 全データを1周」で計算量をそろえて比較した実測(検証済み):</p>
+<ul>
+<li>フルバッチ GD:1エポック(\(=\)1更新)で \(L=1.936\)、50エポックで \(0.0916\)</li>
+<li>SGD(\(B=1\)):1エポック(\(=\)200更新)で \(L=0.0989\)、50エポックで \(0.0924\)</li>
+<li>ミニバッチ(\(B=16\)):1エポック(\(=\)13更新)で \(L=0.340\)、50エポックで \(0.0905\)</li>
+</ul>
+<ol class="sublist">
+<li>1エポック時点で SGD が GD の約20分の1の損失に達している理由を、「同じデータ接触量なら SGD は200倍多く更新できる(1標本の勾配でも不偏なので概ね正しい方向に動ける:問18.2)」という観点から説明せよ。</li>
+<li>50エポック時点の順位は \(B=16\)(\(0.0905\))\(\lt\) GD(\(0.0916\))\(\lt\) \(B=1\)(\(0.0924\))。\(B=1\) が最後に伸び悩む理由をノイズ床(問18.4:分散 \(\propto\eta\times\mathrm{Var}/B\))で説明せよ(なお GD の \(0.0916\) は床ではなく、50歩でまだ収束途上の値である)。</li>
+<li>この実験から「序盤は小さいバッチで荒く速く、終盤は大きいバッチ(または小さい学習率)で静かに詰める」という実務の定石を導け。大規模学習でバッチサイズと学習率を一緒にスケールさせる慣行にも触れよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-8">
+<div class="phead"><span class="pnum">問 18.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">過学習のU字カーブ — 正則化の実験</span></div>
+<p>真の関数 \(y=\sin(\pi x)\) にノイズ(標準偏差 \(0.15\))を載せた訓練12点・テスト100点(シード固定)に、9次多項式をリッジ回帰(\(\min\|A\boldsymbol w-\boldsymbol y\|^2+\lambda\|\boldsymbol w\|^2\)、解 \(\boldsymbol w=(A^\top A+\lambda I)^{-1}A^\top\boldsymbol y\))で当てはめた実測(検証済み):</p>
+<ul>
+<li>\(\lambda=0\):訓練 \(0.0019\)/テスト \(0.0323\)、係数の最大絶対値 \(23.1\)</li>
+<li>\(\lambda=10^{-2}\):訓練 \(0.0120\)/テスト \(0.0201\)(テスト最小)、係数最大 \(2.9\)</li>
+<li>\(\lambda=1\):訓練 \(0.158\)/テスト \(0.148\)、係数最大 \(1.0\)</li>
+</ol>
+<ol class="sublist">
+<li>\(\lambda=0\) で訓練誤差がノイズ分散(\(0.15^2=0.0225\))より小さい \(0.0019\) まで落ちているのに、テスト誤差はその17倍 — 何が起きているか(10係数で12点をほぼ暗記:過学習)を、係数の暴れ(\(23.1\))と関連づけて説明せよ。</li>
+<li>訓練誤差が \(\lambda\) について単調増加(\(0.0019\to0.0120\to0.158\))、テスト誤差がU字(\(0.0323\to0.0201\to0.148\))になる理由を、「\(\lambda\) はデータへの忠実さと関数の暴れにくさの混合比(問11.6)」として説明せよ。閉じた式 \(\boldsymbol w(\lambda)=(A^\top A+\lambda I)^{-1}A^\top\boldsymbol y\) の中の \(+\lambda I\) が果たしている役割(問9.6・12.9:退化しかけた \(A^\top A\) の正定値化・係数の縮小)も述べよ。</li>
+<li>テスト誤差を直接最適化することはできない(テストデータは学習に使えない)。実務で \(\lambda\) をどう選ぶか(検証用データ・交差検証)を述べ、「最適化(訓練誤差を下げる技術:第III部)と汎化(テスト誤差を下げる目的)は別物であり、正則化・早期終了・データ拡張はその橋渡しである」という本書の結論をまとめよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>不偏性 \(E[\nabla\ell_I]=\nabla L\) と分散 \(\mathrm{Var}/B\) を証明つきで言える</li>
+<li>ノイズ床 \(\frac{\eta\sigma^2}{2-\eta}\) と減衰則 \(\sigma^2/K\) を、漸化式・恒等式から導ける</li>
+<li>Adam 系を「勾配統計による対角前処理」として第13・14章の言葉で説明できる</li>
+<li>凸代理損失の2条件(上界・凸)と、その御利益を言える</li>
+<li>GD/SGD 実験と正則化実験の数値を、本書の理論で過不足なく説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch19">
+<p class="chnum">第19章</p>
+<h2>ε-δ論法</h2>
+<p class="chsub">— 「限りなく近づく」を仕様書に書き直す</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>第1章では極限を「限りなく近づく」という直感で運用してきました。院試の記述問題と大学以降の数学は、その直感を<b>検証可能な仕様</b>に書き直したもの — ε-δ論法 — を要求します。仕様の形は「任意の許容誤差 ε に対して、ある応答 δ(または N)が存在して、条件を満たすすべての入力で誤差が ε 未満」。これは<b>挑戦者(ε を突きつける側)と応答者(δ を返す側)のゲーム</b>であり、量化子(∀と∃)の順序がゲームの手番を決めます。順序を1つ入れ替えるだけで「連続」が「一様連続」に化け、命題の強さが変わる — この感覚は、プログラムの仕様記述(任意の入力に対しある出力が…)や誤差保証つき数値計算とまったく同じ思考法です。本書の最終章として、第1章の極限計算・第3章の平均値の定理・第13章のリプシッツ連続を、定義のレベルから証明できる足腰に鍛え直します。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>数列の極限(ε-N)と関数の極限(ε-δ)の定義を、量化子の順序まで正確に書ける</li>
+<li>与えられた ε に対する N・δ を具体的に構成する証明(順方向のゲーム)を書ける</li>
+<li>定義の否定命題を機械的に作り、「収束しない」ことを証明できる</li>
+<li>連続と一様連続の違いを、量化子の順序(δ が何に依存してよいか)で説明できる</li>
+<li>ε/2 論法・min をとる技法・逆三角不等式など、証明の定番部品を使える</li>
+<li>リプシッツ連続を「δ を陽に書ける一様連続性」として理解し、数値誤差の保証に翻訳できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">数列の収束(ε-N)</b>:\(\displaystyle\lim_{n\to\infty}a_n=L\ \iff\) 任意の \(\varepsilon\gt0\) に対して、ある番号 \(N\) が存在して、\(n\ge N\) を満たすすべての \(n\) で \(|a_n-L|\lt\varepsilon\)</li>
+<li><b class="term">関数の極限(ε-δ)</b>:\(\displaystyle\lim_{x\to a}f(x)=L\ \iff\) 任意の \(\varepsilon\gt0\) に対して、ある \(\delta\gt0\) が存在して、\(0\lt|x-a|\lt\delta\) を満たすすべての \(x\) で \(|f(x)-L|\lt\varepsilon\)</li>
+<li><b class="term">連続</b>:\(f\) が点 \(a\) で連続 \(\iff\) 任意の \(\varepsilon\gt0\) に対して、ある \(\delta\gt0\) が存在して、\(|x-a|\lt\delta\) なるすべての \(x\) で \(|f(x)-f(a)|\lt\varepsilon\)</li>
+<li><b class="term">一様連続</b>:任意の \(\varepsilon\gt0\) に対して、ある \(\delta\gt0\) が存在して、\(|x-y|\lt\delta\) なる<b>すべての組</b> \(x,y\) で \(|f(x)-f(y)|\lt\varepsilon\)(\(\delta\) は場所によらず \(\varepsilon\) だけで決まる)</li>
+<li><b class="term">否定の作り方</b>:\(\forall\) と \(\exists\) を交換し、最後の条件を否定する。収束の否定:ある \(\varepsilon\gt0\) が存在して、どの \(N\) に対しても、\(n\ge N\) かつ \(|a_n-L|\ge\varepsilon\) なる \(n\) がある</li>
+<li><b class="term">ゲームの読み</b>:∀(相手が選ぶ:先手)→ ∃(自分が応じる:後手)。<b>後に出てくる文字ほど、先に出た文字に依存してよい</b>(\(N=N(\varepsilon)\)、\(\delta=\delta(\varepsilon,a)\) など)</li>
+</ul>
+</div>
+
+<section class="prob" id="q19-1">
+<div class="phead"><span class="pnum">問 19.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">ε-N の読み方と最初の証明</span></div>
+<ol class="sublist">
+<li>「任意の \(\varepsilon\gt0\) に対して、ある \(N\) が存在して、\(n\ge N\) なるすべての \(n\) で \(|a_n-L|\lt\varepsilon\)」を、\(\varepsilon\) を突きつける挑戦者と \(N\) を返す応答者のゲームとして言い換えよ。応答 \(N\) が \(\varepsilon\) に依存してよい(\(N=N(\varepsilon)\))のはなぜか、量化子の順序から説明せよ。</li>
+<li>\(\displaystyle\lim_{n\to\infty}\frac1n=0\) を定義に従って証明せよ。すなわち、与えられた \(\varepsilon\gt0\) に対して \(N=\Bigl\lceil\dfrac1\varepsilon\Bigr\rceil+1\) と応答すれば、\(n\ge N\) なるすべての \(n\) で \(\Bigl|\dfrac1n-0\Bigr|\lt\varepsilon\) となることを確かめよ。\(\varepsilon=0.01\) のときの \(N\) の値も述べよ(検証済み:\(N=101\))。</li>
+</ol>
+</section>
+
+<section class="prob" id="q19-2">
+<div class="phead"><span class="pnum">問 19.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">ε-δ の型 — 1次関数で素振り</span></div>
+<p>\(\displaystyle\lim_{x\to2}(3x+1)=7\) を定義に従って証明せよ。手順:</p>
+<ol class="sublist">
+<li>目標の量を変形する:\(|(3x+1)-7|=3|x-2|\)(検証済みの恒等式)。</li>
+<li>この形から、任意の \(\varepsilon\gt0\) に対して \(\delta=\dfrac\varepsilon3\) と応答すればよいことを見抜き、「\(0\lt|x-2|\lt\delta\) ならば \(|(3x+1)-7|\lt\varepsilon\)」の証明を清書せよ。</li>
+<li>一般に1次関数 \(f(x)=cx+d\)(\(c\ne0\))なら \(\delta=\dfrac\varepsilon{|c|}\) で足りる — 傾きが誤差の増幅率であることを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q19-3">
+<div class="phead"><span class="pnum">問 19.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">min をとる技 — 2次関数の ε-δ</span></div>
+<p>\(\displaystyle\lim_{x\to3}x^2=9\) を定義に従って証明する。</p>
+<ol class="sublist">
+<li>\(|x^2-9|=|x-3|\,|x+3|\) と因数分解し、困りごと —「増幅率 \(|x+3|\) が \(x\) に依存して定数でない」— を言葉にせよ。</li>
+<li>先に \(|x-3|\le1\) と枠をはめれば \(2\le x\le4\)、したがって \(|x+3|\le7\) と増幅率に上限がつく(検証済み)。これを使って、任意の \(\varepsilon\gt0\) に対する応答 \(\delta=\min\Bigl(1,\ \dfrac\varepsilon7\Bigr)\) が定義の条件を満たすことを証明せよ。</li>
+<li>なぜ \(\min\) が必要か:\(\varepsilon\) が大きいとき(たとえば \(\varepsilon=100\))に \(\delta=\varepsilon/7\) だけを使うとどこが破綻するかを指摘せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q19-4">
+<div class="phead"><span class="pnum">問 19.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">否定命題 — 「収束しない」を証明する</span></div>
+<ol class="sublist">
+<li>収束の定義の否定を作れ:「\(a_n\) が \(L\) に収束<b>しない</b>」とは、<b>ある</b> \(\varepsilon\gt0\) が存在して、<b>どの</b> \(N\) に対しても、\(n\ge N\) かつ \(|a_n-L|\ge\varepsilon\) を満たす \(n\) が存在すること — ∀と∃がすべて反転し、不等号の向きが変わることを確認せよ。</li>
+<li>\(a_n=(-1)^n\) はどんな実数 \(L\) にも収束しないことを、\(\varepsilon=\dfrac12\) を選んで証明せよ。(ヒント:\((1-L)+(1+L)=2\)(\(L\) が消える:検証済み)と三角不等式から \(|1-L|+|{-1}-L|\ge2\)、したがって \(\max\bigl(|1-L|,\ |{-1}-L|\bigr)\ge1\gt\dfrac12\) — どの \(N\) の先にも、偶数番か奇数番のどちらかで \(L\) から \(\dfrac12\) 以上離れた項がある。)</li>
+<li>この論法が「\(L\) の場合分けを一切せずに、すべての \(L\) を同時に倒している」ことに注目せよ。数値検証でも \(L\in[-3,3]\) の格子すべてで \(\max\bigl(|1-L|,|{-1}-L|\bigr)\ge1\) を確認済みである。</li>
+</ol>
+</section>
+
+<section class="prob" id="q19-5">
+<div class="phead"><span class="pnum">問 19.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">量化子の順序が命 — 連続 vs 一様連続</span></div>
+<ol class="sublist">
+<li>「\(f\) が定義域の各点で連続」と「\(f\) が一様連続」の定義を並べて書き、違いが<b>「\(\exists\delta\)」と「\(\forall\)(場所)」の順序だけ</b>であることを確認せよ:各点連続では \(\delta\) は \(\varepsilon\) と<b>場所 \(a\)</b> の両方に依存してよいが、一様連続では \(\delta\) は \(\varepsilon\) だけで決めねばならない。</li>
+<li>\(f(x)=x^2\) は \(\mathbb R\) 上で連続だが一様連続で<b>ない</b>ことを示せ。(ヒント:\(\varepsilon=1\) を選ぶ。どんな \(\delta\gt0\) に対しても、\(a=\dfrac2\delta\)、\(x=a\)、\(y=a+\dfrac\delta2\) とおくと \(|x-y|=\dfrac\delta2\lt\delta\) なのに \(|x^2-y^2|=a\delta+\dfrac{\delta^2}4=2+\dfrac{\delta^2}4\gt1\)(検証済み)— 応答者がどんな \(\delta\) を出しても、遠方に反例の組が作れる。)</li>
+<li>一方、区間 \([0,1]\) 上では \(|x^2-y^2|=|x+y|\,|x-y|\le2|x-y|\)(検証済み)なので、\(\delta=\dfrac\varepsilon2\) が場所によらず通用し、一様連続である。(2) との違い —「増幅率 \(|x+y|\) が有界か否か」— を述べよ。(一般に「有界閉区間上の連続関数は一様連続」(ハイネ・カントールの定理)が成り立つが、証明は成書に譲る。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q19-6">
+<div class="phead"><span class="pnum">問 19.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">ε/2 論法 — 証明の定番部品</span></div>
+<ol class="sublist">
+<li>\(f,g\) がともに点 \(a\) で連続なら、和 \(f+g\) も \(a\) で連続であることを証明せよ。(型:任意の \(\varepsilon\gt0\) をとる。\(f\) の連続性を誤差 \(\dfrac\varepsilon2\) で使って \(\delta_1\) を、\(g\) の連続性を誤差 \(\dfrac\varepsilon2\) で使って \(\delta_2\) をもらい、\(\delta=\min(\delta_1,\delta_2)\) と応答する。三角不等式(5000組で数値検証済み)で \(\dfrac\varepsilon2+\dfrac\varepsilon2=\varepsilon\) に収める。)</li>
+<li>\(f\) が \(a\) で連続なら \(|f|\) も \(a\) で連続であることを、逆三角不等式 \(\bigl||f(x)|-|f(a)|\bigr|\le|f(x)-f(a)|\)(数値検証済み)を使って証明せよ。この場合、\(|f|\) 側の応答 \(\delta\) は \(f\) 側の \(\delta\) を<b>そのまま流用</b>できる — なぜかを述べよ。</li>
+<li>「もらった予算 \(\varepsilon\) を部品に配分し(\(\varepsilon/2\) ずつ)、各部品の \(\delta\) の \(\min\) で応答する」— この設計は、誤差予算(error budget)を部品に割り振るエンジニアリングそのものである。部品が \(k\) 個なら予算をどう配ればよいか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q19-7">
+<div class="phead"><span class="pnum">問 19.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">リプシッツ連続 — δ を陽に書ける世界と数値誤差</span></div>
+<p>\(f\) が定数 \(K\) で<b>リプシッツ連続</b>とは、すべての \(x,y\) で \(|f(x)-f(y)|\le K|x-y|\) が成り立つこと(第13章の \(L\)-平滑性は「勾配が」リプシッツ、こちらは「値が」リプシッツ)。</p>
+<ol class="sublist">
+<li>リプシッツ連続なら一様連続であることを示せ:任意の \(\varepsilon\gt0\) に対して \(\delta=\dfrac\varepsilon K\) と応答すればよい — <b>δ が公式として陽に書ける</b>。例:\(\sin\) は \(K=1\)(平均値の定理:\(|\sin x-\sin y|=|\cos c|\,|x-y|\le|x-y|\)、5000組で数値検証済み)、\(x^2\) は \([0,10]\) 上で \(K=20\)(同検証済み)。</li>
+<li>誤差保証への翻訳:入力に測定誤差 \(|x-\tilde x|\lt\dfrac\varepsilon K\) しかなければ、出力誤差は \(|f(x)-f(\tilde x)|\lt\varepsilon\) — 「出力精度 \(\varepsilon\) が欲しければ入力精度 \(\varepsilon/K\) を用意せよ」という仕様書として読めることを述べよ。リプシッツ定数 \(K\) が大きい関数(急峻)ほど入力に高い精度が要る。</li>
+<li>ただし<b>浮動小数点演算</b>では、関数自体は穏やかでも計算<b>手順</b>が誤差を増幅しうる。実測(検証済み):\(x=10^{-8}\) で \(1-\cos x\) を素朴に計算すると倍精度では \(\cos x\) が \(1.0\) に丸まり結果は<b>ちょうど \(0.0\)</b>(真値 \(\approx5\times10^{-17}\) に対し相対誤差100%の桁落ち)。等価な式 \(2\sin^2\dfrac x2\) で計算し直すと相対誤差 \(10^{-12}\) 未満で真値と一致する。「数学的に等しい式が数値的に等しくない」理由(近い数どうしの引き算による有効桁の消失)を説明し、式変形が精度対策になることを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q19-8">
+<div class="phead"><span class="pnum">問 19.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">定義から定理へ — 院試の2大定番証明</span></div>
+<ol class="sublist">
+<li><b>収束列は有界</b>:\(a_n\to L\) ならば、ある \(M\) が存在してすべての \(n\) で \(|a_n|\le M\) となることを証明せよ。(型:定義で \(\varepsilon=1\) を選ぶと、ある \(N\) から先はすべて \(|a_n|\le|L|+1\)。残るのは最初の有限個 \(a_1,\dots,a_{N-1}\) だけなので、\(M=\max\bigl(|a_1|,\dots,|a_{N-1}|,\ |L|+1\bigr)\) ととれる。「無限個の心配を、定義で有限個の心配に変える」構図に注目。)</li>
+<li><b>はさみうちの原理</b>:すべての \(n\) で \(a_n\le b_n\le c_n\)、かつ \(a_n\to L\)、\(c_n\to L\) ならば \(b_n\to L\) を証明せよ。(型:任意の \(\varepsilon\gt0\) に対し、\(a\) 側から \(N_1\)、\(c\) 側から \(N_2\) をもらい、\(N=\max(N_1,N_2)\) と応答。\(n\ge N\) では \(L-\varepsilon\lt a_n\le b_n\le c_n\lt L+\varepsilon\)。)</li>
+<li>応用:\(\Bigl|\dfrac{\sin n}n\Bigr|\le\dfrac1n\) から \(\displaystyle\lim_{n\to\infty}\dfrac{\sin n}n=0\) を結論せよ(問1.5で直感的に使った「有界 \(\times\) 無限小」が、定義から正当化された:数値でも \(n\ge N=\lceil1/\varepsilon\rceil+1\) で \(|\sin n/n|\lt\varepsilon\) を確認済み)。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら修了)</h3>
+<ul>
+<li>ε-N・ε-δ・連続・一様連続の定義を、量化子の順序と依存関係(何が何の関数か)まで正確に書ける</li>
+<li>「δ(N)を構成して検証する」証明の清書を、1次・2次関数で再現できる</li>
+<li>定義の否定を機械的に作り、収束しないことの証明に使える</li>
+<li>連続と一様連続の差を、\(x^2\) の例(\(\mathbb R\) では×・\([0,1]\) では○)つきで説明できる</li>
+<li>ε/2 論法・min・逆三角不等式・「有限個に帰着」の4部品を組み合わせて定番定理を証明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="appendix">
+<p class="chnum">付録</p>
+<h2>主要公式集</h2>
+<p class="chsub">— 微分・積分・テイラー展開・凸性と最適化の早見表</p>
+</header>
+
+<div class="why">
+<h3>この付録の使い方</h3>
+<p>本文で導出・証明した公式のうち、繰り返し使うものだけを1か所に集めました。かっこ内は初出・導出の問題番号です — <b>ほぼすべて本文のどこかで一度は自分の手で導いた(または証明した)式</b>であり、丸暗記の表ではなく「導けるものを、速く引くための索引」として使ってください。問題番号の代わりに導出ヒントを添えた少数の項目は、隣の公式から1行で導けるものです。</p>
+</div>
+
+<div class="keybox">
+<h3>A.1 微分の公式</h3>
+<table>
+<tr><th>関数</th><th>導関数</th><th>関数</th><th>導関数</th></tr>
+<tr><td>\(x^n\)</td><td>\(nx^{n-1}\)(問2.2)</td><td>\(\sin x\)</td><td>\(\cos x\)(問2.3)</td></tr>
+<tr><td>\(e^x\)</td><td>\(e^x\)(問2.3)</td><td>\(\cos x\)</td><td>\(-\sin x\)(問2.3と同じ方法)</td></tr>
+<tr><td>\(a^x\)</td><td>\(a^x\log a\)(\(a^x=e^{x\log a}\) と問2.6)</td><td>\(\tan x\)</td><td>\(\dfrac1{\cos^2x}\)(問2.5)</td></tr>
+<tr><td>\(\log x\)</td><td>\(\dfrac1x\)(問2.7)</td><td>\(\arctan x\)</td><td>\(\dfrac1{1+x^2}\)(問2.7)</td></tr>
+<tr><td>\(\log_ax\)</td><td>\(\dfrac1{x\log a}\)(\(\log_ax=\dfrac{\log x}{\log a}\))</td><td>\(\arcsin x\)</td><td>\(\dfrac1{\sqrt{1-x^2}}\)(問2.7)</td></tr>
+</table>
+<ul>
+<li><b class="term">微分の定義</b>:\(f'(x)=\displaystyle\lim_{h\to0}\frac{f(x+h)-f(x)}h\)(問2.1)</li>
+<li><b class="term">積の微分</b>:\((fg)'=f'g+fg'\)(問2.4)。<b class="term">商の微分</b>:\(\Bigl(\dfrac fg\Bigr)'=\dfrac{f'g-fg'}{g^2}\)(問2.5)</li>
+<li><b class="term">連鎖律</b>:\(\bigl(f(g(x))\bigr)'=f'(g(x))\,g'(x)\)(問2.6)。<b class="term">逆関数</b>:\((f^{-1})'(x)=\dfrac1{f'(y)}\)(問2.7)</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>A.2 積分の公式</h3>
+<table>
+<tr><th>関数</th><th>原始関数(\(+C\) 省略)</th><th>関数</th><th>原始関数(\(+C\) 省略)</th></tr>
+<tr><td>\(x^n\ (n\ne-1)\)</td><td>\(\dfrac{x^{n+1}}{n+1}\)(問5.2)</td><td>\(\sin x\)</td><td>\(-\cos x\)(問5.3)</td></tr>
+<tr><td>\(\dfrac1x\)</td><td>\(\log|x|\)(問5.2)</td><td>\(\cos x\)</td><td>\(\sin x\)(問5.2)</td></tr>
+<tr><td>\(e^x\)</td><td>\(e^x\)(問5.2)</td><td>\(\dfrac1{\cos^2x}\)</td><td>\(\tan x\)(問2.5の逆読み)</td></tr>
+<tr><td>\(\dfrac1{1+x^2}\)</td><td>\(\arctan x\)(問5.2)</td><td>\(\dfrac1{x^2+a^2}\)</td><td>\(\dfrac1a\arctan\dfrac xa\)(置換 \(x=at\))</td></tr>
+</table>
+<ul>
+<li><b class="term">置換積分</b>:\(\displaystyle\int f(g(x))\,g'(x)\,dx=\int f(u)\,du\)(\(u=g(x)\)。問5.6)</li>
+<li><b class="term">部分積分</b>:\(\displaystyle\int f'g\,dx=fg-\int fg'\,dx\)(積の微分の逆読み。問5.7)</li>
+<li><b class="term">偶奇性</b>:対称区間 \([-a,a]\) で、奇関数の積分は \(0\)、偶関数は \(\displaystyle2\int_0^a\)(問5.5)</li>
+<li><b class="term">よく使う広義積分</b>:\(\displaystyle\int_0^\infty e^{-ax}dx=\dfrac1a\ (a\gt0)\)(問6.9)、\(\displaystyle\int_{-\infty}^\infty e^{-x^2}dx=\sqrt\pi\)(ガウス積分。問10.5)、\(\displaystyle\int_1^\infty\dfrac{dx}{x^p}\) は \(p\gt1\) で収束(問6.5)</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>A.3 テイラー展開(\(x=0\) のまわり)</h3>
+<table>
+<tr><th>関数</th><th>展開(問4.2)</th><th>収束範囲</th></tr>
+<tr><td>\(e^x\)</td><td>\(1+x+\dfrac{x^2}{2!}+\dfrac{x^3}{3!}+\cdots\)</td><td>すべての \(x\)</td></tr>
+<tr><td>\(\sin x\)</td><td>\(x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\cdots\)</td><td>すべての \(x\)</td></tr>
+<tr><td>\(\cos x\)</td><td>\(1-\dfrac{x^2}{2!}+\dfrac{x^4}{4!}-\cdots\)</td><td>すべての \(x\)</td></tr>
+<tr><td>\(\log(1+x)\)</td><td>\(x-\dfrac{x^2}2+\dfrac{x^3}3-\cdots\)</td><td>\(-1\lt x\le1\)</td></tr>
+<tr><td>\(\dfrac1{1-x}\)</td><td>\(1+x+x^2+x^3+\cdots\)</td><td>\(|x|\lt1\)</td></tr>
+<tr><td>\((1+x)^\alpha\)</td><td>\(1+\alpha x+\dfrac{\alpha(\alpha-1)}2x^2+\cdots\)</td><td>\(|x|\lt1\)</td></tr>
+</table>
+<ul>
+<li><b class="term">1次近似(接線)</b>:\(f(a+h)\approx f(a)+f'(a)\,h\)(問2.8)。上表を1次で打ち切れば \(e^x\approx1+x\)、\(\log(1+x)\approx x\)、\((1+x)^\alpha\approx1+\alpha x\)(問2.8・4.2)</li>
+<li><b class="term">ラグランジュの剰余項</b>(問4.5):\(n\) 次で打ち切った誤差は、\(0\) と \(x\) の間の<b>ある</b> \(c\) を用いて \(R_{n+1}=\dfrac{f^{(n+1)}(c)}{(n+1)!}x^{n+1}\) と書ける — 誤差の大きさは \(|R_{n+1}|\le\dfrac{\max|f^{(n+1)}|}{(n+1)!}|x|^{n+1}\) で見積もる</li>
+<li><b class="term">ランダウ記号</b>(問4.3):\(f(x)=o(g(x))\ (x\to0)\) は \(\dfrac{f(x)}{g(x)}\to0\) の略記。たとえば \(\sin x=x-\dfrac{x^3}6+o(x^3)\)</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>A.4 極限・連続の要点</h3>
+<ul>
+<li><b class="term">基本極限</b>:\(\displaystyle\lim_{x\to0}\frac{\sin x}x=1\)(問1.6)、\(\displaystyle\lim_{n\to\infty}\Bigl(1+\frac1n\Bigr)^n=e\)、\(\displaystyle\lim_{x\to0}\frac{e^x-1}x=1\)、\(\displaystyle\lim_{x\to0}\frac{\log(1+x)}x=1\)(以上3つは問1.7)</li>
+<li><b class="term">増大度の階層</b>(問1.9・3.8):\(x\to\infty\) で \(\log x\ \ll\ x^a\ (a\gt0)\ \ll\ e^x\)(比の極限が \(0\))</li>
+<li><b class="term">はさみうちの原理</b>(問1.5・19.8):\(a_n\le b_n\le c_n\)、両端が同じ \(L\) に収束すれば \(b_n\to L\)</li>
+<li><b class="term">ε-N / ε-δ</b>(問19.1・19.2):収束とは「任意の \(\varepsilon\gt0\) に対して、ある \(N\)(または \(\delta\gt0\))が存在して、範囲内のすべてで誤差 \(\lt\varepsilon\)」— \(N=N(\varepsilon)\)、\(\delta=\delta(\varepsilon)\) と依存してよい</li>
+<li><b class="term">中間値の定理</b>(問1.8):閉区間上の連続関数は中間値をすべてとる。<b class="term">最大値の定理</b>(問3.2・9.7):有界閉集合上の連続関数は最大・最小を達成する。<b class="term">平均値の定理</b>(問3.4):\(\dfrac{f(b)-f(a)}{b-a}=f'(c)\) なる \(c\) が \((a,b)\) に存在</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>A.5 多変数の要点</h3>
+<ul>
+<li><b class="term">勾配</b>(問7.2):\(\nabla f=\Bigl(\dfrac{\partial f}{\partial x_1},\dots,\dfrac{\partial f}{\partial x_n}\Bigr)\)。<b class="term">方向微分</b>(問7.6):単位ベクトル \(\boldsymbol u\) 方向に \(\nabla f^\top\boldsymbol u\)。最急上昇方向は \(\nabla f\) の向き(問7.6)、勾配は等高線に垂直(問7.7)</li>
+<li><b class="term">連鎖律</b>(問7.5):\(\dfrac d{dt}f(\boldsymbol r(t))=\nabla f(\boldsymbol r(t))^\top\boldsymbol r'(t)\)</li>
+<li><b class="term">2次近似</b>(問8.4):\(f(\boldsymbol a+\boldsymbol h)\approx f(\boldsymbol a)+\nabla f(\boldsymbol a)^\top\boldsymbol h+\dfrac12\boldsymbol h^\top\nabla^2f(\boldsymbol a)\,\boldsymbol h\)(\(\nabla^2f\) はヘッセ行列。\(C^2\) なら偏微分の順序交換により対称:問7.3)</li>
+<li><b class="term">2変数の極値判定</b>(問9.3):停留点で \(D=f_{xx}f_{yy}-f_{xy}^2\) として、\(D\gt0\) かつ \(f_{xx}\gt0\) なら極小、\(D\gt0\) かつ \(f_{xx}\lt0\) なら極大、\(D\lt0\) なら鞍点、\(D=0\) は判定保留(高次の情報が必要:問9.5)</li>
+<li><b class="term">一般次元</b>(問8.3・9.2):停留点でヘッセ行列が正定値なら極小、負定値なら極大、正負の固有値が混在すれば鞍点</li>
+<li><b class="term">重積分</b>:累次積分で計算(順序交換はフビニ:問10.3)、変数変換はヤコビアン \(|\det J|\) を掛ける(問10.7)。極座標では \(dx\,dy=r\,dr\,d\theta\)(問10.4)</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>A.6 凸性と最適化の早見表</h3>
+<ul>
+<li><b class="term">凸性の3判定</b>(問12.2・12.4・12.3):弦 \(f(t\boldsymbol x+(1-t)\boldsymbol y)\le tf(\boldsymbol x)+(1-t)f(\boldsymbol y)\) ⟺(微分可能なら)接線 \(f(\boldsymbol y)\ge f(\boldsymbol x)+\nabla f(\boldsymbol x)^\top(\boldsymbol y-\boldsymbol x)\) ⟺(\(C^2\) なら)\(\nabla^2f\succeq O\)</li>
+<li><b class="term">凸性を保つ演算</b>(問12.6):非負係数の和/アフィン合成 \(f(A\boldsymbol x+\boldsymbol b)\)/各点最大 \(\max(f,g)\)。<b class="term">イェンゼン</b>(問12.5):凸なら \(f(E[X])\le E[f(X)]\)</li>
+<li><b class="term">凸の御利益</b>(問12.7):局所最小 \(=\) 大域最小。狭義凸なら一意。<b class="term">強凸</b>(問12.9):\(\nabla^2f\succeq\mu I\) なら2次成長 \(f(\boldsymbol y)\ge f(\boldsymbol x^*)+\dfrac\mu2\|\boldsymbol y-\boldsymbol x^*\|^2\)</li>
+<li><b class="term">降下補題</b>(問13.4):\(L\)-平滑なら \(f(\boldsymbol x-\tfrac1L\nabla f)\le f(\boldsymbol x)-\dfrac1{2L}\|\nabla f\|^2\)。学習率の安定条件は \(\eta\lt\dfrac2L\)(問13.2・13.7)</li>
+<li><b class="term">収束レート</b>(問13.6・13.9・14.3):勾配降下法 \(\Bigl(\dfrac{\kappa-1}{\kappa+1}\Bigr)^k\)、モメンタム \(\Bigl(\dfrac{\sqrt\kappa-1}{\sqrt\kappa+1}\Bigr)^k\)(\(\kappa=L/\mu\))、ニュートン法は2次収束(桁数が毎歩倍増、\(|e_{k+1}|\le M|e_k|^2\))</li>
+<li><b class="term">ラグランジュ条件</b>(問15.2):等式制約の最適点で \(\nabla f=\lambda\nabla g\)(\(\nabla g\ne\boldsymbol0\) のとき)。乗数は感度 \(\lambda=\dfrac{dV}{dc}\)(問15.4)</li>
+<li><b class="term">KKT条件</b>(問16.2):停留性 \(\nabla f+\sum\mu_i\nabla g_i+\sum\lambda_j\nabla h_j=\boldsymbol0\)/主実行可能性/\(\mu_i\ge0\)/相補性 \(\mu_ig_i=0\)。凸問題では十分条件でもある</li>
+<li><b class="term">双対性</b>(問17.1・17.2):\(q(\lambda,\mu)=\inf_{\boldsymbol x}\mathcal L\) は常に凹で、弱双対 \(q\le p^*\)。凸+スレーター条件で強双対 \(p^*=d^*\)、等号連鎖から相補性(問17.6)</li>
+<li><b class="term">SGDの3点</b>(問18.2〜18.4):不偏 \(E[\widehat{\nabla L}]=\nabla L\)/分散は \(\mathrm{Var}/B\)/定数学習率のノイズ床 \(\approx\dfrac{\eta\sigma^2}{2-\eta}\)、減衰 \(\eta_k\sim1/k\) で \(E[\text{誤差}^2]\sim\sigma^2/k\)</li>
+</ul>
+</div>
+
+<footer class="book">
+<p>『情報系のための微分積分・最適化 問題集』 全19章・159問+付録。姉妹編『解答解説集』とセットで学習してください。</p>
+<p>すべての数値・記号計算(極限・導関数・積分・テイラー係数・極値判定・勾配法とニュートン法の反復値・KKT点・双対最適値など全589項目)は計算機代数システム SymPy / NumPy で検証済みです。</p>
+</footer>
+</div>
+</body>
+</html>

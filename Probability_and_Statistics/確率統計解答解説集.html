@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>情報系のための確率・統計 解答解説集 — 基礎から大学院レベルまで</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  chtml: { matchFontHeight: true }
+};
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+:root{
+  --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
+  --accent:#1e6b5a; --accent-soft:#edf5f2;
+  --lv1:#2f7d4f; --lv2:#1f4e8c; --lv3:#a83232;
+  --rule:#d8d8d2;
+  --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --sans:"Yu Gothic Medium","Yu Gothic","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.95;font-feature-settings:"palt";}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.15rem 5rem}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.5;letter-spacing:.02em}
+/* --- 表紙 --- */
+header.book{padding:4.2rem 0 2.2rem;border-bottom:3px double var(--accent)}
+header.book .series{color:var(--accent);font-family:var(--sans);font-weight:700;
+  letter-spacing:.35em;font-size:.8rem;margin:0 0 .9rem}
+header.book h1{font-size:2.05rem;margin:0 0 .5rem}
+header.book .subtitle{color:var(--sub);margin:0 0 1.4rem;font-size:1.02rem}
+header.book .meta{font-size:.82rem;color:var(--sub);line-height:2}
+/* --- 目次 --- */
+nav.toc{margin:2.2rem 0;padding:1.3rem 1.5rem;background:var(--card);
+  border:1px solid var(--rule);border-radius:6px}
+nav.toc h2{font-size:1.05rem;margin:0 0 .7rem;color:var(--accent)}
+nav.toc ol{margin:0;padding-left:1.4rem}
+nav.toc li{margin:.28rem 0;font-size:.95rem}
+nav.toc .cnt{color:var(--sub);font-size:.8rem;margin-left:.5em}
+/* --- 章トビラ --- */
+header.chap{margin:4.5rem 0 1.6rem;padding-top:2.2rem;border-top:1px solid var(--rule)}
+header.chap .chnum{font-family:var(--serif);color:var(--accent);font-size:1rem;
+  letter-spacing:.25em;margin:0}
+header.chap h2{font-size:1.75rem;margin:.15rem 0 .2rem}
+header.chap .chsub{color:var(--sub);margin:0;font-size:.98rem}
+/* --- 説明ボックス類 --- */
+.why,.learn,.keybox,.howto{margin:1.4rem 0;padding:1.1rem 1.35rem;border-radius:6px;
+  background:var(--card);border:1px solid var(--rule)}
+.why{border-left:4px solid var(--accent)}
+.why h3,.learn h3,.keybox h3,.howto h3{margin:0 0 .55rem;font-size:1.02rem;color:var(--accent)}
+.learn ul,.keybox ul{margin:.2rem 0;padding-left:1.35rem}
+.learn li,.keybox li{margin:.3rem 0}
+.keybox{background:var(--accent-soft);border-color:transparent}
+.keybox b.term{color:var(--accent)}
+/* --- 問題カード --- */
+section.prob,section.sol{margin:1.7rem 0;padding:1.15rem 1.35rem 1.05rem;
+  background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
+  border-radius:6px}
+section.prob{border-left-color:var(--accent)}
+.phead{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.5rem}
+.pnum{font-family:var(--serif);font-weight:700;font-size:1.08rem;color:var(--accent)}
+.lv{font-size:.72rem;font-weight:700;color:#fff;border-radius:3px;padding:.12rem .5rem;letter-spacing:.05em}
+.lv1{background:var(--lv1)}.lv2{background:var(--lv2)}.lv3{background:var(--lv3)}
+.ptag{font-size:.78rem;color:var(--sub)}
+section.prob p,section.sol p{margin:.55rem 0}
+ol.sublist{padding-left:1.6rem;margin:.4rem 0}
+ol.sublist li{margin:.35rem 0}
+/* --- 解説の段階 --- */
+section.sol{border-left-color:var(--accent)}
+section.sol h4{font-family:var(--sans);font-size:.85rem;letter-spacing:.15em;
+  color:#fff;background:var(--accent);display:inline-block;
+  padding:.14rem .8rem;border-radius:3px;margin:1.05rem 0 .35rem}
+section.sol h4.alt{background:var(--sub)}
+.note{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:var(--accent-soft);
+  border-radius:5px;font-size:.94rem}
+.note b:first-child{color:var(--accent)}
+.warn{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:#faf1ee;
+  border-left:3px solid var(--lv3);border-radius:0 5px 5px 0;font-size:.94rem}
+.warn b:first-child{color:var(--lv3)}
+/* --- 表 --- */
+table{border-collapse:collapse;margin:1rem 0;font-size:.93rem;width:100%}
+th,td{border:1px solid var(--rule);padding:.42rem .7rem;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+/* --- 章末 --- */
+.check{margin:2.2rem 0 0;padding:1rem 1.3rem;border:1px dashed var(--accent);border-radius:6px}
+.check h3{margin:0 0 .5rem;font-size:.98rem;color:var(--accent)}
+.check ul{margin:0;padding-left:1.35rem}
+footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
+  color:var(--sub);font-size:.82rem;line-height:1.9}
+mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+@media (max-width:520px){
+  body{font-size:15.5px}
+  header.book h1{font-size:1.65rem}
+  .wrap{padding:0 .9rem 4rem}
+  section.prob,section.sol{padding:1rem 1rem .9rem}
+}
+@media print{
+  body{background:#fff}
+  header.chap{break-before:page;border-top:none}
+  section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
+  nav.toc a{color:var(--ink)}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+<header class="book">
+<p class="series">情報系のための確率・統計</p>
+<h1>解答解説集</h1>
+<p class="subtitle">基礎から大学院レベルまで — 全18章・154問の詳解</p>
+<p class="meta">本書は『問題集』の姉妹編です。問題番号は完全に対応しています(問 3.4 の解説は 解 3.4)。<br>
+すべての数値計算(確率・期待値・分散・検定統計量・信頼区間・カルマンフィルタの更新値など全224項目)はSymPy / SciPyで検証済みです。</p>
+</header>
+
+<nav class="toc">
+<h2>目次</h2>
+<ol>
+<li><a href="#ch1">第1章 確率の基礎</a><span class="cnt">解 1.1〜1.9</span></li>
+<li><a href="#ch2">第2章 条件付き確率とベイズの定理</a><span class="cnt">解 2.1〜2.10</span></li>
+<li><a href="#ch3">第3章 離散型確率変数</a><span class="cnt">解 3.1〜3.10</span></li>
+<li><a href="#ch4">第4章 連続型確率変数</a><span class="cnt">解 4.1〜4.10</span></li>
+<li><a href="#ch5">第5章 多次元確率変数</a><span class="cnt">解 5.1〜5.9</span></li>
+<li><a href="#ch6">第6章 期待値の技法</a><span class="cnt">解 6.1〜6.9</span></li>
+<li><a href="#ch7">第7章 大数の法則と中心極限定理</a><span class="cnt">解 7.1〜7.9</span></li>
+<li><a href="#ch8">第8章 記述統計と標本分布</a><span class="cnt">解 8.1〜8.8</span></li>
+<li><a href="#ch9">第9章 点推定</a><span class="cnt">解 9.1〜9.9</span></li>
+<li><a href="#ch10">第10章 区間推定</a><span class="cnt">解 10.1〜10.7</span></li>
+<li><a href="#ch11">第11章 仮説検定</a><span class="cnt">解 11.1〜11.10</span></li>
+<li><a href="#ch12">第12章 回帰分析</a><span class="cnt">解 12.1〜12.8</span></li>
+<li><a href="#ch13">第13章 ベイズ統計入門</a><span class="cnt">解 13.1〜13.8</span></li>
+<li><a href="#ch14">第14章 マルコフ連鎖とポアソン過程</a><span class="cnt">解 14.1〜14.9</span></li>
+<li><a href="#ch15">第15章 状態推定とカルマンフィルタ</a><span class="cnt">解 15.1〜15.8</span></li>
+<li><a href="#ch16">第16章 情報理論の基礎</a><span class="cnt">解 16.1〜16.7</span></li>
+<li><a href="#ch17">第17章 信頼性工学の確率モデル</a><span class="cnt">解 17.1〜17.7</span></li>
+<li><a href="#ch18">第18章 測度論的確率論への入口</a><span class="cnt">解 18.1〜18.7</span></li>
+</ol>
+</nav>
+
+<div class="howto">
+<h3>解説の読み方</h3>
+<p>各解説は次の3段構成です。</p>
+<ul>
+<li><b>方針</b> — 解き始める前の見取り図。詰まったときは、まずここだけを読んでもう一度自力で挑戦してください(段階的ヒントとして使えます)。</li>
+<li><b>解答</b> — 答案として書ける形の完全な解。途中計算も省略せずに示します。</li>
+<li><b>ポイント</b> — その問題が教えてくれる本質、よくある誤り、先の章や画像処理・車載システムなど応用とのつながり。</li>
+</ul>
+<p>読んで「わかった」で止めず、<b>翌日、何も見ずにノートへ再現</b>できて初めて身についたと判定してください。証明問題は、論理の流れを自分の言葉で言い直せるかが基準です。</p>
+</div>
+
+<header class="chap" id="ch1">
+<p class="chnum">第1章</p>
+<h2>確率の基礎 — 解答解説</h2>
+<p class="chsub">標本空間・事象・数え上げ</p>
+</header>
+
+<section class="sol" id="a1-1">
+<div class="phead"><span class="pnum">解 1.1</span><span class="lv lv1">★</span><span class="ptag">標本空間と事象</span></div>
+<h4>方針</h4>
+<p>確率の第一歩は「起こりうる結果を全部書き出す」こと。3回の各回に H/T の2通りがあるから、積の法則で \(2^3\) 通り。</p>
+<h4>解答</h4>
+<p>(1) \(\Omega=\{\mathrm{HHH},\mathrm{HHT},\mathrm{HTH},\mathrm{THH},\mathrm{HTT},\mathrm{THT},\mathrm{TTH},\mathrm{TTT}\}\)、\(|\Omega|=2^3=8\)。</p>
+<p>(2) \(A=\{\mathrm{HHT},\ \mathrm{HTH},\ \mathrm{THH}\}\)(表2回・裏1回の並び)。</p>
+<p>(3) 各結果が等確率 \(1/8\) なので</p>
+<p>\[P(A)=\frac{|A|}{|\Omega|}=\frac{3}{8}\]</p>
+<h4 class="alt">ポイント</h4>
+<p>確率の計算は「数える」ことから始まります。\(|A|=3\) は「3回のうち表になる2回を選ぶ」\(\binom{3}{2}\) と読めます — この見方を \(n\) 回に一般化したものが<b>二項分布</b>(第3章)です。列挙が効くのは小さい問題だけで、以後は順列・組合せ、さらに分布という「数え上げの完成品」を使っていきます。</p>
+</section>
+
+<section class="sol" id="a1-2">
+<div class="phead"><span class="pnum">解 1.2</span><span class="lv lv1">★</span><span class="ptag">順列と組合せ</span></div>
+<h4>方針</h4>
+<p>定義どおり計算する。「同時に引く」=順序を区別しない=組合せ。</p>
+<h4>解答</h4>
+<p>(1) \({}_5\mathrm{C}_2=\dfrac{5\cdot4}{2\cdot1}=10\)、\({}_6\mathrm{P}_3=6\cdot5\cdot4=120\)、\({}_8\mathrm{C}_3=\dfrac{8\cdot7\cdot6}{3\cdot2\cdot1}=56\)。</p>
+<p>(2) 引き方の総数は \(\binom{52}{2}=1326\)、2枚ともハートは \(\binom{13}{2}=78\) 通り。よって</p>
+<p>\[P=\frac{\binom{13}{2}}{\binom{52}{2}}=\frac{78}{1326}=\frac{1}{17}\approx 0.0588\]</p>
+<h4 class="alt">ポイント</h4>
+<p>分子と分母で「数え方(順序の扱い)」を揃えることが鉄則です。順序を区別して数えても \(\dfrac{13\cdot12}{52\cdot51}=\dfrac{1}{17}\) と同じ答えになります — 揃えずに混ぜるのが最頻出ミス。なお \(\dfrac{13}{52}\cdot\dfrac{12}{51}\) と読めば、これは次章の<b>乗法定理</b>(条件付き確率の積)そのものです。</p>
+</section>
+
+<section class="sol" id="a1-3">
+<div class="phead"><span class="pnum">解 1.3</span><span class="lv lv1">★</span><span class="ptag">余事象</span></div>
+<h4>方針</h4>
+<p>「少なくとも一方」は、余事象「1つも6が出ない」の方が数えやすい。</p>
+<h4>解答</h4>
+<p>(a) 余事象「どちらも6でない」は \(5\times5=25\) 通りで確率 \(25/36\)。よって</p>
+<p>\[P=1-\frac{25}{36}=\frac{11}{36}\approx 0.306\]</p>
+<p>(b) 直接数える:1個目が6は6通り、2個目が6は6通り、両方6の \((6,6)\) を二重に数えているので \(6+6-1=11\) 通り。\(P=11/36\) で一致。</p>
+<h4 class="alt">ポイント</h4>
+<p>「<b>少なくとも1つ → 余事象</b>」は本書で繰り返し使う定石です(問1.7、問2.9、問3.7 …)。また (b) の「重複を引く」は加法定理・包除原理(問1.4、1.6)の最小例になっています。同じ答えを2通りで出す習慣は、最良の検算法でもあります。</p>
+</section>
+
+<section class="sol" id="a1-4">
+<div class="phead"><span class="pnum">解 1.4</span><span class="lv lv1">★</span><span class="ptag">加法定理</span></div>
+<h4>方針</h4>
+<p>ハートと絵札は排反でない(ハートの絵札がある)。加法定理で重複分を引く。</p>
+<h4>解答</h4>
+<p>\(P(\text{ハート})=\dfrac{13}{52}\)、\(P(\text{絵札})=\dfrac{12}{52}\)、\(P(\text{ハートの絵札})=\dfrac{3}{52}\)。よって</p>
+<p>\[P=\frac{13}{52}+\frac{12}{52}-\frac{3}{52}=\frac{22}{52}=\frac{11}{26}\approx 0.423\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「足しすぎた分を戻す」のが加法定理の心。排反(\(A\cap B=\emptyset\))のときだけ単純な足し算になります。3つ以上の集合への一般化が包除原理(問1.6)です。</p>
+</section>
+
+<section class="sol" id="a1-5">
+<div class="phead"><span class="pnum">解 1.5</span><span class="lv lv2">★★</span><span class="ptag">誕生日問題</span></div>
+<h4>方針</h4>
+<p>「一致する組がある」の余事象「全員の誕生日がバラバラ」を数える。1人ずつ加えていき、それまでの誰とも重ならない確率を掛けていく。</p>
+<h4>解答</h4>
+<p>(1) 全員異なる確率は</p>
+<p>\[\frac{365}{365}\cdot\frac{364}{365}\cdots\frac{365-n+1}{365}=\frac{365!}{(365-n)!\,365^n}\]</p>
+<p>よって \(p_n=1-\dfrac{365!}{(365-n)!\,365^n}\)。</p>
+<p>(2) \(n=23\) のとき、積を計算すると全員異なる確率は \(0.4927\) となり、</p>
+<p>\[p_{23}\approx 1-0.4927=0.5073>\frac12\]</p>
+<p>(\(n=22\) では \(p_{22}\approx0.476\) でまだ \(1/2\) 未満。23人が境目。)</p>
+<p>(3) 直感が外れるのは、「<b>特定の誰か</b>と自分が一致する」(確率 \(1/365\) ずつ)ではなく、「\(\binom{23}{2}=253\) 組の<b>どこかのペア</b>で一致する」確率だから。比べる組の数が人数の2乗のオーダーで増えるため、少人数でも一致が起こりやすい。</p>
+<h4 class="alt">ポイント</h4>
+<p>情報系では<b>ハッシュ衝突</b>の見積もりとして重要です。\(m\) 通りの値に一様に割り当てるとき、約 \(1.18\sqrt{m}\) 個で衝突確率が50%に達します(\(m=365\) なら \(1.18\sqrt{365}\approx22.5\) 人 — 本問と整合)。ハッシュ長を \(b\) ビットにしても総当たりでなく \(2^{b/2}\) 程度で衝突が見つかる、という<b>バースデー攻撃</b>の根拠がこの計算です。</p>
+</section>
+
+<section class="sol" id="a1-6">
+<div class="phead"><span class="pnum">解 1.6</span><span class="lv lv2">★★</span><span class="ptag">包除原理</span></div>
+<h4>方針</h4>
+<p>2, 3, 5 の倍数の集合を \(A,B,C\) とし、3集合の包除原理。\(k\) の倍数の個数は \(\lfloor 100/k\rfloor\)。</p>
+<h4>解答</h4>
+<p>\(|A|=50\)、\(|B|=33\)、\(|C|=20\)。共通部分は最小公倍数の倍数で、\(|A\cap B|=\lfloor100/6\rfloor=16\)、\(|A\cap C|=\lfloor100/10\rfloor=10\)、\(|B\cap C|=\lfloor100/15\rfloor=6\)、\(|A\cap B\cap C|=\lfloor100/30\rfloor=3\)。包除原理より</p>
+<p>\[|A\cup B\cup C|=50+33+20-16-10-6+3=74\]</p>
+<p>よって \(P=\dfrac{74}{100}=0.74\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>包除原理は「重複を引き、引きすぎたら足し戻す」を繰り返す原理で、一般形は \(P\!\left(\bigcup A_i\right)=\sum P(A_i)-\sum P(A_i\cap A_j)+\cdots\)。エラトステネスの篩や、数え上げアルゴリズムの計算量解析にも現れる情報系の基本道具です。問1.9で確率の花形の使い方を見ます。</p>
+</section>
+
+<section class="sol" id="a1-7">
+<div class="phead"><span class="pnum">解 1.7</span><span class="lv lv2">★★</span><span class="ptag">抜き取り検査</span></div>
+<h4>方針</h4>
+<p>「少なくとも1個 → 余事象」。余事象は「4個とも良品」で、良品9個から4個選ぶ組合せ。</p>
+<h4>解答</h4>
+<p>\[P(\text{4個とも良品})=\frac{\binom{9}{4}}{\binom{12}{4}}=\frac{126}{495}=\frac{14}{55}\]</p>
+<p>よって</p>
+<p>\[P(\text{少なくとも1個不良})=1-\frac{14}{55}=\frac{41}{55}\approx 0.745\]</p>
+<h4 class="alt">ポイント</h4>
+<p>逆から読むと、25%(3/12)もの不良率のロットでも、4個の抜き取りでは約 \(14/55\approx25\%\) の確率で「全部良品」に見えて見逃します。「何個抜き取れば、どの程度の不良率を、どの確率で検出できるか」を設計する枠組みが、第10・11章の推定・検定(そして問10.7の実証試験)につながります。</p>
+</section>
+
+<section class="sol" id="a1-8">
+<div class="phead"><span class="pnum">解 1.8</span><span class="lv lv3">★★★</span><span class="ptag">公理からの導出</span></div>
+<h4>方針</h4>
+<p>使ってよいのは公理 (i)〜(iii) だけ。<b>排反な分割</b>を作って (iii) を適用するのが唯一の武器。</p>
+<h4>解答</h4>
+<p>(1) すべての \(i\) で \(A_i=\emptyset\) とすると、これらは互いに排反で \(\bigcup A_i=\emptyset\)。公理 (iii) より</p>
+<p>\[P(\emptyset)=\sum_{i=1}^{\infty}P(\emptyset)\]</p>
+<p>もし \(P(\emptyset)=c>0\) なら右辺は発散して左辺(有限)と矛盾。非負性 (i) と合わせて \(P(\emptyset)=0\)。これで有限個の排反事象についても、残りを \(\emptyset\) で埋めれば (iii) が使える(<b>有限加法性</b>)。</p>
+<p>(2) \(A\subseteq B\) のとき \(B=A\cup(B\setminus A)\) は排反な分解なので</p>
+<p>\[P(B)=P(A)+P(B\setminus A)\ \ge\ P(A)\qquad(\because P(B\setminus A)\ge0)\]</p>
+<p>(3) \(A\cup B=A\cup(B\setminus A)\)(排反)、\(B=(A\cap B)\cup(B\setminus A)\)(排反)より</p>
+<p>\[P(A\cup B)=P(A)+P(B\setminus A),\qquad P(B\setminus A)=P(B)-P(A\cap B)\]</p>
+<p>代入して \(P(A\cup B)=P(A)+P(B)-P(A\cap B)\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>高校で「公式」だったものが、3つの公理から導かれる「定理」に変わりました。<b>最小限の約束事からすべてを導く</b>この構図は、線形代数のベクトル空間の公理と同じ発想です。公理 (iii) がわざわざ「可算個(無限列)」の和を許している理由は、第18章(測度論への入口)で明らかになります(問18.2)。</p>
+</section>
+
+<section class="sol" id="a1-9">
+<div class="phead"><span class="pnum">解 1.9</span><span class="lv lv3">★★★</span><span class="ptag">完全順列(モンマール問題)</span></div>
+<h4>方針</h4>
+<p>「どれかが正しく入る」\(\bigcup A_i\) を包除原理で計算し、余事象を取る。対称性から、\(k\) 個の特定の手紙がすべて正しい確率は共通。</p>
+<h4>解答</h4>
+<p>(1) 特定の \(k\) 通(\(A_{i_1}\cap\cdots\cap A_{i_k}\))がすべて正しい入れ方は、残り \(n-k\) 通が自由なので \((n-k)!\) 通り。よってその確率は \(\dfrac{(n-k)!}{n!}\)。包除原理より</p>
+<p>\[P\Bigl(\bigcup_{i=1}^n A_i\Bigr)=\sum_{k=1}^{n}(-1)^{k-1}\binom{n}{k}\frac{(n-k)!}{n!}=\sum_{k=1}^{n}\frac{(-1)^{k-1}}{k!}\]</p>
+<p>\(\Bigl(\binom{n}{k}\dfrac{(n-k)!}{n!}=\dfrac{1}{k!}\Bigr)\)。余事象を取って</p>
+<p>\[p_n=1-\sum_{k=1}^{n}\frac{(-1)^{k-1}}{k!}=\sum_{k=0}^{n}\frac{(-1)^k}{k!}\]</p>
+<p>(2) \(p_4=1-1+\dfrac12-\dfrac16+\dfrac1{24}=\dfrac{9}{24}=\dfrac38=0.375\)。</p>
+<p>(3) \(e^x=\sum x^k/k!\) に \(x=-1\) を代入した形なので</p>
+<p>\[\lim_{n\to\infty}p_n=e^{-1}\approx 0.368\]</p>
+<h4 class="alt">ポイント</h4>
+<p>\(n\) によらずほぼ 37% で一定 — 「1000通なら1通くらい当たりそう」という直感を裏切る美しい結果です。これは「ランダムな置換に不動点がない確率」であり、シャッフルの検定や暗号でのランダム置換の解析に現れます。確率の問題に \(e\) が自然に顔を出す最初の例で、第3章のポアソン分布(\(e^{-\lambda}\))で再会します。</p>
+</section>
+
+
+<header class="chap" id="ch2">
+<p class="chnum">第2章</p>
+<h2>条件付き確率とベイズの定理 — 解答解説</h2>
+<p class="chsub">情報で確率を更新する</p>
+</header>
+
+<section class="sol" id="a2-1">
+<div class="phead"><span class="pnum">解 2.1</span><span class="lv lv1">★</span><span class="ptag">条件付き確率の定義</span></div>
+<h4>方針</h4>
+<p>条件付けとは「世界を \(B\) に縮める」こと。和が8になる結果だけを新しい標本空間とみなす。</p>
+<h4>解答</h4>
+<p>和が8となるのは(順序対で)\((2,6),(3,5),(4,4),(5,3),(6,2)\) の5通り。このうち6を含むのは \((2,6),(6,2)\) の2通り。よって</p>
+<p>\[P(\text{6を含む}\mid \text{和}=8)=\frac{2}{5}\]</p>
+<p>定義に沿って書けば \(\dfrac{P(\text{6を含む}\cap\text{和8})}{P(\text{和8})}=\dfrac{2/36}{5/36}=\dfrac25\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>情報を得ると<b>分母(考える世界)が変わる</b> — これが条件付き確率の全てです。\((4,4)\) を「1通り」と数えるのは誤り:標本空間は<b>順序対</b>で作ってこそ各結果が等確率になります(2個のサイコロは区別がなくても、確率的には区別して数える)。</p>
+</section>
+
+<section class="sol" id="a2-2">
+<div class="phead"><span class="pnum">解 2.2</span><span class="lv lv1">★</span><span class="ptag">乗法定理</span></div>
+<h4>方針</h4>
+<p>「1個目が赤」×「1個目が赤だったもとで2個目も赤」。非復元抽出は条件付き確率の積で書くのが基本形。</p>
+<h4>解答</h4>
+<p>\[P=\frac{5}{8}\times\frac{4}{7}=\frac{20}{56}=\frac{5}{14}\approx 0.357\]</p>
+<h4 class="alt">ポイント</h4>
+<p>実は「2個目が赤」の(条件なしの)確率も \(5/8\) です — 1個目の結果で場合分けして全確率の公式で確かめられます(\(\frac58\cdot\frac47+\frac38\cdot\frac57=\frac{35}{56}=\frac58\))。「順番が後でも、情報がなければ確率は同じ」という対称性は、くじ引きの公平性の根拠です。</p>
+</section>
+
+<section class="sol" id="a2-3">
+<div class="phead"><span class="pnum">解 2.3</span><span class="lv lv1">★</span><span class="ptag">独立性の判定</span></div>
+<h4>方針</h4>
+<p>独立性の判定方法は、定義 \(P(A\cap B)=P(A)P(B)\) を確かめること以外にない。</p>
+<h4>解答</h4>
+<p>\(P(A)=\dfrac12\)、\(P(B)=\dfrac{4}{6}=\dfrac23\)、\(A\cap B=\{2,4\}\) より \(P(A\cap B)=\dfrac{2}{6}=\dfrac13\)。</p>
+<p>\[P(A)P(B)=\frac12\cdot\frac23=\frac13=P(A\cap B)\quad\Rightarrow\quad A\text{ と }B\text{ は独立}\]</p>
+<p>一方 \(P(C)=\dfrac12\)、\(A\cap C=\{2\}\) より \(P(A\cap C)=\dfrac16\neq \dfrac12\cdot\dfrac12=\dfrac14\)。よって \(A\) と \(C\) は独立でない(従属)。</p>
+<h4 class="alt">ポイント</h4>
+<p>同じサイコロの事象でも独立になりうる、という直感に反する例です。\(B=\{1,2,3,4\}\) を知っても偶数の割合は \(2/4=1/2\) のまま(\(P(A\mid B)=P(A)\))— 独立とは「情報として役に立たない」ことの数学的表現です。<b>「物理的に無関係」と「確率的に独立」は別概念</b>で、判定は必ず計算で行います。</p>
+</section>
+
+<section class="sol" id="a2-4">
+<div class="phead"><span class="pnum">解 2.4</span><span class="lv lv1">★</span><span class="ptag">全確率の公式</span></div>
+<h4>方針</h4>
+<p>どちらの工場製かで場合分け=全確率の公式。樹形図を描くと構造が見える。</p>
+<h4>解答</h4>
+<p>\[P(\text{不良})=0.6\times0.01+0.4\times0.03=0.006+0.012=0.018\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「排反で全体を覆う分割 \(\{B_i\}\) を作り、条件付き確率で重み付き平均する」— 複雑な確率を計算する最重要パターンです。分割の条件(排反・網羅)を満たさない場合分けは二重計上や数え漏れを生みます。</p>
+</section>
+
+<section class="sol" id="a2-5">
+<div class="phead"><span class="pnum">解 2.5</span><span class="lv lv2">★★</span><span class="ptag">ベイズの定理</span></div>
+<h4>方針</h4>
+<p>ベイズの定理。分母(不良品である確率)は問2.4で計算済み。</p>
+<h4>解答</h4>
+<p>\[P(B\mid\text{不良})=\frac{P(B)P(\text{不良}\mid B)}{P(\text{不良})}=\frac{0.4\times0.03}{0.018}=\frac{0.012}{0.018}=\frac{2}{3}\]</p>
+<p>生産シェア(事前確率)では40%の工場Bが、「不良品である」という情報を得た後(事後確率)は \(2/3\approx67\%\) に跳ね上がった。不良率が高い工場ほど「不良品の出どころ」として疑わしくなる、という直感が定量化されている。</p>
+<h4 class="alt">ポイント</h4>
+<p>事前確率 0.4 → 事後確率 2/3 という<b>更新</b>こそがベイズの定理の役割です。「原因 → 結果」の確率(不良率)しか分からなくても、「結果 → 原因」の確率が計算できる。この1ステップを繰り返し適用する体系がベイズ統計(第13章)です。</p>
+</section>
+
+<section class="sol" id="a2-6">
+<div class="phead"><span class="pnum">解 2.6</span><span class="lv lv2">★★</span><span class="ptag">歩行者検出と基準率</span></div>
+<h4>方針</h4>
+<p>\(H\)=歩行者あり、\(+\)=警報。求めるのは \(P(H\mid +)\)。分母は全確率の公式で「真の警報+誤警報」。</p>
+<h4>解答</h4>
+<p>\(P(H)=0.001\)、\(P(+\mid H)=0.99\)、\(P(+\mid H^c)=0.02\) より</p>
+<p>\[P(+)=0.001\times0.99+0.999\times0.02=0.00099+0.01998=0.02097\]</p>
+<p>\[P(H\mid +)=\frac{0.00099}{0.02097}\approx 0.047\]</p>
+<p>警報が出ても、本当に歩行者がいる確率は約 <b>4.7%</b> — 警報の95%以上は誤報である。感度99%・誤警報率2%という高性能でも、歩行者が写るフレームが千に1つと「まれ」であるため、誤警報の絶対数(\(0.999\times0.02\))が真の警報(\(0.001\times0.99\))を圧倒してしまう。</p>
+<h4 class="alt">ポイント</h4>
+<p>これが<b>基準率の誤り(base rate fallacy)</b>です。まれな事象の検出では、(a) 誤警報率を桁で下げる、(b) 事前確率を上げる(検出対象領域の絞り込み・トラッキングによる文脈利用)、(c) 独立性の高い複数センサの統合(第15章)が定石になります。医療スクリーニングで「陽性でも慌てず再検査」と言われるのも同じ構造です。</p>
+</section>
+
+<section class="sol" id="a2-7">
+<div class="phead"><span class="pnum">解 2.7</span><span class="lv lv2">★★</span><span class="ptag">冗長系と独立性</span></div>
+<h4>方針</h4>
+<p>独立なら確率は積。「少なくとも一方」は余事象。(3) は独立の仮定そのものを疑う。</p>
+<h4>解答</h4>
+<p>(1) \(10^{-3}\times10^{-3}=10^{-6}\)。</p>
+<p>(2) \(1-10^{-6}=0.999999\)。</p>
+<p>(3) よくない。電源喪失(確率 \(10^{-4}\))が起これば両系統が同時に機能を失うので、</p>
+<p>\[P(\text{両系統故障})\ \ge\ 10^{-4}\ \gg\ 10^{-6}\]</p>
+<p>となり、(1) の見積もりは100倍以上甘い。共通原因があると故障は<b>独立でなくなり</b>、「掛け算」による楽観的評価は成立しない。</p>
+<h4 class="alt">ポイント</h4>
+<p>確率計算で最も危険な誤りが「<b>従属なものを独立と仮定して掛け算する</b>」ことです。冗長設計の本質は系統数を増やすことではなく、電源分離・異種冗長(カメラ+レーダーのような原理の異なるセンサ)などで<b>独立性を確保する</b>こと — 第17章(信頼性工学)で共通原因故障として定量的に扱います。</p>
+</section>
+
+<section class="sol" id="a2-8">
+<div class="phead"><span class="pnum">解 2.8</span><span class="lv lv2">★★</span><span class="ptag">モンティ・ホール問題</span></div>
+<h4>方針</h4>
+<p>「司会者がどのドアを開けたか」も確率的な情報。賞品の位置を仮説とし、観測「ドア3が開いた」の尤度 \(P(\text{開3}\mid \text{賞}=i)\) を仮説ごとに比べる。</p>
+<h4>解答</h4>
+<p>事前確率は \(P(\text{賞}=i)=\dfrac13\)。司会者の行動ルールから</p>
+<p>\[P(\text{開3}\mid\text{賞}1)=\frac12,\qquad P(\text{開3}\mid\text{賞}2)=1,\qquad P(\text{開3}\mid\text{賞}3)=0\]</p>
+<p>全確率の公式で \(P(\text{開3})=\dfrac13\cdot\dfrac12+\dfrac13\cdot1+\dfrac13\cdot0=\dfrac12\)。ベイズの定理より</p>
+<p>\[P(\text{賞}1\mid\text{開3})=\frac{\frac13\cdot\frac12}{\frac12}=\frac13,\qquad P(\text{賞}2\mid\text{開3})=\frac{\frac13\cdot1}{\frac12}=\frac23\]</p>
+<p>よって変更すれば勝率 \(2/3\)、変更しなければ \(1/3\)。<b>変更すべき</b>。</p>
+<h4 class="alt">ポイント</h4>
+<p>「残り2つだから五分五分」が誤りなのは、司会者の行動が賞の位置に<b>依存した</b>情報だからです。仮説によって尤度が違う(\(1/2\) 対 \(1\))ことが情報の正体。もし司会者が中身を知らずランダムに開けてたまたまハズレだった、という設定なら答えは \(1/2\) になります — <b>データが同じでも、生成のしくみが違えば結論が変わる</b>。統計モデリングの核心的教訓です。</p>
+</section>
+
+<section class="sol" id="a2-9">
+<div class="phead"><span class="pnum">解 2.9</span><span class="lv lv3">★★★</span><span class="ptag">RANSACの反復回数</span></div>
+<h4>方針</h4>
+<p>(1) は独立に4回インライアを引く積。(2) は「\(N\) 回全部失敗」の余事象で不等式を解く — 問1.3の定石。</p>
+<h4>解答</h4>
+<p>(1) インライア率は \(1-0.5=0.5\)。4点すべてインライアの確率は(点の数が十分多く独立とみなせるとして)</p>
+<p>\[w=(0.5)^4=0.0625\]</p>
+<p>(2) \(N\) 回すべて失敗する確率は \((1-w)^N=(0.9375)^N\)。求める条件は</p>
+<p>\[1-(0.9375)^N\ge 0.99\iff (0.9375)^N\le 0.01\iff N\ge\frac{\ln 0.01}{\ln 0.9375}=\frac{-4.605}{-0.06454}\approx 71.4\]</p>
+<p>よって最小の \(N\) は <b>72回</b>。</p>
+<h4 class="alt">ポイント</h4>
+<p>これが実際に使われる RANSAC の反復回数の設計式 \(N=\dfrac{\ln(1-P)}{\ln\bigl(1-(1-\varepsilon)^s\bigr)}\) です(\(\varepsilon\):外れ値率、\(s\):最小サンプル数、\(P\):成功保証確率)。対応点の半分が誤りでも72回で99%成功 — 乱択アルゴリズムの威力です。ただし \(s\) に対して指数的に敏感で、たとえば基礎行列推定(\(s=8\))では同条件で \(N\approx1177\) 回に跳ね上がります。特徴量マッチングの品質(\(\varepsilon\) を下げる)が計算量に直結する理由です。</p>
+</section>
+
+<section class="sol" id="a2-10">
+<div class="phead"><span class="pnum">解 2.10</span><span class="lv lv3">★★★</span><span class="ptag">反復送信とMAP復号</span></div>
+<h4>方針</h4>
+<p>(1) 多数決が誤る=3ビット中2ビット以上誤る。(2) 送信0と送信1を仮説としてベイズの定理。</p>
+<h4>解答</h4>
+<p>(1) 誤りビット数が2以上となる確率:</p>
+<p>\[p_e=\binom{3}{2}p^2(1-p)+p^3=3(0.1)^2(0.9)+(0.1)^3=0.027+0.001=0.028\]</p>
+<p>1ビット送信の誤り率 0.1 が 0.028 に改善する。</p>
+<p>(2) 尤度は \(P(001\mid 0)=0.9\times0.9\times0.1=0.081\)、\(P(001\mid 1)=0.1\times0.1\times0.9=0.009\)。事前が等確率なので</p>
+<p>\[P(0\mid 001)=\frac{0.081}{0.081+0.009}=0.9\]</p>
+<p>(3) 事後確率が大きい方(ここでは0)を選ぶのが <b>MAP復号</b>(maximum a posteriori)。事前が等確率で通信路が対称なら、尤度の大小は「一致ビット数」の大小と同値になるため、MAP復号=多数決。どの位置が食い違ったかによらず「0が2票」なら事後確率は常に0.9になる。</p>
+<h4 class="alt">ポイント</h4>
+<p>繰り返し符号は最も素朴な誤り訂正符号で、信頼性(誤り率 0.1→0.028)を<b>冗長性(伝送レート1/3)で買う</b>トレードオフを体現しています。「事後確率最大の仮説を選ぶ」MAP判定は、ベイズ識別(問13.8)・状態推定(第15章)まで一貫して現れる、不確かさ下の意思決定の基本原理です。</p>
+</section>
+
+
+<header class="chap" id="ch3">
+<p class="chnum">第3章</p>
+<h2>離散型確率変数 — 解答解説</h2>
+<p class="chsub">数えられる不確かさと代表的な分布</p>
+</header>
+
+<section class="sol" id="a3-1">
+<div class="phead"><span class="pnum">解 3.1</span><span class="lv lv1">★</span><span class="ptag">PMFと期待値・分散</span></div>
+<h4>方針</h4>
+<p>最大値は「両方が \(k\) 以下」で押さえるのが定石:\(P(M\le k)=(k/6)^2\)。PMFは差分で出す。</p>
+<h4>解答</h4>
+<p>(1) \(P(M\le k)=P(X_1\le k)P(X_2\le k)=\left(\dfrac{k}{6}\right)^2\) より</p>
+<p>\[P(M=k)=\frac{k^2-(k-1)^2}{36}=\frac{2k-1}{36}\qquad(k=1,\dots,6)\]</p>
+<p>(2) \(E[M]=\dfrac{1}{36}\sum_{k=1}^{6}k(2k-1)=\dfrac{1\cdot1+2\cdot3+3\cdot5+4\cdot7+5\cdot9+6\cdot11}{36}=\dfrac{161}{36}\approx 4.47\)。</p>
+<p>(3) \(E[M^2]=\dfrac{1}{36}\sum k^2(2k-1)=\dfrac{791}{36}\) より</p>
+<p>\[V[M]=\frac{791}{36}-\left(\frac{161}{36}\right)^2=\frac{2555}{1296}\approx 1.97\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「最大値・最小値の分布はCDF(累積)の積で求める」— この手筋は一様分布の最尤推定(問9.6)で主役になります。期待値4.47がサイコロ1個の平均3.5より大きいのは、大きい方だけを拾うから。分散は必ず \(E[X^2]-(E[X])^2\) の形で計算量を減らしましょう。</p>
+</section>
+
+<section class="sol" id="a3-2">
+<div class="phead"><span class="pnum">解 3.2</span><span class="lv lv1">★</span><span class="ptag">期待値と分散の計算</span></div>
+<h4>方針</h4>
+<p>定義どおり重み付き平均。分散は \(E[X^2]-(E[X])^2\)。</p>
+<h4>解答</h4>
+<p>(1) \(E[X]=0\times0.7+100\times0.2+500\times0.1=70\) 円。</p>
+<p>\(E[X^2]=100^2\times0.2+500^2\times0.1=2000+25000=27000\) より</p>
+<p>\[V[X]=27000-70^2=22100,\qquad \sigma=\sqrt{22100}\approx 148.7\ \text{円}\]</p>
+<p>(2) 期待値の線形性より \(E[Y]=E[X]-100=-30\) 円。</p>
+<h4 class="alt">ポイント</h4>
+<p>標準偏差(約149円)が平均(70円)の2倍以上 — 当たりが「まれで大きい」分布は散らばりが支配的で、期待値だけでは分布の姿は見えません(問3.10でこの限界を突き詰めます)。参加者側の期待利益が負(−30円)であることは、胴元側の期待利益が正であることと表裏一体です。</p>
+</section>
+
+<section class="sol" id="a3-3">
+<div class="phead"><span class="pnum">解 3.3</span><span class="lv lv1">★</span><span class="ptag">線形変換</span></div>
+<h4>方針</h4>
+<p>公式 \(E[aX+b]=aE[X]+b\)、\(V[aX+b]=a^2V[X]\) を適用。</p>
+<h4>解答</h4>
+<p>\[E[Y]=2\times50-30=70,\qquad V[Y]=2^2\times100=400,\qquad \sigma_Y=20\]</p>
+<h4 class="alt">ポイント</h4>
+<p>平行移動 \(b\) は散らばりに無関係、倍率 \(a\) は分散に2乗で効く(標準偏差には \(|a|\) 倍)。単位換算・ゲイン調整・正規化はすべてこの公式の応用で、第4章の標準化 \(Z=(X-\mu)/\sigma\)(平均0・分散1にする変換)がその代表です。</p>
+</section>
+
+<section class="sol" id="a3-4">
+<div class="phead"><span class="pnum">解 3.4</span><span class="lv lv1">★</span><span class="ptag">二項分布</span></div>
+<h4>方針</h4>
+<p>「独立な \(n\) 回の成否の合計」を見たら二項分布 \(B(10,\,0.05)\)。</p>
+<h4>解答</h4>
+<p>(1) \(P(X=1)=\dbinom{10}{1}(0.05)(0.95)^9\approx 10\times0.05\times0.6302\approx 0.315\)。</p>
+<p>(2) \(P(X=0)=(0.95)^{10}\approx 0.599\)。</p>
+<p>(3) \(E[X]=np=10\times0.05=0.5\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「まず誤らない」ように見えて、1個以上誤る確率は約4割(\(1-0.599\))もあります — パケットにチェックサムや誤り訂正(問2.10)が必須な理由です。\(E[X]=np\) は、第6章の「指示変数の和」を使うと一瞬で導出できます。</p>
+</section>
+
+<section class="sol" id="a3-5">
+<div class="phead"><span class="pnum">解 3.5</span><span class="lv lv1">★</span><span class="ptag">幾何分布</span></div>
+<h4>方針</h4>
+<p>\(X=k\) ⟺ 最初の \(k-1\) 回失敗して \(k\) 回目に成功。\(P(X>k)\) は「最初の \(k\) 回が全部失敗」。</p>
+<h4>解答</h4>
+<p>(1) \(P(X=3)=(0.8)^2(0.2)=0.128\)。</p>
+<p>(2) \(E[X]=\dfrac1p=\dfrac{1}{0.2}=5\) 回。</p>
+<p>(3) \(P(X>5)=(0.8)^5=0.328\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(P(X>k)=(1-p)^k\) というシンプルな裾の形が幾何分布の特長で、ここから<b>無記憶性</b> \(P(X>m+n\mid X>m)=P(X>n)\) が直ちに従います(\((1-p)^{m+n}/(1-p)^m=(1-p)^n\))。「失敗続きだから次こそ当たる」は成り立ちません。連続版の無記憶性は指数分布(問4.6)です。なお平均 \(1/p\) の導出は問6.2(MGF)でも確認します。</p>
+</section>
+
+<section class="sol" id="a3-6">
+<div class="phead"><span class="pnum">解 3.6</span><span class="lv lv2">★★</span><span class="ptag">ポアソン分布</span></div>
+<h4>方針</h4>
+<p>「3件以上」は余事象で \(P(0)+P(1)+P(2)\) を引く。</p>
+<h4>解答</h4>
+<p>(1) \(P(X=0)=e^{-2}\approx 0.135\)。</p>
+<p>(2) \(P(X\ge3)=1-e^{-2}\left(1+2+\dfrac{2^2}{2!}\right)=1-5e^{-2}\approx 0.323\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>ポアソン分布は「単位時間(単位面積)あたりの発生数」の標準モデルで、\(\lambda\) は平均であり<b>分散でもある</b>という強い性質を持ちます。なぜこの形になるのかは次問(大量×まれの極限)と第14章(ポアソン過程)で解明します。</p>
+</section>
+
+<section class="sol" id="a3-7">
+<div class="phead"><span class="pnum">解 3.7</span><span class="lv lv2">★★</span><span class="ptag">ポアソン近似(イメージセンサ)</span></div>
+<h4>方針</h4>
+<p>厳密には二項分布。\(n\) 大・\(p\) 小・\(np=\lambda=2\) なのでポアソン近似の適用場面。</p>
+<h4>解答</h4>
+<p>(1) 各画素の欠陥有無は独立なベルヌーイ試行なので \(X\sim B(10^6,\ 2\times10^{-6})\)。\(n=10^6\) が大きく \(p=2\times10^{-6}\) が小さく、\(np=2\) が適度なので \(X\approx\mathrm{Po}(2)\) と近似できる。</p>
+<p>(2) \(P(X\ge1)=1-P(X=0)\approx 1-e^{-2}=0.8647\)。</p>
+<p>(3) 厳密値 0.86466 と小数第5位まで一致しており、実用上は区別できない精度。二項係数 \(\binom{10^6}{k}\) の計算を完全に回避できるのが近似の価値。</p>
+<h4 class="alt">ポイント</h4>
+<p>「<b>大量の機会 × まれな発生</b>」はすべてポアソン:製造欠陥、まれな故障、サーバへの同時アクセス、放射線計数。近似誤差は \(np^2\) のオーダーで、目安として \(n\ge100\)、\(p\le0.05\) 程度なら十分実用的です。二項分布の極限としての厳密な導出は問6.7(MGF)で行います。</p>
+</section>
+
+<section class="sol" id="a3-8">
+<div class="phead"><span class="pnum">解 3.8</span><span class="lv lv2">★★</span><span class="ptag">ショットノイズ</span></div>
+<h4>方針</h4>
+<p>階乗を消すため \(E[X]\) と \(E[X(X-1)]\) を計算する — ポアソンの計算の定石。</p>
+<h4>解答</h4>
+<p>(1) \[E[X]=\sum_{k=1}^{\infty}k\,e^{-\lambda}\frac{\lambda^k}{k!}=\lambda e^{-\lambda}\sum_{k=1}^{\infty}\frac{\lambda^{k-1}}{(k-1)!}=\lambda e^{-\lambda}e^{\lambda}=\lambda\]</p>
+<p>\[E[X(X-1)]=\sum_{k=2}^{\infty}k(k-1)e^{-\lambda}\frac{\lambda^k}{k!}=\lambda^2 e^{-\lambda}\sum_{k=2}^{\infty}\frac{\lambda^{k-2}}{(k-2)!}=\lambda^2\]</p>
+<p>よって \(E[X^2]=E[X(X-1)]+E[X]=\lambda^2+\lambda\)、\(V[X]=\lambda^2+\lambda-\lambda^2=\lambda\)。</p>
+<p>(2) \(\mathrm{SN}=\dfrac{\lambda}{\sqrt{\lambda}}=\sqrt{\lambda}\)。\(\lambda=100\) のとき \(\mathrm{SN}=10\)。</p>
+<p>(3) \(\sqrt{4\lambda}=2\sqrt{\lambda}\) より、光量を <b>4倍</b>にすればよい。</p>
+<h4 class="alt">ポイント</h4>
+<p>光子の到来はポアソン的なので、ノイズの標準偏差 \(\sqrt{\lambda}\) は物理的に避けられません(<b>ショットノイズ限界</b>)。「SN比は明るさの平方根でしか上がらない」— 暗所撮影がざらつく根本理由です。ISO感度を上げても \(\lambda\) は増えないため改善せず、露光を伸ばす・画素を束ねる・フレームを平均する(問7.7)ことだけが \(\lambda\) を増やします。</p>
+</section>
+
+<section class="sol" id="a3-9">
+<div class="phead"><span class="pnum">解 3.9</span><span class="lv lv3">★★★</span><span class="ptag">二項分布の最頻値</span></div>
+<h4>方針</h4>
+<p>階乗を含むPMFは「隣との比」を取ると劇的に簡単になる。比が1を超える範囲=増加区間。</p>
+<h4>解答</h4>
+<p>\[r_k=\frac{P(X=k)}{P(X=k-1)}=\frac{\binom{n}{k}}{\binom{n}{k-1}}\cdot\frac{p}{1-p}=\frac{n-k+1}{k}\cdot\frac{p}{1-p}\]</p>
+<p>\[r_k\ge1\iff (n-k+1)p\ge k(1-p)\iff k\le (n+1)p\]</p>
+<p>よってPMFは \(k\le(n+1)p\) の間は増加し、その後減少する。したがって最頻値は \(k^*=\lfloor(n+1)p\rfloor\)(\((n+1)p\) が整数のときは \((n+1)p-1\) と \((n+1)p\) の2点で最大)。</p>
+<p>\(n=20,\ p=0.3\):\((n+1)p=6.3\) より最頻値は <b>6</b>。(実際 \(P(5)=0.179,\ P(6)=0.192,\ P(7)=0.164\)。)</p>
+<h4 class="alt">ポイント</h4>
+<p>最頻値 ≈ \(np\) ≈ 平均、つまり二項分布は平均付近に一山を持つ形です。「隣接比を取る」技は理論だけでなく数値計算でも重要:\(P(X=k)\) を漸化式 \(P(k)=r_k P(k-1)\) で順に求めれば、巨大な二項係数や \(p^k\) のアンダーフローを避けられます。</p>
+</section>
+
+<section class="sol" id="a3-10">
+<div class="phead"><span class="pnum">解 3.10</span><span class="lv lv3">★★★</span><span class="ptag">サンクトペテルブルクのパラドックス</span></div>
+<h4>方針</h4>
+<p>\(P(X=2^k)=(1/2)^k\)。期待値の級数を実際に書いてみる。</p>
+<h4>解答</h4>
+<p>(1) \[E=\sum_{k=1}^{\infty}2^k\left(\frac12\right)^k=\sum_{k=1}^{\infty}1=\infty\]</p>
+<p>期待値は発散する(存在しない)。</p>
+<p>(2) 期待値が無限大でも、賞金が \(2^k\) 円を超える確率は \((1/2)^k\) で急減する:たとえば1024円を超える確率は0.1%未満で、巨額の賞金はまず実現しない。期待値は「同じゲームを無限回繰り返したときの平均」であり、1回きりの意思決定の価値とは別物である。現実の意思決定では、(a) 金額の効用は逓減する(\(\log\) 効用なら期待効用は有限)、(b) 胴元の支払い能力に上限がある(上限 \(2^{30}\) 円なら期待値は約30円)、(c) 分散・リスクも評価に入れる、といった補正が必要になる。</p>
+<h4 class="alt">ポイント</h4>
+<p>期待値が定義できるためには級数(積分)の<b>絶対収束</b> \(\sum|x|p(x)<\infty\) が必要で、それが成り立たない分布は実在します(連続版の代表がコーシー分布、問18.7)。「とりあえず期待値」の適用限界を知ることは、リスク評価や強化学習の報酬設計で実務的に重要です。可積分性の厳密な扱いは第18章で再訪します。</p>
+</section>
+
+
+<header class="chap" id="ch4">
+<p class="chnum">第4章</p>
+<h2>連続型確率変数 — 解答解説</h2>
+<p class="chsub">密度で測る不確かさと正規分布</p>
+</header>
+
+<section class="sol" id="a4-1">
+<div class="phead"><span class="pnum">解 4.1</span><span class="lv lv1">★</span><span class="ptag">密度関数の基本</span></div>
+<h4>方針</h4>
+<p>全積分=1 から \(c\) を決める。\(F\) を先に作れば区間の確率は引き算で済む。</p>
+<h4>解答</h4>
+<p>(1) \(\displaystyle\int_0^2 cx\,dx=2c=1\) より \(c=\dfrac12\)。</p>
+<p>(2) \(0\le x\le2\) で \(F(x)=\displaystyle\int_0^x \frac{t}{2}\,dt=\frac{x^2}{4}\)(\(x<0\) で0、\(x>2\) で1)。</p>
+<p>(3) \(P(X\le1)=F(1)=\dfrac14\)。</p>
+<p>(4) \(E[X]=\displaystyle\int_0^2 x\cdot\frac{x}{2}\,dx=\left[\frac{x^3}{6}\right]_0^2=\frac43\)、\(E[X^2]=\displaystyle\int_0^2 \frac{x^3}{2}\,dx=\left[\frac{x^4}{8}\right]_0^2=2\)。よって</p>
+<p>\[V[X]=2-\left(\frac43\right)^2=\frac29\]</p>
+<h4 class="alt">ポイント</h4>
+<p>密度の値そのものは確率ではありません(\(f(2)=1\) でも、密度は1を超えてもよい)。<b>確率は面積</b>です。「規格化 → CDF → 確率とモーメント」という手順は連続分布の基本動作で、以後何度も繰り返します。</p>
+</section>
+
+<section class="sol" id="a4-2">
+<div class="phead"><span class="pnum">解 4.2</span><span class="lv lv1">★</span><span class="ptag">一様分布</span></div>
+<h4>方針</h4>
+<p>一様分布の確率は区間の長さの比。(3) は条件付き確率の定義。</p>
+<h4>解答</h4>
+<p>(1) \(\dfrac{5-3}{10}=0.2\)。</p>
+<p>(2) \(E[X]=5\) 分、\(V[X]=\dfrac{10^2}{12}=\dfrac{25}{3}\approx 8.33\)。</p>
+<p>(3) \(P(X>8\mid X>5)=\dfrac{P(X>8)}{P(X>5)}=\dfrac{0.2}{0.5}=0.4\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>条件なしで「3分以上待つ」確率は \(P(X>3)=0.7\) ですが、5分待った後にさらに3分待つ確率は 0.4 に下がっています — 一様分布では「待った分だけゴールが近づく」。次問の指数分布(無記憶:待っても状況が変わらない)との対比が、分布の個性を際立たせます。</p>
+</section>
+
+<section class="sol" id="a4-3">
+<div class="phead"><span class="pnum">解 4.3</span><span class="lv lv1">★</span><span class="ptag">指数分布</span></div>
+<h4>方針</h4>
+<p>平均 \(=1/\lambda\)。裾の確率は \(P(X>x)=e^{-\lambda x}\) が最速。</p>
+<h4>解答</h4>
+<p>(1) \(E[X]=\dfrac1\lambda=1000\) より \(\lambda=0.001\)(毎時)。</p>
+<p>(2) \(P(X>2000)=e^{-0.001\times2000}=e^{-2}\approx 0.135\)。</p>
+<p>(3) \(P(X\le500)=1-e^{-0.5}\approx 0.393\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>指数分布のパラメータには「レート \(\lambda\)」(本書)と「平均 \(\theta=1/\lambda\)」の2流儀があり、ソフトウェアでも混在します(NumPy の <code>exponential</code> は平均を渡す)。式を書く前に定義を確認する癖をつけましょう。\(P(X>x)=e^{-\lambda x}\)(信頼度関数)は第17章の主役です。</p>
+</section>
+
+<section class="sol" id="a4-4">
+<div class="phead"><span class="pnum">解 4.4</span><span class="lv lv1">★</span><span class="ptag">標準正規分布</span></div>
+<h4>方針</h4>
+<p>対称性 \(\Phi(-z)=1-\Phi(z)\) を使えば負の側の表は不要。</p>
+<h4>解答</h4>
+<p>(1) \(P(Z\le1.5)=\Phi(1.5)=0.9332\)。</p>
+<p>(2) \(P(|Z|\le1.96)=\Phi(1.96)-\Phi(-1.96)=2\Phi(1.96)-1=2\times0.9750-1=0.95\)。</p>
+<p>(3) \(P(-1&lt;Z<2)=\Phi(2)-\Phi(-1)=0.9772-(1-0.8413)=0.9772-0.1587=0.8186\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「1.96 ↔ 両側95%」「1.645 ↔ 片側95%」の対応は、この先の区間推定・検定で毎回使う基本語彙です。巻末付録に正規分布表を収録してあるので、以後は自由に引いてください。</p>
+</section>
+
+<section class="sol" id="a4-5">
+<div class="phead"><span class="pnum">解 4.5</span><span class="lv lv1">★</span><span class="ptag">標準化</span></div>
+<h4>方針</h4>
+<p>\(Z=(X-120)/15\) で標準正規に変換してから表を引く。</p>
+<h4>解答</h4>
+<p>(1) \(P(X>150)=P\!\left(Z>\dfrac{150-120}{15}\right)=P(Z>2)=1-0.9772=0.0228\)。</p>
+<p>(2) \(P(90&lt;X<150)=P(-2&lt;Z<2)=2\times0.9772-1=0.9545\)。</p>
+<p>(3) \(P(X>x)=0.01\) となるのは \(Z\) が \(z_{0.01}=2.326\) のとき:</p>
+<p>\[x=120+2.326\times15\approx 154.9\]</p>
+<h4 class="alt">ポイント</h4>
+<p>標準化は「\(\mu\) を原点、\(\sigma\) を物差しにして測り直す」操作で、あらゆる正規分布の計算を1枚の表に帰着させます。\(\pm2\sigma\) に約95%、\(\pm3\sigma\) に約99.7% という感覚は、しきい値設計・外れ値検出・品質管理図の共通言語です。(3) のように「確率 → 値」と逆に引く操作(分位点)は、区間推定(第10章)の中核になります。</p>
+</section>
+
+<section class="sol" id="a4-6">
+<div class="phead"><span class="pnum">解 4.6</span><span class="lv lv2">★★</span><span class="ptag">無記憶性</span></div>
+<h4>方針</h4>
+<p>裾の確率 \(P(X>x)=e^{-\lambda x}\) を条件付き確率の定義に入れるだけ。指数法則が鍵。</p>
+<h4>解答</h4>
+<p>(1) \(\{X>s+t\}\subseteq\{X>s\}\) に注意して</p>
+<p>\[P(X>s+t\mid X>s)=\frac{P(X>s+t)}{P(X>s)}=\frac{e^{-\lambda(s+t)}}{e^{-\lambda s}}=e^{-\lambda t}=P(X>t)\]</p>
+<p>(2) 「\(s\) 時間使った部品の残り寿命の分布は、新品の寿命の分布と同じ」— 使っても<b>古びない</b>というモデルであり、経年劣化のない偶発故障だけを表す。ブレーキパッドやベアリングのように摩耗・疲労で壊れる部品では、使用時間とともに故障しやすくなる(故障率が増加する)ため指数分布は不適切で、ワイブル分布など故障率が時間変化するモデル(第17章)を使うべきである。</p>
+<h4 class="alt">ポイント</h4>
+<p>無記憶性を持つ連続分布は指数分布<b>だけ</b>、離散では幾何分布だけです(特徴づけ定理)。逆に言えば、「無記憶とみなせる現象」のモデルは自動的に指数分布に決まります。この性質は第14章のポアソン過程(到着間隔が指数分布)の心臓部でもあります。</p>
+</section>
+
+<section class="sol" id="a4-7">
+<div class="phead"><span class="pnum">解 4.7</span><span class="lv lv2">★★</span><span class="ptag">中央値と平均</span></div>
+<h4>方針</h4>
+<p>中央値は \(F(m)=1/2\) を解く。平均は与えられている。</p>
+<h4>解答</h4>
+<p>(1) \(1-e^{-\lambda m}=\dfrac12\iff m=\dfrac{\ln 2}{\lambda}=1000\ln2\approx 693\) 時間。</p>
+<p>(2) \(F(1000)=1-e^{-1}\approx 0.632\)。</p>
+<p>(3) 指数分布は右に長い裾を引き、少数の長寿命個体が平均を引き上げる。そのため平均(1000時間)は中央値(693時間)より大きくなり、「平均寿命の時点ですでに63%が故障している」ことになる。</p>
+<h4 class="alt">ポイント</h4>
+<p>カタログの MTTF(平均寿命)を「その時間までは大体もつ」と読むのは危険です。歪んだ分布では平均・中央値・最頻値(指数分布では0!)がすべて異なります — どの代表値で語るべきかは目的次第で、この視点は第8章(記述統計)で一般化します。</p>
+</section>
+
+<section class="sol" id="a4-8">
+<div class="phead"><span class="pnum">解 4.8</span><span class="lv lv2">★★</span><span class="ptag">逆関数法(乱数生成)</span></div>
+<h4>方針</h4>
+<p>\(Y\le y\) を \(U\) の条件に翻訳し、\(U\) が一様であることを使う。</p>
+<h4>解答</h4>
+<p>\(y>0\) に対して</p>
+<p>\[P(Y\le y)=P\!\left(-\frac{1}{\lambda}\ln U\le y\right)=P(\ln U\ge -\lambda y)=P(U\ge e^{-\lambda y})=1-e^{-\lambda y}\]</p>
+<p>(最後は \(U\sim U(0,1)\) より \(P(U\ge u)=1-u\)。)これは \(\mathrm{Exp}(\lambda)\) の分布関数に一致するので \(Y\sim\mathrm{Exp}(\lambda)\)。</p>
+<p>一般に、分布関数 \(F\) が連続な逆関数を持てば \(F^{-1}(U)\) は \(F\) に従う(<b>逆関数法</b>)。計算機の一様乱数 \(U\) に \(-\lambda^{-1}\ln U\) を施すだけで指数乱数が得られる。</p>
+<h4 class="alt">ポイント</h4>
+<p>シミュレーション(モンテカルロ法、問7.8)の基礎技術です。正規分布は \(F^{-1}\) が閉じた式で書けないため、2つの一様乱数から極座標で作るボックス=ミュラー法(問4.9・5.9と同じ「2次元化」の構図)などが使われます。「一様乱数さえあれば任意の分布が作れる」— 乱数生成の統一原理です。</p>
+</section>
+
+<section class="sol" id="a4-9">
+<div class="phead"><span class="pnum">解 4.9</span><span class="lv lv3">★★★</span><span class="ptag">ガウス積分</span></div>
+<h4>方針</h4>
+<p>1次元では原始関数が書けない。2乗して2次元にし、極座標 \(dx\,dy=r\,dr\,d\theta\) で解く。</p>
+<h4>解答</h4>
+<p>(1) \[I^2=\int_{-\infty}^{\infty}\!\!\int_{-\infty}^{\infty}e^{-(x^2+y^2)/2}\,dx\,dy=\int_0^{2\pi}\!\!\int_0^{\infty}e^{-r^2/2}\,r\,dr\,d\theta=2\pi\Bigl[-e^{-r^2/2}\Bigr]_0^{\infty}=2\pi\]</p>
+<p>\(I>0\) なので \(I=\sqrt{2\pi}\)。</p>
+<p>(2) よって \(\displaystyle\int\varphi(z)\,dz=\frac{1}{\sqrt{2\pi}}\cdot\sqrt{2\pi}=1\)。\(E[Z]=\displaystyle\int z\varphi(z)\,dz=0\)(奇関数の対称積分;絶対可積分なので正当)。分散は部分積分で</p>
+<p>\[E[Z^2]=\frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} z\cdot ze^{-z^2/2}\,dz=\frac{1}{\sqrt{2\pi}}\left(\Bigl[-ze^{-z^2/2}\Bigr]_{-\infty}^{\infty}+\int_{-\infty}^{\infty}e^{-z^2/2}\,dz\right)=\frac{0+\sqrt{2\pi}}{\sqrt{2\pi}}=1\]</p>
+<h4 class="alt">ポイント</h4>
+<p>正規分布に \(2\pi\) が現れる理由はこの極座標変換にあります。「1次元で困ったら2次元化して回す」技は、レイリー分布(問5.9)・ボックス=ミュラー法と同根で、院試でも頻出です。ここで確立した \(E=0,V=1\) と標準化(問4.5)を合わせれば、一般の \(N(\mu,\sigma^2)\) の平均・分散も直ちに従います。</p>
+</section>
+
+<section class="sol" id="a4-10">
+<div class="phead"><span class="pnum">解 4.10</span><span class="lv lv3">★★★</span><span class="ptag">非単調変換</span></div>
+<h4>方針</h4>
+<p>\(Y=Z^2\) は単調でないので公式は使えない。CDF \(F_Y(y)=P(Z^2\le y)\) を書き下してから微分する。</p>
+<h4>解答</h4>
+<p>(1) \(y>0\) に対して</p>
+<p>\[F_Y(y)=P(-\sqrt{y}\le Z\le\sqrt{y})=\Phi(\sqrt{y})-\Phi(-\sqrt{y})=2\Phi(\sqrt{y})-1\]</p>
+<p>両辺を \(y\) で微分して(\(\Phi'=\varphi\)、合成関数の微分)</p>
+<p>\[f_Y(y)=2\varphi(\sqrt{y})\cdot\frac{1}{2\sqrt{y}}=\frac{1}{\sqrt{y}}\cdot\frac{1}{\sqrt{2\pi}}e^{-y/2}=\frac{1}{\sqrt{2\pi y}}\,e^{-y/2}\]</p>
+<p>(2) \(E[Y]=E[Z^2]=V[Z]+(E[Z])^2=1+0=1\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>非単調変換では「±両側から寄与が来る」ため、CDF経由が安全です。密度は \(y\to0\) で発散しますが積分は有限(可積分)— 密度が1を超えたり発散したりしてよい、の極端な例です。この \(\chi^2(1)\) 分布は、第8章で「分散の推定量の分布」\(\chi^2(n-1)\) の構成要素として統計学の主役になります。</p>
+</section>
+
+
+<header class="chap" id="ch5">
+<p class="chnum">第5章</p>
+<h2>多次元確率変数 — 解答解説</h2>
+<p class="chsub">同時分布・共分散・相関</p>
+</header>
+
+<section class="sol" id="a5-1">
+<div class="phead"><span class="pnum">解 5.1</span><span class="lv lv1">★</span><span class="ptag">同時分布表</span></div>
+<h4>方針</h4>
+<p>周辺分布は行・列の合計。条件付きは「その列だけを切り出して規格化」。独立性は積の形になるか全マスで確認。</p>
+<h4>解答</h4>
+<p>(1) \(P(X=0)=0.1+0.2+0.1=0.4\)、\(P(X=1)=0.6\)。\(P(Y=0)=0.2\)、\(P(Y=1)=0.4\)、\(P(Y=2)=0.4\)。</p>
+<p>(2) \(P(X=1\mid Y=2)=\dfrac{P(X=1,Y=2)}{P(Y=2)}=\dfrac{0.3}{0.4}=0.75\)。</p>
+<p>(3) たとえば \(P(X=0,Y=0)=0.1\) だが \(P(X=0)P(Y=0)=0.4\times0.2=0.08\neq0.1\)。よって<b>独立でない</b>。</p>
+<h4 class="alt">ポイント</h4>
+<p>独立性の判定は「1マスでも崩れたら従属」— 反例1つで十分です(逆に独立を示すには<b>全マス</b>の確認が必要)。周辺分布だけからは同時分布は復元できません:同じ周辺を持つ従属な分布は無数にあります。「関係」の情報は同時分布にしか入っていない、というのがこの章の主題です。</p>
+</section>
+
+<section class="sol" id="a5-2">
+<div class="phead"><span class="pnum">解 5.2</span><span class="lv lv1">★</span><span class="ptag">共分散と相関係数</span></div>
+<h4>方針</h4>
+<p>\(E[XY]\) は全マスの \(xy\times\)確率の和。\(\mathrm{Cov}=E[XY]-E[X]E[Y]\)。</p>
+<h4>解答</h4>
+<p>\(E[X]=0.6\)(前問)。\(E[Y]=0\times0.2+1\times0.4+2\times0.4=1.2\)。</p>
+<p>\(E[XY]\) は \(x=1\) の行だけが効いて \(1\cdot1\cdot0.2+1\cdot2\cdot0.3=0.8\)。よって</p>
+<p>\[\mathrm{Cov}[X,Y]=0.8-0.6\times1.2=0.08\]</p>
+<p>\(V[X]=0.6-0.36=0.24\)(ベルヌーイ)、\(E[Y^2]=0.4+4\times0.4=2.0\) より \(V[Y]=2.0-1.44=0.56\)。</p>
+<p>\[\rho=\frac{0.08}{\sqrt{0.24\times0.56}}=\frac{0.08}{0.3666}\approx 0.218\]</p>
+<h4 class="alt">ポイント</h4>
+<p>\(\mathrm{Cov}>0\) は「\(X\) が大きいとき \(Y\) も大きめ」という<b>直線的な共変</b>の傾向。相関係数はそれをスケール不要の \([-1,1]\) に規格化した量で、単位を変えても値が変わりません(\(\rho\) が \(aX+b\) の変換で不変)。0.218 は「弱い正の相関」— 強弱の感覚は第8章の散布図・データ分析で養います。</p>
+</section>
+
+<section class="sol" id="a5-3">
+<div class="phead"><span class="pnum">解 5.3</span><span class="lv lv1">★</span><span class="ptag">連続型の同時密度</span></div>
+<h4>方針</h4>
+<p>周辺化は「消したい変数で積分」。(3) は領域 \(\{x+y\le1\}\) 上の2重積分。</p>
+<h4>解答</h4>
+<p>(1) \(\displaystyle\int_0^1\!\!\int_0^1(x+y)\,dx\,dy=\int_0^1\left(\frac12+y\right)dy=\frac12+\frac12=1\)。</p>
+<p>(2) \(f_X(x)=\displaystyle\int_0^1(x+y)\,dy=x+\frac12\)(\(0\le x\le1\))。</p>
+<p>(3) \[P(X+Y\le1)=\int_0^1\!\!\int_0^{1-x}(x+y)\,dy\,dx=\int_0^1\left(x(1-x)+\frac{(1-x)^2}{2}\right)dx=\int_0^1\frac{1-x^2}{2}\,dx=\frac12-\frac16=\frac13\]</p>
+<h4 class="alt">ポイント</h4>
+<p>連続の同時分布では「領域の上の体積」が確率です。積分範囲(この場合は三角形領域)を図で描いてから立式する習慣が、計算ミスを大きく減らします。なお \(f(x,y)=x+y\neq f_X(x)f_Y(y)=(x+\frac12)(y+\frac12)\) なので \(X,Y\) は独立でないことも読み取れます。</p>
+</section>
+
+<section class="sol" id="a5-4">
+<div class="phead"><span class="pnum">解 5.4</span><span class="lv lv2">★★</span><span class="ptag">無相関だが独立でない例</span></div>
+<h4>方針</h4>
+<p>\(\mathrm{Cov}[X,X^2]=E[X^3]-E[X]E[X^2]\)。対称性で奇数次モーメントは0。従属性は「\(X\) を知れば \(Y\) が決まる」ことを事象で表す。</p>
+<h4>解答</h4>
+<p>(1) \(X\) の密度は \(\frac12\)(\(-1\le x\le1\))で対称なので \(E[X]=0\)、\(E[X^3]=\displaystyle\int_{-1}^1\frac{x^3}{2}dx=0\)。よって</p>
+<p>\[\mathrm{Cov}[X,Y]=E[X^3]-E[X]\,E[X^2]=0-0=0\]</p>
+<p>(2) 例として \(A=\{X>1/2\}\)、\(B=\{Y>1/4\}=\{|X|>1/2\}\) をとると、\(P(A)=\frac14\)、\(P(B)=\frac12\)、\(P(A\cap B)=P(X>1/2)=\frac14\)。</p>
+<p>\[P(A\cap B)=\frac14\neq \frac14\times\frac12=\frac18=P(A)P(B)\]</p>
+<p>よって独立でない。(そもそも \(Y=X^2\) は \(X\) の値で完全に決まる。)</p>
+<p>(3) 相関係数が捉えるのは<b>直線的な</b>関係だけである。\(Y=X^2\) のような対称な曲線関係は \(\rho=0\) でも強い依存を持つ。「\(\rho=0\) だから無関係」と結論してはならない。</p>
+<h4 class="alt">ポイント</h4>
+<p>「独立 ⇒ 無相関」の逆が成り立たない代表例で、院試でも定番です。非線形な依存まで捉えたければ、散布図を見る・相互情報量(第16章)を使う、が実務の答えになります。相互情報量ならこの例で \(I(X;Y)>0\) となり、依存が正しく検出されます。</p>
+</section>
+
+<section class="sol" id="a5-5">
+<div class="phead"><span class="pnum">解 5.5</span><span class="lv lv2">★★</span><span class="ptag">相関するセンサの平均</span></div>
+<h4>方針</h4>
+<p>\(V[X+Y]=V[X]+V[Y]+2\mathrm{Cov}\)、\(\mathrm{Cov}=\rho\sigma^2\)、定数倍は2乗。</p>
+<h4>解答</h4>
+<p>(1) \[V\!\left[\frac{X+Y}{2}\right]=\frac{1}{4}\left(V[X]+V[Y]+2\rho\sigma^2\right)=\frac{2\sigma^2+2\rho\sigma^2}{4}=\frac{\sigma^2(1+\rho)}{2}\]</p>
+<p>(2) \(\dfrac{4\times1.5}{2}=3\)。</p>
+<p>(3) \(\rho=0\)(独立)なら \(\sigma^2/2\) — 分散が半減する。\(\rho=1\)(完全相関)なら \(\sigma^2\) — <b>まったく減らない</b>。平均化がノイズ低減に効くのは、誤差が互いに独立(に近い)ときだけで、共通の原因で同じ方向にずれる誤差(系統誤差)は何台平均しても消えない。</p>
+<h4 class="alt">ポイント</h4>
+<p>センサフュージョン(第15章)や分散投資の設計原理そのものです。同型センサを並べても電源ノイズ・温度・振動など共通要因で \(\rho>0\) になりがちで、カメラ+レーダー+LiDARのような<b>原理の異なるセンサ</b>の組み合わせが好まれるのは、誤差の独立性(\(\rho\approx0\))を稼ぐためです。問2.7(共通原因故障)と同じ思想が、故障だけでなく誤差にも現れています。</p>
+</section>
+
+<section class="sol" id="a5-6">
+<div class="phead"><span class="pnum">解 5.6</span><span class="lv lv2">★★</span><span class="ptag">畳み込み(一様和)</span></div>
+<h4>方針</h4>
+<p>\(f_Z(z)=\int f_X(x)f_Y(z-x)dx\)。被積分関数が1になるのは \(0\le x\le1\) かつ \(0\le z-x\le1\) のとき — 積分区間を \(z\) の場合分けで決める。</p>
+<h4>解答</h4>
+<p>\(f_X=f_Y=1\)(区間 \([0,1]\))なので、\(f_Z(z)\) は条件 \(\max(0,z-1)\le x\le\min(1,z)\) を満たす区間の長さに等しい。</p>
+<p>\(0\le z\le1\) のとき:\(x\in[0,z]\) で \(f_Z(z)=z\)。</p>
+<p>\(1\le z\le2\) のとき:\(x\in[z-1,1]\) で \(f_Z(z)=2-z\)。</p>
+<p>\[f_Z(z)=\begin{cases}z &amp; (0\le z\le1)\\ 2-z &amp; (1\le z\le2)\\ 0 &amp; (\text{その他})\end{cases}\]</p>
+<p>グラフは \(z=1\) を頂点とする三角形(三角分布)。</p>
+<h4 class="alt">ポイント</h4>
+<p>平らな分布を2つ足すと三角形 — 足すたびに滑らかで釣鐘型に近づいていきます(3つ足すと区分2次曲線)。これが中心極限定理(第7章)を目で見た姿です。画像処理では「ボックスフィルタを2回かける=三角フィルタ」という平滑化の常識に対応します(畳み込みはフィルタリングと同じ演算!)。</p>
+</section>
+
+<section class="sol" id="a5-7">
+<div class="phead"><span class="pnum">解 5.7</span><span class="lv lv2">★★</span><span class="ptag">ポアソン分布の再生性</span></div>
+<h4>方針</h4>
+<p>離散版の畳み込み \(P(X+Y=n)=\sum_{k=0}^n P(X=k)P(Y=n-k)\) を書いて、二項定理でまとめる。</p>
+<h4>解答</h4>
+<p>\[P(X+Y=n)=\sum_{k=0}^{n}e^{-\lambda}\frac{\lambda^k}{k!}\cdot e^{-\mu}\frac{\mu^{n-k}}{(n-k)!}=\frac{e^{-(\lambda+\mu)}}{n!}\sum_{k=0}^{n}\binom{n}{k}\lambda^k\mu^{n-k}=\frac{e^{-(\lambda+\mu)}(\lambda+\mu)^n}{n!}\]</p>
+<p>(途中、\(\dfrac{1}{k!(n-k)!}=\dfrac{1}{n!}\binom{n}{k}\) と二項定理を使った。)これは \(\mathrm{Po}(\lambda+\mu)\) の確率関数である。</p>
+<h4 class="alt">ポイント</h4>
+<p>「足しても同じ族に留まる」性質を<b>再生性</b>と呼び、ポアソン・正規・二項(同じ \(p\))・ガンマ(同じレート)が持ちます。2台のカメラの光子数の合算、2本の通信路のイベント数の合算がまたポアソンになる、という実務上も便利な性質です。第6章ではMGFを使うと、この証明が1行になることを見ます(問6.6・6.7)。</p>
+</section>
+
+<section class="sol" id="a5-8">
+<div class="phead"><span class="pnum">解 5.8</span><span class="lv lv3">★★★</span><span class="ptag">2変量正規の条件付き分布</span></div>
+<h4>方針</h4>
+<p>指数部を \(y\) について平方完成すれば、「\(y\) の正規密度 × \(x\) だけの因子」に分離できる。積分と条件付けの両方が一度に片づく。</p>
+<h4>解答</h4>
+<p>(1) \((y-\rho x)^2+(1-\rho^2)x^2=y^2-2\rho xy+\rho^2x^2+x^2-\rho^2x^2=x^2-2\rho xy+y^2\)。成立。</p>
+<p>(2) (1) より同時密度は</p>
+<p>\[f(x,y)=\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\cdot\frac{1}{\sqrt{2\pi(1-\rho^2)}}\exp\left(-\frac{(y-\rho x)^2}{2(1-\rho^2)}\right)\]</p>
+<p>と分解できる。第2因子は(\(x\) を固定すると)平均 \(\rho x\)・分散 \(1-\rho^2\) の正規密度なので、\(y\) で積分すると1。よって</p>
+<p>\[f_X(x)=\int f(x,y)\,dy=\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\]</p>
+<p>(3) \(f(y\mid x)=\dfrac{f(x,y)}{f_X(x)}\) は上の分解の第2因子そのもの。すなわち</p>
+<p>\[Y\mid X=x\ \sim\ N\!\left(\rho x,\ 1-\rho^2\right)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>結論の読み方が重要です。(a) 条件付き期待値 \(E[Y\mid X=x]=\rho x\) は \(x\) の<b>1次式</b> — これが「回帰直線」の原型で、回帰(regression)という言葉の由来もこの設定にあります(第12章)。(b) 条件付き分散 \(1-\rho^2\) は \(x\) の値によらず一定で、\(|\rho|\) が大きいほど小さい — 「\(X\) を知ることで \(Y\) の不確かさが \(\rho^2\) の割合だけ削れる」。この2点は、最良予測(問6.9)・カルマンフィルタの更新式(第15章)として繰り返し再登場します。一般の \(N(\mu_X,\sigma_X^2)\)、\(N(\mu_Y,\sigma_Y^2)\) では \(E[Y\mid X=x]=\mu_Y+\rho\dfrac{\sigma_Y}{\sigma_X}(x-\mu_X)\)、\(V[Y\mid X=x]=\sigma_Y^2(1-\rho^2)\) となります(標準化すれば本問に帰着)。</p>
+</section>
+
+<section class="sol" id="a5-9">
+<div class="phead"><span class="pnum">解 5.9</span><span class="lv lv3">★★★</span><span class="ptag">レイリー分布</span></div>
+<h4>方針</h4>
+<p>独立性から同時密度は積。回転対称なので極座標が最適(問4.9と同じ技)。</p>
+<h4>解答</h4>
+<p>(1) 同時密度は \(f(x,y)=\dfrac{1}{2\pi\sigma^2}\exp\left(-\dfrac{x^2+y^2}{2\sigma^2}\right)\)。極座標 \(x=t\cos\theta,\ y=t\sin\theta\)(\(dx\,dy=t\,dt\,d\theta\))で</p>
+<p>\[F_R(r)=\iint_{x^2+y^2\le r^2}f(x,y)\,dx\,dy=\int_0^{2\pi}\!\!\int_0^{r}\frac{1}{2\pi\sigma^2}e^{-t^2/(2\sigma^2)}\,t\,dt\,d\theta=1-e^{-r^2/(2\sigma^2)}\]</p>
+<p>微分して \(f_R(r)=\dfrac{r}{\sigma^2}e^{-r^2/(2\sigma^2)}\)(\(r\ge0\))。</p>
+<p>(2) 部分積分(\(u=r\)、\(dv=\frac{r}{\sigma^2}e^{-r^2/(2\sigma^2)}dr\)、\(v=-e^{-r^2/(2\sigma^2)}\))で</p>
+<p>\[E[R]=\int_0^\infty r f_R(r)\,dr=\Bigl[-re^{-r^2/(2\sigma^2)}\Bigr]_0^\infty+\int_0^\infty e^{-r^2/(2\sigma^2)}dr=0+\frac{\sqrt{2\pi\sigma^2}}{2}=\sigma\sqrt{\frac{\pi}{2}}\]</p>
+<p>(最後の積分はガウス積分(問4.9)の半分。)</p>
+<h4 class="alt">ポイント</h4>
+<p>「2次元等方ガウスノイズの<b>大きさ</b>」がレイリー分布 — 画像の勾配強度のノイズ、無線通信のフェージング振幅、風速の大きさなどのモデルとして頻出です。各成分の平均は0でも、大きさの平均は \(\sigma\sqrt{\pi/2}\approx1.25\sigma>0\):ノイズは「向きを平均すると消えるが、大きさは残る」ことの定量化です。なお \(R^2=X^2+Y^2\) は指数分布(自由度2のカイ二乗、問8.5)になり、第8章への伏線となります。</p>
+</section>
+
+
+<header class="chap" id="ch6">
+<p class="chnum">第6章</p>
+<h2>期待値の技法 — 解答解説</h2>
+<p class="chsub">条件付き期待値とモーメント母関数</p>
+</header>
+
+<section class="sol" id="a6-1">
+<div class="phead"><span class="pnum">解 6.1</span><span class="lv lv1">★</span><span class="ptag">指示変数と線形性</span></div>
+<h4>方針</h4>
+<p>\(X\) を「各人が自分のものを受け取ったか」の指示変数の和に分解する。線形性は従属でも成り立つ。</p>
+<h4>解答</h4>
+<p>\(\mathbb{1}_i=\)「\(i\) 番目の人が自分のプレゼントを受け取る」の指示変数とすると \(X=\mathbb{1}_1+\cdots+\mathbb{1}_n\)。一様な順列では各人が特定のプレゼントを受け取る確率は \(1/n\) なので \(E[\mathbb{1}_i]=P(\text{自分のを受け取る})=\dfrac1n\)。線形性より</p>
+<p>\[E[X]=\sum_{i=1}^{n}E[\mathbb{1}_i]=n\cdot\frac1n=1\]</p>
+<h4 class="alt">ポイント</h4>
+<p>受け取り同士は明らかに従属(誰かが自分のを取れば他の人の状況が変わる)ですが、<b>線形性は従属でも使える</b> — ここが最大の武器です。問1.9では「1つも一致しない確率」を求めるのに包除原理という重装備が必要でしたが、「一致数の平均」だけなら1行で出る。難しい分布でも平均は簡単、という非対称性はアルゴリズムの期待計算量の解析(乱択クイックソートなど)で決定的に効きます。</p>
+</section>
+
+<section class="sol" id="a6-2">
+<div class="phead"><span class="pnum">解 6.2</span><span class="lv lv1">★</span><span class="ptag">MGFの計算</span></div>
+<h4>方針</h4>
+<p>定義 \(M(t)=E[e^{tX}]=\sum e^{tk}p(k)\) に入れる。ポアソンでは指数関数の級数にまとめる。</p>
+<h4>解答</h4>
+<p>(1) \(M(t)=e^{t\cdot0}(1-p)+e^{t\cdot1}p=1-p+pe^t\)。</p>
+<p>(2) \[M(t)=\sum_{k=0}^{\infty}e^{tk}\,e^{-\lambda}\frac{\lambda^k}{k!}=e^{-\lambda}\sum_{k=0}^{\infty}\frac{(\lambda e^t)^k}{k!}=e^{-\lambda}e^{\lambda e^t}=e^{\lambda(e^t-1)}\]</p>
+<p>(3) \(M'(t)=\lambda e^t e^{\lambda(e^t-1)}\) より \(E[X]=M'(0)=\lambda\)。</p>
+<p>\(M''(t)=(\lambda e^t+\lambda^2e^{2t})e^{\lambda(e^t-1)}\) より \(E[X^2]=M''(0)=\lambda+\lambda^2\)。よって \(V[X]=\lambda+\lambda^2-\lambda^2=\lambda\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>問3.8では級数の工夫(\(E[X(X-1)]\))が必要だった計算が、MGFなら「微分して0を代入」という機械的作業になります。母関数は「分布の情報をすべて1つの関数に詰め込んだ圧縮ファイル」で、モーメントの取り出し・和の分布・極限操作をすべて関数の操作に変換します。</p>
+</section>
+
+<section class="sol" id="a6-3">
+<div class="phead"><span class="pnum">解 6.3</span><span class="lv lv1">★</span><span class="ptag">全期待値の法則</span></div>
+<h4>方針</h4>
+<p>\(N=n\) を固定すれば \(X\mid N=n\sim B(n,1/2)\) で \(E[X\mid N=n]=n/2\)。それを \(N\) について平均する。</p>
+<h4>解答</h4>
+<p>\(E[X\mid N]=\dfrac{N}{2}\) なので、全期待値の法則より</p>
+<p>\[E[X]=E\bigl[E[X\mid N]\bigr]=E\!\left[\frac{N}{2}\right]=\frac{1}{2}\cdot\frac{7}{2}=\frac{7}{4}\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「まず内側(コイン)を固定した \(N\) で解き、外側(サイコロ)で平均する」— 階層モデルの標準手順です。\(E[X\mid N]\) が \(N\) の関数(確率変数)である、という見方に慣れることがこの章の山場。以後、ベイズ統計の予測(第13章)やカルマンフィルタ(第15章)で常用します。</p>
+</section>
+
+<section class="sol" id="a6-4">
+<div class="phead"><span class="pnum">解 6.4</span><span class="lv lv2">★★</span><span class="ptag">全分散の法則</span></div>
+<h4>方針</h4>
+<p>\(V[X\mid N]=N/4\)(二項分布の分散)、\(E[X\mid N]=N/2\)。全分散の法則の2項に入れる。</p>
+<h4>解答</h4>
+<p>\[V[X]=E\bigl[V[X\mid N]\bigr]+V\bigl[E[X\mid N]\bigr]=E\!\left[\frac{N}{4}\right]+V\!\left[\frac{N}{2}\right]=\frac{1}{4}\cdot\frac{7}{2}+\frac{1}{4}\cdot\frac{35}{12}=\frac{7}{8}+\frac{35}{48}=\frac{77}{48}\approx1.60\]</p>
+<h4 class="alt">ポイント</h4>
+<p>第1項(内側のばらつきの平均)はコイン投げ自体の運、第2項(平均のばらつき)は投げる回数が毎回違うことによる変動 — 不確かさが2つの源泉に<b>分解</b>されています。この分解は、大津の二値化(問8.7:クラス内分散+クラス間分散)や分散分析の考え方そのものです。</p>
+</section>
+
+<section class="sol" id="a6-5">
+<div class="phead"><span class="pnum">解 6.5</span><span class="lv lv2">★★</span><span class="ptag">ランダムな個数の和(複合ポアソン)</span></div>
+<h4>方針</h4>
+<p>\(N=n\) を固定すると普通の \(n\) 項の和。\(E[S\mid N]=N\mu\)、\(V[S\mid N]=N\sigma^2\) を全期待値・全分散に入れる。</p>
+<h4>解答</h4>
+<p>(1) \(E[S\mid N]=N\mu\) より \(E[S]=E[N\mu]=\mu E[N]=\lambda\mu\)。</p>
+<p>(2) 独立性より \(V[S\mid N]=N\sigma^2\)。全分散の法則で</p>
+<p>\[V[S]=E[N\sigma^2]+V[N\mu]=\sigma^2\lambda+\mu^2 V[N]=\lambda\sigma^2+\lambda\mu^2=\lambda(\sigma^2+\mu^2)\]</p>
+<p>(ポアソンでは \(E[N]=V[N]=\lambda\)。)</p>
+<h4 class="alt">ポイント</h4>
+<p>\(V[S]\) には「1件あたりのばらつき \(\sigma^2\)」だけでなく「件数のゆらぎに \(\mu^2\) が乗った項」が入ります — 処理時間の平均 \(\mu\) が大きいほど、件数変動が総時間を大きく揺らす。リアルタイムシステムの最悪時間見積もり、保険の総支払額(複合ポアソンモデル)、ネットワークの総トラフィックなど、「ランダム個数×ランダム量」の標準公式(ワルドの等式の拡張)です。</p>
+</section>
+
+<section class="sol" id="a6-6">
+<div class="phead"><span class="pnum">解 6.6</span><span class="lv lv2">★★</span><span class="ptag">正規分布のMGFと再生性</span></div>
+<h4>方針</h4>
+<p>\(e^{tx}\times\) 正規密度の指数部をまとめて平方完成 — 「積分は正規密度の全積分=1に帰着させる」のが定石。</p>
+<h4>解答</h4>
+<p>(1) \[M(t)=\int_{-\infty}^{\infty}e^{tx}\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)dx\]</p>
+<p>指数部は</p>
+<p>\[tx-\frac{(x-\mu)^2}{2\sigma^2}=-\frac{\bigl(x-(\mu+\sigma^2t)\bigr)^2}{2\sigma^2}+\mu t+\frac{\sigma^2t^2}{2}\]</p>
+<p>(展開して確認できる。)よって</p>
+<p>\[M(t)=e^{\mu t+\sigma^2t^2/2}\int\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu-\sigma^2t)^2}{2\sigma^2}\right)dx=e^{\mu t+\sigma^2t^2/2}\]</p>
+<p>(積分は平均 \(\mu+\sigma^2t\) の正規密度の全積分で1。)</p>
+<p>(2) 独立性より</p>
+<p>\[M_{X+Y}(t)=M_X(t)M_Y(t)=e^{\mu_1t+\sigma_1^2t^2/2}\cdot e^{\mu_2t+\sigma_2^2t^2/2}=e^{(\mu_1+\mu_2)t+(\sigma_1^2+\sigma_2^2)t^2/2}\]</p>
+<p>これは \(N(\mu_1+\mu_2,\ \sigma_1^2+\sigma_2^2)\) のMGF。MGFの一意性より \(X+Y\) はこの正規分布に従う。</p>
+<h4 class="alt">ポイント</h4>
+<p>畳み込み積分(第5章)を直接実行する代わりに、<b>関数の掛け算</b>で和の分布が決まる — これがMGFの主戦場です。「独立な正規の和は正規、平均も分散もそれぞれ足し算」はノイズ伝搬の計算やカルマンフィルタの予測ステップ(問15.5)で毎回使う基本定理になります。</p>
+</section>
+
+<section class="sol" id="a6-7">
+<div class="phead"><span class="pnum">解 6.7</span><span class="lv lv2">★★</span><span class="ptag">MGFによる極限(二項→ポアソン)</span></div>
+<h4>方針</h4>
+<p>\(B(n,p)\) のMGF \((1-p+pe^t)^n\) に \(p=\lambda/n\) を代入し、\((1+a/n)^n\to e^a\) を使う。</p>
+<h4>解答</h4>
+<p>\[M_{X_n}(t)=\left(1-\frac{\lambda}{n}+\frac{\lambda}{n}e^t\right)^n=\left(1+\frac{\lambda(e^t-1)}{n}\right)^n\ \xrightarrow[n\to\infty]{}\ e^{\lambda(e^t-1)}\]</p>
+<p>右辺は \(\mathrm{Po}(\lambda)\) のMGF(問6.2)。MGFの収束は分布の収束を意味する(レヴィの連続性定理、第18章)ので、\(B(n,\lambda/n)\) はポアソン分布に収束する。</p>
+<h4 class="alt">ポイント</h4>
+<p>問3.7で数値的に確認した近似が、ここで定理になりました。「PMFの各点の極限を直接計算する」よりも、MGFという1つの関数の極限を取る方がはるかに見通しがよい — 同じ戦略で中心極限定理も証明できます(問18.7、特性関数版)。近似(実務)と極限定理(理論)が母関数で橋渡しされる、確率論の美しい風景です。</p>
+</section>
+
+<section class="sol" id="a6-8">
+<div class="phead"><span class="pnum">解 6.8</span><span class="lv lv3">★★★</span><span class="ptag">クーポンコレクター問題</span></div>
+<h4>方針</h4>
+<p>「\(i-1\) 種 → \(i\) 種」の各段階に分ければ、それぞれは幾何分布。全体はその和なので線形性で足す。</p>
+<h4>解答</h4>
+<p>(1) \(i-1\) 種持っているとき、新種が出る確率は \(p_i=\dfrac{6-(i-1)}{6}=\dfrac{7-i}{6}\)。新種を引くまでの枚数 \(T_i\) は \(\mathrm{Ge}(p_i)\) に従い \(E[T_i]=\dfrac{6}{7-i}\)。\(T=T_1+\cdots+T_6\) と線形性より</p>
+<p>\[E[T]=\sum_{i=1}^{6}\frac{6}{7-i}=6\left(\frac16+\frac15+\frac14+\frac13+\frac12+1\right)=6H_6=6\times\frac{49}{20}=14.7\ \text{枚}\]</p>
+<p>(2) 一般式 \(E[T]=nH_n\approx n\ln n\)。ランダム入力によるテストで全 \(n\) 分岐を踏むには、分岐数 \(n\) に対して \(n\ln n\) のオーダーの試行が必要 — 特に「最後の1種(踏みにくい分岐)」に \(E[T_n]=n\) 枚を要し、終盤ほど効率が落ちる。カバレッジの最後の数%が高くつく理由の確率的説明であり、狙い撃ちのテスト設計(directed testing)が必要になる根拠でもある。</p>
+<h4 class="alt">ポイント</h4>
+<p>「段階に分けて幾何分布の和にする」分解は、待ち時間解析の常套手段です。分散も同様に \(V[T]=\sum V[T_i]\)(各段階は独立)で計算でき、終盤の段階が分散の大半を占めることが分かります。ハッシュテーブルの全バケット充填、ガチャの完全収集など、応用範囲の広い名作問題です。</p>
+</section>
+
+<section class="sol" id="a6-9">
+<div class="phead"><span class="pnum">解 6.9</span><span class="lv lv3">★★★</span><span class="ptag">最良予測としての条件付き期待値</span></div>
+<h4>方針</h4>
+<p>ヒント通り分解し、交差項を「\(Y\) で条件付けてから平均」で消す。ピタゴラスの定理の確率版。</p>
+<h4>解答</h4>
+<p>\(\hat{X}=E[X\mid Y]\) とおき、\(X-g(Y)=(X-\hat{X})+(\hat{X}-g(Y))\) と分解すると</p>
+<p>\[E[(X-g(Y))^2]=E[(X-\hat{X})^2]+E[(\hat{X}-g(Y))^2]+2E[(X-\hat{X})(\hat{X}-g(Y))]\]</p>
+<p>交差項を全期待値の法則で評価する。\(Y\) を固定すると \(\hat{X}-g(Y)\) は定数なので</p>
+<p>\[E[(X-\hat{X})(\hat{X}-g(Y))\mid Y]=(\hat{X}-g(Y))\,E[X-\hat{X}\mid Y]=(\hat{X}-g(Y))\bigl(E[X\mid Y]-\hat{X}\bigr)=0\]</p>
+<p>よって交差項の(無条件)期待値も0。したがって</p>
+<p>\[E[(X-g(Y))^2]=E[(X-\hat{X})^2]+E[(\hat{X}-g(Y))^2]\ \ge\ E[(X-\hat{X})^2]\]</p>
+<p>等号は \(g(Y)=\hat{X}=E[X\mid Y]\)(確率1で)のとき。すなわち条件付き期待値が平均二乗誤差最小の予測である。</p>
+<h4 class="alt">ポイント</h4>
+<p>この定理は本書後半の背骨です:回帰関数(第12章)は \(E[Y\mid X=x]\) の推定であり、カルマンフィルタ(第15章)は正規性の下で \(E[x_t\mid \text{観測列}]\) を逐次計算する装置です。証明の構図「誤差 \(X-\hat X\) は \(Y\) のどんな関数とも直交する」は、線形代数の<b>正射影</b>(最小二乗法)と完全に同型 — 条件付き期待値とは \(L^2\) 空間での射影に他なりません(姉妹編・線形代数の最小二乗の章と見比べてみてください)。</p>
+</section>
+
+
+<header class="chap" id="ch7">
+<p class="chnum">第7章</p>
+<h2>大数の法則と中心極限定理 — 解答解説</h2>
+<p class="chsub">なぜ平均は信頼できるのか</p>
+</header>
+
+<section class="sol" id="a7-1">
+<div class="phead"><span class="pnum">解 7.1</span><span class="lv lv1">★</span><span class="ptag">マルコフの不等式</span></div>
+<h4>方針</h4>
+<p>非負性と平均だけで裾を押さえるのがマルコフ。分布が分かればもちろん正確に計算できる — その差を体感する。</p>
+<h4>解答</h4>
+<p>(1) \(P(X\ge200)\le\dfrac{E[X]}{200}=\dfrac{50}{200}=0.25\)。</p>
+<p>(2) \(P(X\ge200)=e^{-200/50}=e^{-4}\approx0.018\)。上界 0.25 の1/10以下で、マルコフの評価はかなり緩い。</p>
+<h4 class="alt">ポイント</h4>
+<p>マルコフの不等式は「非負・平均既知」という最小限の情報での<b>最悪ケース保証</b>です(実際、上界を達成する分布が存在するのでこれ以上は縮められない)。緩くても「分布の仮定なしに成り立つ」ことに価値があり、チェビシェフ(2次の情報を使用)・ヘフディング(有界性を使用)と、情報を足すほど鋭くなる不等式の階段の出発点です。</p>
+</section>
+
+<section class="sol" id="a7-2">
+<div class="phead"><span class="pnum">解 7.2</span><span class="lv lv1">★</span><span class="ptag">チェビシェフの不等式</span></div>
+<h4>方針</h4>
+<p>\(90&lt;X<110\) は \(|X-100|<10=2\sigma\)。\(k=2\) のチェビシェフ。</p>
+<h4>解答</h4>
+<p>(1) \(P(|X-100|\ge10)\le\left(\dfrac{5}{10}\right)^2=0.25\) より</p>
+<p>\[P(90&lt;X<110)\ge1-0.25=0.75\]</p>
+<p>(2) 正規分布なら \(P(|Z|<2)=0.9545\)。チェビシェフの保証 0.75 は真の値よりだいぶ控えめだが、<b>どんな分布でも</b>(歪んでいても、裾が重くても)成り立つ。</p>
+<h4 class="alt">ポイント</h4>
+<p>「\(2\sigma\) 以内に75%以上、\(3\sigma\) 以内に \(8/9\approx89\%\) 以上」— 分布不問の普遍保証として覚える価値があります。正規分布の 95.45%・99.7% と並べて、「仮定が強いほど強い結論」という統計の基本構図を体で覚えましょう。チェビシェフの真の使い道は数値よりも、次問のように<b>極限定理の証明部品</b>になることです。</p>
+</section>
+
+<section class="sol" id="a7-3">
+<div class="phead"><span class="pnum">解 7.3</span><span class="lv lv1">★</span><span class="ptag">標本平均の平均と分散</span></div>
+<h4>方針</h4>
+<p>期待値は線形性、分散は独立性(共分散0)を使う。</p>
+<h4>解答</h4>
+<p>(1) \[E[\bar{X}_n]=\frac1n\sum_{i=1}^{n}E[X_i]=\frac{n\mu}{n}=\mu\]</p>
+<p>独立なので分散は加法的:</p>
+<p>\[V[\bar{X}_n]=\frac{1}{n^2}\sum_{i=1}^{n}V[X_i]=\frac{n\sigma^2}{n^2}=\frac{\sigma^2}{n}\]</p>
+<p>(2) \(\sigma_{\bar{X}}=\dfrac{8}{\sqrt{64}}=1\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>この2行の計算が第III部全体の心臓です。平均しても中心は動かず(不偏)、ばらつきは \(1/n\) で縮む — ただし標準偏差では \(1/\sqrt{n}\)。「64回測って精度8倍」であって64倍ではない、という<b>平方根の壁</b>は、あらゆるサンプルサイズ設計に現れます。なお分散の加法性には独立(無相関で十分)が必要で、相関があると問5.5のように縮み方が鈍ります。</p>
+</section>
+
+<section class="sol" id="a7-4">
+<div class="phead"><span class="pnum">解 7.4</span><span class="lv lv2">★★</span><span class="ptag">大数の弱法則</span></div>
+<h4>方針</h4>
+<p>チェビシェフに \(\bar{X}_n\)(平均 \(\mu\)、分散 \(\sigma^2/n\))を入れるだけ。上界が \(n\to\infty\) で0に落ちる。</p>
+<h4>解答</h4>
+<p>(1) チェビシェフの不等式を \(\bar{X}_n\) に適用して</p>
+<p>\[P(|\bar{X}_n-\mu|\ge\varepsilon)\le\frac{V[\bar{X}_n]}{\varepsilon^2}=\frac{\sigma^2}{n\varepsilon^2}\ \xrightarrow[n\to\infty]{}\ 0\]</p>
+<p>任意の \(\varepsilon>0\) でこれが成り立つので、\(\bar{X}_n\) は \(\mu\) に確率収束する(大数の弱法則)。</p>
+<p>(2) \(\dfrac{\sigma^2}{n\varepsilon^2}=\dfrac{100}{n}\le0.05\) より \(n\ge2000\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>証明はチェビシェフ1行 — しかし意味は深く、「経験平均が真の平均を言い当てる」という<b>統計学の存在理由</b>そのものの保証です。(2) の \(n=2000\) は保証のための十分条件で、実際にはCLTベース(問10.5)なら約400回で足ります。「確率収束」という収束概念の正確な意味と、より強い「概収束」(大数の強法則)との違いは第18章で扱います。</p>
+</section>
+
+<section class="sol" id="a7-5">
+<div class="phead"><span class="pnum">解 7.5</span><span class="lv lv2">★★</span><span class="ptag">CLT(サイコロの和)</span></div>
+<h4>方針</h4>
+<p>和の平均・分散は \(n\) 倍。整数値の和なので \(P(S\ge380)=P(S\ge379.5)\) と読み替えて標準化(連続修正)。</p>
+<h4>解答</h4>
+<p>(1) \(E[S]=100\times3.5=350\)、\(V[S]=100\times\dfrac{35}{12}=\dfrac{875}{3}\approx291.7\)、\(\sigma_S\approx17.08\)。</p>
+<p>(2) \[P(S\ge380)=P(S\ge379.5)\approx P\!\left(Z\ge\frac{379.5-350}{17.08}\right)=P(Z\ge1.727)\approx0.0421\]</p>
+<p>厳密値 0.0420 とほぼ一致(4桁目まで合う)。</p>
+<h4 class="alt">ポイント</h4>
+<p>一様なサイコロの出目(平らな分布)でも、100個足せば釣鐘型に化ける — 元の分布の形を「忘れて」正規分布に向かうのがCLTの凄みです(問5.6の三角分布はその第一歩でした)。連続修正 \(\pm0.5\) は「整数 \(k\) の確率を区間 \([k-0.5,k+0.5]\) の面積で受ける」補正で、\(n\) が中程度のとき精度を目に見えて改善します。</p>
+</section>
+
+<section class="sol" id="a7-6">
+<div class="phead"><span class="pnum">解 7.6</span><span class="lv lv2">★★</span><span class="ptag">二項分布の正規近似</span></div>
+<h4>方針</h4>
+<p>\(B(2500,0.02)\approx N(50,49)\)。\(P(X\le40)=P(X\le40.5)\) と連続修正してから標準化。</p>
+<h4>解答</h4>
+<p>(1) \(E[X]=2500\times0.02=50\)、\(\sigma=\sqrt{2500\times0.02\times0.98}=\sqrt{49}=7\)。</p>
+<p>(2) \[P(X\le40)\approx P\!\left(Z\le\frac{40.5-50}{7}\right)=P(Z\le-1.357)=1-\Phi(1.357)\approx0.0874\]</p>
+<p>厳密値 0.0839 と比べ、相対誤差4%程度の実用的な近似になっている。</p>
+<h4 class="alt">ポイント</h4>
+<p>二項分布は「ベルヌーイの和」なのでCLTがそのまま適用できます。適用の目安は \(np\ge5\) かつ \(n(1-p)\ge5\) 程度(本問は \(np=50\) で余裕)。\(p\) が小さく \(np\) も小さいときはポアソン近似(問3.7)、\(np\) が大きければ正規近似 — 2つの近似の使い分けが整理できたことになります。ビット誤りの規格検証やA/Bテストの設計はこの計算の直接の応用です。</p>
+</section>
+
+<section class="sol" id="a7-7">
+<div class="phead"><span class="pnum">解 7.7</span><span class="lv lv2">★★</span><span class="ptag">フレーム平均化</span></div>
+<h4>方針</h4>
+<p>ノイズの平均は標本平均そのもの。\(\sigma/\sqrt{n}\) を目標値以下にする。</p>
+<h4>解答</h4>
+<p>(1) 各フレームのノイズが独立(平均0、\(\sigma=10\))なので、\(n\) 枚平均後のノイズの標準偏差は \(\dfrac{10}{\sqrt{n}}\)。</p>
+<p>(2) \(\dfrac{10}{\sqrt{n}}\le2\iff \sqrt{n}\ge5\iff n\ge25\)。最小 \(n=25\) 枚。</p>
+<p>(3) 信号(真値)は平均しても不変、ノイズの標準偏差は \(1/\sqrt{n}\) 倍。よって SN比 \(=\) 信号/ノイズ標準偏差 は \(\sqrt{n}\) 倍になる。</p>
+<h4 class="alt">ポイント</h4>
+<p>天体写真のスタッキング、暗所撮影のマルチフレームNR、計測の多数回平均 — すべてこの1行の応用です。前提は「ノイズが独立・シーンが静止」:動きがあれば位置合わせ(レジストレーション、問16.7)が先に必要で、固定パターンノイズ(毎回同じずれ)は平均しても消えません(問5.5 の \(\rho=1\) の場合に相当)。ショットノイズ(問3.8)に対しても、\(n\) 枚合算は実効的な \(\lambda\) を \(n\) 倍にするので同じ \(\sqrt{n}\) 改善が成り立ちます。</p>
+</section>
+
+<section class="sol" id="a7-8">
+<div class="phead"><span class="pnum">解 7.8</span><span class="lv lv3">★★★</span><span class="ptag">モンテカルロ法の精度設計</span></div>
+<h4>方針</h4>
+<p>命中は \(\mathrm{Ber}(p)\)、\(\hat{p}\) はその標本平均。\(\hat{\pi}=4\hat{p}\) の標準偏差は4倍。</p>
+<h4>解答</h4>
+<p>(1) \(\hat{p}\) はベルヌーイ標本の平均なので \(\sigma_{\hat{p}}=\sqrt{\dfrac{p(1-p)}{n}}\)。</p>
+<p>(2) \(\sigma_{\hat{\pi}}=4\sigma_{\hat{p}}=4\sqrt{\dfrac{p(1-p)}{n}}\le0.01\) を解いて</p>
+<p>\[n\ \ge\ \frac{16\,p(1-p)}{0.01^2}=\frac{16\times0.7854\times0.2146}{10^{-4}}\approx2.70\times10^4\]</p>
+<p>約2.7万点必要。</p>
+<p>(3) 誤差(標準偏差)は \(1/\sqrt{n}\) でしか縮まないので、誤差を \(1/10\) にするには \(n\) を \(100\) 倍にする必要がある。</p>
+<h4 class="alt">ポイント</h4>
+<p>モンテカルロ法の収束 \(O(1/\sqrt{n})\) は<b>次元によらない</b> — これが高次元積分(ベイズ計算、レンダリング、金融工学)で格子法に勝つ理由です。一方で「精度1桁=コスト100倍」という遅さも本質的で、分散削減法(層化・重点サンプリングなど)の研究が生まれる動機になっています。\(\pi\) の計算法としては非効率でも、「打って数える」だけで積分が推定できる汎用性が本体です。</p>
+</section>
+
+<section class="sol" id="a7-9">
+<div class="phead"><span class="pnum">解 7.9</span><span class="lv lv3">★★★</span><span class="ptag">ヘフディングの不等式と精度評価</span></div>
+<h4>方針</h4>
+<p>不等式に数値を入れるだけだが、(3) の比較でチェビシェフとの<b>収束の速さの違い</b>(多項式 vs 指数)を見る。</p>
+<h4>解答</h4>
+<p>(1) \(2e^{-2\times1000\times0.05^2}=2e^{-5}\approx0.0135\)。すなわち観測誤り率は真の誤り率の \(\pm5\%\) に、確率98.6%以上で収まる。</p>
+<p>(2) \(2e^{-2n\varepsilon^2}\le0.05\iff n\ge\dfrac{\ln(2/0.05)}{2\varepsilon^2}=\dfrac{\ln40}{2\times0.0004}=\dfrac{3.689}{0.0008}\approx4611.1\)。よって \(n=4612\)。</p>
+<p>(3) チェビシェフでは \(\dfrac{\sigma^2}{n\varepsilon^2}\le\dfrac{1}{4n\varepsilon^2}\le0.05\) より \(n\ge\dfrac{1}{4\times0.05\times0.0004}=12500\)。ヘフディングの約2.7倍の標本が要る。差は信頼度を上げるほど開く:上界 \(\delta\) に対しチェビシェフは \(n\propto1/\delta\)(多項式)、ヘフディングは \(n\propto\ln(1/\delta)\)(対数)で済むため、\(\delta=10^{-6}\) のような高信頼保証では桁違いになる。</p>
+<h4 class="alt">ポイント</h4>
+<p>「テスト精度 95.0% ± 何%?」に有限標本で答えるのがこの型の不等式で、機械学習理論(PAC学習・汎化誤差上界)の土台です。指数型の裾評価(チェルノフ限界の一種)は、有界な変数の和が平均から大きく外れる確率が<b>指数的に小さい</b>ことを示します — CLTの「正規近似」を、近似でなく不等式として厳密化した道具と位置づけられます。証明(チェルノフ法:\(e^{tX}\) にマルコフを適用してMGFで最適化)は第6章の道具立てでできる良い演習です。</p>
+</section>
+
+
+<header class="chap" id="ch8">
+<p class="chnum">第8章</p>
+<h2>記述統計と標本分布 — 解答解説</h2>
+<p class="chsub">データの要約と、統計量の確率分布</p>
+</header>
+
+<section class="sol" id="a8-1">
+<div class="phead"><span class="pnum">解 8.1</span><span class="lv lv1">★</span><span class="ptag">要約統計量と外れ値</span></div>
+<h4>方針</h4>
+<p>平均は合計÷個数。中央値は並べ替えて中央2つの平均(\(n=8\) は偶数)。</p>
+<h4>解答</h4>
+<p>(1) 合計 \(12+15+11+14+18+13+95+14=192\) より平均 \(\bar{x}=192/8=24\) ms。並べ替えると \(11,12,13,14,14,15,18,95\) で、中央値は \(\dfrac{14+14}{2}=14\) ms。</p>
+<p>(2) 8回中7回は11〜18 msに収まっており、「典型」は<b>中央値14 ms</b>の方がよく表す。平均24 msは、たった1つの外れ値(95 ms:GCや再送などの突発)に引きずられた値で、どの測定値の代表にもなっていない。</p>
+<h4 class="alt">ポイント</h4>
+<p>平均は外れ値1つで大きく動く(<b>頑健でない</b>)のに対し、中央値はほぼ動きません。応答時間のような右裾の長い量では、実務でも p50(中央値)・p95・p99 のパーセンタイルで語るのが標準です。ただし「外れ値を捨てる」のではなく、95 msが<b>なぜ</b>出たか(それ自体が重要な信号かもしれない)を調べるのが分析の作法です。</p>
+</section>
+
+<section class="sol" id="a8-2">
+<div class="phead"><span class="pnum">解 8.2</span><span class="lv lv1">★</span><span class="ptag">標本分散と不偏分散</span></div>
+<h4>方針</h4>
+<p>偏差の2乗和を作り、\(n\) で割るか \(n-1\) で割るか。</p>
+<h4>解答</h4>
+<p>\(\bar{x}=\dfrac{2+4+4+6+9}{5}=5\)。偏差は \(-3,-1,-1,1,4\)、2乗和は \(9+1+1+1+16=28\)。</p>
+<p>\[s^2=\frac{28}{5}=5.6,\qquad u^2=\frac{28}{4}=7\]</p>
+<p>使い分け:手元のデータ自体のばらつきの記述なら \(s^2\) でもよいが、このデータを<b>母集団からの標本</b>とみなして母分散 \(\sigma^2\) を推定するときは、偏りのない \(u^2\) を使う(理由は問8.4)。</p>
+<h4 class="alt">ポイント</h4>
+<p>用語と記号は書籍・ソフトで揺れます:NumPy の <code>var</code> は既定で \(n\) 割り(<code>ddof=1</code> で \(n-1\) 割り)、Excel は <code>VAR.P</code> と <code>VAR.S</code>、電卓は \(\sigma_n\) と \(\sigma_{n-1}\)。本書では一貫して「\(s^2\):\(n\) 割り、\(u^2\):\(n-1\) 割り」とします。<b>どちらの定義かを常に確認する</b>のが実務の第一歩です。</p>
+</section>
+
+<section class="sol" id="a8-3">
+<div class="phead"><span class="pnum">解 8.3</span><span class="lv lv1">★</span><span class="ptag">標本相関係数</span></div>
+<h4>方針</h4>
+<p>偏差積和 \(S_{xy}\)、偏差2乗和 \(S_{xx},S_{yy}\) を表で整理して計算。</p>
+<h4>解答</h4>
+<p>\(\bar{x}=3\)、\(\bar{y}=5\)。偏差は \(x\):\(-2,-1,0,1,2\)、\(y\):\(-3,-2,0,1,4\)。</p>
+<p>\[S_{xy}=6+2+0+1+8=17,\qquad S_{xx}=4+1+0+1+4=10,\qquad S_{yy}=9+4+0+1+16=30\]</p>
+<p>\[r=\frac{17}{\sqrt{10\times30}}=\frac{17}{\sqrt{300}}\approx0.981\]</p>
+<p>非常に強い正の相関。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(r\) は第5章の相関係数 \(\rho\) の「データ版」で、\(\pm1\) に近いほど点が直線に載ることを意味します。\(S_{xx},S_{xy},S_{yy}\) の3つの和は第12章(回帰分析)でそのまま主役になるので、この計算の型は体に入れておいてください。なお \(r\) が高くても因果関係は言えません(問12.6のポイントで再論)。</p>
+</section>
+
+<section class="sol" id="a8-4">
+<div class="phead"><span class="pnum">解 8.4</span><span class="lv lv2">★★</span><span class="ptag">不偏分散の不偏性</span></div>
+<h4>方針</h4>
+<p>\(X_i-\bar{X}=(X_i-\mu)-(\bar{X}-\mu)\) と分解して展開。期待値では \(E[(X_i-\mu)^2]=\sigma^2\)、\(E[(\bar{X}-\mu)^2]=V[\bar{X}]=\sigma^2/n\) を使う。</p>
+<h4>解答</h4>
+<p>(1) \[\sum(X_i-\bar{X})^2=\sum\bigl\{(X_i-\mu)-(\bar{X}-\mu)\bigr\}^2=\sum(X_i-\mu)^2-2(\bar{X}-\mu)\underbrace{\sum(X_i-\mu)}_{=n(\bar{X}-\mu)}+n(\bar{X}-\mu)^2\]</p>
+<p>\[=\sum(X_i-\mu)^2-n(\bar{X}-\mu)^2\]</p>
+<p>(2) 期待値を取ると</p>
+<p>\[E\!\left[\sum(X_i-\bar{X})^2\right]=n\sigma^2-n\cdot\frac{\sigma^2}{n}=(n-1)\sigma^2\]</p>
+<p>よって \(E[U^2]=\dfrac{(n-1)\sigma^2}{n-1}=\sigma^2\)(不偏)、\(E[S^2]=\dfrac{n-1}{n}\sigma^2<\sigma^2\)(過小評価)。</p>
+<p>(3) 偏差を真の中心 \(\mu\) からでなく、データに最も寄り添う点 \(\bar{X}\) から測っているため、2乗和は必ず小さめに出る((1) の第2項がその縮み分)。縮む量は平均してちょうど「1個分」\(\sigma^2\) — 平均の推定に自由度を1つ使った、と言い換えられる。\(n-1\) で割るのはその補填である。</p>
+<h4 class="alt">ポイント</h4>
+<p>恒等式 (1) は本書で最も働く式のひとつで、\(\chi^2\) 分布の自由度が \(n-1\) になる理由(基本定理)も、回帰の平方和分解(問12.2)もこの型です。極端な例として \(n=1\) では \(\bar{X}=X_1\) で偏差2乗和は常に0 — 1点からばらつきは推定できない、という当然の事実が \(n-1=0\) で割れない形に現れています。</p>
+</section>
+
+<section class="sol" id="a8-5">
+<div class="phead"><span class="pnum">解 8.5</span><span class="lv lv2">★★</span><span class="ptag">カイ二乗分布の基本性質</span></div>
+<h4>方針</h4>
+<p>定義 \(\chi^2(m)=Z_1^2+\cdots+Z_m^2\) に、線形性と独立性を適用。(3) は問5.9のレイリー分布の結果の言い換え。</p>
+<h4>解答</h4>
+<p>(1) \(E[Z_i^2]=V[Z_i]=1\) より \(E[\chi^2(m)]=\sum E[Z_i^2]=m\)。</p>
+<p>(2) \(V[Z_i^2]=E[Z_i^4]-(E[Z_i^2])^2=3-1=2\)。独立なので分散は加法的で \(V[\chi^2(m)]=2m\)。</p>
+<p>(3) \(Z_1^2+Z_2^2\) は、独立な \(N(0,1)\) 2成分の2乗和。問5.9(\(\sigma=1\))より \(P(Z_1^2+Z_2^2>y)=P(R>\sqrt{y})=e^{-y/2}\)。これはレート \(1/2\) の指数分布の裾に等しいので \(\chi^2(2)=\mathrm{Exp}(1/2)\)。よって</p>
+<p>\[P(\chi^2(2)>5.991)=e^{-5.991/2}=e^{-2.9955}\approx0.0500\]</p>
+<h4 class="alt">ポイント</h4>
+<p>\(5.991\) は \(\chi^2(2)\) の上側5%点 \(\chi^2_{0.05}(2)\) で、独立性の検定(問11.9)などで頻出の定数です。「平均 \(m\)・分散 \(2m\)」から、自由度が大きいほど相対的ばらつき \(\sqrt{2/m}\) が減り、\(\chi^2(m)\approx N(m,2m)\)(CLT)と近づくことも読み取れます。ガンマ分布 \(\mathrm{Ga}(m/2,\ 1/2)\) との同一視は第14章・第17章で活きてきます。</p>
+</section>
+
+<section class="sol" id="a8-6">
+<div class="phead"><span class="pnum">解 8.6</span><span class="lv lv2">★★</span><span class="ptag">t分布 — なぜ裾が重いのか</span></div>
+<h4>方針</h4>
+<p>\(T\) を「標準正規 ÷ \(\sqrt{\chi^2/自由度}\)」の形に変形して定義に当てはめる。</p>
+<h4>解答</h4>
+<p>(1) 基本定理より \(Z=\dfrac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim N(0,1)\)、\(W=\dfrac{(n-1)U^2}{\sigma^2}\sim\chi^2(n-1)\)、しかも両者は独立。すると</p>
+<p>\[T=\frac{\bar{X}-\mu}{U/\sqrt{n}}=\frac{(\bar{X}-\mu)/(\sigma/\sqrt{n})}{U/\sigma}=\frac{Z}{\sqrt{W/(n-1)}}\]</p>
+<p>これは \(t(n-1)\) の定義そのもの。</p>
+<p>(2) 分母の \(U\) は確率変数であり、たまたま小さく出ることがある。そのとき \(|T|\) は(\(\sigma\) で割った場合より)大きく振れる。この「分母のゆらぎ」の分だけ極端な値が出やすくなり、裾が重くなる。\(n\) が大きくなると \(U\) が \(\sigma\) に集中し(一致性)、ゆらぎが消えて正規分布に近づく。</p>
+<p>(3) \(t_{0.025}(9)=2.262>1.960=z_{0.025}\)。\(n=10\) で正規表(1.960)を使うと、区間は本来より狭く、検定は本来より棄却しやすくなる — 「95%」と申告しながら実際の信頼水準はそれ未満、という<b>過大申告</b>になる。小標本では必ず \(t\) 表を使う。</p>
+<h4 class="alt">ポイント</h4>
+<p>「未知の \(\sigma\) を推定で置き換えた代償が、裾の重さとして分布に現れる」— 不確かさは消えず、形を変えて残る、という統計の一般原則です。自由度30程度で \(t_{0.025}\approx2.04\) とほぼ正規に近づくため、「\(n\ge30\) なら正規で代用」という経験則が生まれました。第10・11章の区間・検定で毎回この分布を使います。</p>
+</section>
+
+<section class="sol" id="a8-7">
+<div class="phead"><span class="pnum">解 8.7</span><span class="lv lv3">★★★</span><span class="ptag">大津の二値化(分散の分解)</span></div>
+<h4>方針</h4>
+<p>各しきい値で \(w_0,\mu_0,w_1,\mu_1\) を出して \(\sigma_B^2\) に代入。確率は度数÷10。</p>
+<h4>解答</h4>
+<p>輝度の分布は \(P(1)=0.4,\ P(2)=0.3,\ P(6)=0.2,\ P(7)=0.1\)。全体平均 \(\mu=0.4+0.6+1.2+0.7=2.9\)。</p>
+<p>(1) 各 \(t\) で:</p>
+<p>\(t=1\):\(w_0=0.4,\ \mu_0=1\);\(w_1=0.6,\ \mu_1=\dfrac{0.6+1.2+0.7}{0.6}=\dfrac{25}{6}\)。\(\sigma_B^2=0.24\left(\dfrac{25}{6}-1\right)^2\approx2.41\)。</p>
+<p>\(t=2\):\(w_0=0.7,\ \mu_0=\dfrac{0.4+0.6}{0.7}=\dfrac{10}{7}\);\(w_1=0.3,\ \mu_1=\dfrac{1.2+0.7}{0.3}=\dfrac{19}{3}\)。\(\sigma_B^2=0.21\left(\dfrac{19}{3}-\dfrac{10}{7}\right)^2\approx5.05\)。</p>
+<p>\(t=6\):\(w_0=0.9,\ \mu_0=\dfrac{2.2}{0.9}\approx2.44\);\(w_1=0.1,\ \mu_1=7\)。\(\sigma_B^2=0.09(7-2.44)^2\approx1.87\)。</p>
+<p>よって最適しきい値は \(t=2\)(輝度2以下と6以上の間で切る):\(\sigma_B^2\approx5.05\)。ヒストグラムの2つの山の谷で切れており、直感とも一致する。</p>
+<p>(2) \(E[X^2]=0.4+1.2+7.2+4.9=13.7\) より \(\sigma^2=13.7-2.9^2=5.29\)。\(\sigma_W^2=5.29-5.05\approx0.24\)。</p>
+<p>(3) クラスラベル \(C\)(0か1)を条件とする全分散の法則 \(V[X]=E[V[X\mid C]]+V[E[X\mid C]]\) で、第1項がクラス内分散 \(\sigma_W^2\)(各クラス内のばらつきの重み付き平均)、第2項がクラス間分散 \(\sigma_B^2\)(クラス平均のばらつき)。よって \(\sigma^2=\sigma_W^2+\sigma_B^2\) は恒等式であり、「クラス間分散の最大化」と「クラス内分散の最小化」は同じことになる。</p>
+<h4 class="alt">ポイント</h4>
+<p>大津の方法(Otsu, 1979)は今も画像二値化の第一選択で、その正体は第6章で学んだ<b>全分散の法則</b>の最適化でした。「よい分割=各クラスは締まり、クラス同士は離れる」という規準は、クラスタリング(k-means)や判別分析、分散分析(ANOVA)と同じ思想です。実装では全しきい値の \(\sigma_B^2\) を累積和で \(O(L)\) に計算します。</p>
+</section>
+
+<section class="sol" id="a8-8">
+<div class="phead"><span class="pnum">解 8.8</span><span class="lv lv3">★★★</span><span class="ptag">標本分布の定理の運用</span></div>
+<h4>方針</h4>
+<p>基本定理に \(\sigma^2=36,\ n=9\) を代入するだけ。(2) は \(U^2\) の不等式を \(\chi^2\) の不等式に翻訳する。</p>
+<h4>解答</h4>
+<p>(1) \(\bar{X}\sim N\!\left(\mu,\ \dfrac{36}{9}\right)=N(\mu,\ 4)\)(標準偏差2)。</p>
+<p>(2) \(\dfrac{(n-1)U^2}{\sigma^2}=\dfrac{8U^2}{36}\sim\chi^2(8)\) なので</p>
+<p>\[P(U^2>2\sigma^2)=P\!\left(\frac{8U^2}{36}>16\right)=P(\chi^2(8)>16)=0.042\]</p>
+<p>(3) \(T=\dfrac{\bar{X}-\mu}{U/\sqrt{9}}\sim t(8)\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>(2) は「分散の推定は意外に暴れる」ことの定量化です:\(n=9\) でも、不偏分散が真の2倍を超える確率が4%もあります(\(V[U^2]=2\sigma^4/(n-1)\) と大きい)。平均の推定(標準偏差 \(\sigma/\sqrt n\))より分散の推定はずっと多くの標本を要する — 第10章の分散の信頼区間(問10.6)が広く非対称になる伏線です。</p>
+</section>
+
+
+<header class="chap" id="ch9">
+<p class="chnum">第9章</p>
+<h2>点推定 — 解答解説</h2>
+<p class="chsub">最尤法と推定量の良さ</p>
+</header>
+
+<section class="sol" id="a9-1">
+<div class="phead"><span class="pnum">解 9.1</span><span class="lv lv1">★</span><span class="ptag">推定量の比較</span></div>
+<h4>方針</h4>
+<p>期待値の線形性で不偏性、独立性で分散を計算。係数の2乗和が分散を決める。</p>
+<h4>解答</h4>
+<p>(1) \(E[T_1]=\dfrac{\mu+\mu}{2}=\mu\)、\(E[T_2]=\dfrac{\mu+2\mu}{3}=\mu\)。ともに不偏。</p>
+<p>(2) \[V[T_1]=\frac{\sigma^2+\sigma^2}{4}=\frac{\sigma^2}{2},\qquad V[T_2]=\frac{\sigma^2+4\sigma^2}{9}=\frac{5\sigma^2}{9}\]</p>
+<p>\(\dfrac12<\dfrac59\) なので \(T_1\)(等重み平均)の方が分散が小さく望ましい。</p>
+<h4 class="alt">ポイント</h4>
+<p>不偏推定量は無数にあり、その中で<b>分散が小さいものが良い</b> — これが比較の第一基準です。実は係数 \(c_1+c_2=1\) の制約下で \(c_1^2+c_2^2\) を最小にするのは等重み(コーシー・シュワルツ)で、同じ精度の観測は平等に混ぜるのが最適。観測ごとに精度が違う場合の最適重みは「精度(分散の逆数)比例」になり、これがセンサ融合(問15.2)の公式です。</p>
+</section>
+
+<section class="sol" id="a9-2">
+<div class="phead"><span class="pnum">解 9.2</span><span class="lv lv1">★</span><span class="ptag">ベルヌーイのMLE</span></div>
+<h4>方針</h4>
+<p>尤度は \(p^k(1-p)^{n-k}\)(に組合せ定数)。対数を取って微分。</p>
+<h4>解答</h4>
+<p>\(\ell(p)=k\ln p+(n-k)\ln(1-p)+\text{const}\)。</p>
+<p>\[\ell'(p)=\frac{k}{p}-\frac{n-k}{1-p}=0\iff k(1-p)=(n-k)p\iff \hat{p}=\frac{k}{n}\]</p>
+<p>(\(\ell''<0\) より最大。)成功指示変数 \(X_i\) を使えば \(\hat{p}=\bar{X}\) で、\(E[\hat{p}]=E[X_1]=p\)(不偏)、独立性より</p>
+<p>\[V[\hat{p}]=\frac{V[X_1]}{n}=\frac{p(1-p)}{n}\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「観測された成功率で \(p\) を推定する」という当たり前の答えが、最尤原理から<b>導かれる</b>ことが重要です。分散 \(p(1-p)/n\) は問7.8(モンテカルロ)・問10.4(比率の区間)で既に主役でした。対数を取るのは、積を和に変えて微分を楽にする定石で、数値計算でもアンダーフロー回避に必須の操作です。</p>
+</section>
+
+<section class="sol" id="a9-3">
+<div class="phead"><span class="pnum">解 9.3</span><span class="lv lv1">★</span><span class="ptag">ポアソンのMLE</span></div>
+<h4>方針</h4>
+<p>PMFの積の対数を取り、\(\lambda\) で微分。</p>
+<h4>解答</h4>
+<p>\[\ell(\lambda)=\sum_{i=1}^n\left(-\lambda+x_i\ln\lambda-\ln x_i!\right)=-n\lambda+\left(\sum x_i\right)\ln\lambda+\text{const}\]</p>
+<p>\[\ell'(\lambda)=-n+\frac{\sum x_i}{\lambda}=0\iff \hat{\lambda}=\frac{\sum x_i}{n}=\bar{x}\]</p>
+<p>(\(\ell''=-\sum x_i/\lambda^2<0\) より最大。)</p>
+<h4 class="alt">ポイント</h4>
+<p>ポアソンでは平均=\(\lambda\) なので「標本平均で推定」は自然ですが、これも導出の結果です。画像処理では、複数フレームの同一画素のカウント平均が光量 \(\lambda\) のMLEになる — フレーム平均(問7.7)は最尤推定でもあった、という統一的な見方が得られます。推定誤差の評価は問9.9で完成します。</p>
+</section>
+
+<section class="sol" id="a9-4">
+<div class="phead"><span class="pnum">解 9.4</span><span class="lv lv2">★★</span><span class="ptag">指数分布のMLE — 不偏でない例</span></div>
+<h4>方針</h4>
+<p>密度の積 \(\lambda^n e^{-\lambda\sum x_i}\) の対数を微分。(2) は与えられた期待値を読むだけ。</p>
+<h4>解答</h4>
+<p>(1) \(\ell(\lambda)=n\ln\lambda-\lambda\sum x_i\)。</p>
+<p>\[\ell'(\lambda)=\frac{n}{\lambda}-\sum x_i=0\iff \hat{\lambda}=\frac{n}{\sum x_i}=\frac{1}{\bar{x}}\]</p>
+<p>(2) \(E[\hat{\lambda}]=\dfrac{n\lambda}{n-1}\neq\lambda\) なので不偏でない(平均して \(\dfrac{n}{n-1}\) 倍だけ過大評価)。ただし \(n\to\infty\) で \(\dfrac{n}{n-1}\to1\) となり偏りは消える(漸近不偏;一致推定量でもある)。不偏修正版は</p>
+<p>\[\hat{\lambda}^*=\frac{n-1}{n}\hat{\lambda}=\frac{n-1}{\sum x_i}\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「逆数」という非線形変換が偏りの原因です:\(E[1/\bar{X}]\neq1/E[\bar{X}]\)(イェンセンの不等式で、凸関数 \(1/x\) では \(\ge\) 側にずれる)。MLEは<b>一致性・漸近正規性という大標本の良さ</b>を持つ一方、小標本では不偏と限らない — 故障率推定(第17章)のように \(n\) が小さい現場では、この偏りが無視できません。</p>
+</section>
+
+<section class="sol" id="a9-5">
+<div class="phead"><span class="pnum">解 9.5</span><span class="lv lv2">★★</span><span class="ptag">正規分布のMLE</span></div>
+<h4>方針</h4>
+<p>\(\mu\) と \(\sigma^2\) それぞれで偏微分して0。\(\sigma^2\) を1つの変数として微分するのがコツ。</p>
+<h4>解答</h4>
+<p>(1) \[\ell(\mu,\sigma^2)=-\frac{n}{2}\ln(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2\]</p>
+<p>\(\dfrac{\partial\ell}{\partial\mu}=\dfrac{1}{\sigma^2}\sum(x_i-\mu)=0\) より \(\hat{\mu}=\bar{x}\)。</p>
+<p>\(\dfrac{\partial\ell}{\partial\sigma^2}=-\dfrac{n}{2\sigma^2}+\dfrac{1}{2\sigma^4}\sum(x_i-\hat{\mu})^2=0\) より</p>
+<p>\[\hat{\sigma}^2=\frac{1}{n}\sum(x_i-\bar{x})^2=s^2\]</p>
+<p>(2) 問8.4より \(E[S^2]=\dfrac{n-1}{n}\sigma^2\) なので、MLEは分散を平均 \(\dfrac{n-1}{n}\) 倍に過小評価する。不偏にしたものが \(u^2=\dfrac{n}{n-1}s^2\)。まとめると:MLE=\(s^2\)(\(n\) 割り、偏りあり)、不偏推定量=\(u^2\)(\(n-1\) 割り)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「\(\mu\) の推定に使った \(\bar{x}\) がデータに寄り添いすぎる」ことが過小評価の源(問8.4 (3))で、最尤法はそれを自動では補正しません。機械学習で訓練誤差が汎化誤差を過小評価する構図と同型です。もう一点:\(\hat{\mu}=\bar{x}\) は「二乗和 \(\sum(x_i-\mu)^2\) の最小化」でもあり、正規モデルの最尤法=<b>最小二乗法</b>。この対応が第12章(回帰)の理論的根拠になります。</p>
+</section>
+
+<section class="sol" id="a9-6">
+<div class="phead"><span class="pnum">解 9.6</span><span class="lv lv2">★★</span><span class="ptag">一様分布のMLE — 微分で出ない例</span></div>
+<h4>方針</h4>
+<p>尤度は \(\theta\) の減少関数(定義域つき)。グラフの形で最大点を決める。最大値の分布は問3.1の「CDFの積」。</p>
+<h4>解答</h4>
+<p>(1) 各点の密度は \(1/\theta\)(\(0\le x_i\le\theta\))なので</p>
+<p>\[L(\theta)=\begin{cases}\theta^{-n} &amp; (\theta\ge\max_i x_i)\\ 0 &amp; (\theta<\max_i x_i)\end{cases}\]</p>
+<p>\(\theta^{-n}\) は減少関数なので、許される最小の \(\theta\)、すなわち \(\hat{\theta}=\max_i x_i\) で最大になる。境界で最大となるため微分=0では求まらない。</p>
+<p>(2) \(F_M(m)=P(\text{全部}\le m)=\left(\dfrac{m}{\theta}\right)^n\)(\(0\le m\le\theta\))、\(f_M(m)=\dfrac{nm^{n-1}}{\theta^n}\)。</p>
+<p>\[E[M]=\int_0^\theta m\cdot\frac{nm^{n-1}}{\theta^n}\,dm=\frac{n}{n+1}\theta\]</p>
+<p>(3) \(E[M]<\theta\) なので不偏でない(最大値は必ず \(\theta\) 以下だから当然、常に過小評価)。不偏修正版は</p>
+<p>\[\hat{\theta}^*=\frac{n+1}{n}\max_i x_i\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「観測の最大値より少しだけ外側に真の端がある」— この \((n+1)/n\) 倍の補正は、第二次大戦で連合軍が捕獲戦車の製造番号からドイツの生産台数を見積もった「戦車問題」として有名です。パラメータが分布の<b>台(サポート)</b>を決めるモデルでは微分の議論(正則条件)が崩れる、という理論上も重要な例で、次問でその「異常な良さ」が現れます。</p>
+</section>
+
+<section class="sol" id="a9-7">
+<div class="phead"><span class="pnum">解 9.7</span><span class="lv lv3">★★★</span><span class="ptag">モーメント法との対決</span></div>
+<h4>方針</h4>
+<p>\(V[\bar X]=V[X]/n\) と、与えられた \(V[M]\) に定数倍の2乗を掛けるだけ。オーダー比較が本題。</p>
+<h4>解答</h4>
+<p>(1) \(E[\tilde{\theta}]=2E[\bar{X}]=2\cdot\dfrac{\theta}{2}=\theta\)(不偏)。\(V[X]=\dfrac{\theta^2}{12}\) より</p>
+<p>\[V[\tilde{\theta}]=4\cdot\frac{\theta^2/12}{n}=\frac{\theta^2}{3n}\]</p>
+<p>(2) \[V[\hat{\theta}^*]=\left(\frac{n+1}{n}\right)^2 V[M]=\frac{(n+1)^2}{n^2}\cdot\frac{n\theta^2}{(n+1)^2(n+2)}=\frac{\theta^2}{n(n+2)}\]</p>
+<p>(3) \(V[\tilde{\theta}]=O(1/n)\) に対し \(V[\hat{\theta}^*]=O(1/n^2)\)。たとえば \(n=10\) で \(\theta^2/30\) 対 \(\theta^2/120\) と4倍、\(n=100\) では34倍の差がつき、最大値ベースの推定が圧倒的に優れる。直感的には、\(\theta\)(分布の端)の情報は端の近くの観測に集中しており、平均 \(\bar{X}\) はその情報をほとんど捨てているためである。</p>
+<h4 class="alt">ポイント</h4>
+<p>通常の(正則な)モデルでは不偏推定量の分散は \(1/n\) より速く落ちません(クラメール・ラオ下限、次問)。\(1/n^2\) という「限界超え」が起きたのは、台がパラメータに依存する<b>非正則モデル</b>で下限の前提が崩れているからです。モーメント法(積率を合わせる素朴な方法)は手軽ですが、情報を捨てることがある — 最尤法が標準とされる理由の好例です。</p>
+</section>
+
+<section class="sol" id="a9-8">
+<div class="phead"><span class="pnum">解 9.8</span><span class="lv lv3">★★★</span><span class="ptag">フィッシャー情報量とクラメール・ラオ下限</span></div>
+<h4>方針</h4>
+<p>スコア(対数尤度の1階微分)を作り、\(X\) がベルヌーイであることを使って期待値を取る。2階微分でも同じ値になることを確認。</p>
+<h4>解答</h4>
+<p>(1) スコアは \(\dfrac{\partial}{\partial p}\ln f=\dfrac{x}{p}-\dfrac{1-x}{1-p}\)。\(x\in\{0,1\}\) なので、\(x=1\)(確率 \(p\))で値 \(1/p\)、\(x=0\)(確率 \(1-p\))で値 \(-1/(1-p)\)。よって</p>
+<p>\[I(p)=E[(\text{スコア})^2]=p\cdot\frac{1}{p^2}+(1-p)\cdot\frac{1}{(1-p)^2}=\frac1p+\frac{1}{1-p}=\frac{1}{p(1-p)}\]</p>
+<p>2階微分では \(\dfrac{\partial^2}{\partial p^2}\ln f=-\dfrac{x}{p^2}-\dfrac{1-x}{(1-p)^2}\) で、</p>
+<p>\[-E\!\left[\frac{\partial^2}{\partial p^2}\ln f\right]=\frac{E[X]}{p^2}+\frac{1-E[X]}{(1-p)^2}=\frac1p+\frac{1}{1-p}=\frac{1}{p(1-p)}\]</p>
+<p>両定義が一致。</p>
+<p>(2) クラメール・ラオ下限は \(\dfrac{1}{nI(p)}=\dfrac{p(1-p)}{n}\)。一方 \(V[\hat{p}]=\dfrac{p(1-p)}{n}\)(問9.2)でぴったり一致 — \(\hat{p}=\bar{X}\) は下限を達成する<b>有効推定量</b>である。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(I(p)\) は「1回の観測が \(p\) について運ぶ情報の量」で、\(p=1/2\) 付近で最小(4)、端で大きくなります — 五分五分のコインが一番見分けにくい、という直感の定量化です。下限を達成した以上、\(\bar{X}\) より分散の小さい不偏推定量は<b>存在しない</b>。「これ以上は原理的に無理」と言い切れるのが、この理論の価値です。</p>
+</section>
+
+<section class="sol" id="a9-9">
+<div class="phead"><span class="pnum">解 9.9</span><span class="lv lv3">★★★</span><span class="ptag">情報量の計算と漸近正規性</span></div>
+<h4>方針</h4>
+<p>スコアを作って2乗平均(または2階微分)。(3) は既知の \(V[\bar{X}]\) と下限を突き合わせる。</p>
+<h4>解答</h4>
+<p>(1) \(\ln f=-\dfrac{(x-\mu)^2}{2\sigma^2}+\text{const}\)、スコア \(=\dfrac{x-\mu}{\sigma^2}\)。</p>
+<p>\[I(\mu)=E\!\left[\frac{(X-\mu)^2}{\sigma^4}\right]=\frac{\sigma^2}{\sigma^4}=\frac{1}{\sigma^2}\]</p>
+<p>(2) \(\ln f=-\lambda+x\ln\lambda-\ln x!\)、スコア \(=\dfrac{x}{\lambda}-1=\dfrac{x-\lambda}{\lambda}\)。</p>
+<p>\[I(\lambda)=\frac{E[(X-\lambda)^2]}{\lambda^2}=\frac{V[X]}{\lambda^2}=\frac{\lambda}{\lambda^2}=\frac{1}{\lambda}\]</p>
+<p>(3) 下限は \(\dfrac{1}{nI(\lambda)}=\dfrac{\lambda}{n}\)。一方 \(V[\bar{X}]=\dfrac{V[X]}{n}=\dfrac{\lambda}{n}\) で一致し、\(\hat{\lambda}=\bar{X}\) は有効推定量。漸近正規性より \(\hat{\lambda}\) は近似的に \(N\!\left(\lambda,\ \dfrac{\lambda}{n}\right)\) に従う。フォトンカウンティングでは、推定の標準偏差 \(\sqrt{\lambda/n}\)、相対誤差 \(\dfrac{\sqrt{\lambda/n}}{\lambda}=\dfrac{1}{\sqrt{n\lambda}}\) となり、精度は「集めた光子の総数 \(n\lambda\)」だけで決まる — フレーム数を増やすことと露光を伸ばすことが等価であることを意味する。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(I(\mu)=1/\sigma^2\) は「ノイズが小さいほど1観測の情報が多い」、\(I(\lambda)=1/\lambda\) は「明るいほど1カウントあたりの情報は薄い(が総情報 \(n\lambda\cdot\frac1\lambda\cdot\lambda\)…ではなく総数で稼ぐ)」— 情報量は<b>実験設計の通貨</b>です。漸近分布 \(N(\theta,1/(nI))\) を使えば、MLEの誤差棒(問10章の信頼区間)が一般のモデルで書けるようになります。ショットノイズ限界(問3.8)が推定理論の言葉で再導出されたことにも注目してください。</p>
+</section>
+
+
+<header class="chap" id="ch10">
+<p class="chnum">第10章</p>
+<h2>区間推定 — 解答解説</h2>
+<p class="chsub">誤差を幅で保証する</p>
+</header>
+
+<section class="sol" id="a10-1">
+<div class="phead"><span class="pnum">解 10.1</span><span class="lv lv1">★</span><span class="ptag">z区間(σ既知)</span></div>
+<h4>方針</h4>
+<p>ピボット \(\dfrac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim N(0,1)\) を \(\pm z_{0.025}=\pm1.960\) で挟んで \(\mu\) について解く。</p>
+<h4>解答</h4>
+<p>標準誤差は \(\dfrac{\sigma}{\sqrt{n}}=\dfrac{5}{\sqrt{25}}=1\)。95%信頼区間は</p>
+<p>\[102.4\pm1.960\times1=(100.44,\ 104.36)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>構造は常に「推定値 ± 分位点 × 標準誤差」です。\(P(-1.96\le Z\le1.96)=0.95\) という<b>データを取る前に成り立つ確率の式</b>を、\(\mu\) を主語に書き換えたものが信頼区間 — この「書き換え」の出自を覚えておくと、次問の解釈問題が明快になります。</p>
+</section>
+
+<section class="sol" id="a10-2">
+<div class="phead"><span class="pnum">解 10.2</span><span class="lv lv1">★</span><span class="ptag">信頼区間の解釈</span></div>
+<h4>方針</h4>
+<p>確率変数はどれか(区間の端点)、定数はどれか(\(\mu\))を突き止める。</p>
+<h4>解答</h4>
+<p>正しいのは <b>(2)</b>。</p>
+<p>(1) が誤りの理由:(頻度論の立場では)\(\mu\) は未知だが<b>定数</b>であり、確定した区間 \((100.44,104.36)\) が \(\mu\) を含むか否かは(我々が知らないだけで)すでに決まっている。確率95%を持つのは「\(\mu\) の居場所」ではなく、<b>データに応じて動く区間という手続き</b>の方である。取得前なら \(P(\bar{X}-1.96\le\mu\le\bar{X}+1.96)=0.95\) は正しいが、数値を代入した後の文には確率は残らない。</p>
+<p>(3) が誤りの理由:この区間は<b>母平均</b>の推定範囲であり、個々の測定値の散らばる範囲ではない。測定値の95%を覆う区間はおよそ \(\mu\pm1.96\sigma=\mu\pm9.8\) と、はるかに広い(こちらは予測区間・許容区間の話)。</p>
+<h4 class="alt">ポイント</h4>
+<p>(1) の読み方(「真値がこの区間にある確率」)を正当化したければ、\(\mu\) 自体を確率変数として扱う<b>ベイズ統計</b>の信用区間(第13章)へ進むことになります。(3) の混同(平均の区間と個々の値の区間)は実務で最も多い誤読で、\(1/\sqrt{n}\) の縮みがあるかどうかで見分けられます。</p>
+</section>
+
+<section class="sol" id="a10-3">
+<div class="phead"><span class="pnum">解 10.3</span><span class="lv lv2">★★</span><span class="ptag">t区間(σ未知)</span></div>
+<h4>方針</h4>
+<p>\(\sigma\) 未知なので \(u\) で置き換え、分位点を \(t_{0.025}(8)\) にする(問8.6)。</p>
+<h4>解答</h4>
+<p>標準誤差は \(\dfrac{u}{\sqrt{n}}=\dfrac{3.6}{3}=1.2\)。95%信頼区間は</p>
+<p>\[50.2\pm2.306\times1.2=50.2\pm2.77=(47.43,\ 52.97)\ \text{ms}\]</p>
+<h4 class="alt">ポイント</h4>
+<p>もし誤って \(z_{0.025}=1.960\) を使うと \(50.2\pm2.35\) と狭くなり、95%を名乗りながら実際の被覆率はそれ未満になります(過大申告)。「\(\sigma\) を推定した分の追加の不確かさ」を \(t\) 分布の重い裾が引き受けている — \(n\) が小さいほど \(t\) 分位点は大きく、その分だけ謙虚に幅が広がります。</p>
+</section>
+
+<section class="sol" id="a10-4">
+<div class="phead"><span class="pnum">解 10.4</span><span class="lv lv2">★★</span><span class="ptag">母比率の信頼区間</span></div>
+<h4>方針</h4>
+<p>\(\hat{p}\) はベルヌーイ平均。CLT(問7.6)で正規近似し、標準誤差に \(\hat{p}\) を代入する。</p>
+<h4>解答</h4>
+<p>標準誤差は \(\sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}=\sqrt{\dfrac{0.8\times0.2}{400}}=0.02\)。95%信頼区間は</p>
+<p>\[0.8\pm1.960\times0.02=0.8\pm0.039=(0.761,\ 0.839)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「検出率80%」という報告は、\(n=400\) では \(\pm4\%\) の幅を持っています。ベンチマークで80.0%と81.5%を比べて優劣を断じるのは、この幅の前では早計 — 差の議論は第11章の検定(問11.7)へ。なお \(n\hat p\) や \(n(1-\hat p)\) が小さいときは正規近似が崩れ、Wilson区間などの改良版が推奨されます(大標本では本問の形で十分)。</p>
+</section>
+
+<section class="sol" id="a10-5">
+<div class="phead"><span class="pnum">解 10.5</span><span class="lv lv2">★★</span><span class="ptag">標本サイズの設計</span></div>
+<h4>方針</h4>
+<p>誤差幅 \(E=z_{\alpha/2}\sigma/\sqrt{n}\) を目標以下にする不等式を \(n\) について解く。</p>
+<h4>解答</h4>
+<p>\[1.96\times\frac{15}{\sqrt{n}}\le2\iff \sqrt{n}\ge\frac{1.96\times15}{2}=14.7\iff n\ge14.7^2=216.09\]</p>
+<p>よって \(n=217\)(切り上げ)。</p>
+<h4 class="alt">ポイント</h4>
+<p>実験の<b>前</b>に \(n\) を決める、が正しい順序です(取りながら「有意になるまで」続けるのは第11章で述べる禁じ手)。公式から:幅を半分にしたければ \(n\) は4倍、精度1桁なら100倍 — 問7.8のモンテカルロと同じ「平方根の壁」です。\(\sigma\) が未知なら予備実験・過去データ・保守的な上限で見積もります(比率なら \(p(1-p)\le1/4\) を使う安全側の設計が定石)。</p>
+</section>
+
+<section class="sol" id="a10-6">
+<div class="phead"><span class="pnum">解 10.6</span><span class="lv lv3">★★★</span><span class="ptag">母分散の信頼区間</span></div>
+<h4>方針</h4>
+<p>ピボットを \(\chi^2\) の2.5%点と97.5%点で挟み、逆数を取って \(\sigma^2\) について解く(不等号の向きが入れ替わる)。</p>
+<h4>解答</h4>
+<p>(1) \[P\!\left(\chi^2_{0.975}(9)\le\frac{(n-1)U^2}{\sigma^2}\le\chi^2_{0.025}(9)\right)=0.95\]</p>
+<p>中辺の逆数を取り \((n-1)U^2\) を掛けると</p>
+<p>\[P\!\left(\frac{(n-1)U^2}{\chi^2_{0.025}(9)}\le\sigma^2\le\frac{(n-1)U^2}{\chi^2_{0.975}(9)}\right)=0.95\]</p>
+<p>(2) \((n-1)u^2=9\times8.4=75.6\) より</p>
+<p>\[\left(\frac{75.6}{19.02},\ \frac{75.6}{2.700}\right)=(3.97,\ 28.0)\]</p>
+<p>(3) \(\chi^2\) 分布自体が右に歪んでいて、分位点が中心 \(m=9\) に対して非対称(2.700 と 19.02)だから。さらに逆数を取る操作が非対称性を増幅し、区間は \(u^2=8.4\) の右側に大きく伸びる。</p>
+<h4 class="alt">ポイント</h4>
+<p>「分散はかなり大きい可能性を否定できない」— \(n=10\) では \(\sigma^2\) が \(u^2\) の3倍超まで区間に入ります(問8.8で見た分散推定の暴れやすさの裏返し)。ノイズ分散の仕様保証など分散そのものが対象のときは、平均の感覚(対称な \(\pm\))を持ち込まないよう注意が必要です。</p>
+</section>
+
+<section class="sol" id="a10-7">
+<div class="phead"><span class="pnum">解 10.7</span><span class="lv lv3">★★★</span><span class="ptag">片側信頼限界(無故障データ)</span></div>
+<h4>方針</h4>
+<p>故障率 \(\lambda\) のとき「総時間 \(T\) で故障0」の確率は \(e^{-\lambda T}\)(ポアソン過程、第14章;指数寿命の無故障とも読める)。これが5%を割るほど大きい \(\lambda\) は「データと両立しない」として除外する。</p>
+<h4>解答</h4>
+<p>(1) \(e^{-\lambda T}\ge0.05\iff \lambda T\le\ln 20\iff \lambda\le\dfrac{\ln20}{T}\)。よって95%上側信頼限界は</p>
+<p>\[\lambda_U=\frac{\ln20}{T}=\frac{2.996}{T}\approx\frac{3.0}{T}\]</p>
+<p>(「故障0でも \(\lambda\) は \(3/T\) までありうる」— 分子がほぼ3なので<b>3のルール</b>と呼ばれる。)</p>
+<p>(2) \(T=10^4\) 時間なら \(\lambda_U=3.0\times10^{-4}\) /時間。</p>
+<p>(3) 使い方:無故障の実績しかなくても「\(\lambda\le3/T\)(信頼度95%)」という<b>定量的な上限の主張</b>ができる。逆に、故障ゼロは「\(\lambda=0\)」の証明にはならない:\(\lambda=3/T\) でも無故障になる確率が5%あり、データはその可能性を否定できていない。目標の故障率 \(\lambda^*\) を95%で保証したければ \(T\ge3/\lambda^*\) の無故障試験が必要 — 保証したい水準の<b>3倍の総時間</b>が要る、と読める。</p>
+<h4 class="alt">ポイント</h4>
+<p>「事故ゼロの走行実績から安全性をどこまで主張できるか」という自動運転の実証問題の骨格がこれです(問17.6で車載の数値に展開)。片側限界は「良い方は問わない、悪い方だけ抑えたい」安全評価の標準形。なお比率版の3のルール(\(n\) 回無事故なら \(p\le3/n\))も同じ計算 \((1-p)^n\ge0.05\) から出ます。</p>
+</section>
+
+
+<header class="chap" id="ch11">
+<p class="chnum">第11章</p>
+<h2>仮説検定 — 解答解説</h2>
+<p class="chsub">偶然と本物を切り分ける</p>
+</header>
+
+<section class="sol" id="a11-1">
+<div class="phead"><span class="pnum">解 11.1</span><span class="lv lv1">★</span><span class="ptag">z検定</span></div>
+<h4>方針</h4>
+<p>\(\sigma\) 既知なのでz検定。両側5%の棄却域は \(|Z|>1.960\)。</p>
+<h4>解答</h4>
+<p>\[Z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}=\frac{52.1-50}{6/\sqrt{36}}=\frac{2.1}{1}=2.1\]</p>
+<p>\(|2.1|>1.960\) なので \(H_0\) を<b>棄却</b>:平均は変わったと判断できる(有意水準5%)。p値は</p>
+<p>\[p=2\,P(Z\ge2.1)=2(1-0.9821)=0.036\]</p>
+<h4 class="alt">ポイント</h4>
+<p>論理は背理法の確率版:「\(H_0\) が正しいとすれば、\(|Z|\ge2.1\) ほどの外れは3.6%しか起きない。それが起きた — ならば前提 \(H_0\) を疑おう」。信頼区間との表裏も確認できます:95%区間 \(52.1\pm1.96=(50.14,54.06)\) が \(50\) を含まないことと、両側5%で棄却されることは同値です。</p>
+</section>
+
+<section class="sol" id="a11-2">
+<div class="phead"><span class="pnum">解 11.2</span><span class="lv lv1">★</span><span class="ptag">2種類の過誤</span></div>
+<h4>方針</h4>
+<p>\(H_0\)=「いない」を基準に、棄却=警報、と対応づける。</p>
+<h4>解答</h4>
+<p>(1) 第1種の過誤(\(H_0\) が真なのに棄却)=歩行者がいないのに警報を出す「<b>誤報</b>」。第2種の過誤(\(H_1\) が真なのに棄却しない)=歩行者がいるのに警報を出さない「<b>見逃し</b>」。</p>
+<p>(2) 警報のしきい値(検出スコアの棄却ライン)を上げれば誤報 \(\alpha\) は減るが、そのぶん本物の歩行者もしきい値を越えにくくなり、見逃し \(\beta\) が増える。両者は同じしきい値の表と裏であり、片方だけを自由に下げることはできない。両方を同時に下げる正攻法は、判別に使う情報を増やす(標本サイズ・センサ性能・特徴量を改善して2つの分布の重なりを減らす)ことである。</p>
+<h4 class="alt">ポイント</h4>
+<p>しきい値を動かしたときの(誤報率, 検出力)の軌跡が <b>ROC曲線</b>で、検出器の評価の標準言語です。どちらの過誤が重いかは応用で決まります:ブレーキの見逃しは事故に直結する一方、誤報が多すぎれば運転者が警報を信じなくなる(狼少年化)— 統計だけでなくシステム設計の問題であることも押さえておきましょう。</p>
+</section>
+
+<section class="sol" id="a11-3">
+<div class="phead"><span class="pnum">解 11.3</span><span class="lv lv1">★</span><span class="ptag">1標本t検定(片側)</span></div>
+<h4>方針</h4>
+<p>\(\sigma\) 未知・小標本なのでt検定。下側対立なので棄却域は \(T<-t_{0.05}(15)=-1.753\)。</p>
+<h4>解答</h4>
+<p>\[T=\frac{248-250}{8/\sqrt{16}}=\frac{-2}{2}=-1.0\]</p>
+<p>\(-1.0>-1.753\) で棄却域に入らないので、\(H_0\) は<b>棄却できない</b>。結論:「規格割れ(\(\mu<250\))と主張する統計的根拠は、このデータからは得られなかった」。</p>
+<p>注意:これは「\(\mu=250\) が正しいと証明された」ことを意味しない。差が小さいか、\(n=16\) では検出力が足りないだけかもしれない(次問)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「有意でない」の正しい読みは<b>判断保留</b>です。「異常なしを示せなかった」と「正常であることを示した」は別物 — 品質保証で「合格」と言いたいなら、同等性の枠組みや検出力の設計(問11.5)まで含めて主張する必要があります。片側か両側かは<b>データを見る前に</b>、問い(規格割れだけが問題か)から決めます。</p>
+</section>
+
+<section class="sol" id="a11-4">
+<div class="phead"><span class="pnum">解 11.4</span><span class="lv lv2">★★</span><span class="ptag">p値の解釈</span></div>
+<h4>方針</h4>
+<p>p値の定義「\(H_0\) の下での条件付き確率」に照らして1つずつ判定。</p>
+<h4>解答</h4>
+<p>(1) <b>誤り</b>。p値は \(P(\text{極端なデータ}\mid H_0)\) であって \(P(H_0\mid \text{データ})\) ではない。条件の向きが逆(この2つを混同するのが最も有名な誤読;逆向きを計算したければベイズの定理と事前確率が必要 — 第13章)。</p>
+<p>(2) <b>正しい</b>。これが定義そのもの。</p>
+<p>(3) <b>正しい</b>。\(p=0.03\le0.05\) なので5%では棄却、\(0.03>0.01\) なので1%では棄却しない。p値は「棄却できる最小の有意水準」と読める。</p>
+<p>(4) <b>誤り</b>。p値は「差の大きさ」と「標本サイズ」の合成である。巨大な \(n\) なら実質的に無意味な微差でも \(p\) は小さくなる。効果の重要性は、差の推定値と信頼区間(効果量)で別途報告すべきである。</p>
+<h4 class="alt">ポイント</h4>
+<p>(4) は現代のデータ分析で特に重要です:\(n\) が数百万のログ解析では「すべてが有意」になりがちで、<b>統計的有意と実務的重要性は別</b>。また「有意になるまでデータを足す/多数の指標を試して有意なものだけ報告する」(p-hacking)は \(\alpha\) の保証を壊します。検定は事前に設計した問いに対して使う道具です。</p>
+</section>
+
+<section class="sol" id="a11-5">
+<div class="phead"><span class="pnum">解 11.5</span><span class="lv lv2">★★</span><span class="ptag">検出力と標本サイズ</span></div>
+<h4>方針</h4>
+<p>棄却しきい値を数値にし、「真の分布 \(N(52,\sigma^2/n)\) のもとでしきい値を超える確率」を計算する。</p>
+<h4>解答</h4>
+<p>(1) \(n=36\):\(\sigma/\sqrt{n}=1\)、しきい値は \(50+1.645\times1=51.645\)。真値 \(\mu=52\) のとき</p>
+<p>\[\text{検出力}=P(\bar{X}>51.645)=P\!\left(Z>\frac{51.645-52}{1}\right)=P(Z>-0.355)=\Phi(0.355)=0.639\]</p>
+<p>(2) \(n=100\):\(\sigma/\sqrt{n}=0.6\)、しきい値 \(50.987\)。</p>
+<p>\[\text{検出力}=P\!\left(Z>\frac{50.987-52}{0.6}\right)=P(Z>-1.688)=\Phi(1.688)=0.954\]</p>
+<p>(3) 同じ真の差(+2)でも、\(n=36\) では36%の確率で見逃す。「差を \(\Delta\) 以上なら検出力80〜90%で検出したい」という要求から \(n\) を逆算するのが実験計画の標準であり、検出力を考えずに「有意になりませんでした」と報告するのは、単に \(n\) 不足の可能性がある。</p>
+<h4 class="alt">ポイント</h4>
+<p>検出力の一般式 \(1-\beta=\Phi\!\left(\dfrac{\Delta}{\sigma/\sqrt{n}}-z_\alpha\right)\) から、必要 \(n\) は \(n=\left(\dfrac{(z_\alpha+z_\beta)\sigma}{\Delta}\right)^2\)。A/Bテストの設計ツールの中身はこの式です。「検出したい最小の差 \(\Delta\)」を先に決めることが、目的の明確化にもなります。</p>
+</section>
+
+<section class="sol" id="a11-6">
+<div class="phead"><span class="pnum">解 11.6</span><span class="lv lv2">★★</span><span class="ptag">2標本t検定</span></div>
+<h4>方針</h4>
+<p>等分散仮定の下でプールした分散 \(s_p^2\) を作り、差の標準誤差で割る。自由度は \(n_A+n_B-2=14\)。</p>
+<h4>解答</h4>
+<p>\[s_p^2=\frac{7\times30+7\times26}{14}=28,\qquad \mathrm{se}=\sqrt{28\left(\frac18+\frac18\right)}=\sqrt{7}=2.646\]</p>
+<p>\[T=\frac{120.5-115.3}{2.646}=\frac{5.2}{2.646}=1.965\]</p>
+<p>\(|1.965|<2.145=t_{0.025}(14)\) なので、有意水準5%では \(H_0\)(差なし)を<b>棄却できない</b>(p値 \(\approx0.070\))。</p>
+<h4 class="alt">ポイント</h4>
+<p>5.2 msの差が観測されても「偶然の範囲を出ない」判定 — しかし \(p=0.07\) は「差の示唆はあるが証拠不十分」というグレーゾーンで、追試(標本追加)の価値がある水準です。実務では有意性だけでなく差の信頼区間 \(5.2\pm2.145\times2.646=(−0.5,\ 10.9)\) を添えると、判断材料が格段に増えます。等分散が怪しいときは Welch のt検定(自由度を補正)が既定の選択肢です。</p>
+</section>
+
+<section class="sol" id="a11-7">
+<div class="phead"><span class="pnum">解 11.7</span><span class="lv lv2">★★</span><span class="ptag">比率の検定</span></div>
+<h4>方針</h4>
+<p>標準誤差は<b>帰無仮説の値 \(p_0=0.85\)</b> で計算する(\(H_0\) の下での分布を使うため)。片側なので棄却域は \(Z>1.645\)。</p>
+<h4>解答</h4>
+<p>\[Z=\frac{0.9-0.85}{\sqrt{0.85\times0.15/200}}=\frac{0.05}{0.02525}=1.98\]</p>
+<p>\(1.98>1.645\) なので \(H_0\) を<b>棄却</b>:検出率は向上したと言える(有意水準5%)。p値は</p>
+<p>\[p=P(Z\ge1.98)=1-0.9762=0.024\]</p>
+<h4 class="alt">ポイント</h4>
+<p>問10.4(区間)では標準誤差に \(\hat p\) を使いましたが、検定では「\(H_0\) が正しい世界」でのばらつき、すなわち \(p_0\) を使うのが原則 — どの分布の下で確率を測っているかを常に意識してください。ベンチマーク間の比較(2標本の比率差)にはもう一段の公式がありますが、考え方は同じです。両側で見ると \(p=0.048\) とぎりぎりになる点も、片側/両側の事前決定の大切さを物語ります。</p>
+</section>
+
+<section class="sol" id="a11-8">
+<div class="phead"><span class="pnum">解 11.8</span><span class="lv lv2">★★</span><span class="ptag">適合度検定</span></div>
+<h4>方針</h4>
+<p>期待度数は \(120/6=20\) ずつ。\(\chi^2=\sum(O-E)^2/E\)、自由度は \(6-1=5\)。</p>
+<h4>解答</h4>
+<p>\[\chi^2=\frac{(15-20)^2+(25-20)^2+(20-20)^2+(15-20)^2+(22-20)^2+(23-20)^2}{20}=\frac{25+25+0+25+4+9}{20}=\frac{88}{20}=4.4\]</p>
+<p>\(4.4<11.07=\chi^2_{0.05}(5)\) なので棄却できない:このデータから「サイコロが歪んでいる」とは言えない。</p>
+<h4 class="alt">ポイント</h4>
+<p>\((O-E)^2/E\) の形は、各セルの度数がほぼポアソン(分散≈平均=\(E\))であることに由来する標準化です。自由度が1減るのは「合計が120に固定」という制約のため(問8.4の \(n-1\) と同じ理屈)。乱数生成器の一様性テスト、カテゴリ分布のモデル検証など、離散データの検定の基本形です(期待度数が5未満のセルが多いときは近似が崩れるので併合や正確検定を)。</p>
+</section>
+
+<section class="sol" id="a11-9">
+<div class="phead"><span class="pnum">解 11.9</span><span class="lv lv3">★★★</span><span class="ptag">独立性の検定</span></div>
+<h4>方針</h4>
+<p>期待度数=行和×列和÷総数。自由度は \((2-1)(2-1)=1\)。</p>
+<h4>解答</h4>
+<p>(1) 分割表(行:天候、列:異常/正常):観測は 晴れ \((8,\ 192)\)、雨 \((18,\ 82)\)。行和は200と100、列和は26と274、総数300。独立なら</p>
+<p>\[E_{\text{晴,異}}=\frac{200\times26}{300}=17.33,\quad E_{\text{晴,正}}=182.67,\quad E_{\text{雨,異}}=\frac{100\times26}{300}=8.67,\quad E_{\text{雨,正}}=91.33\]</p>
+<p>(2) \[\chi^2=\frac{(8-17.33)^2}{17.33}+\frac{(192-182.67)^2}{182.67}+\frac{(18-8.67)^2}{8.67}+\frac{(82-91.33)^2}{91.33}\approx5.02+0.48+10.05+0.95=16.51\]</p>
+<p>\(16.51>3.841=\chi^2_{0.05}(1)\) なので独立性を<b>棄却</b>:天候と異常発生には関連があると言える(p値 \(\approx4.8\times10^{-5}\))。異常率は晴れ4%に対し雨18%で、雨天時に集中している。</p>
+<h4 class="alt">ポイント</h4>
+<p>期待度数の式は「独立なら \(P(\text{雨}\cap\text{異常})=P(\text{雨})P(\text{異常})\)」(第2章)の度数版です。関連が示せても<b>因果や機構は別問題</b>(雨そのものか、暗さか、路面反射か)で、次の調査の仮説を与えるのが検定の役割。車載データ解析では、こうした層別(天候・時間帯・場所)との関連探索が異常解析の常套手段です。</p>
+</section>
+
+<section class="sol" id="a11-10">
+<div class="phead"><span class="pnum">解 11.10</span><span class="lv lv3">★★★</span><span class="ptag">ネイマン・ピアソンの補題</span></div>
+<h4>方針</h4>
+<p>両仮説とも分布が完全に決まる(単純仮説)。尤度比を書き、単調変換で \(\bar{x}\) の条件に落とす。</p>
+<h4>解答</h4>
+<p>(1) \[\frac{L_1}{L_0}=\frac{\prod\exp\!\left(-\frac{(x_i-1)^2}{2}\right)}{\prod\exp\!\left(-\frac{x_i^2}{2}\right)}=\exp\!\left(\sum x_i-\frac{n}{2}\right)=\exp\!\left(n\bar{x}-\frac{n}{2}\right)\]</p>
+<p>これは \(\bar{x}\) の増加関数なので、「尤度比が大きいとき棄却」は「\(\bar{x}>c\) で棄却」と同値。ネイマン・ピアソンの補題により、この形が与えられた \(\alpha\) の下で検出力最大(最強力)である。</p>
+<p>(2) \(H_0\) の下で \(\bar{X}\sim N(0,\ 1/25)\)(標準偏差 \(0.2\))。\(P(\bar{X}>c)=0.05\) より</p>
+<p>\[c=1.645\times0.2=0.329\]</p>
+<p>(3) \(H_1\) の下で \(\bar{X}\sim N(1,\ 0.04)\)。</p>
+<p>\[\text{検出力}=P(\bar{X}>0.329)=P\!\left(Z>\frac{0.329-1}{0.2}\right)=P(Z>-3.355)=\Phi(3.355)=0.9996\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「まず誤報率 \(\alpha\) を固定し、その制約下で検出力を最大化する — 最適解は尤度比のしきい値判定」。これがネイマン・ピアソン流の設計思想で、レーダーのCFAR検出、通信の信号検出、そしてMAP復号(問2.10)ともつながる、<b>検出理論の背骨</b>です。z検定・t検定が広く使われるのは、多くの設定でこの最強力検定(またはその一般化)に一致するからです。しきい値を動かして得られる \((\alpha,\ 1-\beta)\) の軌跡がROC曲線であり、尤度比検定はROCを最も外側に張る判定則だと言えます。</p>
+</section>
+
+
+<header class="chap" id="ch12">
+<p class="chnum">第12章</p>
+<h2>回帰分析 — 解答解説</h2>
+<p class="chsub">最小二乗法と統計的推測</p>
+</header>
+
+<section class="sol" id="a12-1">
+<div class="phead"><span class="pnum">解 12.1</span><span class="lv lv1">★</span><span class="ptag">最小二乗直線</span></div>
+<h4>方針</h4>
+<p>偏差の表を作って \(S_{xx},S_{xy}\) を集計 — 問8.3と同じ型。</p>
+<h4>解答</h4>
+<p>\(\bar{x}=3\)、\(\bar{y}=\dfrac{1.8+3.2+3.9+5.1+6.0}{5}=4.0\)。偏差は \(x\):\(-2,-1,0,1,2\)、\(y\):\(-2.2,-0.8,-0.1,1.1,2.0\)。</p>
+<p>\[S_{xx}=4+1+0+1+4=10,\qquad S_{xy}=4.4+0.8+0+1.1+4.0=10.3\]</p>
+<p>\[\hat{\beta}_1=\frac{10.3}{10}=1.03,\qquad \hat{\beta}_0=4.0-1.03\times3=0.91\]</p>
+<p>回帰直線は \(\hat{y}=0.91+1.03x\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>回帰直線は必ず重心 \((\bar{x},\bar{y})\) を通ります(\(\hat\beta_0\) の式そのもの)。最小二乗の意味は「残差2乗和 \(\sum(y_i-\beta_0-\beta_1x_i)^2\) の最小化」で、偏微分=0 から上の公式が出ます — そしてこれは誤差が正規なら最尤推定でもある(問9.5のポイント)、という二重の正当化を持ちます。</p>
+</section>
+
+<section class="sol" id="a12-2">
+<div class="phead"><span class="pnum">解 12.2</span><span class="lv lv1">★</span><span class="ptag">決定係数</span></div>
+<h4>方針</h4>
+<p>\(S_{yy}\) を集計し、公式 \(\mathrm{SSE}=S_{yy}-\hat{\beta}_1S_{xy}\) で残差2乗和を出す。</p>
+<h4>解答</h4>
+<p>\[S_{yy}=2.2^2+0.8^2+0.1^2+1.1^2+2.0^2=4.84+0.64+0.01+1.21+4.00=10.7\]</p>
+<p>\[\mathrm{SSE}=10.7-1.03\times10.3=10.7-10.609=0.091\]</p>
+<p>\[R^2=1-\frac{0.091}{10.7}\approx0.9915\]</p>
+<p>\(y\) の全変動のうち<b>約99.2%が直線(\(x\) の違い)で説明され</b>、残差はわずか0.8% — 当てはまりは極めて良い。</p>
+<h4 class="alt">ポイント</h4>
+<p>分解 \(S_{yy}=\mathrm{SSR}+\mathrm{SSE}\)(説明された変動+残差変動)は、問8.4・8.7で見た「2乗和の直交分解」の回帰版です。\(R^2\) は便利ですが万能ではありません:非線形関係の見逃し、外れ値による見かけの上下(問12.8)があるため、<b>必ず散布図と残差プロットを見る</b>のが分析の作法です。</p>
+</section>
+
+<section class="sol" id="a12-3">
+<div class="phead"><span class="pnum">解 12.3</span><span class="lv lv2">★★</span><span class="ptag">傾きの推定量の性質</span></div>
+<h4>方針</h4>
+<p>\(S_{xy}\) の \(\bar{Y}\) を含む項が消えることを使って \(\hat\beta_1\) を \(Y_i\) の線形結合に直す。あとは線形性と独立性。</p>
+<h4>解答</h4>
+<p>(1) \(\sum(x_i-\bar{x})=0\) より \(\sum(x_i-\bar{x})\bar{Y}=0\)。よって</p>
+<p>\[\hat{\beta}_1=\frac{\sum(x_i-\bar{x})(Y_i-\bar{Y})}{S_{xx}}=\frac{\sum(x_i-\bar{x})Y_i}{S_{xx}}=\sum_i c_iY_i,\qquad c_i=\frac{x_i-\bar{x}}{S_{xx}}\]</p>
+<p>(2) \(E[Y_i]=\beta_0+\beta_1x_i\) と、\(\sum c_i=0\)、\(\sum c_ix_i=\dfrac{\sum(x_i-\bar{x})x_i}{S_{xx}}=\dfrac{S_{xx}}{S_{xx}}=1\) を使うと</p>
+<p>\[E[\hat{\beta}_1]=\sum c_i(\beta_0+\beta_1x_i)=\beta_0\cdot0+\beta_1\cdot1=\beta_1\]</p>
+<p>(3) \(\varepsilon_i\) が独立(分散 \(\sigma^2\))なので</p>
+<p>\[V[\hat{\beta}_1]=\sum c_i^2\,\sigma^2=\sigma^2\cdot\frac{\sum(x_i-\bar{x})^2}{S_{xx}^2}=\frac{\sigma^2}{S_{xx}}\]</p>
+<p>\(S_{xx}\)(\(x\) の広がり)が大きいほど分散は小さい。同じ本数の測定でも、\(x\) を端に広く配置するほど傾きは正確に決まる — 直線を「長い腕」で支えるイメージ。</p>
+<h4 class="alt">ポイント</h4>
+<p>「推定量は観測の線形結合」という見方は、重回帰・カルマンフィルタまで貫く見通しです。(3) は<b>実験計画</b>の最重要原理:キャリブレーションで測定点を狭い範囲に密集させるのは損で、範囲の両端を厚くするのが傾き精度には最適です(ただしモデルの直線性の検証には中間点も必要、というトレードオフがあります)。</p>
+</section>
+
+<section class="sol" id="a12-4">
+<div class="phead"><span class="pnum">解 12.4</span><span class="lv lv2">★★</span><span class="ptag">傾きの検定と信頼区間</span></div>
+<h4>方針</h4>
+<p>\(\hat\sigma^2=\mathrm{SSE}/(n-2)\)(自由度は係数2つ分減る)。あとは t の型どおり。</p>
+<h4>解答</h4>
+<p>\[\hat{\sigma}^2=\frac{0.091}{3}=0.0303,\qquad \mathrm{se}(\hat{\beta}_1)=\sqrt{\frac{0.0303}{10}}=0.0551\]</p>
+<p>\[T=\frac{\hat{\beta}_1-0}{\mathrm{se}(\hat{\beta}_1)}=\frac{1.03}{0.0551}=18.7\]</p>
+<p>\(|18.7|\gg3.182=t_{0.025}(3)\) なので \(H_0:\beta_1=0\) を強く棄却:傾きは0でない(\(x\) は \(y\) の説明に有意に寄与)。95%信頼区間は</p>
+<p>\[1.03\pm3.182\times0.0551=1.03\pm0.175=(0.85,\ 1.21)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>統計ソフトの回帰出力(係数・標準誤差・t値・p値)の中身がこの計算です。自由度 \(n-2\) は「平均と傾きの2パラメータをデータから推定した」ことの反映(問8.4の一般化)。\(n=5\) と小さいため、\(R^2=0.99\) でも区間は \(\pm17\%\) と意外に広い — 当てはまりの良さと係数の精度は別物です。</p>
+</section>
+
+<section class="sol" id="a12-5">
+<div class="phead"><span class="pnum">解 12.5</span><span class="lv lv2">★★</span><span class="ptag">平均応答の区間と外挿</span></div>
+<h4>方針</h4>
+<p>点推定は直線に代入。標準誤差は \(\hat\sigma\sqrt{1/n+(x_0-\bar x)^2/S_{xx}}\)。</p>
+<h4>解答</h4>
+<p>点推定:\(\hat{y}(6)=0.91+1.03\times6=7.09\)。標準誤差:</p>
+<p>\[\mathrm{se}=\hat{\sigma}\sqrt{\frac15+\frac{(6-3)^2}{10}}=\sqrt{0.0303\times1.1}=0.183\]</p>
+<p>95%信頼区間:\(7.09\pm3.182\times0.183=7.09\pm0.58=(6.51,\ 7.67)\)。</p>
+<p>区間が広がる理由:\((x_0-\bar{x})^2/S_{xx}\) の項は<b>傾きの不確かさ</b>が \(x_0\) までの距離に比例して増幅されることを表す(支点 \((\bar x,\bar y)\) を中心に直線が「ぶれる」扇形を想像するとよい)。さらに外挿では、幅の拡大以前に「データ範囲外でも直線関係が続く」という<b>検証不能な仮定</b>に依存しており、モデルが範囲外で曲がっていれば区間ごと外れる。区間は「モデルが正しいとき」の保証でしかない。</p>
+<h4 class="alt">ポイント</h4>
+<p>これは「平均応答(回帰直線の高さ)」の区間です。個々の新しい観測 \(Y\) を当てる<b>予測区間</b>は、これにノイズ1個分 \(\hat\sigma^2\) を足した \(\hat\sigma\sqrt{1+\frac1n+\frac{(x_0-\bar x)^2}{S_{xx}}}\) を使い、ずっと広くなります(問10.2 (3) と同じ区別)。センサのレンジ外での校正式の使用が危険なのは、まさに外挿だからです。</p>
+</section>
+
+<section class="sol" id="a12-6">
+<div class="phead"><span class="pnum">解 12.6</span><span class="lv lv2">★★</span><span class="ptag">相関係数と回帰</span></div>
+<h4>方針</h4>
+<p>問8.3と同じ計算。\(r^2\) と問12.2の \(R^2\) を突き合わせる。</p>
+<h4>解答</h4>
+<p>\[r=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}=\frac{10.3}{\sqrt{10\times10.7}}=\frac{10.3}{\sqrt{107}}\approx0.9957\]</p>
+<p>\(r^2\approx0.9915=R^2\) で一致。また</p>
+<p>\[r\sqrt{\frac{S_{yy}}{S_{xx}}}=\frac{S_{xy}}{\sqrt{S_{xx}S_{yy}}}\cdot\sqrt{\frac{S_{yy}}{S_{xx}}}=\frac{S_{xy}}{S_{xx}}=\hat{\beta}_1\ \checkmark\]</p>
+<h4 class="alt">ポイント</h4>
+<p>単回帰では「相関の強さ」と「直線の説明力」は同じ情報です(\(R^2=r^2\);重回帰では別物になります)。関係式 \(\hat\beta_1=r\,\dfrac{s_y}{s_x}\) は、両変数を標準化すると傾きが \(r\) そのものになることを意味し、\(|r|<1\) ゆえ予測は常に平均側へ縮む — これが「平均への回帰(regression)」という語の由来です(問5.8の \(E[Y\mid X=x]=\rho x\) のデータ版)。最後に注意:\(r\) が高くても因果は言えません。交絡(第3の変数)や逆向きの因果がありえます — 介入実験・因果推論は別の枠組みが必要です。</p>
+</section>
+
+<section class="sol" id="a12-7">
+<div class="phead"><span class="pnum">解 12.7</span><span class="lv lv3">★★★</span><span class="ptag">重回帰(正規方程式)</span></div>
+<h4>方針</h4>
+<p>\(X\) は \(4\times3\)。\(X^{\mathsf T}X\)、\(X^{\mathsf T}\boldsymbol y\) を作り、3元連立を消去法で解く。</p>
+<h4>解答</h4>
+<p>(1) \[X=\begin{pmatrix}1&amp;1&amp;1\\1&amp;2&amp;1\\1&amp;3&amp;2\\1&amp;4&amp;2\end{pmatrix},\qquad
+X^{\mathsf T}X=\begin{pmatrix}4&amp;10&amp;6\\10&amp;30&amp;17\\6&amp;17&amp;10\end{pmatrix},\qquad
+X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
+<p>(2) 正規方程式 \(X^{\mathsf T}X\hat{\boldsymbol\beta}=X^{\mathsf T}\boldsymbol y\) を消去法で解く。第2式−第1式×2.5:\(5\beta_1+2\beta_2=8.5\)。第3式−第1式×1.5:\(2\beta_1+\beta_2=3.5\)。後者から \(\beta_2=3.5-2\beta_1\) を前者に代入して \(\beta_1=1.5\)、\(\beta_2=0.5\)、第1式より \(\beta_0=0.75\)。</p>
+<p>\[\hat{\boldsymbol{\beta}}=(0.75,\ 1.5,\ 0.5)^{\mathsf T},\qquad \hat{y}=0.75+1.5x_1+0.5x_2\]</p>
+<p>(3) 当てはめ値は \(2.75,\ 4.25,\ 6.25,\ 7.75\)、残差は \(\boldsymbol{e}=(0.25,\ -0.25,\ -0.25,\ 0.25)\)、\(\mathrm{SSE}=4\times0.0625=0.25\)。直交性:</p>
+<p>\[\boldsymbol{1}^{\mathsf T}\boldsymbol{e}=0,\qquad \boldsymbol{x}_1^{\mathsf T}\boldsymbol{e}=0.25-0.5-0.75+1=0,\qquad \boldsymbol{x}_2^{\mathsf T}\boldsymbol{e}=0.25-0.25-0.5+0.5=0\ \checkmark\]</p>
+<h4 class="alt">ポイント</h4>
+<p>正規方程式は \(X^{\mathsf T}(\boldsymbol y-X\hat{\boldsymbol\beta})=\boldsymbol 0\)、すなわち「<b>残差は説明変数の張る空間と直交する</b>」という条件そのもの — 最小二乗=正射影(姉妹編・線形代数の主題)です。統計側の結果もそのまま拡張され、\(V[\hat{\boldsymbol\beta}]=\sigma^2(X^{\mathsf T}X)^{-1}\)、各係数の \(t\) 検定は自由度 \(n-p-1\) で行います。説明変数同士が強く相関すると \(X^{\mathsf T}X\) が特異に近づき係数が暴れる(多重共線性)ことも、行列の言葉で理解できます。</p>
+</section>
+
+<section class="sol" id="a12-8">
+<div class="phead"><span class="pnum">解 12.8</span><span class="lv lv3">★★★</span><span class="ptag">外れ値の影響とロバスト化</span></div>
+<h4>方針</h4>
+<p>\(\bar y\) と \(S_{xy}\) だけ再計算(\(S_{xx}\) は不変)。変化の大きさを見る。</p>
+<h4>解答</h4>
+<p>(1) 新しい \(\bar{y}=\dfrac{1.8+3.2+3.9+5.1+12.0}{5}=5.2\)。偏差積和は</p>
+<p>\[S_{xy}=(-2)(-3.4)+(-1)(-2.0)+0+(1)(-0.1)+(2)(6.8)=6.8+2.0-0.1+13.6=22.3\]</p>
+<p>\[\hat{\beta}_1=\frac{22.3}{10}=2.23,\qquad \hat{\beta}_0=5.2-2.23\times3=-1.49\]</p>
+<p>傾きは \(1.03\to2.23\) と2倍以上、切片は \(0.91\to-1.49\) と符号まで反転。<b>たった1点</b>で直線が別物になった。</p>
+<p>(2) 二乗損失は大きな残差に2乗で重い罰を課すため、直線は外れ値を「なだめる」方向へ強く引き寄せられる。しかも \(x_5=5\) は \(x\) の端で \(c_5=(x_5-\bar x)/S_{xx}\) が最大 — 端の点は<b>てこの支点から遠い力点</b>のように傾きへの影響力(レバレッジ)が大きい。端の外れ値は最悪の組み合わせである。</p>
+<p>(3) 対策:(a) 残差の大きい点の重みを落とす<b>ロバスト回帰</b>(Huber損失、最小絶対偏差など — 中央値が平均より頑健なこと(問8.1)の回帰版)。(b) <b>RANSAC</b>(問2.9):少数点でモデルを仮組みし、賛同する点(インライア)の多いモデルを採る — 外れ値が50%あっても正しい直線を見つけられ、画像の対応点あてはめの標準手法になっている。いずれも「外れ値を検出して原因を調べる」姿勢とセットで使う。</p>
+<h4 class="alt">ポイント</h4>
+<p>最小二乗の最適性(ガウス・マルコフ、正規なら最尤)は「誤差がおとなしい」仮定の上の話で、仮定が壊れたときの<b>もろさ</b>と表裏一体です。実データ(特徴点マッチング、センサログ)には外れ値が必ず混ざる — 「まず頑健に当て、残差で外れ値を診断し、必要なら精密に再推定」という2段構えが実務の型です。</p>
+</section>
+
+
+<header class="chap" id="ch13">
+<p class="chnum">第13章</p>
+<h2>ベイズ統計入門 — 解答解説</h2>
+<p class="chsub">事前知識とデータの融合</p>
+</header>
+
+<section class="sol" id="a13-1">
+<div class="phead"><span class="pnum">解 13.1</span><span class="lv lv1">★</span><span class="ptag">離散パラメータのベイズ更新</span></div>
+<h4>方針</h4>
+<p>仮説は2つ(公正/細工)。第2章のベイズの定理そのもの — ただし「仮説」がパラメータの値になっている。</p>
+<h4>解答</h4>
+<p>尤度は \(P(\text{HHH}\mid\text{細工})=0.8^3=0.512\)、\(P(\text{HHH}\mid\text{公正})=0.5^3=0.125\)。事前は各 \(0.5\) なので</p>
+<p>\[P(\text{細工}\mid\text{HHH})=\frac{0.5\times0.512}{0.5\times0.512+0.5\times0.125}=\frac{0.512}{0.637}\approx0.804\]</p>
+<h4 class="alt">ポイント</h4>
+<p>3回の表で信念が \(50\%\to80\%\) へ動きました。パラメータ推論とは「パラメータの値を仮説群とみなしたベイズの定理」にすぎない — 本章の全問がこの1行の変奏です。値の候補を2個から連続体に増やしたものが次問以降の連続パラメータの更新になります。</p>
+</section>
+
+<section class="sol" id="a13-2">
+<div class="phead"><span class="pnum">解 13.2</span><span class="lv lv1">★</span><span class="ptag">ベータ–ベルヌーイの更新</span></div>
+<h4>方針</h4>
+<p>事後 ∝ 事前 × 尤度 の指数を足すだけ:\(\theta^{a-1}(1-\theta)^{b-1}\times\theta^{7}(1-\theta)^{3}\)。</p>
+<h4>解答</h4>
+<p>(1) \[\pi(\theta\mid\text{データ})\propto \theta^{1-1}(1-\theta)^{1-1}\cdot\theta^7(1-\theta)^3=\theta^{8-1}(1-\theta)^{4-1}\]</p>
+<p>よって事後分布は \(\mathrm{Beta}(8,\ 4)\)。</p>
+<p>(2) 事後平均 \(\dfrac{8}{8+4}=\dfrac23\approx0.667\)。MAP(最頻値)は \(\dfrac{8-1}{8+4-2}=\dfrac{7}{10}=0.7\)。</p>
+<p>(3) MAPの \(0.7\) は最尤推定 \(k/n=0.7\) と一致(一様事前ではMAP=MLE)。事後平均 \(\dfrac{k+1}{n+2}\) は「成功と失敗を1回ずつ水増しした」形で、\(n\) が小さいとき極端な値を避ける:たとえば \(n=3\) 全成功でも \(1\) でなく \(4/5\) と見積もり、「まだ失敗を見ていないだけかもしれない」慎重さを持つ。\(n\to\infty\) では \(k/n\) に一致し、データが事前を圧倒する。</p>
+<h4 class="alt">ポイント</h4>
+<p>ラプラス平滑化は自然言語処理(未出現単語に確率0を与えない)やクリック率推定の定番技法で、その正体は<b>一様事前のベイズ事後平均</b>でした。「事前=擬似的な観測 \(a\) 回成功・\(b\) 回失敗」という読み方(擬似カウント)は、共役事前分布の直感的理解として万能です。</p>
+</section>
+
+<section class="sol" id="a13-3">
+<div class="phead"><span class="pnum">解 13.3</span><span class="lv lv2">★★</span><span class="ptag">逐次更新</span></div>
+<h4>方針</h4>
+<p>1観測ごとに \(a\)(成功)か \(b\)(失敗)を1増やす。順番に追うだけ。</p>
+<h4>解答</h4>
+<p>\[\mathrm{Beta}(2,2)\ \xrightarrow{\,1\,}\ \mathrm{Beta}(3,2)\ \xrightarrow{\,1\,}\ \mathrm{Beta}(4,2)\ \xrightarrow{\,0\,}\ \mathrm{Beta}(4,3)\ \xrightarrow{\,1\,}\ \mathrm{Beta}(5,3)\]</p>
+<p>最終事後は \(\mathrm{Beta}(5,3)\)、事後平均 \(\dfrac{5}{8}=0.625\)。まとめて更新しても、成功3・失敗1を足して \(\mathrm{Beta}(2+3,\ 2+1)=\mathrm{Beta}(5,3)\) — 一致する。</p>
+<h4 class="alt">ポイント</h4>
+<p>「今日の事後は明日の事前」— 逐次更新と一括更新が一致するのは、観測が条件付き独立だからです(尤度が積に分解)。ストリーミングデータをパラメータ2個 \((a,b)\) だけ持って処理できる、というオンライン学習の原型で、カルマンフィルタ(第15章)の「予測→更新」ループの静的版とも言えます。順番を入れ替えても結果が同じ点も確認しておきましょう。</p>
+</section>
+
+<section class="sol" id="a13-4">
+<div class="phead"><span class="pnum">解 13.4</span><span class="lv lv2">★★</span><span class="ptag">正規–正規の更新(1観測)</span></div>
+<h4>方針</h4>
+<p>要点欄の公式:精度(分散の逆数)を足し、精度重み付き平均を取る。</p>
+<h4>解答</h4>
+<p>\[\frac{1}{\tau_1^2}=\frac{1}{16}+\frac{1}{9}=\frac{9+16}{144}=\frac{25}{144}\quad\Rightarrow\quad \tau_1^2=\frac{144}{25}=5.76\]</p>
+<p>\[\mu_1=\tau_1^2\left(\frac{50}{16}+\frac{58}{9}\right)=\frac{144}{25}\cdot\frac{450+928}{144}=\frac{1378}{25}=55.12\]</p>
+<p>よって事後分布は \(N(55.12,\ 5.76)\)。事後平均は、事前平均50(精度 \(1/16\))と観測58(精度 \(1/9\))を精度の比 \(9:16\) で重み付けした内分点になっている(観測の方が精密なので観測寄り)。</p>
+<h4 class="alt">ポイント</h4>
+<p>正規×正規の指数部の平方完成(問6.6と同じ計算)から出るこの公式は、<b>本書後半で最も再利用される式</b>です。事後分散 \(5.76\) は事前 \(16\) よりも観測ノイズ \(9\) よりも小さい — 情報は合わせると必ず増える(精度の加算)。問15.2ではこれがそのまま「センサ融合」、問15.3では「カルマンフィルタの更新ステップ」になります。</p>
+</section>
+
+<section class="sol" id="a13-5">
+<div class="phead"><span class="pnum">解 13.5</span><span class="lv lv2">★★</span><span class="ptag">正規–正規の更新(n観測)</span></div>
+<h4>方針</h4>
+<p>\(\bar{X}\sim N(\mu,\ \sigma^2/n)\) なので、「分散 \(9/9=1\) の観測が1個」とみなして同じ公式へ。</p>
+<h4>解答</h4>
+<p>\[\frac{1}{\tau_1^2}=\frac{1}{16}+\frac{9}{9}=\frac{1}{16}+1=\frac{17}{16}\quad\Rightarrow\quad \tau_1^2=\frac{16}{17}\approx0.941\]</p>
+<p>\[\mu_1=\tau_1^2\left(\frac{50}{16}+\frac{9\times58}{9}\right)=\frac{16}{17}\left(3.125+58\right)=\frac{16\times61.125}{17}\approx57.53\]</p>
+<p>事後は \(N(57.53,\ 0.941)\)。1観測のとき(55.12)より事後平均は観測側の58へ大きく寄り、事後分散は \(5.76\to0.94\) と急減した — データが増えるほど事前の影響は薄れ、事後は \(\bar{x}\) とその標準誤差に近づく(\(n\to\infty\) で頻度論の答えと一致)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「事前 vs データ」の綱引きの重みは精度 \(1/\tau_0^2\) 対 \(n/\sigma^2\)。事前は「分散 \(\sigma^2\tau_0^{-2}\cdots\)」— より直感的には<b>擬似観測 \(\sigma^2/\tau_0^2\) 個分</b>(本問では \(9/16\approx0.56\) 個分)の重みしか持ちません。ベイズと頻度論は、データ十分の極限で合流する — 対立ではなく守備範囲の違い、と捉えるのが実務的です。</p>
+</section>
+
+<section class="sol" id="a13-6">
+<div class="phead"><span class="pnum">解 13.6</span><span class="lv lv2">★★</span><span class="ptag">MAP推定と正則化(縮小推定)</span></div>
+<h4>方針</h4>
+<p>問13.5の公式に \(\mu_0=0\) を入れる。等価性は「事後密度の対数=−(2乗和+罰則)/定数」を見る。</p>
+<h4>解答</h4>
+<p>(1) 事後は正規なので MAP=事後平均。\(\mu_0=0\) を代入して</p>
+<p>\[\hat{\mu}_{\mathrm{MAP}}=\frac{\dfrac{n\bar{x}}{\sigma^2}}{\dfrac{1}{\tau^2}+\dfrac{n}{\sigma^2}}=\frac{n\tau^2}{n\tau^2+\sigma^2}\,\bar{x}\]</p>
+<p>(2) \(\dfrac{4\times1}{4\times1+4}\times10=\dfrac{4}{8}\times10=5\)。</p>
+<p>(3) 係数 \(\dfrac{n\tau^2}{n\tau^2+\sigma^2}<1\) なので、推定値は \(\bar{x}=10\) を事前平均0の方向へ縮めた値(<b>縮小推定</b>)。また対数事後は</p>
+<p>\[\ln\pi(\mu\mid x)=-\frac{1}{2\sigma^2}\sum(x_i-\mu)^2-\frac{\mu^2}{2\tau^2}+\text{const}\]</p>
+<p>なので、MAP は \(\displaystyle\min_\mu\left\{\sum(x_i-\mu)^2+\frac{\sigma^2}{\tau^2}\mu^2\right\}\) と等価 — 二乗罰則(L2正則化)付き最小二乗であり、罰則の強さ \(\lambda=\sigma^2/\tau^2\) は「事前の自信」(\(\tau^2\) 小=強い正則化)に対応する。</p>
+<h4 class="alt">ポイント</h4>
+<p>リッジ回帰・重み減衰(weight decay)は「係数はそう大きくないはず」という正規事前のMAP推定だった — 機械学習の正則化にベイズの解釈を与える古典的な対応です(L1正則化はラプラス事前に対応)。少データで推定が暴れるのを事前で抑える、という思想は、次章以降のフィルタリングでも一貫しています。</p>
+</section>
+
+<section class="sol" id="a13-7">
+<div class="phead"><span class="pnum">解 13.7</span><span class="lv lv3">★★★</span><span class="ptag">事後予測分布</span></div>
+<h4>方針</h4>
+<p>予測は「パラメータを事後分布で平均する」:全期待値・全分散(第6章)の出番。</p>
+<h4>解答</h4>
+<p>(1) \[P(\tilde{X}=1\mid\text{データ})=\int_0^1\theta\,\pi(\theta\mid\text{データ})\,d\theta=E[\theta\mid\text{データ}]=\frac{8}{12}=\frac23\]</p>
+<p>(2) \(\tilde{X}=\mu+\varepsilon\) で、\(\mu\sim N(55.12,\ 5.76)\)(事後)と \(\varepsilon\sim N(0,\ 9)\) は独立。独立な正規の和(問6.6)より</p>
+<p>\[\tilde{X}\mid\text{データ}\ \sim\ N(55.12,\ 5.76+9)=N(55.12,\ 14.76)\]</p>
+<p>予測分散 \(14.76\) は、<b>パラメータの不確かさ</b> \(5.76\) と<b>観測ノイズ</b> \(9\) の和に分解される(全分散の法則:\(V[\tilde X]=E[V[\tilde X\mid\mu]]+V[E[\tilde X\mid\mu]]=9+5.76\))。</p>
+<h4 class="alt">ポイント</h4>
+<p>「点推定を代入して予測する」(分散9だけ)と比べ、ベイズ予測は<b>推定の不確かさまで込みで幅を出す</b> — 誠実な予測区間の作り方です。機械学習で言う認識論的不確かさ(データ不足由来、5.76)と偶然的不確かさ(ノイズ由来、9)の分解がここに現れています。(1) の形(事後平均が予測確率)は、ラプラス平滑化の予測としての読み直しでもあります。</p>
+</section>
+
+<section class="sol" id="a13-8">
+<div class="phead"><span class="pnum">解 13.8</span><span class="lv lv3">★★★</span><span class="ptag">ベイズ識別(2クラス)</span></div>
+<h4>方針</h4>
+<p>\(\pi_1f_1(x)>\pi_0f_0(x)\) の対数を取り、\(x\) について解く。等分散ガウスなので判定は1次(しきい値)になる。</p>
+<h4>解答</h4>
+<p>(1) \(C_1\) と判定する条件は \(\pi_1f_1(x)>\pi_0f_0(x)\)。対数を取り、共通因子を消すと</p>
+<p>\[-\frac{(x-140)^2}{2\cdot400}+\ln0.1>-\frac{(x-100)^2}{2\cdot400}+\ln0.9\]</p>
+<p>\[\frac{(x-100)^2-(x-140)^2}{800}>\ln9\iff\frac{80x-9600}{800}>\ln9\iff x>120+10\ln9\approx142.0\]</p>
+<p>すなわち \(x^*=\dfrac{100+140}{2}+\dfrac{\sigma^2}{\mu_1-\mu_0}\ln\dfrac{\pi_0}{\pi_1}=120+10\ln9\)。</p>
+<p>(2) 誤り率は「背景なのに \(x>x^*\)」+「歩行者なのに \(x\le x^*\)」:</p>
+<p>\[P(\text{誤り})=0.9\,P\!\left(Z>\frac{142.0-100}{20}\right)+0.1\,P\!\left(Z\le\frac{142.0-140}{20}\right)\]</p>
+<p>\[=0.9\,(1-\Phi(2.099))+0.1\,\Phi(0.0986)=0.9\times0.0179+0.1\times0.5393\approx0.0701\]</p>
+<p>(3) 事前確率が \(9:1\) で背景に偏っているため、判定は「よほど強い証拠がなければ多数派(背景)」に傾く — しきい値は2つの山の中点120から \(10\ln9\approx22\) だけ歩行者側へ移動する。誤って歩行者と言う機会損失(0.9の重み)を抑えるのが全体誤り率最小の戦略だからである。</p>
+<h4 class="alt">ポイント</h4>
+<p>これはガウス分布を仮定した2クラス判別(LDAの1次元版)で、MAP判定=ベイズ最適(誤り率最小)という事実は問2.10・11.10と同じ原理です。ただし歩行者検出では見逃し(重み0.1側の誤り)の<b>コスト</b>が桁違いに重い — 誤り率でなく期待損失を最小化するなら、損失比をしきい値の \(\ln\) 項に足すだけで拡張できます(コスト考慮のベイズ決定)。事前確率がしきい値を動かす構図は、基準率の誤り(問2.6)の裏面でもあります。</p>
+</section>
+
+
+<header class="chap" id="ch14">
+<p class="chnum">第14章</p>
+<h2>マルコフ連鎖とポアソン過程 — 解答解説</h2>
+<p class="chsub">時間とともに変わる確率</p>
+</header>
+
+<section class="sol" id="a14-1">
+<div class="phead"><span class="pnum">解 14.1</span><span class="lv lv1">★</span><span class="ptag">遷移行列と多段遷移</span></div>
+<h4>方針</h4>
+<p>2段遷移確率は \(P^2\) の成分。経路(良好→良好→良好、良好→混雑→良好)で場合分けしても同じ。</p>
+<h4>解答</h4>
+<p>\[P^2=\begin{pmatrix}0.8&amp;0.2\\0.4&amp;0.6\end{pmatrix}\begin{pmatrix}0.8&amp;0.2\\0.4&amp;0.6\end{pmatrix}=\begin{pmatrix}0.72&amp;0.28\\0.56&amp;0.44\end{pmatrix}\]</p>
+<p>求める確率は \((P^2)_{11}=0.8\times0.8+0.2\times0.4=0.72\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>成分計算 \(\sum_k P_{1k}P_{k1}\) は「中継状態で場合分けする全確率の公式」であり、行列積がその帳簿づけを自動化しています(チャップマン・コルモゴロフの等式)。「\(n\) 歩後=\(P^n\)」という翻訳により、確率過程の時間発展が線形代数(固有値・対角化)の問題になる — これが本章の最大の仕掛けです。</p>
+</section>
+
+<section class="sol" id="a14-2">
+<div class="phead"><span class="pnum">解 14.2</span><span class="lv lv1">★</span><span class="ptag">定常分布</span></div>
+<h4>方針</h4>
+<p>\(\boldsymbol{\pi}P=\boldsymbol{\pi}\) と \(\pi_1+\pi_2=1\) の連立。</p>
+<h4>解答</h4>
+<p>\(\pi_1=0.8\pi_1+0.4\pi_2\iff 0.2\pi_1=0.4\pi_2\iff \pi_1=2\pi_2\)。和が1より</p>
+<p>\[\boldsymbol{\pi}=\left(\frac23,\ \frac13\right)\]</p>
+<p>意味:初期状態がどちらでも、長時間運用すれば「良好でいる時間の割合」は \(2/3\) に近づく(この連鎖は既約・非周期なので収束が保証される)。流入と流出が釣り合う配分、とも読める:\(0.2\pi_1=0.4\pi_2\) はまさに「良好→混雑の流量=混雑→良好の流量」。</p>
+<h4 class="alt">ポイント</h4>
+<p>定常分布には3つの顔があります:(a) 釣り合いの方程式の解、(b) 長時間平均(エルゴード性)、(c) \(P^{\mathsf T}\) の固有値1の固有ベクトル。実際 \(P^2\) の行(0.72,0.28)と(0.56,0.44)がすでに \((2/3,1/3)\approx(0.67,0.33)\) へ近づきつつあることを確認できます。収束の速さは固有値の第2位(ここでは \(0.4\))が支配します — 姉妹編・線形代数のべき乗法の話がそのまま使えます。</p>
+</section>
+
+<section class="sol" id="a14-3">
+<div class="phead"><span class="pnum">解 14.3</span><span class="lv lv2">★★</span><span class="ptag">劣化モデル(3状態)</span></div>
+<h4>方針</h4>
+<p>初期分布 \(\boldsymbol{\pi}_0=(1,0,0)\) に \(P\) を2回掛ける。</p>
+<h4>解答</h4>
+<p>1周期後:\(\boldsymbol{\pi}_1=(0.9,\ 0.1,\ 0)\)。2周期後:</p>
+<p>\[\boldsymbol{\pi}_2=\boldsymbol{\pi}_1P=(0.9\times0.9,\ \ 0.9\times0.1+0.1\times0.8,\ \ 0.1\times0.2)=(0.81,\ 0.17,\ 0.02)\]</p>
+<p>2周期後には、81%が正常、17%が劣化、2%がすでに故障している。</p>
+<h4 class="alt">ポイント</h4>
+<p>「正常→劣化→故障」の一方向モデルは、信頼性工学の多状態劣化モデルの最小例です。故障状態は一度入ると出られない<b>吸収状態</b>(行が \((0,0,1)\))で、時間とともに確率が故障へ吸い込まれていく。予知保全(劣化段階での交換)の価値を定量化する土台であり、平均余命の計算が次問です。</p>
+</section>
+
+<section class="sol" id="a14-4">
+<div class="phead"><span class="pnum">解 14.4</span><span class="lv lv2">★★</span><span class="ptag">平均吸収時間</span></div>
+<h4>方針</h4>
+<p>「1歩進んで、行き先から先の平均を足す」1段階解析。未知数は \(h_{\text{正}},h_{\text{劣}}\) の2つ、故障では0。</p>
+<h4>解答</h4>
+<p>劣化から:\(h_{\text{劣}}=1+0.8\,h_{\text{劣}}+0.2\times0\iff 0.2\,h_{\text{劣}}=1\iff h_{\text{劣}}=5\)。</p>
+<p>正常から:\(h_{\text{正}}=1+0.9\,h_{\text{正}}+0.1\,h_{\text{劣}}\iff 0.1\,h_{\text{正}}=1+0.5\iff h_{\text{正}}=15\)。</p>
+<p>新品からの平均寿命は15周期(うち、正常滞在の平均 \(1/0.1=10\) 周期+劣化滞在の平均 \(1/0.2=5\) 周期、と分解しても確かめられる)。</p>
+<h4 class="alt">ポイント</h4>
+<p>1段階解析(first-step analysis)は「期待値を条件付けで漸化式にする」全期待値の法則(第6章)の応用で、平均到達時間・吸収確率・期待コストを同じ型で解けます。各状態の滞在時間が幾何分布(平均 \(1/p\)、問3.5)になっている点にも注目 — 離散版の「無記憶な滞在」です。</p>
+</section>
+
+<section class="sol" id="a14-5">
+<div class="phead"><span class="pnum">解 14.5</span><span class="lv lv2">★★</span><span class="ptag">ランダムウォークとPageRank</span></div>
+<h4>方針</h4>
+<p>リンク先を等確率で選ぶ遷移行列を書き、\(\boldsymbol{\pi}P=\boldsymbol{\pi}\) を解く。</p>
+<h4>解答</h4>
+<p>(1) 状態順を A, B, C として</p>
+<p>\[P=\begin{pmatrix}0&amp;1/2&amp;1/2\\0&amp;0&amp;1\\1&amp;0&amp;0\end{pmatrix}\]</p>
+<p>(2) \(\boldsymbol{\pi}P=\boldsymbol{\pi}\) より \(\pi_A=\pi_C\)、\(\pi_B=\tfrac12\pi_A\)、\(\pi_C=\tfrac12\pi_A+\pi_B\)。和が1で</p>
+<p>\[\boldsymbol{\pi}=(0.4,\ 0.2,\ 0.4)\]</p>
+<p>読み:ランダムに閲覧し続けたとき、滞在時間の割合が最も高いのは A と C(各40%)。「多くの(重要な)ページからリンクされるページほど重要」という再帰的な重要度が、定常分布として定まる — これが PageRank の基本形である。</p>
+<p>(3) \(\boldsymbol{\pi}P=\boldsymbol{\pi}\) を転置すると \(P^{\mathsf T}\boldsymbol{\pi}^{\mathsf T}=\boldsymbol{\pi}^{\mathsf T}\):\(\boldsymbol{\pi}^{\mathsf T}\) は \(P^{\mathsf T}\) の固有値1の固有ベクトル。実際 \(P^{\mathsf T}(0.4,0.2,0.4)^{\mathsf T}=(0.4,\ 0.2,\ 0.4)^{\mathsf T}\) が成分計算で確認できる。</p>
+<h4 class="alt">ポイント</h4>
+<p>実際の PageRank は、リンクのないページや閉じた輪への対処として「確率 \(1-d\) でランダムなページへ飛ぶ」減衰(ダンピング、\(d\approx0.85\))を混ぜ、既約・非周期性を保証してから、べき乗法 \(\boldsymbol{\pi}_{t+1}=\boldsymbol{\pi}_tP\) で定常分布を計算します。巨大な疎行列の固有ベクトル計算が検索エンジンの心臓部だった — 線形代数と確率論の最も有名な合流点です。</p>
+</section>
+
+<section class="sol" id="a14-6">
+<div class="phead"><span class="pnum">解 14.6</span><span class="lv lv2">★★</span><span class="ptag">ポアソン過程の2つの顔</span></div>
+<h4>方針</h4>
+<p>計数は \(N(3)\sim\mathrm{Po}(6)\)、間隔は \(\mathrm{Exp}(2)\)。(3) は「イベント0個」⟺「最初の到着がまだ」。</p>
+<h4>解答</h4>
+<p>(1) \(N(3)\sim\mathrm{Po}(\lambda t)=\mathrm{Po}(6)\)。</p>
+<p>\[P(N(3)\le3)=e^{-6}\left(1+6+\frac{36}{2}+\frac{216}{6}\right)=61e^{-6}\approx0.151\]</p>
+<p>(2) 間隔 \(T\sim\mathrm{Exp}(2)\) より \(P(T>1)=e^{-2}\approx0.135\)。</p>
+<p>(3) 「時刻 \(t\) までイベントが0個」と「最初の到着時刻 \(T_1\) が \(t\) より後」は同じ事象なので</p>
+<p>\[P(T_1>t)=P(N(t)=0)=e^{-\lambda t}\]</p>
+<p>右辺はポアソン分布の \(k=0\) 項、左辺は指数分布の裾 — 計数がポアソンであることと間隔が指数であることは、同じ過程の表と裏である。</p>
+<h4 class="alt">ポイント</h4>
+<p>この対応 \(\{N(t)=0\}=\{T_1>t\}\) は、2つの分布を結ぶ蝶番として何度でも使います。指数間隔の無記憶性(問4.6)は「いつ観測を始めても過程は同じに見える」ことを意味し、ポアソン過程が「完全にランダムな到着」の唯一のモデルである理由です。LiDARやSPADセンサの光子計数、ネットワークのパケット到着の一次モデルとして標準的です。</p>
+</section>
+
+<section class="sol" id="a14-7">
+<div class="phead"><span class="pnum">解 14.7</span><span class="lv lv3">★★★</span><span class="ptag">間引き(thinning)</span></div>
+<h4>方針</h4>
+<p>各イベントを独立にコイン(確率0.1)で残す=間引き。残った列もポアソン過程で、強度が \(p\lambda\)。</p>
+<h4>解答</h4>
+<p>物体由来イベントは強度 \(0.1\times2=0.2\) /秒のポアソン過程になる(間引きの性質)。10秒間の物体由来イベント数は \(\mathrm{Po}(0.2\times10)=\mathrm{Po}(2)\) に従い、</p>
+<p>\[P(\text{0件})=e^{-2}\approx0.135\]</p>
+<p>簡単な確認:区間内の総数 \(N\sim\mathrm{Po}(20)\)、各イベントが物体由来かは独立な \(\mathrm{Ber}(0.1)\) なので、物体由来数は「ポアソン個のベルヌーイの和」— そのPMFを計算すると \(\mathrm{Po}(2)\) に一致する(複合分布の計算、問6.5の設定)。</p>
+<h4 class="alt">ポイント</h4>
+<p>間引き(および逆の重ね合わせ)の閉性は、ポアソン過程の実務価値の核心です:検出確率 \(p\) のフィルタを通しても「ポアソン過程のまま、強度だけ \(p\lambda\) に」なるので、モデルの形が壊れません。クラス別のイベント分解(車由来・歩行者由来・ノイズ由来)を独立なポアソン過程の和として扱う根拠でもあります。</p>
+</section>
+
+<section class="sol" id="a14-8">
+<div class="phead"><span class="pnum">解 14.8</span><span class="lv lv3">★★★</span><span class="ptag">重ね合わせと競争</span></div>
+<h4>方針</h4>
+<p>合流=重ね合わせ。次のイベントは2つの指数時計の「早い方」で、最小は \(\mathrm{Exp}(\lambda_1+\lambda_2)\)。</p>
+<h4>解答</h4>
+<p>(1) 独立なポアソン過程の重ね合わせなので、強度 \(\lambda_1+\lambda_2=4\) /秒のポアソン過程。</p>
+<p>(2) \(P(\text{レーダーが先})=\dfrac{\lambda_2}{\lambda_1+\lambda_2}=\dfrac34\)。</p>
+<p>(導出:\(P(T_2&lt;T_1)=\displaystyle\int_0^\infty \lambda_2e^{-\lambda_2t}\,e^{-\lambda_1t}\,dt=\frac{\lambda_2}{\lambda_1+\lambda_2}\)。)</p>
+<p>(3) \(\min(T_1,T_2)\) の裾は \(P(\min>t)=e^{-\lambda_1t}e^{-\lambda_2t}=e^{-4t}\) なので \(\min\sim\mathrm{Exp}(4)\)、平均は \(\dfrac14=0.25\) 秒。</p>
+<h4 class="alt">ポイント</h4>
+<p>「複数の指数時計の競争」は、並列システムの最初の故障(第17章)、複数サーバの最初の応答、化学反応のギレスピー法など至る所に現れる基本モチーフです。強度が「速さ」、強度比が「勝率」という素直な対応も覚えやすい。センサ統合の文脈では、イベント駆動の処理レート設計(平均0.25秒に1回のイベントを捌く)につながります。</p>
+</section>
+
+<section class="sol" id="a14-9">
+<div class="phead"><span class="pnum">解 14.9</span><span class="lv lv3">★★★</span><span class="ptag">隠れマルコフモデルの1ステップ</span></div>
+<h4>方針</h4>
+<p>(1) はベイズ更新(第2章・第13章)。(2) は事後分布に遷移行列を掛ける(全確率の公式)。</p>
+<h4>解答</h4>
+<p>(1) 検知の尤度は \(P(\text{検知}\mid\text{湿})=0.8\)、\(P(\text{検知}\mid\text{乾})=0.1\)。</p>
+<p>\[P(\text{湿}\mid\text{検知})=\frac{0.2\times0.8}{0.2\times0.8+0.8\times0.1}=\frac{0.16}{0.24}=\frac23\]</p>
+<p>(2) 事後 \((\text{乾},\text{湿})=(\frac13,\frac23)\) を1歩進める。\(P(\text{乾}\to\text{湿})=0.1\)、\(P(\text{湿}\to\text{湿})=0.7\) より</p>
+<p>\[P(\text{次が湿})=\frac23\times0.7+\frac13\times0.1=\frac{0.7\times2+0.1}{3}=0.5\]</p>
+<p>(3) HMMのフィルタリングは「<b>観測でベイズ更新 → 遷移行列で1歩予測</b>」の交互反復で、いま実行したのがその1周期である。状態が連続(位置・速度)で、遷移と観測が線形ガウスの場合に、この同じ反復を閉じた式で回せるのがカルマンフィルタ(第15章)— HMMとKFは「離散か連続か」だけが違う兄弟である。</p>
+<h4 class="alt">ポイント</h4>
+<p>センサは状態そのものでなく「状態の痕跡」しか見られない — この<b>隠れ</b>構造の下で信念(確率分布)を運ぶのがフィルタリングです。予測ステップは不確かさを増やし(遷移のぼかし)、更新ステップは減らす(観測の絞り込み)。音声認識・自然言語のHMM、ロボットのベイズフィルタ、路面状態推定まで、この2拍子が共通の心臓部です。</p>
+</section>
+
+
+<header class="chap" id="ch15">
+<p class="chnum">第15章</p>
+<h2>状態推定とカルマンフィルタ — 解答解説</h2>
+<p class="chsub">ノイズの中から状態を追いかける</p>
+</header>
+
+<section class="sol" id="a15-1">
+<div class="phead"><span class="pnum">解 15.1</span><span class="lv lv1">★</span><span class="ptag">逐次平均はフィルタである</span></div>
+<h4>方針</h4>
+<p>\(\bar y_n\) の定義を \(\bar y_{n-1}\) で書き直すだけ。形を更新式と見比べる。</p>
+<h4>解答</h4>
+<p>\[\bar{y}_n=\frac{(n-1)\bar{y}_{n-1}+y_n}{n}=\bar{y}_{n-1}+\frac{1}{n}\left(y_n-\bar{y}_{n-1}\right)\]</p>
+<p>これは「現在の推定 \(\bar y_{n-1}\) に、イノベーション \(y_n-\bar y_{n-1}\) をゲイン \(K_n=1/n\) で足し込む」更新式そのもの。ゲインが \(1/n\) で減るのは、推定の分散 \(R/(n-1)\) が観測1個の分散 \(R\) に比べてどんどん小さくなり、新しい1個を信じる度合いを下げるべきだから — 実際 \(K=\dfrac{P^-}{P^-+R}=\dfrac{R/(n-1)}{R/(n-1)+R}=\dfrac1n\) と、カルマンゲインの式から同じ値が出る。</p>
+<h4 class="alt">ポイント</h4>
+<p>「平均を取る」というもっとも素朴な操作が、静止状態(\(Q=0\))のカルマンフィルタの特別な場合でした。逆に言えばKFは、状態が動く(\(Q>0\))ときに「古い情報を適度に忘れる平均」を自動設計する装置です。逐次形は全データの保持が不要で、組み込み実装の基本形でもあります。</p>
+</section>
+
+<section class="sol" id="a15-2">
+<div class="phead"><span class="pnum">解 15.2</span><span class="lv lv1">★</span><span class="ptag">2センサの融合</span></div>
+<h4>方針</h4>
+<p>精度(分散の逆数)で重み付け — 問13.4の公式で「事前」をレーダー、「観測」をLiDARと読めばよい。</p>
+<h4>解答</h4>
+<p>\[\hat{x}=\frac{y_1/R_1+y_2/R_2}{1/R_1+1/R_2}=\frac{10.0/4+10.6/1}{1/4+1}=\frac{2.5+10.6}{1.25}=10.48\ \text{m}\]</p>
+<p>\[V=\left(\frac14+1\right)^{-1}=0.8\]</p>
+<p>重みは \(1/4:1=1:4\) でLiDARが4倍信頼され、推定値10.48はLiDARの10.6寄り。融合後の分散0.8は、<b>単独最良のLiDAR(1)よりもさらに小さい</b> — 精度の低いレーダーでも情報は足しになる。</p>
+<h4 class="alt">ポイント</h4>
+<p>「精度は加算される」\(1/V=1/R_1+1/R_2\) がセンサフュージョンの基本原理です(問9.1の最適重みの一般形)。前提は誤差の<b>独立性</b>:相関があれば効果は問5.5のとおり目減りし、共通バイアス(外部パラメータのずれ等)は融合では消えません。原理の異なるセンサを組み合わせる工学的理由がここにもあります。</p>
+</section>
+
+<section class="sol" id="a15-3">
+<div class="phead"><span class="pnum">解 15.3</span><span class="lv lv2">★★</span><span class="ptag">スカラーKFを2ステップ回す</span></div>
+<h4>方針</h4>
+<p>「予測:\(P^-=P+Q\)(\(a=1\))→ 更新:\(K,\ \hat x,\ P\)」を2周する。分数で正確に。</p>
+<h4>解答</h4>
+<p><b>時刻1</b>:予測 \(\hat{x}^-=0\)、\(P^-=10+1=11\)。</p>
+<p>\[K_1=\frac{11}{11+2}=\frac{11}{13}\approx0.846\]</p>
+<p>\[\hat{x}_1=0+\frac{11}{13}(3.0-0)=\frac{33}{13}\approx2.538,\qquad P_1=\left(1-\frac{11}{13}\right)\times11=\frac{22}{13}\approx1.692\]</p>
+<p><b>時刻2</b>:予測 \(\hat{x}^-=\hat{x}_1\)、\(P^-=\dfrac{22}{13}+1=\dfrac{35}{13}\approx2.692\)。</p>
+<p>\[K_2=\frac{35/13}{35/13+2}=\frac{35}{61}\approx0.574\]</p>
+<p>\[\hat{x}_2=\frac{33}{13}+\frac{35}{61}\left(3.6-\frac{33}{13}\right)\approx2.538+0.574\times1.062\approx3.148,\qquad P_2=\left(1-\frac{35}{61}\right)\frac{35}{13}=\frac{70}{61}\approx1.148\]</p>
+<h4 class="alt">ポイント</h4>
+<p>数値の物語を読みましょう:初期の無知(\(P_0=10\))ゆえ最初は観測を強く信じ(\(K_1=0.85\))、1回の観測で分散は \(10\to1.7\) と激減。2周目は信念が育ったのでゲインが下がり(\(0.57\))、推定は予測と観測の中間に落ち着く。分散は予測で \(+Q\) 増え、更新で \((1-K)\) 倍に減る — この収支が定常値(問15.6)へ向かいます。</p>
+</section>
+
+<section class="sol" id="a15-4">
+<div class="phead"><span class="pnum">解 15.4</span><span class="lv lv2">★★</span><span class="ptag">カルマンゲインの意味</span></div>
+<h4>方針</h4>
+<p>\(K=P^-/(P^-+R)\) の極限を読む。</p>
+<h4>解答</h4>
+<p>(1) \(P^-\gg R\)(予測が観測よりずっと不確か)のとき \(K\to1\):更新は \(\hat{x}\approx y\)、すなわち観測をほぼ丸ごと採用する。初期化直後や長い観測断の後がこの状態。</p>
+<p>(2) \(P^-\ll R\)(予測の方がずっと確か)のとき \(K\to0\):観測をほぼ無視し、\(\hat{x}\approx\hat{x}^-\)。ノイズだらけのセンサに信念を荒らされない。</p>
+<p>(3) \(K_1=0.85\to K_2=0.57\):最初は無知ゆえ観測重視、学ぶにつれ予測(蓄積した情報)の比重が増えた — ゲインは「予測と観測の信頼度の配分比」を毎時刻自動調整するダイヤルである。</p>
+<h4 class="alt">ポイント</h4>
+<p>ゲインの式は融合公式(問15.2)の \(k\) 側の重み \(\dfrac{1/R}{1/P^-+1/R}=\dfrac{P^-}{P^-+R}\) と同一 — 更新とは「予測という名のセンサ」と「実センサ」の融合です。実務では、イノベーション \(y-\hat x^-\) が \(S=P^-+R\) に照らして大きすぎる観測を棄却する(外れ値ゲート、問12.8の思想)など、この枠組みの上に安全装置を足します。</p>
+</section>
+
+<section class="sol" id="a15-5">
+<div class="phead"><span class="pnum">解 15.5</span><span class="lv lv2">★★</span><span class="ptag">観測が来ないとき</span></div>
+<h4>方針</h4>
+<p>更新なしで予測 \(P\leftarrow a^2P+Q\) を5回。\(a=1\) なら等差、\(|a|<1\) なら等比の混合。</p>
+<h4>解答</h4>
+<p>\(a=1\) なら \(P\leftarrow P+Q\) の繰り返しで、5周期後は</p>
+<p>\[P=1+5\times0.5=3.5\]</p>
+<p>一般に \(a=1\)(ランダムウォーク)では分散は \(Q\) ずつ<b>線形に増え続け</b>、上限がない — 観測断が長引くほど推定は際限なく劣化する。一方 \(|a|<1\)(平衡点へ戻る減衰系)では \(P\leftarrow a^2P+Q\) は不動点 \(\dfrac{Q}{1-a^2}\) に収束し、観測がなくても不確かさは頭打ちになる(ダイナミクス自体が情報を持つ)。</p>
+<h4 class="alt">ポイント</h4>
+<p>GPS断(トンネル・ビル陰)でのデッドレコニングの誤差成長がまさにこの計算です。線形成長といっても標準偏差では \(\sqrt{Qt}\) — ランダムウォークの \(\sqrt{t}\) 拡散(第7章の \(\sqrt n\))が再登場しています。復帰後の最初の観測では \(P^-\) が大きい分ゲインが跳ね上がり、素早く引き戻される(問15.4 (1))ところまでがワンセットの挙動です。</p>
+</section>
+
+<section class="sol" id="a15-6">
+<div class="phead"><span class="pnum">解 15.6</span><span class="lv lv3">★★★</span><span class="ptag">定常ゲイン(リカッチ方程式)</span></div>
+<h4>方針</h4>
+<p>予測と更新を1本の漸化式に合成し、不動点 \(P_{t}=P_{t-1}=P_\infty\) を解く。</p>
+<h4>解答</h4>
+<p>(1) \(P^-=P_{t-1}+Q\)、更新後 \(P_t=(1-K)P^-=\dfrac{R}{P^-+R}P^-\) より</p>
+<p>\[P_t=\frac{(P_{t-1}+Q)R}{P_{t-1}+Q+R}\]</p>
+<p>(2) \(P_\infty(P_\infty+Q+R)=(P_\infty+Q)R\) を展開して \(P_\infty^2+QP_\infty-QR=0\)。\(Q=1,R=2\) で \(P_\infty^2+P_\infty-2=0\)、正の解は</p>
+<p>\[P_\infty=\frac{-1+\sqrt{1+8}}{2}=1\]</p>
+<p>(3) \(P^-_\infty=P_\infty+Q=2\) より</p>
+<p>\[K_\infty=\frac{2}{2+2}=0.5\]</p>
+<p>問15.3では \(K_1=0.846\to K_2=0.574\) と、確かに \(0.5\) へ向かって減衰している。</p>
+<h4 class="alt">ポイント</h4>
+<p>「予測で増える分」と「更新で減る分」が釣り合う点が定常分散で、この不動点方程式が(離散代数)<b>リカッチ方程式</b>の最小例です。定常ゲインは初期値によらず決まるので、計算資源の乏しい組み込みでは \(K_\infty\) を事前計算して固定する設計(α-βフィルタ)も定番。KFと最適制御(LQR)が同じリカッチ方程式で結ばれている、という双対性は制御理論への入口です。</p>
+</section>
+
+<section class="sol" id="a15-7">
+<div class="phead"><span class="pnum">解 15.7</span><span class="lv lv3">★★★</span><span class="ptag">2次元KF — 見ていない速度が直る</span></div>
+<h4>方針</h4>
+<p>行列版の式に代入して丁寧に。\(H=(1\ 0)\) なので \(S\) はスカラー、\(K\) は2×1。</p>
+<h4>解答</h4>
+<p>(1) \(\hat{\boldsymbol{x}}^-=F(0,1)^{\mathsf T}=(1,\ 1)^{\mathsf T}\)(位置は速度分進む)。</p>
+<p>\[P^-=FP_0F^{\mathsf T}+Q=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}\begin{pmatrix}2&amp;0\\0&amp;1\end{pmatrix}\begin{pmatrix}1&amp;0\\1&amp;1\end{pmatrix}+\begin{pmatrix}0&amp;0\\0&amp;0.5\end{pmatrix}=\begin{pmatrix}3&amp;1\\1&amp;1.5\end{pmatrix}\]</p>
+<p>(位置の分散は \(2+1=3\) に増え、位置と速度に相関1が生まれた:速度が大きめなら位置も進みすぎているはず、という結びつき。)</p>
+<p>(2) \(S=HP^-H^{\mathsf T}+R=P^-_{11}+R=3+1=4\)。</p>
+<p>\[K=P^-H^{\mathsf T}S^{-1}=\frac{1}{4}\begin{pmatrix}3\\1\end{pmatrix}=\begin{pmatrix}0.75\\0.25\end{pmatrix}\]</p>
+<p>(3) イノベーションは \(y_1-H\hat{\boldsymbol{x}}^-=1.4-1=0.4\)。</p>
+<p>\[\hat{\boldsymbol{x}}=\begin{pmatrix}1\\1\end{pmatrix}+0.4\begin{pmatrix}0.75\\0.25\end{pmatrix}=\begin{pmatrix}1.3\\1.1\end{pmatrix},\qquad P=(I-KH)P^-=\begin{pmatrix}0.75&amp;0.25\\0.25&amp;1.25\end{pmatrix}\]</p>
+<p>観測したのは位置だけなのに、速度の推定も \(1\to1.1\) に修正された。理由は \(P^-\) の非対角成分(相関)にある:「予測より位置が進んでいた(+0.4)」という証拠は、相関を通じて「速度も想定よりやや大きい」ことを示唆する。ゲインの第2成分 \(K_2=P^-_{21}/S=0.25\) がその換算係数で、相関が0ならこの成分は0になり速度は動かない。</p>
+<h4 class="alt">ポイント</h4>
+<p>「<b>見えない成分は、相関を介して観測から学ぶ</b>」— これが多次元KFの真価です。位置観測だけから速度・加速度・ジャイロバイアスまで推定できる(可観測性が満たす限り)のはこの仕組みで、GPS+IMU統合やトラッキング(位置観測から速度を推定して次を予測)の核心です。条件付き分布 \(N(\rho x,\ 1-\rho^2)\)(問5.8)の「相関があるほど情報が流れる」がベクトルで動いている、と読めます。</p>
+</section>
+
+<section class="sol" id="a15-8">
+<div class="phead"><span class="pnum">解 15.8</span><span class="lv lv3">★★★</span><span class="ptag">3つの顔の同値性</span></div>
+<h4>方針</h4>
+<p>それぞれ独立に解いて同じ式に着地させる。(1) は第13章の公式、(2) は2次関数の最小化、(3) は微分=0。</p>
+<h4>解答</h4>
+<p>(1) <b>ベイズ</b>:事前 \(N(\hat x^-,P^-)\)、尤度 \(N(x,R)\) の正規–正規更新(問13.4)より、事後平均は精度重み付き平均</p>
+<p>\[\hat{x}=\frac{\hat{x}^-/P^-+y/R}{1/P^-+1/R}=\frac{R\,\hat{x}^-+P^-y}{P^-+R}=\hat{x}^-+\frac{P^-}{P^-+R}(y-\hat{x}^-)\]</p>
+<p>(2) <b>最小分散</b>:\(f(k)=(1-k)^2P^-+k^2R\) は下に凸で、\(f'(k)=-2(1-k)P^-+2kR=0\) より</p>
+<p>\[k^*=\frac{P^-}{P^-+R}=K\]</p>
+<p>(このとき最小分散は \(f(K)=\dfrac{P^-R}{P^-+R}=(1-K)P^-\) — 更新式の \(P\) と一致。)</p>
+<p>(3) <b>正則化つき最小二乗</b>:目的関数を \(x\) で微分して</p>
+<p>\[\frac{2(x-\hat{x}^-)}{P^-}-\frac{2(y-x)}{R}=0\iff x\left(\frac{1}{P^-}+\frac1R\right)=\frac{\hat{x}^-}{P^-}+\frac{y}{R}\]</p>
+<p>これは (1) と同じ精度重み付き平均。3つの導出がすべて \(\hat{x}=\hat{x}^-+K(y-\hat{x}^-)\)、\(K=\dfrac{P^-}{P^-+R}\) に一致する。</p>
+<h4 class="alt">ポイント</h4>
+<p>カルマンフィルタは、(a) ガウスの下での厳密なベイズフィルタ(HMMの連続版、問14.9)、(b) 線形不偏推定の中の最小分散(ガウスでなくても最良線形)、(c) 逐次最小二乗(正則化項=事前信念)という3つの理論の交差点にいます。だからこそ、仮定が多少崩れても「そこそこ最良」に働き、60年以上たった今も現役です。非線形への拡張(EKF/UKF)や、\(E[x\mid y]\) を最良予測とする根拠(問6.9)まで、本書の総決算と呼べる定理でした。</p>
+</section>
+
+
+<header class="chap" id="ch16">
+<p class="chnum">第16章</p>
+<h2>情報理論の基礎 — 解答解説</h2>
+<p class="chsub">不確かさを情報量で測る</p>
+</header>
+
+<section class="sol" id="a16-1">
+<div class="phead"><span class="pnum">解 16.1</span><span class="lv lv1">★</span><span class="ptag">エントロピーの計算</span></div>
+<h4>方針</h4>
+<p>定義 \(H=-\sum p\log_2 p\) に代入するだけ。</p>
+<h4>解答</h4>
+<p>(1) \[h(0.9)=-0.9\log_20.9-0.1\log_20.1=0.9\times0.152+0.1\times3.322=0.137+0.332=0.469\ \text{ビット}\]</p>
+<p>(2) 公正なコイン:\(h(0.5)=1\) ビット。4値一様:\(H=\log_24=2\) ビット。</p>
+<p>(3) \(0.469<1<2\)。表が9割と分かっているコインは「ほぼ予想がつく」ので不確かさが小さく、結果を知って得られる情報も平均的に少ない。選択肢が多く等確率なほど不確かさは大きい。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(-\log_2p\) は「確率 \(p\) の事象が起きたと知ったときの驚き(ビット)」で、エントロピーはその平均です。まれな事象ほど情報が大きい(問1.5のまれな一致、問2.6の警報)という直感が、対数で定量化されました。\(h(p)\) のグラフ(\(p=1/2\) で山)は本章で3回登場する主役関数です。</p>
+</section>
+
+<section class="sol" id="a16-2">
+<div class="phead"><span class="pnum">解 16.2</span><span class="lv lv1">★</span><span class="ptag">エントロピーと符号長</span></div>
+<h4>方針</h4>
+<p>各記号の \(-\log_2p\) がちょうど整数になる分布 — 符号長をそれに合わせると平均が \(H\) に一致する。</p>
+<h4>解答</h4>
+<p>(1) \[H=\frac12\cdot1+\frac14\cdot2+\frac18\cdot3+\frac18\cdot3=0.5+0.5+0.375+0.375=1.75\ \text{ビット}\]</p>
+<p>(2) 平均符号長 \(\bar{L}=\frac12\cdot1+\frac14\cdot2+\frac18\cdot3+\frac18\cdot3=1.75\) ビット。\(\bar{L}=H\) で一致(固定長なら2ビット必要なところを0.25ビット節約)。</p>
+<p>(3) 情報源符号化定理により、どんな一意復号可能な符号でも平均長は \(H\) 未満にできない。よって \(H\) は「この情報源を平均何ビットで表せるか」の理論限界であり、本問の符号(ハフマン符号)はそれを達成している。頻出記号に短い符号を割り当てる、という圧縮の原理が数式で保証された形である。</p>
+<h4 class="alt">ポイント</h4>
+<p>各確率が \(2^{-\ell}\) 型のときは限界ぴったりに達成でき、一般の分布でもハフマン符号で \(H\le\bar L&lt;H+1\)、ブロック化や算術符号で限界に迫れます。ZIP・PNG・JPEGのエントロピー符号段はこの理論の実装であり、「画像のエントロピー」を測ることが圧縮率の見積もりになる — 確率分布が工学量に直結する好例です。</p>
+</section>
+
+<section class="sol" id="a16-3">
+<div class="phead"><span class="pnum">解 16.3</span><span class="lv lv2">★★</span><span class="ptag">KLダイバージェンス</span></div>
+<h4>方針</h4>
+<p>定義に代入。log の中身は「真/モデル」の比。</p>
+<h4>解答</h4>
+<p>\[D(p\,\|\,q)=0.5\log_2\frac{0.5}{0.9}+0.5\log_2\frac{0.5}{0.1}=0.5(-0.848)+0.5(2.322)=0.737\ \text{ビット}\]</p>
+<p>\[D(q\,\|\,p)=0.9\log_2\frac{0.9}{0.5}+0.1\log_2\frac{0.1}{0.5}=0.9(0.848)+0.1(-2.322)=0.531\ \text{ビット}\]</p>
+<p>\(0.737\neq0.531\) で非対称。\(D(p\,\|\,q)\) は「真実は \(p\) なのに \(q\) を信じて符号化・予測したときの平均的な損(余分なビット数)」。\(p\) では半々に起こる事象の片方を \(q\) が確率0.1としか見ていないため、その事象が起こるたび大きく驚かされ、損が大きい。\(D(q\,\|\,p)\) は役割を入れ替えた損で、別の量である。</p>
+<h4 class="alt">ポイント</h4>
+<p>KLは「距離」と呼ばれがちですが、対称性も三角不等式も満たしません。どちら向きを使うかで最適化の性格も変わります(機械学習では \(D(\text{真}\,\|\,\text{モデル})\) の最小化=最尤が基本、変分推論では逆向きも使う)。「モデルが小さい確率を割り当てた事象が実際に起こると大損」という非対称の感覚は、まれな事象のモデリング(問2.6)の重要性ともつながります。</p>
+</section>
+
+<section class="sol" id="a16-4">
+<div class="phead"><span class="pnum">解 16.4</span><span class="lv lv2">★★</span><span class="ptag">ギブスの不等式</span></div>
+<h4>方針</h4>
+<p>\(-D\) を \(\ln\) に直し、\(\ln x\le x-1\) を \(x=q/p\) に適用する。</p>
+<h4>解答</h4>
+<p>\(p(x)>0\) の点だけ和を取る。\(\ln\dfrac{q(x)}{p(x)}\le\dfrac{q(x)}{p(x)}-1\) より</p>
+<p>\[-D(p\,\|\,q)\ln2=\sum_x p(x)\ln\frac{q(x)}{p(x)}\le\sum_x p(x)\left(\frac{q(x)}{p(x)}-1\right)=\sum_x q(x)-\sum_x p(x)\le1-1=0\]</p>
+<p>よって \(D(p\,\|\,q)\ge0\)。等号には各点で \(\ln(q/p)=q/p-1\)、すなわち \(q(x)=p(x)\)(全点)が必要で、逆にそのとき \(D=0\)。</p>
+<p>系:\(q\) を一様分布(各 \(1/m\))とすると</p>
+<p>\[0\le D(p\,\|\,\text{一様})=\sum p(x)\log_2\bigl(m\,p(x)\bigr)=\log_2m-H(p)\]</p>
+<p>ゆえに \(H(p)\le\log_2m\)、等号は \(p\) が一様のとき — エントロピーは等確率で最大。</p>
+<h4 class="alt">ポイント</h4>
+<p>証明の心臓は \(\ln\) の凸性(接線 \(x-1\) の下にある)で、イェンセンの不等式の1回分に相当します。この非負性1本から、\(H\) の最大性、相互情報量の非負性(\(I=D\ge0\))、クロスエントロピーの下限(次問)がすべて系として落ちる — 情報理論の不等式群の「親」となる補題です。</p>
+</section>
+
+<section class="sol" id="a16-5">
+<div class="phead"><span class="pnum">解 16.5</span><span class="lv lv2">★★</span><span class="ptag">クロスエントロピー損失</span></div>
+<h4>方針</h4>
+<p>1標本の損失は正解確率の \(-\log_2\)。(2) は問16.3の値を使って分解を数値検算。</p>
+<h4>解答</h4>
+<p>(1) \(-\log_20.7=0.515\) ビット。\(-\log_20.99=0.014\)(自信を持って正解:損失ほぼ0)、\(-\log_20.5=1\)(当てずっぽう:1ビットの損)。正解確率が低いほど損失は急増する(\(\to0\) で \(\to\infty\):「絶対違う」と断言して外すと無限の罰)。</p>
+<p>(2) \[H(p,q)=-0.5\log_20.9-0.5\log_20.1=0.5(0.152)+0.5(3.322)=1.737\ \text{ビット}\]</p>
+<p>一方 \(H(p)+D(p\,\|\,q)=1+0.737=1.737\) で一致。</p>
+<p>(3) 分解 \(H(p,q)=H(p)+D(p\,\|\,q)\) の第1項 \(H(p)\) はデータ固有の不確かさでモデルによらない。よって \(q\) についてクロスエントロピーを最小化することは \(D(p\,\|\,q)\) の最小化(モデルを真の分布へ近づけること)と同じ。さらに、経験分布に対するクロスエントロピーは \(-\frac1n\sum\log_2 q(x_i)\)、すなわち<b>負の対数尤度</b>(の定数倍)なので、その最小化は最尤推定(第9章)と一致する。</p>
+<h4 class="alt">ポイント</h4>
+<p>ニューラルネット分類器の標準損失は、「モデル分布と真の分布のKLを、標本を通して最小化=最尤法」の実装でした。第9章(最尤)と第16章(情報量)がここで握手します。損失の値にも意味があり、\(\log_2\) 換算で「1標本あたり平均何ビット外しているか」と読めます(\(\ln\) を使う実装なら nat 単位)。</p>
+</section>
+
+<section class="sol" id="a16-6">
+<div class="phead"><span class="pnum">解 16.6</span><span class="lv lv3">★★★</span><span class="ptag">二元対称通信路の容量</span></div>
+<h4>方針</h4>
+<p>入力等確率のときの \(I(X;Y)\) を計算する(BSCでは等確率入力が最適)。</p>
+<h4>解答</h4>
+<p>(1) \(C=1-h(0.1)=1-0.469=0.531\) ビット/使用。</p>
+<p>(2) 入力 \(X\) を等確率とする。対称性より出力も \(P(Y=0)=P(Y=1)=\frac12\)(例:\(P(Y=0)=\frac12(1-p)+\frac12p=\frac12\))なので \(H(Y)=1\)。また \(X\) を固定すると \(Y\) は「確率 \(p\) で反転」だけが残る不確かさなので、どちらの \(x\) でも \(H(Y\mid X=x)=h(p)\)、ゆえに \(H(Y\mid X)=h(p)\)。したがって</p>
+<p>\[I(X;Y)=H(Y)-H(Y\mid X)=1-h(p)\]</p>
+<p>入力分布の中でこれが最大(\(H(Y)\le1\) の上限を達成)なので容量は \(C=1-h(p)\)。</p>
+<p>(3) シャノンの定理は「レート \(&lt;C=0.531\) なら、十分長い符号で誤り率をいくらでも小さくできる。\(>C\) は不可能」と主張する。問2.10の3回繰り返し符号はレート \(1/3\approx0.333&lt;C\) だが誤り率は0.028止まりで、繰り返しを増やすとレートが0に向かってしまう。定理は「レートを0.53近くに保ったまま誤りをほぼ0にできる符号が存在する」と言っており、現代のLDPC符号・ポーラ符号(5G等で実用)がそれをほぼ達成している。素朴な冗長化と情報理論的限界のギャップを埋めたのが符号理論の歴史である。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(I(X;Y)=H(Y)-H(Y\mid X)\) は「出力の不確かさのうち、入力を知っても残る分(ノイズ由来 \(h(p)\))を引いた、通信で運べた正味の情報」という読みです。\(p=1/2\) で \(C=0\)(完全なコイン投げ通信路は何も運べない)、\(p=0\) または \(1\) で \(C=1\)(確定反転は復号できるので無害)という両端の値も、この式の健全性チェックとして確認する価値があります。</p>
+</section>
+
+<section class="sol" id="a16-7">
+<div class="phead"><span class="pnum">解 16.7</span><span class="lv lv3">★★★</span><span class="ptag">相互情報量と画像レジストレーション</span></div>
+<h4>方針</h4>
+<p>周辺はどちらも \((0.5,0.5)\)。定義 \(I=\sum p\log_2\dfrac{p}{p_Xp_Y}\) に4マスを代入。</p>
+<h4>解答</h4>
+<p>(1) 周辺は \(P(X=0)=P(X=1)=0.5\)、\(Y\) も同じ。独立なら各マス \(0.25\) のはずなので</p>
+<p>\[I(X;Y)=2\times0.4\log_2\frac{0.4}{0.25}+2\times0.1\log_2\frac{0.1}{0.25}=0.8\log_21.6+0.2\log_20.4\]</p>
+<p>\[=0.8\times0.678+0.2\times(-1.322)=0.542-0.264=0.278\ \text{ビット}\]</p>
+<p>(2) 独立なら定義よりすべての \(\log\) の中身が1で \(I=0\)。</p>
+<p>(3) 正しく重なった位置では、一方の輝度を知ると他方の予想が絞れる(共有情報が大きい)ため \(I\) が大きく、ずれると対応が壊れて \(I\to0\)。そこで「\(I\) が最大になる変位・変形を探す」ことが位置合わせの規準になる。相互情報量は<b>関係の形を仮定しない</b>:可視光とサーモグラフィのように輝度の対応が非線形・非単調でも(暑い物が明るいとは限らない)、「対応の規則性」さえあれば検出できる。相関係数は直線的関係しか測れず(問5.4)、モダリティ間で符号が反転するだけで破綻する — MI基準がマルチモーダル医用画像・センサ画像の位置合わせの標準になった理由である。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(I(X;Y)=D\bigl(p(x,y)\,\|\,p(x)p(y)\bigr)\) — 「同時分布が独立からどれだけ離れているか」が依存の普遍的な物差しです。実装ではヒストグラムから同時分布を推定して \(I\) を評価し、勾配法や探索で最大化します。特徴選択(ラベルとの \(I\) が大きい特徴を選ぶ)、決定木の情報利得など、機械学習でも同じ量が働いています。</p>
+</section>
+
+
+<header class="chap" id="ch17">
+<p class="chnum">第17章</p>
+<h2>信頼性工学の確率モデル — 解答解説</h2>
+<p class="chsub">故障率・冗長設計・安全の定量化</p>
+</header>
+
+<section class="sol" id="a17-1">
+<div class="phead"><span class="pnum">解 17.1</span><span class="lv lv1">★</span><span class="ptag">FITとMTTF</span></div>
+<h4>方針</h4>
+<p>\(1\ \mathrm{FIT}=10^{-9}\)/時間。一定故障率なので指数分布の公式で。</p>
+<h4>解答</h4>
+<p>(1) \(\lambda=100\times10^{-9}=10^{-7}\)/時間。MTTF \(=1/\lambda=10^7\) 時間(約1140年)。</p>
+<p>(2) \(P(T\le8760)=1-e^{-10^{-7}\times8760}=1-e^{-0.000876}\approx8.76\times10^{-4}\)(約0.088%)。</p>
+<p>(3) \(10^5\times8.76\times10^{-4}\approx88\) 台。</p>
+<h4 class="alt">ポイント</h4>
+<p>MTTF「1140年」は個体が千年もつという意味ではなく、<b>大集団での故障ペース</b>の逆数です(問4.7の平均の読み違いに注意)。実際、10万台の艦隊では年88台 — 個体ではまれでも母数が大きいと確実に起こる(問3.7の「大量×まれ」)。\(\lambda t\ll1\) では \(1-e^{-\lambda t}\approx\lambda t\) の近似が便利で、(2) はほぼ \(10^{-7}\times8760\) です。</p>
+</section>
+
+<section class="sol" id="a17-2">
+<div class="phead"><span class="pnum">解 17.2</span><span class="lv lv1">★</span><span class="ptag">直列系</span></div>
+<h4>方針</h4>
+<p>直列=全員生存の積。指数分布なら指数部が足し算=故障率の加算。</p>
+<h4>解答</h4>
+<p>(1) \[R_{\text{sys}}(t)=e^{-\lambda_1t}e^{-\lambda_2t}e^{-\lambda_3t}=e^{-(\lambda_1+\lambda_2+\lambda_3)t}\]</p>
+<p>より故障率は加算されて \(100+50+50=200\) FIT。</p>
+<p>(2) \(\lambda=2\times10^{-7}\)/時間、\(R(8760)=e^{-2\times10^{-7}\times8760}=e^{-0.00175}\approx0.99825\)。</p>
+<p>(3) MTTF \(=1/\lambda=5\times10^6\) 時間。</p>
+<h4 class="alt">ポイント</h4>
+<p>「故障率はFITのまま足せる」— 部品表から系全体の故障率を積み上げる<b>故障率予測</b>の基本操作です(独立性が前提;共通原因は問2.7)。直列系は「最弱リンク」で決まり、部品点数が増えるほど故障率は線形に悪化する。だからこそ重要機能には次問の冗長化を投じます。なお \(\min\) の分布が \(\mathrm{Exp}(\sum\lambda_i)\) になる話(問14.8)と同じ数学です。</p>
+</section>
+
+<section class="sol" id="a17-3">
+<div class="phead"><span class="pnum">解 17.3</span><span class="lv lv2">★★</span><span class="ptag">並列冗長と多数決(TMR)</span></div>
+<h4>方針</h4>
+<p>並列=「全滅」の余事象。TMRは二項分布 \(B(3,R)\) で「2以上正常」。</p>
+<h4>解答</h4>
+<p>(1) \(R_{\text{par}}=1-(1-0.99)^2=1-10^{-4}=0.9999\)。</p>
+<p>(2) 正常系統数は \(B(3,R)\)。2oo3が機能するのは正常が2または3のときで</p>
+<p>\[R_{\mathrm{TMR}}=\binom{3}{2}R^2(1-R)+R^3=3R^2-2R^3\]</p>
+<p>\(R=0.99\) で \(3(0.9801)-2(0.970299)=0.999702\)。</p>
+<p>(3) \[R_{\mathrm{TMR}}-R=3R^2-2R^3-R=-R(2R^2-3R+1)=R(1-R)(2R-1)\]</p>
+<p>\(0&lt;R<1\) では \(R(1-R)>0\) なので符号は \(2R-1\) で決まり、\(R>\dfrac12\) のとき正。すなわち各系統が「当たる方が多い」限りで多数決は単独に勝ち、\(R<1/2\) では逆に劣化する。</p>
+<h4 class="alt">ポイント</h4>
+<p>TMRは故障を<b>隠して動き続ける</b>(フェイルオペレーショナル)構成で、投票回路が単一故障点にならない設計が肝です。並列(0.9999)よりTMR(0.9997)が下なのは、TMRが「2重故障で即死」なぶん条件が厳しいから — その代わり故障系統の特定(どれが少数派か)ができる。多数決の \(R>1/2\) 条件は、問2.10の反復送信と同じ構造(コンドルセの陪審定理)である点も味わいどころです。</p>
+</section>
+
+<section class="sol" id="a17-4">
+<div class="phead"><span class="pnum">解 17.4</span><span class="lv lv2">★★</span><span class="ptag">ワイブル分布とB10寿命</span></div>
+<h4>方針</h4>
+<p>\(R(t)=0.9\) を \(t\) について解く。ハザードは \(-(\ln R)'\)。</p>
+<h4>解答</h4>
+<p>(1) \(\exp\left(-\left(\dfrac{t}{\eta}\right)^2\right)=0.9\iff\left(\dfrac{t}{\eta}\right)^2=-\ln0.9=0.105\)。</p>
+<p>\[t_{B10}=10^4\sqrt{0.105}\approx3.25\times10^3\ \text{時間}\]</p>
+<p>(2) \(\ln R(t)=-\left(\dfrac{t}{\eta}\right)^m\) より</p>
+<p>\[\lambda(t)=-\frac{d}{dt}\ln R(t)=\frac{m}{\eta}\left(\frac{t}{\eta}\right)^{m-1}\]</p>
+<p>(\(m=2\) なら故障率は時間に比例して増える:使うほど壊れやすい。)</p>
+<p>(3) \(m<1\):故障率が減少 — 初期故障期(弱い個体が先に脱落;スクリーニングで除く)。\(m=1\):一定 — 偶発故障期(指数分布;本章前半の世界)。\(m>1\):増加 — 摩耗故障期(疲労・摩耗;予防交換が有効)。この3領域をつないだ形がバスタブ曲線である。</p>
+<h4 class="alt">ポイント</h4>
+<p>ワイブル分布は「\(m\) というダイヤル1つでバスタブの各領域を表せる」柔軟さで寿命解析の標準です(\(\ln(-\ln R)\) 対 \(\ln t\) が直線になるワイブルプロットで \(m,\eta\) をデータから推定)。B10のような分位点寿命は、平均(MTTF)よりも保証・保全計画に直結する量 — 「10%が壊れる前に交換する」予防保全の設計値です。指数分布(無記憶)を摩耗部品に使ってはいけない理由(問4.6)の、実務側の受け皿がここにあります。</p>
+</section>
+
+<section class="sol" id="a17-5">
+<div class="phead"><span class="pnum">解 17.5</span><span class="lv lv2">★★</span><span class="ptag">コールドスタンバイ</span></div>
+<h4>方針</h4>
+<p>主系の故障→予備の故障、と「一定レート \(\lambda\) のイベント」が2回起こって初めてシステム故障。時刻 \(t\) までのイベント数は \(\mathrm{Po}(\lambda t)\)。</p>
+<h4>解答</h4>
+<p>(1) 主系稼働中も(切替後の)予備稼働中も、故障は常にレート \(\lambda\) で起こる。よって「時刻 \(t\) までの故障イベント数 \(N(t)\)」は強度 \(\lambda\) のポアソン過程に従い、システムが生きている ⟺ \(N(t)\le1\)。</p>
+<p>\[R(t)=P(N(t)\le1)=e^{-\lambda t}+\lambda t\,e^{-\lambda t}=e^{-\lambda t}(1+\lambda t)\]</p>
+<p>(2) \(\lambda t=1\) なので \(R_{\text{cold}}=2e^{-1}\approx0.736\)。ホットスタンバイは \(R_{\text{hot}}=2e^{-1}-e^{-2}\approx0.600\)。コールドの方が13ポイント以上高い(待機中は消耗しないため)。</p>
+<p>(3) MTTFは、コールドが「寿命2本分」で \(2/\lambda\)、ホットは \(\int_0^\infty(2e^{-\lambda t}-e^{-2\lambda t})dt=\dfrac2\lambda-\dfrac1{2\lambda}=\dfrac{1.5}{\lambda}\)。コールドが優れるが、実際には<b>切替の検知・起動が失敗する確率</b>や待機中の潜在故障があり、理想値どおりにはならない。切替機構の信頼性と故障検知率(診断カバレッジ)込みで評価するのが実務である。</p>
+<h4 class="alt">ポイント</h4>
+<p>「\(k\) 個目の故障までの時間=指数の和=ガンマ分布(アーラン分布)」で、\(R(t)\) がポアソンの累積で書けるのはポアソン過程の計数と間隔の双対(問14.6)そのものです。コールド(温存)対ホット(即応)の選択は、切替時間・検知能力・消耗のトレードオフ — ブレーキの機械バックアップ、電源の二重化など、車載設計の定番論点です。</p>
+</section>
+
+<section class="sol" id="a17-6">
+<div class="phead"><span class="pnum">解 17.6</span><span class="lv lv3">★★★</span><span class="ptag">安全目標の実証に必要な走行時間</span></div>
+<h4>方針</h4>
+<p>3のルール \(T\ge\ln20/\lambda^*\approx3/\lambda^*\) に数値を入れる。桁を体感するのが目的。</p>
+<h4>解答</h4>
+<p>(1) \[T=\frac{\ln20}{10^{-8}}\approx\frac{3.0}{10^{-8}}=3\times10^8\ \text{時間}\]</p>
+<p>(この間、危険故障ゼロを観測して初めて「\(\lambda<10^{-8}\)/時間(信頼度95%)」と言える。)</p>
+<p>(2) 1台あたり年500時間なら、\(3\times10^8/500=6\times10^5\) 台・年。たとえば1万台の試験車でも60年、10万台でも6年かかる計算になる。</p>
+<p>(3) 極低故障率の直接実証は、時間・費用の点で単独では非現実的である。実務では:(a) 目標故障率を冗長構成の各系に<b>分配</b>し、各系はより緩い(実証可能な)水準で示す(独立2系なら \(10^{-4}\) 級×2で \(10^{-8}\) 級、ただし共通原因(問2.7)の管理が前提)。(b) 加速寿命試験(温度・振動ストレスで時間を圧縮)や部品レベルの故障率データの積み上げ(問17.2)。(c) 設計・製造プロセスの保証と診断カバレッジ、系統的故障への対策。(d) シナリオベースのシミュレーションによる補完。統計的実証は最後の確認であり、安全は設計で作り込むもの — というのが規格の思想である。</p>
+<h4 class="alt">ポイント</h4>
+<p>「事故ゼロの走行距離をどれだけ積めば安全と言えるか」という自動運転の有名な論点(RAND研究などで知られる)の骨格計算です。0件データは \(\lambda=0\) の証明にならない(問10.7)、必要時間は目標の逆数に比例して爆発する — この2点を数式で言えることが、安全性の議論に統計リテラシーが必須である理由です。</p>
+</section>
+
+<section class="sol" id="a17-7">
+<div class="phead"><span class="pnum">解 17.7</span><span class="lv lv3">★★★</span><span class="ptag">可用性と年間停止時間</span></div>
+<h4>方針</h4>
+<p>稼働と修復のサイクルで「動いている時間の割合」。冗長版は不稼働率の2乗。</p>
+<h4>解答</h4>
+<p>(1) \[A=\frac{1000}{1000+2}=0.99800\quad(\text{不稼働率 }1-A\approx2.0\times10^{-3})\]</p>
+<p>年間停止時間 \(=8760\times(1-A)\approx17.5\) 時間。</p>
+<p>(2) 不稼働率 \((1-A)^2\approx(2.0\times10^{-3})^2=4.0\times10^{-6}\)。年間停止は \(8760\times4.0\times10^{-6}\approx0.035\) 時間 \(\approx\) <b>2.1分</b>。1台の17.5時間から劇的に改善する(いわゆる「9の数」で二九(99%台)から五九(99.999%台)へ)。</p>
+<p>(3) \(1-A=\dfrac{\mathrm{MTTR}}{\mathrm{MTTF}+\mathrm{MTTR}}\approx\dfrac{\mathrm{MTTR}}{\mathrm{MTTF}}\)(MTTR \(\ll\) MTTF のとき)。不稼働率は比 MTTR/MTTF で決まるので、MTTFを2倍にするのもMTTRを半分にするのも同じ効果。壊れにくくする(信頼性)だけでなく、<b>早く直す</b>(保守性:検知・診断・交換の速さ)が同格の設計変数である。</p>
+<h4 class="alt">ポイント</h4>
+<p>可用性は「修復系」の中心指標で、データセンターのSLA(99.9%=年8.8時間、99.999%=年5.3分)の言葉です。(2) の2乗則は独立修復の近似で、修復要員の共有や共通原因で崩れます(ここでも問2.7)。信頼性(壊れない)・保守性(すぐ直る)・安全性(壊れ方が危なくない)は別の軸 — 3つを区別して要求を書くことが、システム設計の出発点になります。</p>
+</section>
+
+
+<header class="chap" id="ch18">
+<p class="chnum">第18章</p>
+<h2>測度論的確率論への入口 — 解答解説</h2>
+<p class="chsub">厳密さはなぜ必要か</p>
+</header>
+
+<section class="sol" id="a18-1">
+<div class="phead"><span class="pnum">解 18.1</span><span class="lv lv1">★</span><span class="ptag">σ-加法族の構成</span></div>
+<h4>方針</h4>
+<p>3条件(全体・補集合・可算和)を機械的に確認。最小のσ-加法族は「必要なものだけ足して閉じるまで」。</p>
+<h4>解答</h4>
+<p>(1) \(\{\emptyset,\Omega\}\):\(\Omega\) を含み、互いに補集合で、和も \(\emptyset\) か \(\Omega\)。○。\(2^\Omega\):全部あるので何をしても閉じる。○(それぞれ最小・最大のσ-加法族)。</p>
+<p>(2) \(\{1,2\}\) と、その補集合 \(\{3,4\}\)、および \(\emptyset,\Omega\) が必要。この4つで補集合・和が閉じることを確認できるので</p>
+<p>\[\sigma(\{1,2\})=\bigl\{\emptyset,\ \{1,2\},\ \{3,4\},\ \Omega\bigr\}\]</p>
+<p>(3) σ-加法族で<b>ない</b>。たとえば \(\{1\}\in\mathcal{F}\) の補集合 \(\{2,3,4\}\) は入っているが、\(\{1,2\}\) の補集合 \(\{3,4\}\) が入っていない。また \(\{1\}\cup\{1,2\}=\{1,2\}\) は良いが \(\{2,3,4\}\cap\{1,2\}=\{2\}\)(補集合と和から作れるはず)が欠けている — 閉じていない。</p>
+<h4 class="alt">ポイント</h4>
+<p>σ-加法族は「確率を割り当ててよい質問(事象)の目録」です。(2) のように、粗い目録は「\(\{1,2\}\) に入ったか」しか問えない=<b>情報の粗さ</b>を表す、という読み方が重要で、これが条件付き期待値の厳密な定義や、時間とともに増える情報(フィルトレーション、確率過程の基礎)の言語になります。実数上で「すべての部分集合」に一様な確率を与えることは実はできず(バナッハ・タルスキー的な病的集合)、ボレル集合族というσ-加法族に制限する — 目録が必要な本当の理由はここにあります。</p>
+</section>
+
+<section class="sol" id="a18-2">
+<div class="phead"><span class="pnum">解 18.2</span><span class="lv lv1">★</span><span class="ptag">測度の連続性と「いつかは起こる」</span></div>
+<h4>方針</h4>
+<p>増大列を「年輪」\(B_n=A_n\setminus A_{n-1}\) に切り分けると排反になり、可算加法性が使える。</p>
+<h4>解答</h4>
+<p>(1) \(B_1=A_1\)、\(B_n=A_n\setminus A_{n-1}\)(\(n\ge2\))は互いに排反で、\(\bigcup_{k\le n}B_k=A_n\)、\(\bigcup_k B_k=\bigcup_n A_n\)。可算加法性より</p>
+<p>\[P\!\left(\bigcup_n A_n\right)=\sum_{k=1}^{\infty}P(B_k)=\lim_{n\to\infty}\sum_{k=1}^{n}P(B_k)=\lim_{n\to\infty}P(A_n)\]</p>
+<p>(2) \(A_n\) は増大列で \(P(A_n)=1-(1-p)^n\)。「いつかは成功」\(=\bigcup_n A_n\) なので、(1) より</p>
+<p>\[P\!\left(\bigcup_n A_n\right)=\lim_n\bigl(1-(1-p)^n\bigr)=1\]</p>
+<h4 class="alt">ポイント</h4>
+<p>「極限と確率の順序交換」を正当化するのが連続性で、その源は公理の<b>可算</b>加法性です(有限加法性だけでは証明できない)。第1章で「なぜ公理 (iii) は無限列まで許すのか」と伏線を張った答えがこれ:無限の時間・無限の試行に関する主張(いつかは/無限回/収束する)を扱うための装備でした。幾何分布の \(P(X<\infty)=1\) が、いま初めて定理として着地しています。</p>
+</section>
+
+<section class="sol" id="a18-3">
+<div class="phead"><span class="pnum">解 18.3</span><span class="lv lv2">★★</span><span class="ptag">可算集合の確率は0</span></div>
+<h4>方針</h4>
+<p>1点を小区間で挟んで \(\varepsilon\to0\)。可算集合は「確率0の和(可算個)」。</p>
+<h4>解答</h4>
+<p>(1) 任意の \(\varepsilon>0\) で \(\{X=c\}\subseteq\{c-\varepsilon&lt;X\le c+\varepsilon\}\) だから \(P(X=c)\le2\varepsilon\)(区間の長さ)。\(\varepsilon\) は任意に小さくできるので \(P(X=c)=0\)。</p>
+<p>(2) 有理数は可算なので \(\mathbb{Q}\cap[0,1]=\{q_1,q_2,\dots\}\) と番号づけできる。可算加法性(と (1))より</p>
+<p>\[P(X\in\mathbb{Q}\cap[0,1])=\sum_{k=1}^{\infty}P(X=q_k)=\sum_{k=1}^{\infty}0=0\]</p>
+<p>(3) \([0,1]\) は<b>非可算</b>なので、「全体=各点の和」という分解は可算加法性の適用範囲外である。確率0の点を可算個集めても0のままだが、非可算個集めることについて公理は何も約束していない — だから「各点0・全体1」は矛盾しない。連続分布の確率は点の足し算ではなく、長さ(測度)で測るものである。</p>
+<h4 class="alt">ポイント</h4>
+<p>「一様乱数がぴったり有理数になる確率は0」— 稠密に(どこにでも)ある集合でも測度は0になりうる、という直感の更新です。さらに驚くべきことに、非可算でも測度0の集合(カントール集合)が存在します。「ほとんど確実に(almost surely)=確率1で」という言い回しは、こうした測度0の例外集合を許す表現で、次問以降の収束概念で主役になります。</p>
+</section>
+
+<section class="sol" id="a18-4">
+<div class="phead"><span class="pnum">解 18.4</span><span class="lv lv2">★★</span><span class="ptag">分布収束 ≠ 確率収束</span></div>
+<h4>方針</h4>
+<p>対称性で分布は不変。一方、実現値の差 \(|X_n-X|=2|X|\) は全然小さくない。</p>
+<h4>解答</h4>
+<p>(1) 標準正規は対称なので \(-X\sim N(0,1)\)。よってすべての \(n\) で \(X_n\) のCDFは \(\Phi\) そのもの — 定数列として当然 \(\Phi\) に収束するから、\(X_n\) は \(X\) に分布収束する。</p>
+<p>(2) \(|X_n-X|=|-2X|=2|X|\) より</p>
+<p>\[P(|X_n-X|>\varepsilon)=P\!\left(|X|>\frac{\varepsilon}{2}\right)=2\left(1-\Phi\!\left(\frac{\varepsilon}{2}\right)\right)>0\]</p>
+<p>これは \(n\) によらない正の定数で、0に収束しない。よって確率収束しない。</p>
+<p>(3) 分布収束は「ヒストグラムの形が同じになる」ことしか要求せず、\(X_n\) と \(X\) の<b>実現値が近い</b>ことは全く含意しない(本問では常に符号が逆!)。CLT(第7章)が与えるのはこの弱い意味の収束であり、「\(\bar X_n\) の値が \(Z\) の値に近づく」と読むのは誤り — 「\(\bar X_n\) の分布の形が正規に近づく」が正しい読みである。</p>
+<h4 class="alt">ポイント</h4>
+<p>収束概念の強弱:概収束 ⇒ 確率収束 ⇒ 分布収束(逆は不成立;本問が後段の反例、次問が前段の反例)。用途で使い分けます — 近似計算の正当化には分布収束(CLT)で十分、推定量の一致性は確率収束(大数の弱法則)、アルゴリズムの軌道1本の挙動には概収束(強法則)。「どの意味で収束か」を言えることが、大学院の確率の第一関門です。</p>
+</section>
+
+<section class="sol" id="a18-5">
+<div class="phead"><span class="pnum">解 18.5</span><span class="lv lv3">★★★</span><span class="ptag">タイプライター列</span></div>
+<h4>方針</h4>
+<p>「確率(区間の幅)は0に向かう」が「どの点も無限回踏まれる」— 集団の性質と軌道1本の性質のずれを見る。</p>
+<h4>解答</h4>
+<p>(1) 第 \(k\) 世代(幅 \(2^{-k}\) の区間 \(2^k\) 本)では \(P(X_n\neq0)=|I_n|=2^{-k}\)。\(n\to\infty\) で世代 \(k\to\infty\) だから \(P(|X_n-0|>\varepsilon)\le P(X_n\neq0)\to0\)(任意の \(\varepsilon\in(0,1)\))。よって \(X_n\to0\)(確率収束)。</p>
+<p>(2) 各世代の区間は \([0,1]\) を敷き詰めるので、どんな \(\omega\) も<b>各世代で必ず1回</b>どれかの区間に入る。したがって \(X_n(\omega)=1\) となる \(n\) が世代ごとに(無限個)存在し、数列 \(X_n(\omega)\) は0と1を無限に往復して収束しない。収束する \(\omega\) が1つもないのだから \(P(X_n\to0)=0\neq1\):概収束しない(確率収束はするのに!)。</p>
+<h4 class="alt">ポイント</h4>
+<p>タイプライターのキャリッジのように区間が走るこの例は、「各時刻の失敗確率は0に向かう」のに「どの軌道も無限回失敗する」ことがありうる、という<b>集団と個の乖離</b>の決定版です。ずれの原因は失敗確率の減りが遅いこと:各世代の和が \(2^k\times2^{-k}=1\) で、\(\sum_nP(X_n\neq0)=\infty\)。もし和が収束すれば話は変わる — それが次問のボレル・カンテリです。</p>
+</section>
+
+<section class="sol" id="a18-6">
+<div class="phead"><span class="pnum">解 18.6</span><span class="lv lv3">★★★</span><span class="ptag">ボレル・カンテリの補題</span></div>
+<h4>方針</h4>
+<p>「無限個起こる」=「どのNから先にも起こる」を集合で書き、裾の和で押さえる。</p>
+<h4>解答</h4>
+<p>(1) \(C=\{A_n\text{ が無限個起こる}\}=\bigcap_{N\ge1}\bigcup_{n\ge N}A_n\)。\(U_N=\bigcup_{n\ge N}A_n\) は減少列で \(C=\bigcap_N U_N\)。測度の連続性(減少版)と劣加法性より</p>
+<p>\[P(C)=\lim_{N\to\infty}P(U_N)\le\lim_{N\to\infty}\sum_{n\ge N}P(A_n)=0\]</p>
+<p>(最後は収束級数の裾が0に向かうこと。)よって \(P(C)=0\)。</p>
+<p>(2) 任意の \(\varepsilon>0\) に対し \(A_n=\{|X_n-X|>\varepsilon\}\) とおくと \(\sum P(A_n)\le\sum C/n^2<\infty\)。補題より、確率1で \(A_n\) は有限個しか起こらない — すなわちある番号から先ずっと \(|X_n-X|\le\varepsilon\)。これが \(\varepsilon=1,\frac12,\frac13,\dots\)(可算個)すべてで成り立つ事象も確率1(確率0の例外の可算和は確率0)なので、確率1で \(X_n\to X\):概収束する。問18.5の列は \(\sum P(X_n\neq0)=\infty\)(各世代の和が1)なので、この十分条件を満たさない — 実際に概収束しなかったことと整合する。</p>
+<h4 class="alt">ポイント</h4>
+<p>ボレル・カンテリは「失敗確率の和が有限なら、失敗はいつか止む(確率1)」という、<b>概収束を作るほぼ唯一の初等的な道具</b>です。ヘフディングの不等式(問7.9)の指数的な裾 \(2e^{-2n\varepsilon^2}\) は和が収束するので、経験平均は概収束する — 大数の<b>強</b>法則がこのルートで(有界の場合に)証明できます。第7章の弱法則(確率収束)との違いが、ここでようやく言葉になりました。</p>
+</section>
+
+<section class="sol" id="a18-7">
+<div class="phead"><span class="pnum">解 18.7</span><span class="lv lv3">★★★</span><span class="ptag">特性関数とCLTの証明スケッチ</span></div>
+<h4>方針</h4>
+<p>(1) は存在の普遍性がすべて。(2) は「独立和 → 積」「スケール → 引数の縮小」というMGFで学んだ操作(問6.7)をφで再演する。</p>
+<h4>解答</h4>
+<p>(1) \(|e^{itX}|=1\) なので \(\varphi_X(t)=E[e^{itX}]\) は<b>どんな分布でも</b>存在する。MGFは \(E[e^{tX}]\) が発散して存在しないことがあり(コーシー分布はその代表;裾が重く \(E[e^{tX}]=\infty\)、そもそも \(E[X]\) すら存在しない — 問3.10の連続版)、MGFベースの理論はそこで止まる。特性関数なら、一意性定理(φが一致 ⇒ 分布が一致)とレヴィの連続性定理(φの各点収束 ⇒ 分布収束)が<b>無条件で</b>使え、あらゆる分布を同じ土俵で扱える。これが理論の主役がφである理由。</p>
+<p>(2) 独立性より \(\varphi_{X_1+\cdots+X_n}(t)=\varphi_X(t)^n\)、スケールより \(\varphi_{S_n}(t)=\varphi_X(t/\sqrt{n})^n\)。テイラー展開に \(E[X]=0\)、\(E[X^2]=1\) を入れると</p>
+<p>\[\varphi_X\!\left(\frac{t}{\sqrt{n}}\right)=1-\frac{t^2}{2n}+o\!\left(\frac1n\right)\]</p>
+<p>よって</p>
+<p>\[\varphi_{S_n}(t)=\left(1-\frac{t^2}{2n}+o\!\left(\frac1n\right)\right)^n\ \longrightarrow\ e^{-t^2/2}=\varphi_Z(t)\]</p>
+<p>(\((1+a_n/n)^n\to e^a\) 型の極限、問6.7と同型。)各 \(t\) でφが標準正規のφに収束したので、レヴィの連続性定理により \(S_n\) は \(N(0,1)\) に分布収束する — これが中心極限定理の証明の骨組みである。φの存在が無条件なので、必要な仮定は「分散が有限」だけでよい。</p>
+<h4 class="alt">ポイント</h4>
+<p>第7章で「使う」だけだったCLTの、証明の設計図が手に入りました:<b>分布の収束を、変換(φ)の収束に翻訳する</b> — フーリエ変換で微分方程式を解く発想と同じで、実際φは分布のフーリエ変換です。仮定を外すと結論も変わり、分散無限のコーシー分布では平均 \(\bar X_n\) がいつまでも同じコーシー分布のまま(φで1行:\((e^{-|t|/n})^n=e^{-|t|}\))— 平均化がまったく効かない世界もある。ここから先、確率過程・確率微分方程式・統計的学習理論へ — 本書の測度論の扉はここまでですが、装備は整いました。</p>
+</section>
+
+
+<footer class="book">
+<p>『情報系のための確率・統計 解答解説集』 全18章・154問。姉妹編『問題集』とセットで学習してください。</p>
+<p>本書に登場する数値計算(確率・期待値・分散・検定統計量・信頼区間・カルマンフィルタの更新値など全224項目)は、SymPy / SciPy による計算で全件検証済みです。</p>
+</footer>
+</div>
+</body>
+</html>

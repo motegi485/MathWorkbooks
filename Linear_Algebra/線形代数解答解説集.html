@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>情報系のための線形代数 解答解説集 — 基礎から大学院レベルまで</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  chtml: { matchFontHeight: true }
+};
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+:root{
+  --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
+  --accent:#1e6b5a; --accent-soft:#edf5f2;
+  --lv1:#2f7d4f; --lv2:#1f4e8c; --lv3:#a83232;
+  --rule:#d8d8d2;
+  --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --sans:"Yu Gothic Medium","Yu Gothic","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.95;font-feature-settings:"palt";}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.15rem 5rem}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.5;letter-spacing:.02em}
+/* --- 表紙 --- */
+header.book{padding:4.2rem 0 2.2rem;border-bottom:3px double var(--accent)}
+header.book .series{color:var(--accent);font-family:var(--sans);font-weight:700;
+  letter-spacing:.35em;font-size:.8rem;margin:0 0 .9rem}
+header.book h1{font-size:2.05rem;margin:0 0 .5rem}
+header.book .subtitle{color:var(--sub);margin:0 0 1.4rem;font-size:1.02rem}
+header.book .meta{font-size:.82rem;color:var(--sub);line-height:2}
+/* --- 目次 --- */
+nav.toc{margin:2.2rem 0;padding:1.3rem 1.5rem;background:var(--card);
+  border:1px solid var(--rule);border-radius:6px}
+nav.toc h2{font-size:1.05rem;margin:0 0 .7rem;color:var(--accent)}
+nav.toc ol{margin:0;padding-left:1.4rem}
+nav.toc li{margin:.28rem 0;font-size:.95rem}
+nav.toc .cnt{color:var(--sub);font-size:.8rem;margin-left:.5em}
+/* --- 章トビラ --- */
+header.chap{margin:4.5rem 0 1.6rem;padding-top:2.2rem;border-top:1px solid var(--rule)}
+header.chap .chnum{font-family:var(--serif);color:var(--accent);font-size:1rem;
+  letter-spacing:.25em;margin:0}
+header.chap h2{font-size:1.75rem;margin:.15rem 0 .2rem}
+header.chap .chsub{color:var(--sub);margin:0;font-size:.98rem}
+/* --- 説明ボックス類 --- */
+.why,.learn,.keybox,.howto{margin:1.4rem 0;padding:1.1rem 1.35rem;border-radius:6px;
+  background:var(--card);border:1px solid var(--rule)}
+.why{border-left:4px solid var(--accent)}
+.why h3,.learn h3,.keybox h3,.howto h3{margin:0 0 .55rem;font-size:1.02rem;color:var(--accent)}
+.learn ul,.keybox ul{margin:.2rem 0;padding-left:1.35rem}
+.learn li,.keybox li{margin:.3rem 0}
+.keybox{background:var(--accent-soft);border-color:transparent}
+.keybox b.term{color:var(--accent)}
+/* --- 問題カード --- */
+section.prob,section.sol{margin:1.7rem 0;padding:1.15rem 1.35rem 1.05rem;
+  background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
+  border-radius:6px}
+section.prob{border-left-color:var(--accent)}
+.phead{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.5rem}
+.pnum{font-family:var(--serif);font-weight:700;font-size:1.08rem;color:var(--accent)}
+.lv{font-size:.72rem;font-weight:700;color:#fff;border-radius:3px;padding:.12rem .5rem;letter-spacing:.05em}
+.lv1{background:var(--lv1)}.lv2{background:var(--lv2)}.lv3{background:var(--lv3)}
+.ptag{font-size:.78rem;color:var(--sub)}
+section.prob p,section.sol p{margin:.55rem 0}
+ol.sublist{padding-left:1.6rem;margin:.4rem 0}
+ol.sublist li{margin:.35rem 0}
+/* --- 解説の段階 --- */
+section.sol{border-left-color:var(--accent)}
+section.sol h4{font-family:var(--sans);font-size:.85rem;letter-spacing:.15em;
+  color:#fff;background:var(--accent);display:inline-block;
+  padding:.14rem .8rem;border-radius:3px;margin:1.05rem 0 .35rem}
+section.sol h4.alt{background:var(--sub)}
+.note{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:var(--accent-soft);
+  border-radius:5px;font-size:.94rem}
+.note b:first-child{color:var(--accent)}
+.warn{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:#faf1ee;
+  border-left:3px solid var(--lv3);border-radius:0 5px 5px 0;font-size:.94rem}
+.warn b:first-child{color:var(--lv3)}
+/* --- 表 --- */
+table{border-collapse:collapse;margin:1rem 0;font-size:.93rem;width:100%}
+th,td{border:1px solid var(--rule);padding:.42rem .7rem;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+/* --- 章末 --- */
+.check{margin:2.2rem 0 0;padding:1rem 1.3rem;border:1px dashed var(--accent);border-radius:6px}
+.check h3{margin:0 0 .5rem;font-size:.98rem;color:var(--accent)}
+.check ul{margin:0;padding-left:1.35rem}
+footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
+  color:var(--sub);font-size:.82rem;line-height:1.9}
+mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+@media (max-width:520px){
+  body{font-size:15.5px}
+  header.book h1{font-size:1.65rem}
+  .wrap{padding:0 .9rem 4rem}
+  section.prob,section.sol{padding:1rem 1rem .9rem}
+}
+@media print{
+  body{background:#fff}
+  header.chap{break-before:page;border-top:none}
+  section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
+  nav.toc a{color:var(--ink)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="book">
+<p class="series">情報系のための線形代数</p>
+<h1>解答解説集</h1>
+<p class="subtitle">基礎から大学院レベルまで — 全11章・103問の詳解</p>
+<p class="meta">本書は『問題集』の姉妹編です。問題番号は完全に対応しています(問 3.4 の解説は 解 3.4)。<br>
+すべての数値計算(逆行列・行列式・固有値・特異値分解・最小二乗解など全129項目)は計算機代数システムSymPyで検証済みです。</p>
+</header>
+
+<nav class="toc">
+<h2>目次</h2>
+<ol>
+<li><a href="#ch1">第1章 ベクトル</a><span class="cnt">解 1.1〜1.10</span></li>
+<li><a href="#ch2">第2章 行列</a><span class="cnt">解 2.1〜2.10</span></li>
+<li><a href="#ch3">第3章 連立一次方程式</a><span class="cnt">解 3.1〜3.10</span></li>
+<li><a href="#ch4">第4章 行列式</a><span class="cnt">解 4.1〜4.9</span></li>
+<li><a href="#ch5">第5章 ベクトル空間</a><span class="cnt">解 5.1〜5.10</span></li>
+<li><a href="#ch6">第6章 線形写像</a><span class="cnt">解 6.1〜6.8</span></li>
+<li><a href="#ch7">第7章 固有値と固有ベクトル</a><span class="cnt">解 7.1〜7.11</span></li>
+<li><a href="#ch8">第8章 内積空間と直交性</a><span class="cnt">解 8.1〜8.10</span></li>
+<li><a href="#ch9">第9章 対称行列と二次形式</a><span class="cnt">解 9.1〜9.8</span></li>
+<li><a href="#ch10">第10章 特異値分解(SVD)</a><span class="cnt">解 10.1〜10.9</span></li>
+<li><a href="#ch11">第11章 発展</a><span class="cnt">解 11.1〜11.8</span></li>
+</ol>
+</nav>
+
+<div class="howto">
+<h3>解説の読み方</h3>
+<p>各解説は次の3段構成です。</p>
+<ul>
+<li><b>方針</b> — 解き始める前の見取り図。詰まったときは、まずここだけを読んでもう一度自力で挑戦してください(段階的ヒントとして使えます)。</li>
+<li><b>解答</b> — 答案として書ける形の完全な解。途中計算も省略せずに示します。</li>
+<li><b>ポイント</b> — その問題が教えてくれる本質、よくある誤り、先の章や応用とのつながり。</li>
+</ul>
+<p>読んで「わかった」で止めず、<b>翌日、何も見ずにノートへ再現</b>できて初めて身についたと判定してください。証明問題は、論理の流れを自分の言葉で言い直せるかが基準です。</p>
+</div>
+
+<header class="chap" id="ch1">
+<p class="chnum">第1章</p>
+<h2>ベクトル — 解答解説</h2>
+<p class="chsub">空間とデータの言葉</p>
+</header>
+
+<section class="sol" id="a1-1">
+<div class="phead"><span class="pnum">解 1.1</span><span class="lv lv1">★</span><span class="ptag">ベクトルの演算</span></div>
+<h4>方針</h4>
+<p>ベクトルの和・スカラー倍は<b>成分ごと</b>に計算する、という定義の確認問題。</p>
+<h4>解答</h4>
+<p>\(2\mathbf{a}=(4,\,-2,\,6)\)、\(3\mathbf{b}=(3,\,12,\,-6)\) より</p>
+<p>\[2\mathbf{a}-3\mathbf{b}=(4-3,\ -2-12,\ 6+6)=(1,\,-14,\,12)\]</p>
+<p>\[\mathbf{a}+\mathbf{b}=(2+1,\ -1+4,\ 3-2)=(3,\,3,\,1)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>\(s\mathbf{a}+t\mathbf{b}\) の形の式を<b>一次結合(線形結合)</b>と呼びます。本書に登場するほぼすべての概念(張る空間・線形写像・固有ベクトル…)はこの操作の言い換えです。図形的には「\(\mathbf{a}\) 方向に2歩、\(\mathbf{b}\) 方向に逆向きへ3歩」という移動の合成です。</p>
+</section>
+
+<section class="sol" id="a1-2">
+<div class="phead"><span class="pnum">解 1.2</span><span class="lv lv1">★</span><span class="ptag">一次結合</span></div>
+<h4>方針</h4>
+<p>\(s\mathbf{a}+t\mathbf{b}=\mathbf{c}\) を成分で書くと、未知数 \(s,t\) の連立一次方程式になる。</p>
+<h4>解答</h4>
+<p>\(s(2,1)+t(1,-1)=(2s+t,\ s-t)=(5,\,1)\) より</p>
+<p>\[\begin{cases}2s+t=5\\ s-t=1\end{cases}\]</p>
+<p>2式を辺々加えると \(3s=6\)、よって \(s=2\)、\(t=s-1=1\)。したがって</p>
+<p>\[\mathbf{c}=2\mathbf{a}+\mathbf{b}\]</p>
+<p>検算:\(2(2,1)+(1,-1)=(4+1,\ 2-1)=(5,1)\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「あるベクトルを他のベクトルたちで表す」ことは、常に連立一次方程式に翻訳されます(第3章)。また \(s,t\) は「基底 \(\{\mathbf{a},\mathbf{b}\}\) から見た \(\mathbf{c}\) の座標」でもあります(第5章)。この問題は本書の後半への最短の伏線です。</p>
+</section>
+
+<section class="sol" id="a1-3">
+<div class="phead"><span class="pnum">解 1.3</span><span class="lv lv1">★</span><span class="ptag">ノルムと内積</span></div>
+<h4>方針</h4>
+<p>ノルムは \(\|\mathbf{u}\|=\sqrt{\mathbf{u}\cdot\mathbf{u}}\)。内積の値、特に「0かどうか」に注目する。</p>
+<h4>解答</h4>
+<p>\[\|\mathbf{u}\|=\sqrt{1^2+2^2+2^2}=\sqrt{9}=3,\qquad \|\mathbf{v}\|=\sqrt{2^2+(-2)^2+1^2}=\sqrt{9}=3\]</p>
+<p>\[\mathbf{u}\cdot\mathbf{v}=1\cdot2+2\cdot(-2)+2\cdot1=2-4+2=0\]</p>
+<p>内積が \(0\) なので、\(\mathbf{u}\) と \(\mathbf{v}\) は<b>直交</b>する(なす角は \(90^\circ\))。どちらも長さ \(3\) の直交するベクトルである。</p>
+<h4 class="alt">ポイント</h4>
+<p>「直交」は図が描けない高次元でも \(\mathbf{u}\cdot\mathbf{v}=0\) で<b>定義</b>されます。この2本は第8章で「直交基底」の材料として再登場します。</p>
+</section>
+
+<section class="sol" id="a1-4">
+<div class="phead"><span class="pnum">解 1.4</span><span class="lv lv1">★</span><span class="ptag">なす角</span></div>
+<h4>方針</h4>
+<p>\(\cos\theta=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|\,\|\mathbf{b}\|}\) に代入する。</p>
+<h4>解答</h4>
+<p>\(\mathbf{a}\cdot\mathbf{b}=1\cdot1+\sqrt{3}\cdot0=1\)、\(\|\mathbf{a}\|=\sqrt{1+3}=2\)、\(\|\mathbf{b}\|=1\)。よって</p>
+<p>\[\cos\theta=\frac{1}{2\cdot1}=\frac{1}{2}\qquad\therefore\ \theta=\frac{\pi}{3}\ (=60^\circ)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>この公式が「角度の定義」として意味を持つのは \(-1\le\cos\theta\le1\) が保証されているから。その保証がコーシー・シュワルツの不等式(問1.9)です。公式は定理に支えられています。</p>
+</section>
+
+<section class="sol" id="a1-5">
+<div class="phead"><span class="pnum">解 1.5</span><span class="lv lv2">★★</span><span class="ptag">正射影</span></div>
+<h4>方針</h4>
+<p>射影を \(\mathbf{p}=t\mathbf{a}\) と置き、「残差 \(\mathbf{b}-\mathbf{p}\) が \(\mathbf{a}\) と直交する」条件から \(t\) を決める。公式暗記より、この導出の型が大事。</p>
+<h4>解答</h4>
+<p>\((\mathbf{b}-t\mathbf{a})\cdot\mathbf{a}=0\) より \(t=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\mathbf{a}\cdot\mathbf{a}}\)。ここで \(\mathbf{a}\cdot\mathbf{b}=3+4=7\)、\(\mathbf{a}\cdot\mathbf{a}=2\) だから \(t=\dfrac{7}{2}\)、</p>
+<p>\[\mathbf{p}=\frac{7}{2}(1,\,1)=\left(\frac{7}{2},\,\frac{7}{2}\right)\]</p>
+<p>残差は \(\mathbf{b}-\mathbf{p}=\left(3-\frac{7}{2},\ 4-\frac{7}{2}\right)=\left(-\frac{1}{2},\,\frac{1}{2}\right)\) で、</p>
+<p>\[(\mathbf{b}-\mathbf{p})\cdot\mathbf{a}=-\frac{1}{2}+\frac{1}{2}=0\]</p>
+<p>となり、確かに直交する。</p>
+<h4 class="alt">ポイント</h4>
+<p>「直線 \(\{t\mathbf{a}\}\) 上で \(\mathbf{b}\) に最も近い点」が \(\mathbf{p}\) であり、最短であることと残差の直交は同値です。この考え方をそのまま多次元化したものが<b>最小二乗法</b>(第8章)。回帰分析・カメラキャリブレーション・信号推定の心臓部です。</p>
+</section>
+
+<section class="sol" id="a1-6">
+<div class="phead"><span class="pnum">解 1.6</span><span class="lv lv2">★★</span><span class="ptag">正規化</span></div>
+<h4>方針</h4>
+<p>ノルムで割れば長さ1になる(正規化)。</p>
+<h4>解答</h4>
+<p>\(\|\mathbf{a}\|=\sqrt{9+16}=5\)。求める単位ベクトルは</p>
+<p>\[\frac{\mathbf{a}}{\|\mathbf{a}\|}=\left(\frac{3}{5},\,-\frac{4}{5}\right)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>正規化は「大きさの情報を捨てて向きだけを取り出す」操作。第8章の正規直交基底、第10章のSVDの \(U,V\) の列は、すべて正規化されたベクトルです。</p>
+</section>
+
+<section class="sol" id="a1-7">
+<div class="phead"><span class="pnum">解 1.7</span><span class="lv lv2">★★</span><span class="ptag">内積の展開</span></div>
+<h4>方針</h4>
+<p>成分が無くても、ノルムを内積で書き直して展開すれば計算できる。\((x+y)^2\) の展開と同じ形。</p>
+<h4>解答</h4>
+<p>\[\|\mathbf{a}+\mathbf{b}\|^2=(\mathbf{a}+\mathbf{b})\cdot(\mathbf{a}+\mathbf{b})=\|\mathbf{a}\|^2+2\,\mathbf{a}\cdot\mathbf{b}+\|\mathbf{b}\|^2=4+2(-3)+9=7\]</p>
+<p>よって \(\|\mathbf{a}+\mathbf{b}\|=\sqrt{7}\)。なす角は</p>
+<p>\[\cos\theta=\frac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|\,\|\mathbf{b}\|}=\frac{-3}{2\cdot3}=-\frac{1}{2}\qquad\therefore\ \theta=\frac{2\pi}{3}\ (=120^\circ)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>内積は和に対して分配できる(<b>双線形性</b>)ので、\(\|\mathbf{a}+\mathbf{b}\|^2\) は文字式のように展開できます。ただし \(\mathbf{a}\cdot\mathbf{b}=\mathbf{b}\cdot\mathbf{a}\)(対称性)を使っていることに注意。成分を知らなくても内積の情報だけで幾何が決まる — これが「内積空間」という抽象化(第8章)の出発点です。</p>
+</section>
+
+<section class="sol" id="a1-8">
+<div class="phead"><span class="pnum">解 1.8</span><span class="lv lv2">★★</span><span class="ptag">中線定理の証明</span></div>
+<h4>方針</h4>
+<p>両辺ともノルムの2乗なので、すべて内積で書いて展開・整理するだけで証明できる。</p>
+<h4>解答</h4>
+<p>内積の双線形性と対称性より</p>
+<p>\[\|\mathbf{a}+\mathbf{b}\|^2=\|\mathbf{a}\|^2+2\,\mathbf{a}\cdot\mathbf{b}+\|\mathbf{b}\|^2,\qquad \|\mathbf{a}-\mathbf{b}\|^2=\|\mathbf{a}\|^2-2\,\mathbf{a}\cdot\mathbf{b}+\|\mathbf{b}\|^2\]</p>
+<p>辺々加えると交差項 \(\pm2\,\mathbf{a}\cdot\mathbf{b}\) が打ち消し合い、</p>
+<p>\[\|\mathbf{a}+\mathbf{b}\|^2+\|\mathbf{a}-\mathbf{b}\|^2=2\|\mathbf{a}\|^2+2\|\mathbf{b}\|^2\]</p>
+<p>が得られる。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>平行四辺形の2本の対角線の長さの関係です。証明に使ったのは内積の代数的性質だけなので、この等式は内積が定義できる空間なら<b>関数の空間でも</b>成り立ちます(問8.10参照)。「図形の定理」が「内積の定理」に昇格した瞬間です。</p>
+</section>
+
+<section class="sol" id="a1-9">
+<div class="phead"><span class="pnum">解 1.9</span><span class="lv lv3">★★★</span><span class="ptag">コーシー・シュワルツの不等式</span></div>
+<h4>方針</h4>
+<p>「2乗ノルムは常に非負」という当たり前の事実を、パラメータ \(t\) 入りで使う。\(f(t)=\|\mathbf{a}-t\mathbf{b}\|^2\ge0\) が \(t\) の2次関数であることから、最小値(または判別式)の条件を読む。</p>
+<h4>解答</h4>
+<p>\(\mathbf{b}=\mathbf{0}\) のときは両辺 \(0\) で成立。以下 \(\mathbf{b}\ne\mathbf{0}\) とする。任意の実数 \(t\) に対して</p>
+<p>\[f(t)=\|\mathbf{a}-t\mathbf{b}\|^2=\|\mathbf{a}\|^2-2t\,(\mathbf{a}\cdot\mathbf{b})+t^2\|\mathbf{b}\|^2\ \ge\ 0\]</p>
+<p>\(\|\mathbf{b}\|^2\gt0\) なので \(f\) は下に凸の2次関数であり、\(t^*=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{b}\|^2}\) で最小値をとる。代入すると</p>
+<p>\[f(t^*)=\|\mathbf{a}\|^2-\frac{(\mathbf{a}\cdot\mathbf{b})^2}{\|\mathbf{b}\|^2}\ \ge\ 0\]</p>
+<p>整理して \((\mathbf{a}\cdot\mathbf{b})^2\le\|\mathbf{a}\|^2\|\mathbf{b}\|^2\)、両辺の平方根をとって</p>
+<p>\[|\mathbf{a}\cdot\mathbf{b}|\le\|\mathbf{a}\|\,\|\mathbf{b}\|\]</p>
+<p><b>等号条件</b>:等号が成り立つのは \(f(t^*)=0\)、すなわち \(\mathbf{a}=t^*\mathbf{b}\) のとき。つまり \(\mathbf{a}\) が \(\mathbf{b}\) のスカラー倍(平行)のとき。\(\mathbf{b}=\mathbf{0}\) の場合も含めると、「\(\mathbf{a},\mathbf{b}\) の一方が他方のスカラー倍である(一次従属である)とき、かつそのときに限る」。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>\(t^*\) は問1.5の射影係数そのもの — つまりこの証明は「\(\mathbf{a}\) から直線 \(\{t\mathbf{b}\}\) への最短距離が非負」と言っているだけです。この不等式のおかげで \(\bigl|\frac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|\|\mathbf{b}\|}\bigr|\le1\) となり、なす角の定義(問1.4)が正当化されます。三角不等式 \(\|\mathbf{a}+\mathbf{b}\|\le\|\mathbf{a}\|+\|\mathbf{b}\|\) もここから直ちに従います(\(\|\mathbf{a}+\mathbf{b}\|^2\) を展開して交差項を評価)。</p>
+</section>
+
+<section class="sol" id="a1-10">
+<div class="phead"><span class="pnum">解 1.10</span><span class="lv lv3">★★★</span><span class="ptag">コサイン類似度(情報検索)</span></div>
+<h4>方針</h4>
+<p>定義どおり \(\cos=\dfrac{内積}{ノルムの積}\) を計算して比べる。</p>
+<h4>解答</h4>
+<p>(1) \(\mathbf{d}_1\cdot\mathbf{d}_2=2+1+0=3\)、\(\|\mathbf{d}_1\|=\sqrt{5}\)、\(\|\mathbf{d}_2\|=\sqrt{3}\) より</p>
+<p>\[\cos(\mathbf{d}_1,\mathbf{d}_2)=\frac{3}{\sqrt{5}\sqrt{3}}=\frac{3}{\sqrt{15}}=\frac{\sqrt{15}}{5}\approx0.775\]</p>
+<p>\(\mathbf{d}_1\cdot\mathbf{d}_3=0+1+0=1\)、\(\|\mathbf{d}_3\|=\sqrt{5}\) より</p>
+<p>\[\cos(\mathbf{d}_1,\mathbf{d}_3)=\frac{1}{\sqrt{5}\sqrt{5}}=\frac{1}{5}=0.2\]</p>
+<p>(2) \(0.775\gt0.2\) なので、文書1に近いのは<b>文書2</b>。内積そのものは文書が長い(単語数が多い)ほど大きくなってしまうが、コサイン類似度はベクトルを実質的に正規化して<b>向きだけ</b>を比べるため、文書の長さの影響を受けにくい。「何について書かれているか(単語の比率)」で比較できるのが利点である。</p>
+<h4 class="alt">ポイント</h4>
+<p>コサイン類似度は情報検索・推薦・自然言語処理の埋め込みベクトル比較で最も標準的な尺度です。「内積=類似度の素点、正規化=公平化」という見方は、第8章の正規直交基底や第9章のPCAでも一貫して現れます。</p>
+</section>
+
+<header class="chap" id="ch2">
+<p class="chnum">第2章</p>
+<h2>行列 — 解答解説</h2>
+<p class="chsub">線形変換という操作</p>
+</header>
+
+<section class="sol" id="a2-1">
+<div class="phead"><span class="pnum">解 2.1</span><span class="lv lv1">★</span><span class="ptag">行列の演算</span></div>
+<h4>方針</h4>
+<p>和とスカラー倍は成分ごと。積は「\(A\) の第 \(i\) 行と \(B\) の第 \(j\) 列の内積」が \((i,j)\) 成分。</p>
+<h4>解答</h4>
+<p>\[A+B=\begin{pmatrix}3 &amp; 2\\ 4 &amp; 7\end{pmatrix},\qquad 3A=\begin{pmatrix}3 &amp; 6\\ 9 &amp; 12\end{pmatrix}\]</p>
+<p>積は、たとえば \((1,1)\) 成分が「第1行 \((1,2)\) と第1列 \((2,1)\) の内積」\(=1\cdot2+2\cdot1=4\)。同様に全成分を計算して</p>
+<p>\[AB=\begin{pmatrix}1\cdot2+2\cdot1 &amp; 1\cdot0+2\cdot3\\ 3\cdot2+4\cdot1 &amp; 3\cdot0+4\cdot3\end{pmatrix}=\begin{pmatrix}4 &amp; 6\\ 10 &amp; 12\end{pmatrix}\]</p>
+<h4 class="alt">ポイント</h4>
+<p>積の計算は「左の行 × 右の列」。指でなぞりながら計算する癖をつけると、サイズの合わない積(左の列数 ≠ 右の行数)を書いてしまうミスも防げます。</p>
+</section>
+
+<section class="sol" id="a2-2">
+<div class="phead"><span class="pnum">解 2.2</span><span class="lv lv1">★</span><span class="ptag">積の「列の一次結合」解釈</span></div>
+<h4>方針</h4>
+<p>定義どおり計算した結果を、\(x_1(\cdot)+x_2(\cdot)\) の形にくくり直す。</p>
+<h4>解答</h4>
+<p>\[A\mathbf{x}=\begin{pmatrix}x_1+2x_2\\ 3x_1+4x_2\end{pmatrix}=x_1\begin{pmatrix}1\\ 3\end{pmatrix}+x_2\begin{pmatrix}2\\ 4\end{pmatrix}\]</p>
+<p>すなわち \(A\mathbf{x}\) は、\(A\) の第1列と第2列の、係数 \(x_1,x_2\) による一次結合である。</p>
+<h4 class="alt">ポイント</h4>
+<p>この読み替えは本書で最も重要な視点の1つです。「\(A\mathbf{x}=\mathbf{b}\) が解をもつ ⟺ \(\mathbf{b}\) が \(A\) の列の一次結合で書ける ⟺ \(\mathbf{b}\) が<b>列空間</b>に入っている」(第3・5章)という理解が、ここから一直線につながります。</p>
+</section>
+
+<section class="sol" id="a2-3">
+<div class="phead"><span class="pnum">解 2.3</span><span class="lv lv1">★</span><span class="ptag">非可換性</span></div>
+<h4>方針</h4>
+<p>順序を入れ替えて同じ手順で計算し、比較する。</p>
+<h4>解答</h4>
+<p>\[BA=\begin{pmatrix}2\cdot1+0\cdot3 &amp; 2\cdot2+0\cdot4\\ 1\cdot1+3\cdot3 &amp; 1\cdot2+3\cdot4\end{pmatrix}=\begin{pmatrix}2 &amp; 4\\ 10 &amp; 14\end{pmatrix}\]</p>
+<p>問2.1より \(AB=\begin{pmatrix}4 &amp; 6\\ 10 &amp; 12\end{pmatrix}\) だったから、\(AB\ne BA\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>行列の積は「操作の合成」なので、順序が変われば結果も変わるのが自然です(「服を着てからコートを着る」と「コートを着てから服を着る」は違う)。数の計算の常識 \(xy=yx\) を無意識に使わないこと — 式変形で順序を保つ習慣が、この先の証明問題の生命線です。</p>
+</section>
+
+<section class="sol" id="a2-4">
+<div class="phead"><span class="pnum">解 2.4</span><span class="lv lv2">★★</span><span class="ptag">転置の規則</span></div>
+<h4>方針</h4>
+<p>(1)は数値計算。(2)は「両辺の \((i,j)\) 成分が等しい」ことを、成分の定義式で示す。</p>
+<h4>解答</h4>
+<p>(1) \(AB=\begin{pmatrix}4 &amp; 6\\ 10 &amp; 12\end{pmatrix}\) より \((AB)^\top=\begin{pmatrix}4 &amp; 10\\ 6 &amp; 12\end{pmatrix}\)。一方</p>
+<p>\[B^\top A^\top=\begin{pmatrix}2 &amp; 1\\ 0 &amp; 3\end{pmatrix}\begin{pmatrix}1 &amp; 3\\ 2 &amp; 4\end{pmatrix}=\begin{pmatrix}2+2 &amp; 6+4\\ 0+6 &amp; 0+12\end{pmatrix}=\begin{pmatrix}4 &amp; 10\\ 6 &amp; 12\end{pmatrix}\]</p>
+<p>で一致する。</p>
+<p>(2) 転置の定義は \((M^\top)_{ij}=M_{ji}\)。よって</p>
+<p>\[\bigl((AB)^\top\bigr)_{ij}=(AB)_{ji}=\sum_k a_{jk}b_{ki}\]</p>
+<p>一方、</p>
+<p>\[\bigl(B^\top A^\top\bigr)_{ij}=\sum_k (B^\top)_{ik}(A^\top)_{kj}=\sum_k b_{ki}\,a_{jk}\]</p>
+<p>2つの和は同じ項の並べ替えなので等しい。すべての \(i,j\) で成分が一致するから \((AB)^\top=B^\top A^\top\)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>「行列の等式の証明=両辺の \((i,j)\) 成分が等しいことの証明」という基本の型です。順序が逆転する直感:転置は「入力と出力の立場を入れ替える」操作なので、合成の順番もひっくり返ります。</p>
+</section>
+
+<section class="sol" id="a2-5">
+<div class="phead"><span class="pnum">解 2.5</span><span class="lv lv2">★★</span><span class="ptag">2次の逆行列</span></div>
+<h4>方針</h4>
+<p>2次の公式 \(\begin{pmatrix}a &amp; b\\ c &amp; d\end{pmatrix}^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d &amp; -b\\ -c &amp; a\end{pmatrix}\)(\(ad-bc\ne0\))を使う。</p>
+<h4>解答</h4>
+<p>\(ad-bc=2\cdot3-1\cdot5=1\ne0\) なので正則で、</p>
+<p>\[A^{-1}=\frac{1}{1}\begin{pmatrix}3 &amp; -1\\ -5 &amp; 2\end{pmatrix}=\begin{pmatrix}3 &amp; -1\\ -5 &amp; 2\end{pmatrix}\]</p>
+<p>検算:</p>
+<p>\[AA^{-1}=\begin{pmatrix}2 &amp; 1\\ 5 &amp; 3\end{pmatrix}\begin{pmatrix}3 &amp; -1\\ -5 &amp; 2\end{pmatrix}=\begin{pmatrix}6-5 &amp; -2+2\\ 15-15 &amp; -5+6\end{pmatrix}=\begin{pmatrix}1 &amp; 0\\ 0 &amp; 1\end{pmatrix}=I\]</p>
+<h4 class="alt">ポイント</h4>
+<p>逆行列は「変換の巻き戻し」。分母の \(ad-bc\) が行列式(第4章)で、これが \(0\) だと変換で面積が潰れてしまい巻き戻せません。3次以上の逆行列は公式暗記ではなく掃き出し法(問3.8)で求めるのが実用的です。</p>
+</section>
+
+<section class="sol" id="a2-6">
+<div class="phead"><span class="pnum">解 2.6</span><span class="lv lv2">★★</span><span class="ptag">回転行列の合成</span></div>
+<h4>方針</h4>
+<p>左辺を定義どおり掛け、三角関数の加法定理で右辺の形に整理する。</p>
+<h4>解答</h4>
+<p>\[R(\alpha)R(\beta)=\begin{pmatrix}\cos\alpha &amp; -\sin\alpha\\ \sin\alpha &amp; \cos\alpha\end{pmatrix}\begin{pmatrix}\cos\beta &amp; -\sin\beta\\ \sin\beta &amp; \cos\beta\end{pmatrix}=\begin{pmatrix}\cos\alpha\cos\beta-\sin\alpha\sin\beta &amp; -(\cos\alpha\sin\beta+\sin\alpha\cos\beta)\\ \sin\alpha\cos\beta+\cos\alpha\sin\beta &amp; \cos\alpha\cos\beta-\sin\alpha\sin\beta\end{pmatrix}\]</p>
+<p>加法定理 \(\cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta\)、\(\sin(\alpha+\beta)=\sin\alpha\cos\beta+\cos\alpha\sin\beta\) より、これは</p>
+<p>\[\begin{pmatrix}\cos(\alpha+\beta) &amp; -\sin(\alpha+\beta)\\ \sin(\alpha+\beta) &amp; \cos(\alpha+\beta)\end{pmatrix}=R(\alpha+\beta)\]</p>
+<p>に等しい。(証明終)</p>
+<p><b>幾何学的意味</b>:「\(\beta\) 回してから \(\alpha\) 回す」ことは「一度に \(\alpha+\beta\) 回す」ことと同じ、という当然の事実が、行列の積として正確に表現されている。</p>
+<h4 class="alt">ポイント</h4>
+<p>「変換の合成=行列の積」の最も美しい実例で、CG・ロボティクスの姿勢計算の基礎です。なお回転どうしは例外的に可換(\(R(\alpha)R(\beta)=R(\beta)R(\alpha)\))ですが、3次元の回転は非可換になります。逆に、この等式から加法定理を「導出」する見方もでき、行列が公式の記憶装置にもなります。</p>
+</section>
+
+<section class="sol" id="a2-7">
+<div class="phead"><span class="pnum">解 2.7</span><span class="lv lv2">★★</span><span class="ptag">剪断変換の幾何</span></div>
+<h4>方針</h4>
+<p>各頂点ベクトルに \(S\) を掛けるだけ。像を座標平面に描いて形を読む。</p>
+<h4>解答</h4>
+<p>\(S\begin{pmatrix}x\\ y\end{pmatrix}=\begin{pmatrix}x+y\\ y\end{pmatrix}\) だから、</p>
+<p>\[(0,0)\mapsto(0,0),\quad (1,0)\mapsto(1,0),\quad (0,1)\mapsto(1,1),\quad (1,1)\mapsto(2,1)\]</p>
+<p>変換後の図形は、頂点 \((0,0),(1,0),(2,1),(1,1)\) の<b>平行四辺形</b>。底辺(\(y=0\) 上の辺)は動かず、上の辺が右へ1だけスライドした「斜めに倒れた」形になる。</p>
+<h4 class="alt">ポイント</h4>
+<p>剪断(シアー)は「高さに比例して横へずらす」変換。底辺と高さが変わらないので<b>面積は保たれる</b>(実際 \(\det S=1\)、第4章)。イタリック体のフォント描画や画像の傾き補正で実際に使われる変換です。線形変換のイメージ作りには「単位正方形がどんな平行四辺形に写るか」を見るのが最良の方法です。</p>
+</section>
+
+<section class="sol" id="a2-8">
+<div class="phead"><span class="pnum">解 2.8</span><span class="lv lv2">★★</span><span class="ptag">帰納法による行列の累乗</span></div>
+<h4>方針</h4>
+<p>数学的帰納法の型どおり:\(n=1\) で成立を確認し、「\(n=k\) で成立すれば \(n=k+1\) でも成立」を積の計算で示す。</p>
+<h4>解答</h4>
+<p><b>[基底]</b> \(n=1\) のとき \(S^1=\begin{pmatrix}1 &amp; 1\\ 0 &amp; 1\end{pmatrix}\) で、主張の式に \(n=1\) を入れたものと一致する。</p>
+<p><b>[帰納段階]</b> ある自然数 \(k\) で \(S^k=\begin{pmatrix}1 &amp; k\\ 0 &amp; 1\end{pmatrix}\) が成り立つと仮定する。このとき</p>
+<p>\[S^{k+1}=S^k S=\begin{pmatrix}1 &amp; k\\ 0 &amp; 1\end{pmatrix}\begin{pmatrix}1 &amp; 1\\ 0 &amp; 1\end{pmatrix}=\begin{pmatrix}1 &amp; 1+k\\ 0 &amp; 1\end{pmatrix}=\begin{pmatrix}1 &amp; k+1\\ 0 &amp; 1\end{pmatrix}\]</p>
+<p>となり \(n=k+1\) でも成立。以上より、すべての自然数 \(n\) で \(S^n=\begin{pmatrix}1 &amp; n\\ 0 &amp; 1\end{pmatrix}\)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>幾何的には「剪断を \(n\) 回重ねると、ずれ量が \(n\) 倍になる」という自然な事実です。一般の行列の \(n\) 乗はこんなに簡単ではなく、固有値による対角化(第7章)が本命の道具になります。この \(S\) は対角化<b>できない</b>行列の代表でもあり(問7.10)、第11章のジョルダン標準形まで長い伏線が続きます。</p>
+</section>
+
+<section class="sol" id="a2-9">
+<div class="phead"><span class="pnum">解 2.9</span><span class="lv lv3">★★★</span><span class="ptag">逆行列の規則の証明</span></div>
+<h4>方針</h4>
+<p>「\(X\) が \(M\) の逆行列である」とは \(MX=XM=I\) が成り立つこと。候補を右と左から掛けて \(I\) になることを確かめれば、それが逆行列である(逆行列の一意性より)。</p>
+<h4>解答</h4>
+<p>(1) 候補 \(X=B^{-1}A^{-1}\) を確かめる:</p>
+<p>\[(AB)(B^{-1}A^{-1})=A(BB^{-1})A^{-1}=AIA^{-1}=AA^{-1}=I\]</p>
+<p>\[(B^{-1}A^{-1})(AB)=B^{-1}(A^{-1}A)B=B^{-1}IB=B^{-1}B=I\]</p>
+<p>よって \(AB\) は正則で \((AB)^{-1}=B^{-1}A^{-1}\)。</p>
+<p>(2) \(AA^{-1}=I\) の両辺を転置し、問2.4の規則 \((AB)^\top=B^\top A^\top\) を使うと</p>
+<p>\[(AA^{-1})^\top=I^\top \iff (A^{-1})^\top A^\top=I\]</p>
+<p>同様に \(A^{-1}A=I\) から \(A^\top (A^{-1})^\top=I\)。よって \(A^\top\) は正則で \((A^\top)^{-1}=(A^{-1})^\top\)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>(1)の順序逆転は「靴下を履いてから靴を履いたら、脱ぐときは靴が先」— 合成の巻き戻しは逆順、という日常の論理そのものです。結合法則 \((AB)C=A(BC)\) だけで証明が回ることにも注目。「候補を掛けて \(I\) を確認する」型は、この先ずっと使う証明の定跡です。</p>
+</section>
+
+<section class="sol" id="a2-10">
+<div class="phead"><span class="pnum">解 2.10</span><span class="lv lv3">★★★</span><span class="ptag">トレースの性質</span></div>
+<h4>方針</h4>
+<p>\(\operatorname{tr}(AB)=\sum_i (AB)_{ii}\) を積の定義で二重和に開き、和の順序を交換する。</p>
+<h4>解答</h4>
+<p>\[\operatorname{tr}(AB)=\sum_{i=1}^{n}(AB)_{ii}=\sum_{i=1}^{n}\sum_{k=1}^{n}a_{ik}b_{ki}\]</p>
+<p>有限和なので \(i\) と \(k\) の和の順序は交換でき、文字を入れ替えて眺めると</p>
+<p>\[\sum_{k=1}^{n}\sum_{i=1}^{n}b_{ki}a_{ik}=\sum_{k=1}^{n}(BA)_{kk}=\operatorname{tr}(BA)\]</p>
+<p>よって \(\operatorname{tr}(AB)=\operatorname{tr}(BA)\)。(証明終)</p>
+<p><b>面白さ</b>:行列としては \(AB\ne BA\) でも(問2.3)、対角成分の総和という「1つの数」に潰すと必ず一致する。積の非可換性が、トレースという観測では見えなくなる、ということ。</p>
+<h4 class="alt">ポイント</h4>
+<p>この性質から \(\operatorname{tr}(P^{-1}AP)=\operatorname{tr}(A)\)(巡回性)が従い、「トレースは基底の取り方によらない量」だと分かります。実際、トレースは固有値の和に等しく(問7.6)、機械学習でも行列計算の簡約化に頻繁に使われる恒等式です。</p>
+</section>
+
+<header class="chap" id="ch3">
+<p class="chnum">第3章</p>
+<h2>連立一次方程式 — 解答解説</h2>
+<p class="chsub">掃き出し法とランク</p>
+</header>
+
+<section class="sol" id="a3-1">
+<div class="phead"><span class="pnum">解 3.1</span><span class="lv lv1">★</span><span class="ptag">2元の消去</span></div>
+<h4>方針</h4>
+<p>第2行から第1行の3倍を引いて \(x\) を消す。以後、変形は「行に対する操作」として記録する。</p>
+<h4>解答</h4>
+<p>\[\left(\begin{array}{cc|c}1 &amp; 2 &amp; 5\\ 3 &amp; 4 &amp; 11\end{array}\right)\xrightarrow{R_2\leftarrow R_2-3R_1}\left(\begin{array}{cc|c}1 &amp; 2 &amp; 5\\ 0 &amp; -2 &amp; -4\end{array}\right)\xrightarrow{R_2\leftarrow -\frac12 R_2}\left(\begin{array}{cc|c}1 &amp; 2 &amp; 5\\ 0 &amp; 1 &amp; 2\end{array}\right)\]</p>
+<p>第2行より \(y=2\)、第1行に代入して \(x=5-2y=1\)。よって \((x,y)=(1,\,2)\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>中学以来の「加減法」を、係数だけ抜き出して機械的に実行したものが掃き出し法です。行基本変形は可逆な操作なので、変形の前後で解集合は一切変わりません — これがアルゴリズムの正当性の根拠です。</p>
+</section>
+
+<section class="sol" id="a3-2">
+<div class="phead"><span class="pnum">解 3.2</span><span class="lv lv1">★</span><span class="ptag">3元の掃き出し</span></div>
+<h4>方針</h4>
+<p>第1列→第2列の順に、ピボットの下を \(0\) にしていく(前進消去)。三角形になったら下から代入(後退代入)。</p>
+<h4>解答</h4>
+<p>\[\left(\begin{array}{ccc|c}1 &amp; 1 &amp; 1 &amp; 6\\ 2 &amp; 3 &amp; 1 &amp; 11\\ 1 &amp; 2 &amp; 3 &amp; 14\end{array}\right)\xrightarrow[R_3\leftarrow R_3-R_1]{R_2\leftarrow R_2-2R_1}\left(\begin{array}{ccc|c}1 &amp; 1 &amp; 1 &amp; 6\\ 0 &amp; 1 &amp; -1 &amp; -1\\ 0 &amp; 1 &amp; 2 &amp; 8\end{array}\right)\xrightarrow{R_3\leftarrow R_3-R_2}\left(\begin{array}{ccc|c}1 &amp; 1 &amp; 1 &amp; 6\\ 0 &amp; 1 &amp; -1 &amp; -1\\ 0 &amp; 0 &amp; 3 &amp; 9\end{array}\right)\]</p>
+<p>第3行より \(3z=9\)、\(z=3\)。第2行より \(y=-1+z=2\)。第1行より \(x=6-y-z=1\)。</p>
+<p>\[(x,\,y,\,z)=(1,\,2,\,3)\]</p>
+<p>検算:\(2\cdot1+3\cdot2+3=11\)、\(1+2\cdot2+3\cdot3=14\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「前進消去で三角形を作る → 後退代入で下から解く」。この2段構えが計算機の実装(問3.9のLU分解)にそのまま対応します。手計算では、1ステップごとに1つの成分だけを見て焦らず進めるのがミスを防ぐ最大のコツです。</p>
+</section>
+
+<section class="sol" id="a3-3">
+<div class="phead"><span class="pnum">解 3.3</span><span class="lv lv1">★</span><span class="ptag">簡約階段形とランク</span></div>
+<h4>方針</h4>
+<p>ピボットの下を消し(階段形)、さらにピボットを \(1\) にして上も消す(簡約階段形)。</p>
+<h4>解答</h4>
+<p>\[\begin{pmatrix}1 &amp; 2 &amp; 1 &amp; 3\\ 2 &amp; 4 &amp; 0 &amp; 4\\ 1 &amp; 2 &amp; 3 &amp; 5\end{pmatrix}\xrightarrow[R_3\leftarrow R_3-R_1]{R_2\leftarrow R_2-2R_1}\begin{pmatrix}1 &amp; 2 &amp; 1 &amp; 3\\ 0 &amp; 0 &amp; -2 &amp; -2\\ 0 &amp; 0 &amp; 2 &amp; 2\end{pmatrix}\xrightarrow{R_3\leftarrow R_3+R_2}\begin{pmatrix}1 &amp; 2 &amp; 1 &amp; 3\\ 0 &amp; 0 &amp; -2 &amp; -2\\ 0 &amp; 0 &amp; 0 &amp; 0\end{pmatrix}\]</p>
+<p>\[\xrightarrow{R_2\leftarrow -\frac12 R_2}\begin{pmatrix}1 &amp; 2 &amp; 1 &amp; 3\\ 0 &amp; 0 &amp; 1 &amp; 1\\ 0 &amp; 0 &amp; 0 &amp; 0\end{pmatrix}\xrightarrow{R_1\leftarrow R_1-R_2}\begin{pmatrix}1 &amp; 2 &amp; 0 &amp; 2\\ 0 &amp; 0 &amp; 1 &amp; 1\\ 0 &amp; 0 &amp; 0 &amp; 0\end{pmatrix}\]</p>
+<p>これがRREF。ピボットは第1列と第3列にあり、\(\operatorname{rank}A=2\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>第2列にピボットが立たない(第1列の2倍だから消えてしまう)のがこの問題の見どころ。ピボット列=「本質的に新しい方向」、非ピボット列=「それまでの列の一次結合」という対応が、第5章の基底の話へ直結します。ランク2は「独立な式が実質2本しかない」ことを意味します。</p>
+</section>
+
+<section class="sol" id="a3-4">
+<div class="phead"><span class="pnum">解 3.4</span><span class="lv lv2">★★</span><span class="ptag">解が無数にある場合</span></div>
+<h4>方針</h4>
+<p>拡大係数行列を掃き出し、ピボットのない列の変数(自由変数)にパラメータを置く。</p>
+<h4>解答</h4>
+<p>\[\left(\begin{array}{ccc|c}1 &amp; 2 &amp; 1 &amp; 3\\ 2 &amp; 4 &amp; 0 &amp; 4\\ 1 &amp; 2 &amp; 3 &amp; 5\end{array}\right)\xrightarrow[R_3\leftarrow R_3-R_1]{R_2\leftarrow R_2-2R_1}\left(\begin{array}{ccc|c}1 &amp; 2 &amp; 1 &amp; 3\\ 0 &amp; 0 &amp; -2 &amp; -2\\ 0 &amp; 0 &amp; 2 &amp; 2\end{array}\right)\xrightarrow{R_3\leftarrow R_3+R_2}\left(\begin{array}{ccc|c}1 &amp; 2 &amp; 1 &amp; 3\\ 0 &amp; 0 &amp; -2 &amp; -2\\ 0 &amp; 0 &amp; 0 &amp; 0\end{array}\right)\]</p>
+<p>第2行より \(z=1\)。第1行より \(x+2y=3-z=2\)。ピボットのない第2列の変数 \(y\) を自由変数として \(y=t\) と置くと \(x=2-2t\)。よって解は</p>
+<p>\[\begin{pmatrix}x\\ y\\ z\end{pmatrix}=\begin{pmatrix}2-2t\\ t\\ 1\end{pmatrix}=\underbrace{\begin{pmatrix}2\\ 0\\ 1\end{pmatrix}}_{特殊解}+t\underbrace{\begin{pmatrix}-2\\ 1\\ 0\end{pmatrix}}_{斉次解の方向}\qquad(t\ は任意の実数)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>解集合は3次元空間内の<b>直線</b>です(1本のパラメータ=自由度 \(3-\operatorname{rank}A=3-2=1\))。「1点(特殊解)を通り、零空間の方向に伸びる直線」という構造は、次の問3.6で確かめます。</p>
+</section>
+
+<section class="sol" id="a3-5">
+<div class="phead"><span class="pnum">解 3.5</span><span class="lv lv2">★★</span><span class="ptag">解が存在しない場合</span></div>
+<h4>方針</h4>
+<p>同じ変形を右辺 \((3,4,6)\) で行い、「\(0=(\ne0)\)」型の行が現れることを見る。</p>
+<h4>解答</h4>
+<p>\[\left(\begin{array}{ccc|c}1 &amp; 2 &amp; 1 &amp; 3\\ 2 &amp; 4 &amp; 0 &amp; 4\\ 1 &amp; 2 &amp; 3 &amp; 6\end{array}\right)\xrightarrow[R_3\leftarrow R_3-R_1]{R_2\leftarrow R_2-2R_1}\left(\begin{array}{ccc|c}1 &amp; 2 &amp; 1 &amp; 3\\ 0 &amp; 0 &amp; -2 &amp; -2\\ 0 &amp; 0 &amp; 2 &amp; 3\end{array}\right)\xrightarrow{R_3\leftarrow R_3+R_2}\left(\begin{array}{ccc|c}1 &amp; 2 &amp; 1 &amp; 3\\ 0 &amp; 0 &amp; -2 &amp; -2\\ 0 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\]</p>
+<p>最終行は \(0\cdot x+0\cdot y+0\cdot z=1\)、すなわち \(0=1\) を要求しており矛盾。よって解は存在しない。</p>
+<p><b>ランクの観点</b>:係数行列は \(\operatorname{rank}A=2\)(問3.3)だが、拡大係数行列は最終行のせいで \(\operatorname{rank}(A\mid\mathbf{b})=3\)。\(\operatorname{rank}A\lt\operatorname{rank}(A\mid\mathbf{b})\) だから解なし、と判定できる。</p>
+<h4 class="alt">ポイント</h4>
+<p>幾何的には「\(\mathbf{b}\) が \(A\) の列空間からはみ出している」状態です(問2.2の見方)。このとき「厳密解は諦めて、一番近い解を探す」のが第8章の最小二乗法 — 実データの方程式はほぼ常にこちらの世界です。</p>
+</section>
+
+<section class="sol" id="a3-6">
+<div class="phead"><span class="pnum">解 3.6</span><span class="lv lv2">★★</span><span class="ptag">斉次方程式と零空間</span></div>
+<h4>方針</h4>
+<p>右辺を \(\mathbf{0}\) にして同じ掃き出しを行う(右辺は \(0\) のまま変わらない)。</p>
+<h4>解答</h4>
+<p>問3.4と同じ変形により \(-2z=0\)、\(x+2y+z=0\)。よって \(z=0\)、\(x=-2y\)。\(y=t\) と置いて</p>
+<p>\[\mathbf{x}=t\begin{pmatrix}-2\\ 1\\ 0\end{pmatrix}\qquad(t\ は任意の実数)\]</p>
+<p>零空間は \(\operatorname{span}\left\{(-2,\,1,\,0)\right\}\)、原点を通る直線である。</p>
+<p><b>関係</b>:問3.4の解集合は「特殊解 \((2,0,1)\) + この零空間」だった。つまり非斉次方程式の解集合は、零空間(原点を通る直線)を特殊解の分だけ平行移動したものになっている。</p>
+<h4 class="alt">ポイント</h4>
+<p>2つの解 \(\mathbf{x}_1,\mathbf{x}_2\) の差をとると \(A(\mathbf{x}_1-\mathbf{x}_2)=\mathbf{b}-\mathbf{b}=\mathbf{0}\)。<b>解どうしの差は必ず零空間に落ちる</b> — これが「特殊解+斉次解」構造の証明そのものです。微分方程式の「特殊解+一般解」と同じ論理で、線形な世界に共通する構造です。</p>
+</section>
+
+<section class="sol" id="a3-7">
+<div class="phead"><span class="pnum">解 3.7</span><span class="lv lv2">★★</span><span class="ptag">パラメータによる場合分け</span></div>
+<h4>方針</h4>
+<p>消去を実行すると \((1-a^2)\) が現れる。この係数が \(0\) になるかどうか(\(a=\pm1\))で場合が分かれる。</p>
+<h4>解答</h4>
+<p>第2式から第1式の \(a\) 倍を引くと</p>
+<p>\[(1-a^2)\,y=1-a\]</p>
+<p><b>(i) \(a\ne\pm1\) のとき</b>:\(1-a^2=(1-a)(1+a)\ne0\) で割れて \(y=\dfrac{1-a}{(1-a)(1+a)}=\dfrac{1}{1+a}\)。第1式に戻すと \(x=1-ay=1-\dfrac{a}{1+a}=\dfrac{1}{1+a}\)。解はただ1つ:</p>
+<p>\[(x,\,y)=\left(\frac{1}{1+a},\ \frac{1}{1+a}\right)\]</p>
+<p><b>(ii) \(a=1\) のとき</b>:2つの式はどちらも \(x+y=1\) となり、実質1本。解は無数(直線 \(x+y=1\) 全体、\(x=1-t,\ y=t\))。</p>
+<p><b>(iii) \(a=-1\) のとき</b>:\(x-y=1\) と \(-x+y=1\)。辺々加えると \(0=2\) で矛盾。解なし。</p>
+<h4 class="alt">ポイント</h4>
+<p>場合分けの境目 \(a=\pm1\) は、係数行列の行列式 \(\det\begin{pmatrix}1 &amp; a\\ a &amp; 1\end{pmatrix}=1-a^2\) が \(0\) になる点そのもの。「行列式 \(\ne0\iff\) 解が一意」という第4章の主定理を、パラメータ付きで先取りした問題です。院試でも頻出の型です。</p>
+<div class="warn"><b>よくある誤り</b>:\((1-a^2)y=1-a\) の両辺をいきなり \(1-a^2\) で割ってしまうこと。文字で割るときは必ず「\(0\) かどうか」の場合分けが要ります。</div>
+</section>
+
+<section class="sol" id="a3-8">
+<div class="phead"><span class="pnum">解 3.8</span><span class="lv lv3">★★★</span><span class="ptag">掃き出し法による逆行列</span></div>
+<h4>方針</h4>
+<p>\((A\mid I)\) に行基本変形を施して左側を \(I\) にすれば、右側が \(A^{-1}\) になる。上三角なので「下から上へ」消すだけでよい。</p>
+<h4>解答</h4>
+<p>\[\left(\begin{array}{ccc|ccc}1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 1 &amp; 0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\xrightarrow{R_2\leftarrow R_2-R_3}\left(\begin{array}{ccc|ccc}1 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0\\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; -1\\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\xrightarrow{R_1\leftarrow R_1-R_2}\left(\begin{array}{ccc|ccc}1 &amp; 0 &amp; 0 &amp; 1 &amp; -1 &amp; 1\\ 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; -1\\ 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1\end{array}\right)\]</p>
+<p>よって</p>
+<p>\[A^{-1}=\begin{pmatrix}1 &amp; -1 &amp; 1\\ 0 &amp; 1 &amp; -1\\ 0 &amp; 0 &amp; 1\end{pmatrix}\]</p>
+<p>検算:\(AA^{-1}\) の \((1,2)\) 成分は \(1\cdot(-1)+1\cdot1+0\cdot0=0\)、対角成分はすべて \(1\)(他の成分も同様に \(0\))で \(I\) になる。</p>
+<h4 class="alt">ポイント</h4>
+<p>この方法が正しい理由:行基本変形は左から基本行列を掛けることに相当し、\(A\) を \(I\) にする変形の積 \(E_k\cdots E_1\) はまさに \(A^{-1}\)。同じ変形を \(I\) に施せば \(A^{-1}I=A^{-1}\) が右側に現れる、という仕掛けです。計算量の点でも、余因子による公式(第4章)より圧倒的に実用的です。</p>
+</section>
+
+<section class="sol" id="a3-9">
+<div class="phead"><span class="pnum">解 3.9</span><span class="lv lv3">★★★</span><span class="ptag">LU分解</span></div>
+<h4>方針</h4>
+<p>前進消去の「消去の係数」を \(L\) に記録し、消去後の上三角を \(U\) とする。解くときは \(L\mathbf{y}=\mathbf{b}\)(上から)、\(U\mathbf{x}=\mathbf{y}\)(下から)。</p>
+<h4>解答</h4>
+<p>第2行から第1行の \(2\) 倍を引くと \(A\to\begin{pmatrix}2 &amp; 1\\ 0 &amp; 3\end{pmatrix}=U\)。消去に使った倍率 \(2\) を \((2,1)\) 成分に記録して \(L=\begin{pmatrix}1 &amp; 0\\ 2 &amp; 1\end{pmatrix}\)。実際、</p>
+<p>\[LU=\begin{pmatrix}1 &amp; 0\\ 2 &amp; 1\end{pmatrix}\begin{pmatrix}2 &amp; 1\\ 0 &amp; 3\end{pmatrix}=\begin{pmatrix}2 &amp; 1\\ 4 &amp; 5\end{pmatrix}=A\]</p>
+<p><b>前進代入</b> \(L\mathbf{y}=(4,\,14)^\top\):第1行より \(y_1=4\)。第2行より \(2y_1+y_2=14\)、\(y_2=6\)。</p>
+<p><b>後退代入</b> \(U\mathbf{x}=(4,\,6)^\top\):第2行より \(3x_2=6\)、\(x_2=2\)。第1行より \(2x_1+x_2=4\)、\(x_1=1\)。</p>
+<p>\[\mathbf{x}=(1,\,2)^\top\]</p>
+<p>検算:\(2\cdot1+1\cdot2=4\)、\(4\cdot1+5\cdot2=14\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>LU分解の価値は「<b>同じ \(A\) で右辺 \(\mathbf{b}\) だけ何度も変わる</b>」場面にあります。分解(\(O(n^3)\))は1回だけ行い、以後は代入2回(\(O(n^2)\))で済む。シミュレーションの時間発展や回路解析はまさにこの状況で、NumPy/SciPyの <code>solve</code> の内部でも(部分ピボット選択付きの)LU分解が動いています。</p>
+</section>
+
+<section class="sol" id="a3-10">
+<div class="phead"><span class="pnum">解 3.10</span><span class="lv lv3">★★★</span><span class="ptag">多項式補間(応用)</span></div>
+<h4>方針</h4>
+<p>「点を通る」という条件1つが方程式1本。3点で3本、未知数 \(a,b,c\) の3元連立になる。</p>
+<h4>解答</h4>
+<p>各点を代入して</p>
+<p>\[\begin{cases}a+b+c=2\\ 4a+2b+c=3\\ 9a+3b+c=6\end{cases}\]</p>
+<p>第2式−第1式:\(3a+b=1\)。第3式−第2式:\(5a+b=3\)。さらに辺々引くと \(2a=2\)、\(a=1\)。よって \(b=1-3a=-2\)、\(c=2-a-b=3\)。</p>
+<p>\[y=x^2-2x+3\]</p>
+<p>検算:\(x=3\) で \(9-6+3=6\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>係数行列 \(\begin{pmatrix}1 &amp; 1 &amp; 1\\ 4 &amp; 2 &amp; 1\\ 9 &amp; 3 &amp; 1\end{pmatrix}\) は<b>ヴァンデルモンド型</b>で、通る点の \(x\) 座標が相異なれば必ず正則になります(問4.8で証明)。つまり「相異なる \(n+1\) 点を通る \(n\) 次多項式はただ1つ」— データへの曲線当てはめ・スプライン・数値積分公式の理論的土台です。点の数が式の数より多く厳密に通れないときが、最小二乗法(問8.5)の出番です。</p>
+</section>
+
+<header class="chap" id="ch4">
+<p class="chnum">第4章</p>
+<h2>行列式 — 解答解説</h2>
+<p class="chsub">体積・可逆性・符号</p>
+</header>
+
+<section class="sol" id="a4-1">
+<div class="phead"><span class="pnum">解 4.1</span><span class="lv lv1">★</span><span class="ptag">行列式の計算</span></div>
+<h4>方針</h4>
+<p>2次は \(ad-bc\)。3次はサラスの方法(右下がり3本の積の和 − 左下がり3本の積の和)。</p>
+<h4>解答</h4>
+<p>(1) \(\det=3\cdot2-1\cdot4=6-4=2\)。</p>
+<p>(2) サラスの方法で</p>
+<p>\[\det=\underbrace{1\cdot1\cdot0+2\cdot4\cdot5+3\cdot0\cdot6}_{0+40+0}-\underbrace{(3\cdot1\cdot5+1\cdot4\cdot6+2\cdot0\cdot0)}_{15+24+0}=40-39=1\]</p>
+<h4 class="alt">ポイント</h4>
+<p>サラスの方法は<b>3次限定</b>(4次以上では使えない)。4次以上は余因子展開(問4.4)か行変形(問4.2・4.3の性質)で計算します。この2つの行列は正則(\(\det\ne0\))なので、対応する連立方程式は必ずただ1つの解をもちます。</p>
+</section>
+
+<section class="sol" id="a4-2">
+<div class="phead"><span class="pnum">解 4.2</span><span class="lv lv1">★</span><span class="ptag">三角行列の行列式</span></div>
+<h4>方針</h4>
+<p>第1列で余因子展開すると、\(0\) だらけなので生き残る項は左上の1個だけ。これを繰り返す。</p>
+<h4>解答</h4>
+<p>上三角行列の第1列は、先頭の \(a_{11}\) 以外すべて \(0\)。第1列で余因子展開すると</p>
+<p>\[\det A=a_{11}\cdot\det(A\text{ から第1行・第1列を除いた行列})\]</p>
+<p>だけが残る。残った行列もまた上三角なので、同じ議論を繰り返すと、最終的に対角成分の積 \(a_{11}a_{22}\cdots a_{nn}\) になる。与えられた行列では</p>
+<p>\[\det=2\cdot3\cdot4=24\]</p>
+<h4 class="alt">ポイント</h4>
+<p>これが実用上の行列式計算の核心です:<b>掃き出しで三角化してから対角積をとる</b>(交換した回数だけ符号を反転)。計算機の行列式計算もこの方式(LU分解経由)で、\(O(n^3)\) で済みます。</p>
+</section>
+
+<section class="sol" id="a4-3">
+<div class="phead"><span class="pnum">解 4.3</span><span class="lv lv1">★</span><span class="ptag">行変形と行列式</span></div>
+<h4>方針</h4>
+<p>「1つの行を \(c\) 倍すると行列式は \(c\) 倍」(行ごとの線形性)、「行交換で \(-1\) 倍」、「行の加算で不変」を適用する。</p>
+<h4>解答</h4>
+<p>(1) \(2A\) は<b>3つの行すべて</b>を2倍した行列。1行ごとに2倍が出るので</p>
+<p>\[\det(2A)=2^3\det A=8\cdot5=40\]</p>
+<p>(2) 行の交換1回で符号が反転し、\(-5\)。</p>
+<p>(3) ある行に他の行の定数倍を加えても行列式は変わらないので、\(5\) のまま。</p>
+<h4 class="alt">ポイント</h4>
+<p>(1)は最頻出の引っかけ:\(\det(cA)=c^n\det A\) であって \(c\det A\) ではありません(体積は各辺が \(c\) 倍されると \(c^n\) 倍)。(3)の「加算で不変」のおかげで、掃き出し法(主に加算を使う)で三角化しながら行列式を追跡できます。</p>
+<div class="warn"><b>よくある誤り</b>:\(\det(A+B)=\det A+\det B\) は一般に<b>成り立ちません</b>。行列式が線形なのは「1つの行(列)ごと」に見たときだけです。</div>
+</section>
+
+<section class="sol" id="a4-4">
+<div class="phead"><span class="pnum">解 4.4</span><span class="lv lv2">★★</span><span class="ptag">4次の余因子展開</span></div>
+<h4>方針</h4>
+<p>第1行には非零成分が2つ(\(a_{11}=1,\ a_{13}=2\))しかない。ここで展開して3次に落とし、さらに零の多い行で展開する。符号 \((-1)^{i+j}\) を丁寧に。</p>
+<h4>解答</h4>
+<p>第1行で展開すると</p>
+<p>\[\det=1\cdot(-1)^{1+1}\det\begin{pmatrix}3 &amp; 0 &amp; 4\\ 0 &amp; 6 &amp; 0\\ 7 &amp; 0 &amp; 8\end{pmatrix}+2\cdot(-1)^{1+3}\det\begin{pmatrix}0 &amp; 3 &amp; 4\\ 5 &amp; 0 &amp; 0\\ 0 &amp; 7 &amp; 8\end{pmatrix}\]</p>
+<p>第1項の3次行列式:第2行(\(0,6,0\))で展開して</p>
+<p>\[6\cdot(-1)^{2+2}\det\begin{pmatrix}3 &amp; 4\\ 7 &amp; 8\end{pmatrix}=6(24-28)=6\cdot(-4)=-24\]</p>
+<p>第2項の3次行列式:第2行(\(5,0,0\))で展開して</p>
+<p>\[5\cdot(-1)^{2+1}\det\begin{pmatrix}3 &amp; 4\\ 7 &amp; 8\end{pmatrix}=-5\cdot(-4)=20\]</p>
+<p>よって</p>
+<p>\[\det=1\cdot(-24)+2\cdot20=-24+40=16\]</p>
+<h4 class="alt">ポイント</h4>
+<p>余因子展開の鉄則は「<b>零が最も多い行・列で展開する</b>」。符号は市松模様 \(\begin{pmatrix}+ &amp; - &amp; +\\ - &amp; + &amp; -\\ + &amp; - &amp; +\end{pmatrix}\) で覚えると速い。なおこの行列は行・列を並べ替えると2つの \(2\times2\) ブロックに分かれ、\(\det\begin{pmatrix}1 &amp; 2\\ 5 &amp; 6\end{pmatrix}\cdot\det\begin{pmatrix}3 &amp; 4\\ 7 &amp; 8\end{pmatrix}=(-4)(-4)=16\) と一致します(ブロック対角の行列式=ブロックの行列式の積)。</p>
+</section>
+
+<section class="sol" id="a4-5">
+<div class="phead"><span class="pnum">解 4.5</span><span class="lv lv2">★★</span><span class="ptag">積の行列式</span></div>
+<h4>方針</h4>
+<p>3つとも直接計算して比較する。\(AB\) は問2.1で計算済み。</p>
+<h4>解答</h4>
+<p>\(\det A=1\cdot4-2\cdot3=-2\)、\(\det B=2\cdot3-0\cdot1=6\)。また \(AB=\begin{pmatrix}4 &amp; 6\\ 10 &amp; 12\end{pmatrix}\) より</p>
+<p>\[\det(AB)=4\cdot12-6\cdot10=48-60=-12\]</p>
+<p>一方 \(\det A\,\det B=(-2)\cdot6=-12\) で、確かに一致する。</p>
+<p><b>幾何学的解釈</b>:\(AB\) は「\(B\) で変換してから \(A\) で変換する」合成。面積の拡大率は各段階の拡大率の積になる(\(6\) 倍してから \(2\) 倍(向き反転)なら合計 \(12\) 倍・向き反転)、という自然な事実の表現である。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(\det(AB)=\det A\det B\) から、\(A\) が正則なら \(\det(A^{-1})=1/\det A\)(\(\det A\det A^{-1}=\det I=1\) より)が直ちに従います。符号は「向き(裏返るかどうか)」を表し、\(\det A=-2\lt0\) は \(A\) が平面を裏返す変換であることを意味します。</p>
+</section>
+
+<section class="sol" id="a4-6">
+<div class="phead"><span class="pnum">解 4.6</span><span class="lv lv2">★★</span><span class="ptag">特異になる条件</span></div>
+<h4>方針</h4>
+<p>「特異(正則でない)\(\iff\det=0\)」を解くだけ。</p>
+<h4>解答</h4>
+<p>\[\det\begin{pmatrix}1 &amp; x\\ x &amp; 4\end{pmatrix}=4-x^2\]</p>
+<p>特異になるのは \(4-x^2=0\)、すなわち</p>
+<p>\[x=\pm2\]</p>
+<h4 class="alt">ポイント</h4>
+<p>\(x=2\) のとき行列は \(\begin{pmatrix}1 &amp; 2\\ 2 &amp; 4\end{pmatrix}\) で、第2行が第1行の2倍 — 行が一次従属になって空間が直線に潰れています。「\(\det=0\iff\) 行(列)が一次従属」という第5章の言葉との対応を、ここで体感しておきましょう。この形の行列(対称行列)は第9章・第10章で主役になります。</p>
+</section>
+
+<section class="sol" id="a4-7">
+<div class="phead"><span class="pnum">解 4.7</span><span class="lv lv2">★★</span><span class="ptag">面積と体積</span></div>
+<h4>方針</h4>
+<p>ベクトルを行(または列)に並べた行列式の<b>絶対値</b>が面積・体積。</p>
+<h4>解答</h4>
+<p>(1) \[\left|\det\begin{pmatrix}3 &amp; 1\\ 1 &amp; 2\end{pmatrix}\right|=|3\cdot2-1\cdot1|=|5|=5\]</p>
+<p>(2) 3本を行に並べると下三角形になるので対角積(問4.2)で</p>
+<p>\[\left|\det\begin{pmatrix}1 &amp; 0 &amp; 0\\ 1 &amp; 1 &amp; 0\\ 1 &amp; 1 &amp; 1\end{pmatrix}\right|=|1\cdot1\cdot1|=1\]</p>
+<h4 class="alt">ポイント</h4>
+<p>(2)の平行六面体は斜めに傾いていますが体積は \(1\) — 剪断(問2.7)が体積を変えないことの3次元版です。符号を捨てずに使うと「ベクトルの並びが右手系か左手系か」が分かり、計算幾何(多角形の面積・点の左右判定)やCGの面の向き判定で符号ごと活用されます。</p>
+</section>
+
+<section class="sol" id="a4-8">
+<div class="phead"><span class="pnum">解 4.8</span><span class="lv lv3">★★★</span><span class="ptag">ヴァンデルモンドの行列式</span></div>
+<h4>方針</h4>
+<p>「行の加算で行列式は不変」を使い、第1行を他の行から引いて \(0\) を作ってから展開する。</p>
+<h4>解答</h4>
+<p>\(R_2\leftarrow R_2-R_1\)、\(R_3\leftarrow R_3-R_1\) は行列式を変えないので</p>
+<p>\[\det V=\det\begin{pmatrix}1 &amp; 1 &amp; 1\\ 0 &amp; 1 &amp; x-1\\ 0 &amp; 3 &amp; x^2-1\end{pmatrix}=1\cdot\det\begin{pmatrix}1 &amp; x-1\\ 3 &amp; x^2-1\end{pmatrix}\]</p>
+<p>(第1列で展開)。よって</p>
+<p>\[\det V=(x^2-1)-3(x-1)=(x-1)(x+1)-3(x-1)=(x-1)(x-2)\]</p>
+<p><b>意味</b>:\(\det V=0\iff x=1\) または \(x=2\)。この行列は「節点 \(1,2,x\) での多項式補間」の係数行列(を転置したもの)であり、特異になるのは<b>節点が重複するとき</b>にほかならない。つまり問3.10の「3点を通る放物線がただ1つに決まる」ことは、3点の \(x\) 座標が相異なる限り保証される。</p>
+<h4 class="alt">ポイント</h4>
+<p>一般のヴァンデルモンド行列式は \(\det V=\prod_{i\lt j}(x_j-x_i)\)(すべてのペアの差の積)という美しい形になり、「節点が全て異なる \(\iff\) 正則」が一目で分かります。多項式補間・誤り訂正符号(リード・ソロモン符号)・数値積分公式の一意性は、すべてこの1本の式が支えています。</p>
+</section>
+
+<section class="sol" id="a4-9">
+<div class="phead"><span class="pnum">解 4.9</span><span class="lv lv3">★★★</span><span class="ptag">クラメルの公式と計算量</span></div>
+<h4>方針</h4>
+<p>クラメルの公式:\(x_i=\dfrac{\det A_i}{\det A}\)(\(A_i\) は \(A\) の第 \(i\) 列を \(\mathbf{b}\) で置き換えた行列)。(2)は数の規模の比較。</p>
+<h4>解答</h4>
+<p>(1) \(\det A=3\cdot2-1\cdot4=2\)。第1列・第2列をそれぞれ \(\mathbf{b}=(5,8)^\top\) で置き換えて</p>
+<p>\[x=\frac{\det\begin{pmatrix}5 &amp; 1\\ 8 &amp; 2\end{pmatrix}}{2}=\frac{10-8}{2}=1,\qquad y=\frac{\det\begin{pmatrix}3 &amp; 5\\ 4 &amp; 8\end{pmatrix}}{2}=\frac{24-20}{2}=2\]</p>
+<p>よって \((x,y)=(1,\,2)\)。検算:\(3+2=5\)、\(4+4=8\)。</p>
+<p>(2) \(n=20\) では \(20!\approx2.4\times10^{18}\)。毎秒 \(10^9\) 項処理できたとしても<b>約77年</b>かかる規模である。一方、掃き出し法は \(20^3/3\approx2{,}700\) 回程度の演算 — 一瞬で終わる。クラメルの公式は \(n+1\) 個の行列式を要求するため、素朴に使うと階乗的コストになり実用に耐えない。解の存在や感度を<b>論じる</b>ための理論的道具と割り切り、実際に<b>解く</b>ときは掃き出し法(LU分解)を使うべきである。</p>
+<h4 class="alt">ポイント</h4>
+<p>「数学的に正しい公式」と「計算機で使うべきアルゴリズム」は別物 — 情報系の人が必ず持つべき視点です。同じ区別は逆行列の余因子公式(理論用)とガウス・ジョルダン法(実用)にも当てはまります。なお行列式自体も掃き出しで \(O(n^3)\) で計算できる(問4.2ポイント)ので、\(n!\) は「定義通りの展開」のコストです。</p>
+</section>
+
+<header class="chap" id="ch5">
+<p class="chnum">第5章</p>
+<h2>ベクトル空間 — 解答解説</h2>
+<p class="chsub">基底・次元・部分空間</p>
+</header>
+
+<section class="sol" id="a5-1">
+<div class="phead"><span class="pnum">解 5.1</span><span class="lv lv1">★</span><span class="ptag">部分空間の判定</span></div>
+<h4>方針</h4>
+<p>①\(\mathbf{0}\) を含む ②和で閉じる ③スカラー倍で閉じる、の3条件を確認。ダメなときは<b>反例を1つ</b>挙げれば十分。</p>
+<h4>解答</h4>
+<p>(1) <b>部分空間である</b>。① \((0,0,0)\) は \(0+0+0=0\) を満たす。② \(x_1+y_1+z_1=0\)、\(x_2+y_2+z_2=0\) なら、和の成分の総和は \((x_1+x_2)+(y_1+y_2)+(z_1+z_2)=0+0=0\)。③ \(c\) 倍の成分の総和は \(c(x+y+z)=0\)。</p>
+<p>(2) <b>部分空間でない</b>。\((1,0)\in W_2\) だが、\((-1)\) 倍した \((-1,0)\) は \(x\ge0\) を満たさない(スカラー倍で閉じない)。</p>
+<p>(3) <b>部分空間でない</b>。\((1,0)\in W_3\)、\((0,1)\in W_3\) だが、和 \((1,1)\) は \(xy=1\ne0\) で \(W_3\) に入らない(和で閉じない)。</p>
+<h4 class="alt">ポイント</h4>
+<p>部分空間とは「原点を通る、まっすぐな(直線・平面状の)集合」。(2)は半平面(端で切れている)、(3)は2直線の合併(折れている)なのでダメ、という図形的直感と、条件のチェックがきちんと対応します。一般に「\(A\mathbf{x}=\mathbf{0}\) の解集合(零空間)」は常に部分空間、「\(A\mathbf{x}=\mathbf{b}\ (\mathbf{b}\ne\mathbf{0})\) の解集合」は原点を通らないので部分空間ではありません。</p>
+</section>
+
+<section class="sol" id="a5-2">
+<div class="phead"><span class="pnum">解 5.2</span><span class="lv lv1">★</span><span class="ptag">一次独立の判定</span></div>
+<h4>方針</h4>
+<p>3本を列に並べた行列の行列式が \(\ne0\) なら独立(\(c_1\mathbf{v}_1+c_2\mathbf{v}_2+c_3\mathbf{v}_3=\mathbf{0}\) が自明解しか持たない)。従属のときは実際の関係式を見つける。</p>
+<h4>解答</h4>
+<p>前半:列に並べて</p>
+<p>\[\det\begin{pmatrix}1 &amp; 1 &amp; 0\\ 1 &amp; 0 &amp; 1\\ 0 &amp; 1 &amp; 1\end{pmatrix}=1\cdot(0-1)-1\cdot(1-0)+0=-2\ne0\]</p>
+<p>よって \(\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\}\) は<b>一次独立</b>。</p>
+<p>後半:\(\mathbf{v}_1+\mathbf{v}_2=(2,1,1)=\mathbf{w}\) が成り立つので、\(\mathbf{v}_1+\mathbf{v}_2-\mathbf{w}=\mathbf{0}\) という非自明な関係がある。よって \(\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{w}\}\) は<b>一次従属</b>。</p>
+<h4 class="alt">ポイント</h4>
+<p>一次従属とは「誰かが他の仲間の一次結合で作れる=情報として冗長」ということ。判定は常に「\(c_1\mathbf{v}_1+\cdots+c_k\mathbf{v}_k=\mathbf{0}\) という斉次連立方程式が非自明解をもつか」に帰着し、正方形の場合は行列式、一般には掃き出し(ランク)で判定します。第3章の技術がそのまま理論の道具になっています。</p>
+</section>
+
+<section class="sol" id="a5-3">
+<div class="phead"><span class="pnum">解 5.3</span><span class="lv lv1">★</span><span class="ptag">部分空間の基底と次元</span></div>
+<h4>方針</h4>
+<p>条件 \(x+y+z=0\) を「自由変数で解く」と、基底が自動的に出てくる。</p>
+<h4>解答</h4>
+<p>\(x=-y-z\) より、\(y=s,\ z=t\) と置くと</p>
+<p>\[(x,y,z)=(-s-t,\ s,\ t)=s\,(-1,1,0)+t\,(-1,0,1)\]</p>
+<p>よって \(W=\operatorname{span}\{(-1,1,0),\ (-1,0,1)\}\)。この2本は(第2・第3成分を見れば)一方が他方のスカラー倍でなく一次独立。ゆえに基底の1組は</p>
+<p>\[\{(-1,1,0),\ (-1,0,1)\}\qquad \dim W=2\]</p>
+<p class="note">符号を変えた \(\{(1,-1,0),\ (1,0,-1)\}\) など、基底の取り方は無数にある(本数だけが不変)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「平面だから次元2」という直感が、「自由変数2個」という計算と一致します。\(\dim=\)(未知数の個数)\(-\)(独立な条件の本数)\(=3-1=2\) — これは rank-nullity 定理(問5.8)の最小例です。</p>
+</section>
+
+<section class="sol" id="a5-4">
+<div class="phead"><span class="pnum">解 5.4</span><span class="lv lv2">★★</span><span class="ptag">span への所属判定</span></div>
+<h4>方針</h4>
+<p>\(a(1,1,0)+b(1,0,1)=(a+b,\ a,\ b)\) の形を目標のベクトルと成分比較する(=連立方程式の可解性判定)。</p>
+<h4>解答</h4>
+<p>一般の一次結合は \((a+b,\ a,\ b)\)。</p>
+<p><b>\((3,1,2)\) について</b>:第2成分から \(a=1\)、第3成分から \(b=2\)。このとき第1成分は \(a+b=3\) で一致。よって \((3,1,2)=1\cdot(1,1,0)+2\cdot(1,0,1)\in U\)。</p>
+<p><b>\((1,1,1)\) について</b>:第2成分から \(a=1\)、第3成分から \(b=1\)。しかし第1成分は \(a+b=2\ne1\) で矛盾。よって \((1,1,1)\notin U\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(U\) は \(\mathbb{R}^3\) 内の平面(2次元部分空間)であり、\((1,1,1)\) はその平面から浮いています。「span に属するか」=「連立方程式 \(A\mathbf{c}=\mathbf{v}\) が解をもつか」=「\(\mathbf{v}\) が列空間に入るか」。第3章の解の存在判定と完全に同じ問題です。属さないときに"一番近い点"を求めるのが射影(第8章)です。</p>
+</section>
+
+<section class="sol" id="a5-5">
+<div class="phead"><span class="pnum">解 5.5</span><span class="lv lv2">★★</span><span class="ptag">基底に関する座標</span></div>
+<h4>方針</h4>
+<p>\((5,1)=a(1,1)+b(1,-1)\) を解く。</p>
+<h4>解答</h4>
+<p>\((a+b,\ a-b)=(5,\,1)\) より \(a+b=5\)、\(a-b=1\)。辺々加えて \(2a=6\)、\(a=3\)、\(b=2\)。よって \(B\) に関する座標は</p>
+<p>\[[\,(5,1)\,]_B=(3,\,2)\]</p>
+<p>検算:\(3(1,1)+2(1,-1)=(5,1)\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>同じベクトルでも「どの基底というモノサシで測るか」で数値表現(座標)は変わります。標準基底での \((5,1)\) が、この基底では \((3,2)\)。座標が<b>一意に</b>決まるのは基底が一次独立だからです。「対象は不変、表現は基底次第」— この視点が第6章の基底変換、そして「良い基底を選んで問題を簡単にする」(対角化・フーリエ・PCA)へつながります。</p>
+</section>
+
+<section class="sol" id="a5-6">
+<div class="phead"><span class="pnum">解 5.6</span><span class="lv lv2">★★</span><span class="ptag">多項式空間の基底</span></div>
+<h4>方針</h4>
+<p>標準基底 \(\{1,x,x^2\}\) に関する座標(係数)ベクトルに翻訳すれば、数ベクトルの問題と同じ。3本の座標ベクトルを列に並べた行列式で独立性を判定する。</p>
+<h4>解答</h4>
+<p>(1) \(1+x,\ x+x^2,\ 1+x^2\) の座標ベクトル(\(1,x,x^2\) の係数)はそれぞれ \((1,1,0),\ (0,1,1),\ (1,0,1)\)。列に並べて</p>
+<p>\[\det\begin{pmatrix}1 &amp; 0 &amp; 1\\ 1 &amp; 1 &amp; 0\\ 0 &amp; 1 &amp; 1\end{pmatrix}=1\cdot(1-0)-0+1\cdot(1-0)=2\ne0\]</p>
+<p>よって3本は一次独立。\(\dim P_2=3\) の空間内の独立な3本なので、これは基底である。</p>
+<p>(2) \(a(1+x)+b(x+x^2)+c(1+x^2)=(a+c)+(a+b)x+(b+c)x^2\) を \(2+3x+x^2\) と係数比較して</p>
+<p>\[a+c=2,\qquad a+b=3,\qquad b+c=1\]</p>
+<p>3式を加えると \(2(a+b+c)=6\)、\(a+b+c=3\)。各式との差から \(b=1,\ c=0,\ a=2\)。座標は</p>
+<p>\[(a,\,b,\,c)=(2,\,1,\,0)\]</p>
+<p>検算:\(2(1+x)+1(x+x^2)+0=2+3x+x^2\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>多項式のような「数ベクトルでないベクトル」も、基底を1つ固定すれば座標ベクトルとして \(\mathbb{R}^n\) の話に完全翻訳できる — これが抽象化のご利益です。同じ翻訳で、信号は標本値ベクトルに、画像は画素ベクトルになります。「\(n\) 次元ベクトル空間はどれも \(\mathbb{R}^n\) と同じ構造(同型)」という事実の体験版です。</p>
+</section>
+
+<section class="sol" id="a5-7">
+<div class="phead"><span class="pnum">解 5.7</span><span class="lv lv2">★★</span><span class="ptag">列空間・零空間</span></div>
+<h4>方針</h4>
+<p>掃き出してピボット位置を特定。列空間の基底は「<b>元の行列</b>のピボット列」、零空間は自由変数で解く。</p>
+<h4>解答</h4>
+<p>\[A=\begin{pmatrix}1 &amp; 2 &amp; 1\\ 2 &amp; 4 &amp; 0\\ 3 &amp; 6 &amp; 1\end{pmatrix}\xrightarrow[R_3\leftarrow R_3-3R_1]{R_2\leftarrow R_2-2R_1}\begin{pmatrix}1 &amp; 2 &amp; 1\\ 0 &amp; 0 &amp; -2\\ 0 &amp; 0 &amp; -2\end{pmatrix}\xrightarrow{R_3\leftarrow R_3-R_2}\begin{pmatrix}1 &amp; 2 &amp; 1\\ 0 &amp; 0 &amp; -2\\ 0 &amp; 0 &amp; 0\end{pmatrix}\]</p>
+<p>ピボットは第1列・第3列にあり、\(\operatorname{rank}A=2\)。</p>
+<p><b>列空間</b>:元の \(A\) の第1列と第3列をとって、基底は \(\left\{(1,2,3),\ (1,0,1)\right\}\)(\(\dim\operatorname{Col}A=2\):\(\mathbb{R}^3\) 内の平面)。</p>
+<p><b>零空間</b>:\(-2z=0\) より \(z=0\)、\(x+2y+z=0\) より \(x=-2y\)。\(y=t\) として \(\mathbf{x}=t(-2,1,0)\)。基底は \(\{(-2,1,0)\}\)、\(\dim\operatorname{Null}A=1\)。</p>
+<p><b>確認</b>:\(\operatorname{rank}A+\dim\operatorname{Null}A=2+1=3=\)(列の数 \(n\))。定理どおり。</p>
+<h4 class="alt">ポイント</h4>
+<p>列空間の基底に「変形後」でなく「<b>元の</b>」列を使うのは、行変形が列どうしの関係(どの列がどの列の結合か)は保つが、列そのものは変えてしまうから。第2列は第1列の2倍なので基底に入らない、という判定が掃き出しから自動で読めます。零空間 \((-2,1,0)\) はまさに「第1列の \(-2\) 倍+第2列 \(=\mathbf{0}\)」という列の従属関係の記録です。</p>
+</section>
+
+<section class="sol" id="a5-8">
+<div class="phead"><span class="pnum">解 5.8</span><span class="lv lv3">★★★</span><span class="ptag">階数・退化次数の定理の証明</span></div>
+<h4>方針</h4>
+<p>ヒント通り、核の基底を全体の基底へ拡張する。「付け足した分の像」が像空間の基底になること(張ること・独立なこと)を、それぞれ定義から示す。</p>
+<h4>解答</h4>
+<p>\(\dim(\operatorname{Ker}T)=k\) とし、\(\operatorname{Ker}T\) の基底 \(\{\mathbf{u}_1,\dots,\mathbf{u}_k\}\) をとる。これを \(\mathbb{R}^n\) 全体の基底</p>
+<p>\[\{\mathbf{u}_1,\dots,\mathbf{u}_k,\ \mathbf{w}_1,\dots,\mathbf{w}_r\}\qquad(k+r=n)\]</p>
+<p>に拡張する(独立な組は必ず基底まで拡張できる)。このとき \(\{T(\mathbf{w}_1),\dots,T(\mathbf{w}_r)\}\) が \(\operatorname{Im}T\) の基底であることを示せば、\(\dim(\operatorname{Im}T)=r=n-k\) となり定理が従う。</p>
+<p><b>(i) 張ること</b>:任意の \(\mathbf{y}\in\operatorname{Im}T\) は \(\mathbf{y}=T(\mathbf{x})\) と書ける。\(\mathbf{x}=\sum_i a_i\mathbf{u}_i+\sum_j b_j\mathbf{w}_j\) と展開して \(T\) を作用させると、\(T(\mathbf{u}_i)=\mathbf{0}\) より</p>
+<p>\[\mathbf{y}=\sum_i a_i\,T(\mathbf{u}_i)+\sum_j b_j\,T(\mathbf{w}_j)=\sum_j b_j\,T(\mathbf{w}_j)\]</p>
+<p>よって \(T(\mathbf{w}_j)\) たちで \(\operatorname{Im}T\) 全体が張れる。</p>
+<p><b>(ii) 一次独立なこと</b>:\(\sum_j c_j\,T(\mathbf{w}_j)=\mathbf{0}\) とすると、線形性より \(T\bigl(\sum_j c_j\mathbf{w}_j\bigr)=\mathbf{0}\)、すなわち \(\sum_j c_j\mathbf{w}_j\in\operatorname{Ker}T\)。核の基底で書けるから</p>
+<p>\[\sum_j c_j\mathbf{w}_j=\sum_i d_i\mathbf{u}_i \iff \sum_i (-d_i)\mathbf{u}_i+\sum_j c_j\mathbf{w}_j=\mathbf{0}\]</p>
+<p>ところが \(\{\mathbf{u}_i,\mathbf{w}_j\}\) は \(\mathbb{R}^n\) の基底で一次独立なので、係数はすべて \(0\)。特に \(c_j=0\)(全 \(j\))。</p>
+<p>以上より \(\{T(\mathbf{w}_j)\}\) は \(\operatorname{Im}T\) の基底で、\(\dim(\operatorname{Ker}T)+\dim(\operatorname{Im}T)=k+r=n\)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>直感は「入力の自由度 \(n\) は、<b>潰される自由度</b>(核)と<b>生き残る自由度</b>(像)に過不足なく分配される」。問5.7 の \(2+1=3\)、問5.3 の \(3-1=2\) はすべてこの定理の実例です。「基底を拡張して像を調べる」証明パターンは線形代数で繰り返し使う定跡なので、流れを自分の言葉で再現できるようにしておきましょう。</p>
+</section>
+
+<section class="sol" id="a5-9">
+<div class="phead"><span class="pnum">解 5.9</span><span class="lv lv3">★★★</span><span class="ptag">本数と従属性</span></div>
+<h4>方針</h4>
+<p>基底で座標化すると、「\(n+1\) 個の未知数・\(n\) 本の式」の斉次連立方程式が現れる。式より未知数が多い斉次系は必ず非自明解をもつ(自由変数が残る)。</p>
+<h4>解答</h4>
+<p>\(V\) の基底 \(\{\mathbf{e}_1,\dots,\mathbf{e}_n\}\) をとり、各 \(\mathbf{v}_j\ (j=1,\dots,n+1)\) を座標で \(\mathbf{v}_j=\sum_{i=1}^{n}a_{ij}\mathbf{e}_i\) と表す。係数 \(c_1,\dots,c_{n+1}\) に対して</p>
+<p>\[c_1\mathbf{v}_1+\cdots+c_{n+1}\mathbf{v}_{n+1}=\sum_{i=1}^{n}\Bigl(\sum_{j=1}^{n+1}a_{ij}c_j\Bigr)\mathbf{e}_i\]</p>
+<p>基底の一次独立性より、これが \(\mathbf{0}\) になる条件は各 \(i\) で \(\sum_j a_{ij}c_j=0\) — すなわち未知数 \(n+1\) 個・式 \(n\) 本の斉次連立一次方程式である。掃き出せばピボットは高々 \(n\) 個しか立たず、自由変数が少なくとも \(1\) 個残るので、非自明解 \((c_1,\dots,c_{n+1})\ne\mathbf{0}\) が存在する。これは \(\mathbf{v}_1,\dots,\mathbf{v}_{n+1}\) の非自明な一次関係にほかならず、一次従属である。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>この定理こそ「次元」という概念が破綻なく定まる理由の核心です。系として「基底の本数はどの取り方でも同じ」(もし本数の違う基底があれば、多い方が従属になって矛盾)が従います。3次元空間に独立な4本は立てられない — 当たり前に見える事実の、きちんとした証明です。</p>
+</section>
+
+<section class="sol" id="a5-10">
+<div class="phead"><span class="pnum">解 5.10</span><span class="lv lv3">★★★</span><span class="ptag">パリティ検査行列(符号理論への入口)</span></div>
+<h4>方針</h4>
+<p>\(H\mathbf{x}=\mathbf{0}\) を掃き出しで解く。\(H\) はすでにほぼ階段形。</p>
+<h4>解答</h4>
+<p>条件は \(\begin{cases}x_1+x_2+x_3=0\\ x_2+x_3+x_4=0\end{cases}\)。第1式−第2式より \(x_1=x_4\) にも気づくが、素直に解く:ピボットは \(x_1,x_2\) の列。\(x_3=s,\ x_4=t\) を自由変数として、第2式から \(x_2=-s-t\)、第1式から \(x_1=-x_2-x_3=(s+t)-s=t\)。よって</p>
+<p>\[\mathbf{x}=\begin{pmatrix}t\\ -s-t\\ s\\ t\end{pmatrix}=s\begin{pmatrix}0\\ -1\\ 1\\ 0\end{pmatrix}+t\begin{pmatrix}1\\ -1\\ 0\\ 1\end{pmatrix}\]</p>
+<p>基底は \(\{(0,-1,1,0),\ (1,-1,0,1)\}\)、次元は \(\dim(\operatorname{Null}H)=4-\operatorname{rank}H=4-2=2\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>通信符号の世界では「検査条件 \(H\mathbf{x}=\mathbf{0}\) を満たすベクトル=正しい符号語」であり、符号語全体はまさに零空間(部分空間)です。長さ4のうち自由に選べるのは2ビット分(情報)、残り2つは条件で決まる(冗長=誤り検出用) — rank-nullity がそのまま「情報ビット数 \(=n-\operatorname{rank}H\)」を与えます。実際のハミング符号などは \(\mathrm{GF}(2)\)(\(1+1=0\) の世界)上で同じ計算をしますが、部分空間・基底・次元という構造は完全に共通です。</p>
+</section>
+
+<header class="chap" id="ch6">
+<p class="chnum">第6章</p>
+<h2>線形写像 — 解答解説</h2>
+<p class="chsub">表現行列と基底変換</p>
+</header>
+
+<section class="sol" id="a6-1">
+<div class="phead"><span class="pnum">解 6.1</span><span class="lv lv1">★</span><span class="ptag">線形性の判定</span></div>
+<h4>方針</h4>
+<p>線形なら \(T(\mathbf{u}+\mathbf{v})=T(\mathbf{u})+T(\mathbf{v})\) と \(T(c\mathbf{u})=cT(\mathbf{u})\) を確認。線形でないと疑ったら、まず \(T(\mathbf{0})=\mathbf{0}\) をチェック(破れていれば即アウト)、次に具体的な反例。</p>
+<h4>解答</h4>
+<p>(1) <b>線形である</b>。\(\mathbf{u}=(x_1,y_1),\ \mathbf{v}=(x_2,y_2)\) に対し</p>
+<p>\[T_1(\mathbf{u}+\mathbf{v})=\bigl(2(x_1+x_2)+(y_1+y_2),\ (x_1+x_2)-(y_1+y_2)\bigr)=T_1(\mathbf{u})+T_1(\mathbf{v})\]</p>
+<p>\(T_1(c\mathbf{u})=(2cx_1+cy_1,\ cx_1-cy_1)=cT_1(\mathbf{u})\)。両条件を満たす。</p>
+<p>(2) <b>線形でない</b>。\(T_2(0,0)=(1,0)\ne(0,0)\)。線形写像は必ず \(T(\mathbf{0})=\mathbf{0}\) を満たす(\(T(\mathbf{0})=T(0\cdot\mathbf{0})=0\cdot T(\mathbf{0})=\mathbf{0}\))ので、これだけで否定できる。</p>
+<p>(3) <b>線形でない</b>。\(\mathbf{u}=(1,0),\ \mathbf{v}=(0,1)\) とすると \(T_3(\mathbf{u}+\mathbf{v})=T_3(1,1)=1\) だが \(T_3(\mathbf{u})+T_3(\mathbf{v})=0+0=0\)。和を保たない。</p>
+<h4 class="alt">ポイント</h4>
+<p>(2)のような「平行移動を含む写像」(アフィン写像)は、CGでは行列で扱いたい重要な変換です。実務では座標を1次元増やす<b>同次座標</b>という技で線形化します。(3)のような積の項は本質的に非線形 — ニューラルネットが「線形層+非線形活性化」を交互に重ねるのは、線形だけでは表現力が足りないからです。</p>
+</section>
+
+<section class="sol" id="a6-2">
+<div class="phead"><span class="pnum">解 6.2</span><span class="lv lv1">★</span><span class="ptag">標準行列</span></div>
+<h4>方針</h4>
+<p>標準基底 \(\mathbf{e}_1=(1,0),\ \mathbf{e}_2=(0,1)\) の像を計算し、<b>列に並べる</b>。</p>
+<h4>解答</h4>
+<p>\(T_1(1,0)=(2,1)\)、\(T_1(0,1)=(1,-1)\)。これらを列に並べて</p>
+<p>\[A=\begin{pmatrix}2 &amp; 1\\ 1 &amp; -1\end{pmatrix}\]</p>
+<p>検算:\(A\begin{pmatrix}x\\ y\end{pmatrix}=\begin{pmatrix}2x+y\\ x-y\end{pmatrix}\) で定義と一致。</p>
+<h4 class="alt">ポイント</h4>
+<p>「<b>列を見れば、基底ベクトルの行き先が分かる</b>」— 行列を読むための最重要スキルです。逆に、線形写像は基底の行き先だけで完全に決まる(他のベクトルは基底の一次結合なので、線形性で像が自動的に決まる)ことも意味します。回転行列 \(R(\theta)\) の列が \((\cos\theta,\sin\theta)\) と \((-\sin\theta,\cos\theta)\) であることも、この原理から一瞬で再構成できます。</p>
+</section>
+
+<section class="sol" id="a6-3">
+<div class="phead"><span class="pnum">解 6.3</span><span class="lv lv2">★★</span><span class="ptag">核と像</span></div>
+<h4>方針</h4>
+<p>像=列空間(ランクを見る)、核=零空間(斉次方程式を解く)。第5章の計算そのもの。</p>
+<h4>解答</h4>
+<p><b>像</b>:\(A\) の列 \((1,0),(1,1),(0,1)\) のうち \((1,0),(1,1)\) は一次独立(行列式 \(1\ne0\))なので \(\operatorname{rank}A=2\)。よって \(\operatorname{Im}T\) は \(\mathbb{R}^2\) の2次元部分空間、すなわち \(\operatorname{Im}T=\mathbb{R}^2\)。\(T\) は<b>全射</b>である。</p>
+<p><b>核</b>:\(A\mathbf{x}=\mathbf{0}\) は \(\begin{cases}x+y=0\\ y+z=0\end{cases}\)。\(y=-x\)、\(z=-y=x\) より</p>
+<p>\[\operatorname{Ker}T=\operatorname{span}\{(1,-1,1)\},\qquad\dim\operatorname{Ker}T=1\]</p>
+<p>核が \(\{\mathbf{0}\}\) でないので \(T\) は<b>単射でない</b>(実際 \((1,-1,1)\) と \(\mathbf{0}\) が同じ \(\mathbf{0}\) に写る)。</p>
+<p><b>次元の確認</b>:\(\dim\operatorname{Ker}T+\dim\operatorname{Im}T=1+2=3=\dim\mathbb{R}^3\)。定理(問5.8)どおり。</p>
+<h4 class="alt">ポイント</h4>
+<p>3次元から2次元への写像なので、どうしても1次元分は「潰れる」— それが核です。次元を下げる写像は情報を必ず失う(単射になれない)一方、この例のように出力側は覆い尽くせる(全射)。次元削減(PCAなど)は「何を潰すか(核の方向)を賢く選ぶ」技術だ、という見方がここにつながります。</p>
+</section>
+
+<section class="sol" id="a6-4">
+<div class="phead"><span class="pnum">解 6.4</span><span class="lv lv2">★★</span><span class="ptag">合成と行列の積</span></div>
+<h4>方針</h4>
+<p>定義に沿って \((T\circ S)(\mathbf{x})=T(S(\mathbf{x}))=A(B\mathbf{x})\) を変形。結合法則で \((AB)\mathbf{x}\) になる。</p>
+<h4>解答</h4>
+<p><b>理由</b>:任意の \(\mathbf{x}\) について</p>
+<p>\[(T\circ S)(\mathbf{x})=T\bigl(S(\mathbf{x})\bigr)=A(B\mathbf{x})=(AB)\mathbf{x}\]</p>
+<p>(最後は積の結合法則)。よって \(T\circ S\) の標準行列は \(AB\)。<b>先に作用する \(S\) の行列 \(B\) が右</b>に来ることに注意。</p>
+<p><b>確認</b>:\(\mathbf{x}=(1,0)\) とする。まず \(S\):\(B\mathbf{x}=(2,\,1)\)。次に \(T\):\(A(2,1)^\top=(2+2,\ 6+4)=(4,\,10)\)。一方 \(AB=\begin{pmatrix}4 &amp; 6\\ 10 &amp; 12\end{pmatrix}\)(問2.1)なので \((AB)\mathbf{x}=(4,\,10)\)(\(AB\) の第1列)。一致する。</p>
+<h4 class="alt">ポイント</h4>
+<p>行列の積のあの定義は、この「合成=積」がぴったり成り立つように<b>逆算して設計</b>されたものです。積が非可換なのも、合成の順序が入れ替えられないから(問2.3)。\(f(g(x))\) の記法と同じで「内側(右)から作用」と覚えましょう。</p>
+</section>
+
+<section class="sol" id="a6-5">
+<div class="phead"><span class="pnum">解 6.5</span><span class="lv lv2">★★</span><span class="ptag">うまい基底での表現行列</span></div>
+<h4>方針</h4>
+<p>表現行列の定義:\(T(\mathbf{b}_j)\) を基底 \(B\) で展開したときの係数を第 \(j\) 列に並べる。</p>
+<h4>解答</h4>
+<p>\(\mathbf{b}_1=(1,1)\) は直線 \(y=x\) 上のベクトルなので鏡映で動かない:</p>
+<p>\[T(\mathbf{b}_1)=A\begin{pmatrix}1\\ 1\end{pmatrix}=\begin{pmatrix}1\\ 1\end{pmatrix}=1\cdot\mathbf{b}_1+0\cdot\mathbf{b}_2\]</p>
+<p>\(\mathbf{b}_2=(1,-1)\) は直線 \(y=x\) に垂直なので、鏡映で反転する:</p>
+<p>\[T(\mathbf{b}_2)=A\begin{pmatrix}1\\ -1\end{pmatrix}=\begin{pmatrix}-1\\ 1\end{pmatrix}=0\cdot\mathbf{b}_1+(-1)\cdot\mathbf{b}_2\]</p>
+<p>係数を列に並べて</p>
+<p>\[[T]_B=\begin{pmatrix}1 &amp; 0\\ 0 &amp; -1\end{pmatrix}\]</p>
+<p>— <b>対角行列</b>になる。</p>
+<h4 class="alt">ポイント</h4>
+<p>標準基底で見ると \(A=\begin{pmatrix}0 &amp; 1\\ 1 &amp; 0\end{pmatrix}\) は「成分の入れ替え」にしか見えませんが、鏡映の軸方向と垂直方向を基底に選ぶと「軸方向は保つ(\(\times1\))、垂直方向は反転(\(\times(-1)\))」という<b>写像の正体</b>がそのまま行列に現れます。この \(\mathbf{b}_1,\mathbf{b}_2\) こそ \(A\) の固有ベクトル(第7章)。「良い基底=写像が対角に見える基底」です。</p>
+</section>
+
+<section class="sol" id="a6-6">
+<div class="phead"><span class="pnum">解 6.6</span><span class="lv lv2">★★</span><span class="ptag">基底変換の公式</span></div>
+<h4>方針</h4>
+<p>2次の逆行列公式で \(P^{-1}\) を求め、\(P^{-1}AP\) を右から順に計算する。</p>
+<h4>解答</h4>
+<p>\(\det P=1\cdot(-1)-1\cdot1=-2\) より</p>
+<p>\[P^{-1}=\frac{1}{-2}\begin{pmatrix}-1 &amp; -1\\ -1 &amp; 1\end{pmatrix}=\frac{1}{2}\begin{pmatrix}1 &amp; 1\\ 1 &amp; -1\end{pmatrix}\]</p>
+<p>まず \(AP\):\(A\) は行の入れ替えなので</p>
+<p>\[AP=\begin{pmatrix}0 &amp; 1\\ 1 &amp; 0\end{pmatrix}\begin{pmatrix}1 &amp; 1\\ 1 &amp; -1\end{pmatrix}=\begin{pmatrix}1 &amp; -1\\ 1 &amp; 1\end{pmatrix}\]</p>
+<p>続けて</p>
+<p>\[P^{-1}AP=\frac{1}{2}\begin{pmatrix}1 &amp; 1\\ 1 &amp; -1\end{pmatrix}\begin{pmatrix}1 &amp; -1\\ 1 &amp; 1\end{pmatrix}=\frac{1}{2}\begin{pmatrix}2 &amp; 0\\ 0 &amp; -2\end{pmatrix}=\begin{pmatrix}1 &amp; 0\\ 0 &amp; -1\end{pmatrix}\]</p>
+<p>問6.5 の \([T]_B\) と一致した。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(P^{-1}AP\) を右から読むと:「\(P\):\(B\) 座標を標準座標に直す → \(A\):標準座標で写像を実行 → \(P^{-1}\):結果を \(B\) 座標に戻す」。つまり「翻訳して・実行して・翻訳し直す」の三段activityです。\(A\) と \(P^{-1}AP\) の関係を<b>相似</b>と呼び、「同じ写像の別表現」を意味します。第7章の対角化 \(P^{-1}AP=D\) は、この計算を固有ベクトルで行うことにほかなりません。</p>
+</section>
+
+<section class="sol" id="a6-7">
+<div class="phead"><span class="pnum">解 6.7</span><span class="lv lv3">★★★</span><span class="ptag">単射・全射の特徴づけ</span></div>
+<h4>方針</h4>
+<p>(1)は両方向を定義から。「差をとって核に落とす」のが鍵。(2)は像=列空間の次元の話に翻訳する。</p>
+<h4>解答</h4>
+<p>(1) <b>(⇒)</b> \(T\) が単射とする。\(\mathbf{v}\in\operatorname{Ker}T\) なら \(T(\mathbf{v})=\mathbf{0}=T(\mathbf{0})\)。単射性より \(\mathbf{v}=\mathbf{0}\)。よって \(\operatorname{Ker}T=\{\mathbf{0}\}\)。</p>
+<p><b>(⇐)</b> \(\operatorname{Ker}T=\{\mathbf{0}\}\) とする。\(T(\mathbf{u})=T(\mathbf{v})\) なら、線形性より \(T(\mathbf{u}-\mathbf{v})=\mathbf{0}\)、すなわち \(\mathbf{u}-\mathbf{v}\in\operatorname{Ker}T=\{\mathbf{0}\}\)。よって \(\mathbf{u}=\mathbf{v}\) で単射。(証明終)</p>
+<p>(2) \(T\) が全射 \(\iff \operatorname{Im}T=\mathbb{R}^m\)。\(\operatorname{Im}T\) は \(\mathbb{R}^m\) の部分空間なので、全体に一致することと次元が \(m\) であることは同値。\(\dim\operatorname{Im}T=\operatorname{rank}A\) より</p>
+<p>\[T\ が全射\iff\operatorname{rank}A=m\]</p>
+<p>(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>(1)により「単射かどうか」は方程式 \(A\mathbf{x}=\mathbf{0}\) を1本調べるだけで判定できます(すべての \(\mathbf{b}\) を調べる必要がない)— 線形性の威力です。正方行列(\(m=n\))では rank-nullity より「単射 \(\iff\) 全射 \(\iff\) 正則 \(\iff \det\ne0\)」がすべて同値になり、第4章までの判定条件と合流します。</p>
+</section>
+
+<section class="sol" id="a6-8">
+<div class="phead"><span class="pnum">解 6.8</span><span class="lv lv3">★★★</span><span class="ptag">微分は線形写像(表現行列)</span></div>
+<h4>方針</h4>
+<p>基底 \(1,x,x^2\) それぞれの微分を計算し、係数ベクトルを列に並べる。以降は行列の計算に翻訳して考える。</p>
+<h4>解答</h4>
+<p>(1) \(D(1)=0,\ D(x)=1,\ D(x^2)=2x\)。座標(\(1,x,x^2\) の係数)はそれぞれ \((0,0,0),\ (1,0,0),\ (0,2,0)\)。列に並べて</p>
+<p>\[M=\begin{pmatrix}0 &amp; 1 &amp; 0\\ 0 &amp; 0 &amp; 2\\ 0 &amp; 0 &amp; 0\end{pmatrix}\]</p>
+<p>(2) \(D(a+bx+cx^2)=b+2cx=0\iff b=c=0\)。よって \(\operatorname{Ker}D=\{定数関数\}=\operatorname{span}\{1\}\)、次元 \(1\)。像は \(b+2cx\) の形の全体、すなわち \(\operatorname{Im}D=\operatorname{span}\{1,x\}=P_1\)(1次以下の多項式全体)、次元 \(2\)。確認:\(1+2=3=\dim P_2\)。</p>
+<p>(3) \[M^2=\begin{pmatrix}0 &amp; 0 &amp; 2\\ 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0\end{pmatrix},\qquad M^3=O\]</p>
+<p>これは「2次以下の多項式を3回微分すると必ず \(0\) になる」という事実の行列表現である。</p>
+<h4 class="alt">ポイント</h4>
+<p>微積分の操作が行列に化ける — 抽象化の威力が最も鮮やかに見える例です。何乗かすると \(O\) になる行列を<b>冪零(べきれい)</b>といい、冪零行列は固有値がすべて \(0\) なのに \(O\) でない、対角化できない行列の代表格(第11章のジョルダン標準形の主役)。また「微分を行列で表す」発想は、微分方程式の数値解法(差分法)で現実に使われています(問9.4の行列がその例)。</p>
+</section>
+
+<header class="chap" id="ch7">
+<p class="chnum">第7章</p>
+<h2>固有値と固有ベクトル — 解答解説</h2>
+<p class="chsub">対角化とその威力</p>
+</header>
+
+<section class="sol" id="a7-1">
+<div class="phead"><span class="pnum">解 7.1</span><span class="lv lv1">★</span><span class="ptag">三角行列の固有値</span></div>
+<h4>方針</h4>
+<p>三角行列では \(\det(A-\lambda I)\) も三角で対角積になるから、固有値は対角成分そのもの。固有ベクトルは \((A-\lambda I)\mathbf{v}=\mathbf{0}\) を各 \(\lambda\) で解く。</p>
+<h4>解答</h4>
+<p>\(\det(A-\lambda I)=(3-\lambda)(2-\lambda)=0\) より固有値は \(\lambda=3,\ 2\)。</p>
+<p>\(\lambda=3\):\((A-3I)\mathbf{v}=\begin{pmatrix}0 &amp; 1\\ 0 &amp; -1\end{pmatrix}\mathbf{v}=\mathbf{0}\) より \(v_2=0\)。固有ベクトルは \(\mathbf{v}=(1,\,0)\)(の非零スカラー倍)。</p>
+<p>\(\lambda=2\):\((A-2I)\mathbf{v}=\begin{pmatrix}1 &amp; 1\\ 0 &amp; 0\end{pmatrix}\mathbf{v}=\mathbf{0}\) より \(v_1+v_2=0\)。固有ベクトルは \(\mathbf{v}=(1,\,-1)\)。</p>
+<p>検算:\(A(1,-1)^\top=(3-1,\ -2)^\top=(2,-2)^\top=2(1,-1)^\top\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「三角行列の固有値=対角成分」は暗算レベルで使う基本事実。固有ベクトルを求めたら必ず \(A\mathbf{v}=\lambda\mathbf{v}\) を検算する習慣を — 一瞬の掛け算で計算ミスの大半を検出できます。</p>
+</section>
+
+<section class="sol" id="a7-2">
+<div class="phead"><span class="pnum">解 7.2</span><span class="lv lv1">★</span><span class="ptag">固有値・固有ベクトルの計算</span></div>
+<h4>方針</h4>
+<p>①特性方程式 \(\det(A-\lambda I)=0\) を解く ②各 \(\lambda\) で \((A-\lambda I)\mathbf{v}=\mathbf{0}\) を解く、の2段階。</p>
+<h4>解答</h4>
+<p>\[\det(A-\lambda I)=\det\begin{pmatrix}4-\lambda &amp; 1\\ 2 &amp; 3-\lambda\end{pmatrix}=(4-\lambda)(3-\lambda)-2=\lambda^2-7\lambda+10=(\lambda-5)(\lambda-2)\]</p>
+<p>よって固有値は \(\lambda=5,\ 2\)。</p>
+<p>\(\lambda=5\):\((A-5I)=\begin{pmatrix}-1 &amp; 1\\ 2 &amp; -2\end{pmatrix}\)。2つの行は比例しており(1本の条件 \(-v_1+v_2=0\))、固有ベクトルは \(\mathbf{v}_1=(1,\,1)\)。</p>
+<p>\(\lambda=2\):\((A-2I)=\begin{pmatrix}2 &amp; 1\\ 2 &amp; 1\end{pmatrix}\)。条件 \(2v_1+v_2=0\) より \(\mathbf{v}_2=(1,\,-2)\)。</p>
+<p>検算:\(A(1,1)^\top=(5,5)^\top\)、\(A(1,-2)^\top=(4-2,\ 2-6)^\top=(2,-4)^\top=2(1,-2)^\top\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>\((A-\lambda I)\) の行が必ず従属になる(そうでなければ \(\mathbf{v}=\mathbf{0}\) しかなく \(\lambda\) が固有値でない)のは良い検算指標:行が比例していなければ、特性方程式の解を間違えています。</p>
+</section>
+
+<section class="sol" id="a7-3">
+<div class="phead"><span class="pnum">解 7.3</span><span class="lv lv2">★★</span><span class="ptag">3次・重複固有値</span></div>
+<h4>方針</h4>
+<p>ヒントに従い \(A=2J-I\)(\(J\) は全成分 \(1\))と分解。\(J\) の固有値・固有ベクトルが分かれば、\(A\) のそれは「同じベクトルのまま、固有値だけ \(\lambda\mapsto2\lambda-1\)」に変換される。</p>
+<h4>解答</h4>
+<p>\(J\mathbf{v}\) は「各成分が \(v_1+v_2+v_3\) のベクトル」。よって:</p>
+<p>・\(\mathbf{v}=(1,1,1)\) なら \(J\mathbf{v}=3\mathbf{v}\):固有値 \(3\)。</p>
+<p>・\(v_1+v_2+v_3=0\) なら \(J\mathbf{v}=\mathbf{0}\):固有値 \(0\)(固有空間は平面 \(x+y+z=0\)、次元2)。</p>
+<p>\(A=2J-I\) は同じ固有ベクトルに対して \(A\mathbf{v}=2J\mathbf{v}-\mathbf{v}=(2\lambda_J-1)\mathbf{v}\) と作用するから、\(A\) の固有値は</p>
+<p>\[\lambda=2\cdot3-1=5\ (単純),\qquad \lambda=2\cdot0-1=-1\ (重複度2)\]</p>
+<p>固有空間の基底:\(\lambda=5\) は \(\{(1,1,1)\}\)。\(\lambda=-1\) は平面 \(x+y+z=0\) の基底として \(\{(1,-1,0),\ (1,0,-1)\}\)(問5.3)。</p>
+<p>検算:\(A(1,-1,0)^\top=(1-2,\ 2-1,\ 2-2)^\top=(-1,1,0)^\top=-(1,-1,0)^\top\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>「行列を簡単な部品(\(J\) と \(I\))に分解して固有値を移送する」のは院試でも実戦的な技です。固有値 \(-1\) は重複度2ですが固有空間もちゃんと次元2あるので、独立な固有ベクトルが計3本とれ、この \(A\) は対角化可能。対称行列では常にこうなる(第9章スペクトル定理)ことの予告編です。</p>
+</section>
+
+<section class="sol" id="a7-4">
+<div class="phead"><span class="pnum">解 7.4</span><span class="lv lv2">★★</span><span class="ptag">対角化</span></div>
+<h4>方針</h4>
+<p>固有ベクトルを列に並べて \(P\)、対応する固有値を同じ順で並べて \(D\)。検算は \(AP=PD\) の形が楽。</p>
+<h4>解答</h4>
+<p>問7.2 より固有対は \((5,\ (1,1))\)、\((2,\ (1,-2))\)。</p>
+<p>\[P=\begin{pmatrix}1 &amp; 1\\ 1 &amp; -2\end{pmatrix},\qquad D=\begin{pmatrix}5 &amp; 0\\ 0 &amp; 2\end{pmatrix}\]</p>
+<p>\(\det P=-2-1=-3\ne0\) なので \(P\) は正則で、\(P^{-1}=\dfrac{1}{-3}\begin{pmatrix}-2 &amp; -1\\ -1 &amp; 1\end{pmatrix}=\dfrac{1}{3}\begin{pmatrix}2 &amp; 1\\ 1 &amp; -1\end{pmatrix}\)。</p>
+<p>検算:\(AP=\begin{pmatrix}5 &amp; 2\\ 5 &amp; -4\end{pmatrix}\)(各列が \(5\mathbf{v}_1,\ 2\mathbf{v}_2\))であり、</p>
+<p>\[P^{-1}AP=\frac{1}{3}\begin{pmatrix}2 &amp; 1\\ 1 &amp; -1\end{pmatrix}\begin{pmatrix}5 &amp; 2\\ 5 &amp; -4\end{pmatrix}=\frac{1}{3}\begin{pmatrix}15 &amp; 0\\ 0 &amp; 6\end{pmatrix}=\begin{pmatrix}5 &amp; 0\\ 0 &amp; 2\end{pmatrix}=D\]</p>
+<h4 class="alt">ポイント</h4>
+<p>\(P^{-1}AP=D\) の意味は第6章そのもの:「固有ベクトルを基底に選ぶと、\(A\) はただの伸縮 \(D\) に見える」。\(P\) の列の順番と \(D\) の対角の順番を対応させること、検算は逆行列を経由しない \(AP=PD\)(各列で \(A\mathbf{v}_i=\lambda_i\mathbf{v}_i\) を見るだけ)で行うのが実戦的です。</p>
+</section>
+
+<section class="sol" id="a7-5">
+<div class="phead"><span class="pnum">解 7.5</span><span class="lv lv2">★★</span><span class="ptag">行列の n 乗</span></div>
+<h4>方針</h4>
+<p>\(A=PDP^{-1}\) を \(n\) 回掛けると内側の \(P^{-1}P\) が次々消えて \(A^n=PD^nP^{-1}\)。あとは行列2回の掛け算。</p>
+<h4>解答</h4>
+<p>\[A^n=(PDP^{-1})^n=PD^nP^{-1}=\begin{pmatrix}1 &amp; 1\\ 1 &amp; -2\end{pmatrix}\begin{pmatrix}5^n &amp; 0\\ 0 &amp; 2^n\end{pmatrix}\cdot\frac{1}{3}\begin{pmatrix}2 &amp; 1\\ 1 &amp; -1\end{pmatrix}\]</p>
+<p>まず \(PD^n=\begin{pmatrix}5^n &amp; 2^n\\ 5^n &amp; -2\cdot2^n\end{pmatrix}\)。続けて右の因子を掛けると</p>
+<p>\[A^n=\frac{1}{3}\begin{pmatrix}2\cdot5^n+2^n &amp; 5^n-2^n\\ 2\cdot5^n-2\cdot2^n &amp; 5^n+2\cdot2^n\end{pmatrix}\]</p>
+<p>\(n=1\):\(\dfrac{1}{3}\begin{pmatrix}12 &amp; 3\\ 6 &amp; 9\end{pmatrix}=\begin{pmatrix}4 &amp; 1\\ 2 &amp; 3\end{pmatrix}=A\)。確かに戻る。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(A^n\) の全成分が「\(5^n\) と \(2^n\) の一次結合」になっている点に注目 — 行列の長期的な振る舞いは<b>固有値の \(n\) 乗</b>で完全に支配され、最大固有値 \(5\) の項がやがて圧倒します。この構造がそのまま漸化式(問7.7)・マルコフ連鎖(問7.8)・冪乗法(問11.6)の原理です。</p>
+</section>
+
+<section class="sol" id="a7-6">
+<div class="phead"><span class="pnum">解 7.6</span><span class="lv lv2">★★</span><span class="ptag">トレース・行列式と固有値</span></div>
+<h4>方針</h4>
+<p>数値確認のあと、一般の2次行列で特性多項式を2通りに書いて係数比較する。</p>
+<h4>解答</h4>
+<p><b>確認</b>:\(\operatorname{tr}A=4+3=7=5+2\)、\(\det A=12-2=10=5\cdot2\)。成立。</p>
+<p><b>証明</b>(2次):\(A=\begin{pmatrix}a &amp; b\\ c &amp; d\end{pmatrix}\) の特性多項式は</p>
+<p>\[\det(A-\lambda I)=(a-\lambda)(d-\lambda)-bc=\lambda^2-(a+d)\lambda+(ad-bc)=\lambda^2-(\operatorname{tr}A)\lambda+\det A\]</p>
+<p>一方、固有値 \(\lambda_1,\lambda_2\) を根にもつモニック2次式として</p>
+<p>\[\det(A-\lambda I)=(\lambda_1-\lambda)(\lambda_2-\lambda)=\lambda^2-(\lambda_1+\lambda_2)\lambda+\lambda_1\lambda_2\]</p>
+<p>両者の係数を比較して \(\operatorname{tr}A=\lambda_1+\lambda_2\)、\(\det A=\lambda_1\lambda_2\)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>この関係は \(n\) 次でも成り立ちます(\(\operatorname{tr}=\sum\lambda_i,\ \det=\prod\lambda_i\)、重複度込み・複素数の範囲で)。実用上は最強の検算道具:固有値を求めたら和と積を \(\operatorname{tr},\det\) と照合する癖をつけると、計算ミスがほぼ確実に見つかります。2次なら「和が \(\operatorname{tr}\)、積が \(\det\) の2数」として固有値を暗算で当てることもできます。</p>
+</section>
+
+<section class="sol" id="a7-7">
+<div class="phead"><span class="pnum">解 7.7</span><span class="lv lv3">★★★</span><span class="ptag">フィボナッチ数列の一般項</span></div>
+<h4>方針</h4>
+<p>\(\mathbf{x}_n=(F_{n+1},F_n)^\top\) とすれば \(\mathbf{x}_n=A^n\mathbf{x}_0\)。初期ベクトルを固有ベクトルの一次結合に分解すれば、\(A^n\) の作用は固有値の \(n\) 乗倍になる。</p>
+<h4>解答</h4>
+<p>\(A=\begin{pmatrix}1 &amp; 1\\ 1 &amp; 0\end{pmatrix}\) の特性方程式は</p>
+<p>\[\det(A-\lambda I)=(1-\lambda)(-\lambda)-1=\lambda^2-\lambda-1=0\]</p>
+<p>解は \(\varphi=\dfrac{1+\sqrt5}{2},\ \psi=\dfrac{1-\sqrt5}{2}\)(黄金比とその共役。\(\varphi+\psi=1,\ \varphi\psi=-1,\ \varphi-\psi=\sqrt5\))。</p>
+<p>固有ベクトル:\((A-\lambda I)\mathbf{v}=\mathbf{0}\) の第2行 \(v_1-\lambda v_2=0\) より \(\mathbf{v}_\lambda=(\lambda,\,1)\)。(検算:\(A(\lambda,1)^\top=(\lambda+1,\ \lambda)^\top=(\lambda^2,\lambda)^\top=\lambda(\lambda,1)^\top\)、ここで \(\lambda^2=\lambda+1\) を使った。)</p>
+<p>初期ベクトル \(\mathbf{x}_0=(F_1,F_0)^\top=(1,0)^\top\) を分解する:\(c_1(\varphi,1)+c_2(\psi,1)=(1,0)\) より \(c_1+c_2=0\)、\(c_1\varphi+c_2\psi=1\)。前者から \(c_2=-c_1\)、代入して \(c_1(\varphi-\psi)=1\)、すなわち \(c_1=\dfrac{1}{\sqrt5},\ c_2=-\dfrac{1}{\sqrt5}\)。</p>
+<p>よって</p>
+<p>\[\begin{pmatrix}F_{n+1}\\ F_n\end{pmatrix}=A^n\mathbf{x}_0=c_1\varphi^n\begin{pmatrix}\varphi\\ 1\end{pmatrix}+c_2\psi^n\begin{pmatrix}\psi\\ 1\end{pmatrix}\]</p>
+<p>第2成分を読んで</p>
+<p>\[F_n=\frac{\varphi^n-\psi^n}{\sqrt5}\]</p>
+<p><b>確認</b>:\(n=10\) で \(F_{10}=\dfrac{\varphi^{10}-\psi^{10}}{\sqrt5}=55\)(数列を回しても \(0,1,1,2,3,5,8,13,21,34,55\) で一致)。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(|\psi|\approx0.618\lt1\) なので \(\psi^n\to0\)。ゆえに \(F_n\approx\varphi^n/\sqrt5\) — フィボナッチ数列が黄金比の等比数列で近似できる理由が固有値から一目で分かります。線形漸化式一般(3項間でも \(k\) 項間でも)がこの「行列化 → 固有分解」で機械的に解ける、という汎用手法として身につけてください。</p>
+</section>
+
+<section class="sol" id="a7-8">
+<div class="phead"><span class="pnum">解 7.8</span><span class="lv lv3">★★★</span><span class="ptag">マルコフ連鎖と定常分布(PageRankの原理)</span></div>
+<h4>方針</h4>
+<p>(1)特性方程式。(2)\((M-I)\boldsymbol{\pi}=\mathbf{0}\) を解いて成分和1に正規化。(3)初期分布を固有ベクトルで分解し、\(|\lambda_2|\lt1\) の減衰を読む。</p>
+<h4>解答</h4>
+<p>(1) \[\det(M-\lambda I)=(0.7-\lambda)(0.6-\lambda)-0.12=\lambda^2-1.3\lambda+0.3=(\lambda-1)(\lambda-0.3)\]</p>
+<p>固有値は \(\lambda_1=1,\ \lambda_2=0.3\)。(各列の和が \(1\) の行列では、行ベクトル \(\mathbf{1}^\top=(1,1)\) が \(\mathbf{1}^\top M=\mathbf{1}^\top\) を満たすため、\(1\) は必ず固有値になる。)</p>
+<p>(2) \((M-I)\boldsymbol{\pi}=\mathbf{0}\):第1行 \(-0.3\pi_1+0.4\pi_2=0\) より \(3\pi_1=4\pi_2\)、比は \(\pi_1:\pi_2=4:3\)。成分和を \(1\) に正規化して</p>
+<p>\[\boldsymbol{\pi}=\left(\frac{4}{7},\ \frac{3}{7}\right)\]</p>
+<p>(3) \(\lambda_2=0.3\) の固有ベクトルは \((M-0.3I)\mathbf{v}=\mathbf{0}\) より \(\mathbf{v}_2=(1,-1)\)(成分和 \(0\))。任意の初期分布 \(\mathbf{p}_0\)(成分和1)は、成分和を比べることで</p>
+<p>\[\mathbf{p}_0=\boldsymbol{\pi}+c\,\mathbf{v}_2\]</p>
+<p>と書ける(差 \(\mathbf{p}_0-\boldsymbol{\pi}\) は成分和 \(0\) なので \(\mathbf{v}_2\) 方向)。よって</p>
+<p>\[\mathbf{p}_k=M^k\mathbf{p}_0=\boldsymbol{\pi}+c\,(0.3)^k\mathbf{v}_2\ \longrightarrow\ \boldsymbol{\pi}\quad(k\to\infty)\]</p>
+<p>第2固有値の絶対値 \(0.3\lt1\) により、ずれが毎ステップ \(0.3\) 倍に縮む(幾何級数的に高速収束)。</p>
+<h4 class="alt">ポイント</h4>
+<p>これがGoogleの<b>PageRank</b>の骨格です:Webページを状態、リンクを遷移とみなした巨大なマルコフ連鎖の定常分布 \(\boldsymbol{\pi}\) がページの重要度。実際にはリンク切れ対策に一様ジャンプを混ぜ(ダンピング係数 \(\approx0.85\))、固有値 \(1\) の固有ベクトルを冪乗法(問11.6)で計算します。収束の速さを第2固有値が決める、という(3)の構造もそのまま使われています。</p>
+</section>
+
+<section class="sol" id="a7-9">
+<div class="phead"><span class="pnum">解 7.9</span><span class="lv lv3">★★★</span><span class="ptag">相異なる固有値と一次独立性</span></div>
+<h4>方針</h4>
+<p>本数 \(m\) についての帰納法。関係式に \(A\) を作用させた式と、元の式の \(\lambda_m\) 倍を引き算して、最後の1本を消す。</p>
+<h4>解答</h4>
+<p>\(m\) についての帰納法で示す。</p>
+<p><b>[基底]</b> \(m=1\):固有ベクトルは \(\mathbf{v}_1\ne\mathbf{0}\) なので、1本だけなら一次独立。</p>
+<p><b>[帰納段階]</b> 相異なる固有値に属する \(m-1\) 本は必ず独立、と仮定する。いま</p>
+<p>\[c_1\mathbf{v}_1+\cdots+c_m\mathbf{v}_m=\mathbf{0}\qquad(\ast)\]</p>
+<p>とする。\((\ast)\) に \(A\) を作用させると \(A\mathbf{v}_i=\lambda_i\mathbf{v}_i\) より</p>
+<p>\[c_1\lambda_1\mathbf{v}_1+\cdots+c_m\lambda_m\mathbf{v}_m=\mathbf{0}\]</p>
+<p>この式から \((\ast)\) の \(\lambda_m\) 倍を引くと、\(\mathbf{v}_m\) の項が消えて</p>
+<p>\[c_1(\lambda_1-\lambda_m)\mathbf{v}_1+\cdots+c_{m-1}(\lambda_{m-1}-\lambda_m)\mathbf{v}_{m-1}=\mathbf{0}\]</p>
+<p>帰納法の仮定より係数はすべて \(0\):\(c_i(\lambda_i-\lambda_m)=0\)。固有値は相異なるので \(\lambda_i-\lambda_m\ne0\)、ゆえに \(c_i=0\)(\(i=1,\dots,m-1\))。これを \((\ast)\) に戻すと \(c_m\mathbf{v}_m=\mathbf{0}\)、\(\mathbf{v}_m\ne\mathbf{0}\) より \(c_m=0\)。よって \(m\) 本も一次独立。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>系として「\(n\) 次行列が \(n\) 個の相異なる固有値をもてば対角化可能」が直ちに従います(独立な固有ベクトルが \(n\) 本そろう)。対角化できない可能性があるのは固有値が重複するときだけ — その具体例が次の問7.10です。「\(A\) を作用させて引き算し、1本消す」操作は、多項式の証明などにも転用できる汎用テクニックです。</p>
+</section>
+
+<section class="sol" id="a7-10">
+<div class="phead"><span class="pnum">解 7.10</span><span class="lv lv2">★★</span><span class="ptag">対角化できない行列</span></div>
+<h4>方針</h4>
+<p>固有値の重複度(代数的重複度)と、固有空間の次元(幾何的重複度)を比べる。</p>
+<h4>解答</h4>
+<p>特性多項式は \(\det(A-\lambda I)=(2-\lambda)^2\)。固有値は \(\lambda=2\) のみ(代数的重複度2)。固有空間は</p>
+<p>\[(A-2I)\mathbf{v}=\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}\mathbf{v}=\mathbf{0}\iff v_2=0\]</p>
+<p>すなわち \(\operatorname{span}\{(1,0)\}\) で次元は \(1\)。一次独立な固有ベクトルが1本しかとれず、\(2\times2\) の正則な \(P\) を固有ベクトルだけで組めない。よって対角化不可能である。</p>
+<p class="note">別の見方:もし対角化できれば \(D\) は固有値 \(2\) だけの対角行列、つまり \(D=2I\)。すると \(A=P(2I)P^{-1}=2I\) となるが、\(A\ne2I\) なので矛盾。</p>
+<h4 class="alt">ポイント</h4>
+<p>これは問2.8の剪断行列。剪断には「不動の軸」が1本(\(x\) 軸)しかなく、軸2本を要求する対角化が原理的に不可能なのです。「代数的重複度 \(\ge\) 幾何的重複度」で、全固有値について等号が成り立つことが対角化可能の条件。等号が破れる行列の標準形がジョルダン標準形(問11.2)です。</p>
+</section>
+
+<section class="sol" id="a7-11">
+<div class="phead"><span class="pnum">解 7.11</span><span class="lv lv2">★★</span><span class="ptag">ケーリー・ハミルトンの定理</span></div>
+<h4>方針</h4>
+<p>\(A^2\) を計算し、\(7A\) と \(10I\) を組み合わせるだけ。</p>
+<h4>解答</h4>
+<p>\[A^2=\begin{pmatrix}4 &amp; 1\\ 2 &amp; 3\end{pmatrix}\begin{pmatrix}4 &amp; 1\\ 2 &amp; 3\end{pmatrix}=\begin{pmatrix}16+2 &amp; 4+3\\ 8+6 &amp; 2+9\end{pmatrix}=\begin{pmatrix}18 &amp; 7\\ 14 &amp; 11\end{pmatrix}\]</p>
+<p>\[A^2-7A+10I=\begin{pmatrix}18 &amp; 7\\ 14 &amp; 11\end{pmatrix}-\begin{pmatrix}28 &amp; 7\\ 14 &amp; 21\end{pmatrix}+\begin{pmatrix}10 &amp; 0\\ 0 &amp; 10\end{pmatrix}=\begin{pmatrix}0 &amp; 0\\ 0 &amp; 0\end{pmatrix}=O\]</p>
+<p>確かに零行列になる。</p>
+<h4 class="alt">ポイント</h4>
+<p>「どんな正方行列も、自分自身の特性多項式を満たす」— これがケーリー・ハミルトンの定理(一般の \(n\) 次で成立)です。\(A^2=7A-10I\) と読み替えれば、\(A\) の高次の冪はすべて \(A\) と \(I\) の一次結合に落とせ、逆行列も \(A^{-1}=(7I-A)/10\) と表せます(問11.5)。「行列を多項式に代入する」という発想は、行列関数 \(e^{A}\)(問11.3・11.4)への入口でもあります。</p>
+</section>
+
+<header class="chap" id="ch8">
+<p class="chnum">第8章</p>
+<h2>内積空間と直交性 — 解答解説</h2>
+<p class="chsub">直交化・QR・最小二乗法</p>
+</header>
+
+<section class="sol" id="a8-1">
+<div class="phead"><span class="pnum">解 8.1</span><span class="lv lv1">★</span><span class="ptag">正規直交基底の確認</span></div>
+<h4>方針</h4>
+<p>3組の内積がすべて \(0\) であることと、各ノルムを確認して割る。</p>
+<h4>解答</h4>
+<p>\[\mathbf{a}_1\cdot\mathbf{a}_2=2-4+2=0,\qquad \mathbf{a}_1\cdot\mathbf{a}_3=2+2-4=0,\qquad \mathbf{a}_2\cdot\mathbf{a}_3=4-2-2=0\]</p>
+<p>で互いに直交。ノルムはすべて \(\sqrt{1+4+4}=\sqrt{4+4+1}=3\)。よって正規直交基底は</p>
+<p>\[\mathbf{q}_1=\frac{1}{3}(1,2,2),\quad \mathbf{q}_2=\frac{1}{3}(2,-2,1),\quad \mathbf{q}_3=\frac{1}{3}(2,1,-2)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>直交する非零ベクトルは自動的に一次独立(\(\sum c_i\mathbf{a}_i=\mathbf{0}\) と \(\mathbf{a}_j\) の内積をとれば \(c_j\|\mathbf{a}_j\|^2=0\))なので、3本そろえば \(\mathbb{R}^3\) の基底です。正規直交基底では任意の \(\mathbf{v}\) の座標が \(c_i=\mathbf{q}_i\cdot\mathbf{v}\) と<b>内積1回で</b>求まる — 連立方程式を解く必要がない。これが直交性の最大のご利益です。</p>
+</section>
+
+<section class="sol" id="a8-2">
+<div class="phead"><span class="pnum">解 8.2</span><span class="lv lv2">★★</span><span class="ptag">グラム・シュミットの直交化</span></div>
+<h4>方針</h4>
+<p>1本目はそのまま。2本目以降は「既に作った各方向への射影成分を引き去る」。分数を避けたければ、途中で都合よくスカラー倍してよい(直交性は保たれる)。</p>
+<h4>解答</h4>
+<p><b>第1段</b>:\(\mathbf{u}_1=\mathbf{a}_1=(1,1,0)\)。</p>
+<p><b>第2段</b>:\(\mathbf{u}_1\cdot\mathbf{a}_2=1,\ \mathbf{u}_1\cdot\mathbf{u}_1=2\) より</p>
+<p>\[\mathbf{u}_2=\mathbf{a}_2-\frac{1}{2}\mathbf{u}_1=\left(\frac12,\ -\frac12,\ 1\right)\ \parallel\ (1,-1,2)\]</p>
+<p>以後 \(\mathbf{u}_2=(1,-1,2)\) と取り直す(検算:\(\mathbf{u}_1\cdot\mathbf{u}_2=1-1+0=0\))。</p>
+<p><b>第3段</b>:\(\mathbf{u}_1\cdot\mathbf{a}_3=1,\ \mathbf{u}_2\cdot\mathbf{a}_3=-1+2=1,\ \mathbf{u}_2\cdot\mathbf{u}_2=6\) より</p>
+<p>\[\mathbf{u}_3=\mathbf{a}_3-\frac{1}{2}\mathbf{u}_1-\frac{1}{6}\mathbf{u}_2=\left(0-\frac12-\frac16,\ 1-\frac12+\frac16,\ 1-\frac26\right)=\left(-\frac23,\ \frac23,\ \frac23\right)\ \parallel\ (-1,1,1)\]</p>
+<p>(検算:\((-1,1,1)\cdot(1,1,0)=0,\ (-1,1,1)\cdot(1,-1,2)=-1-1+2=0\)。)</p>
+<p><b>正規化</b>:ノルムは \(\sqrt2,\ \sqrt6,\ \sqrt3\) だから</p>
+<p>\[\mathbf{q}_1=\frac{1}{\sqrt2}(1,1,0),\qquad \mathbf{q}_2=\frac{1}{\sqrt6}(1,-1,2),\qquad \mathbf{q}_3=\frac{1}{\sqrt3}(-1,1,1)\]</p>
+<h4 class="alt">ポイント</h4>
+<p>グラム・シュミットは「新しいベクトルから、既知の方向の影(射影)を順に引き算して、純粋に新しい成分だけを残す」操作 — 問1.5の射影公式の反復です。各段の直交性検算(内積 \(=0\))を怠らないこと。数値計算では丸め誤差に弱いため修正版が使われますが、原理はこの通りです。</p>
+</section>
+
+<section class="sol" id="a8-3">
+<div class="phead"><span class="pnum">解 8.3</span><span class="lv lv2">★★</span><span class="ptag">直交行列の性質</span></div>
+<h4>方針</h4>
+<p>(1)は \(Q^\top Q\) の \((i,j)\) 成分が「第 \(i\) 列と第 \(j\) 列の内積」であることに気づけば一行。(2)はノルムを内積で書く。(3)は積の行列式。</p>
+<h4>解答</h4>
+<p>(1) \(Q\) の列を \(\mathbf{q}_1,\dots,\mathbf{q}_n\) とすると、\((Q^\top Q)_{ij}=\mathbf{q}_i\cdot\mathbf{q}_j\)(\(Q^\top\) の第 \(i\) 行=第 \(i\) 列の転置)。よって</p>
+<p>\[Q^\top Q=I\iff \mathbf{q}_i\cdot\mathbf{q}_j=\begin{cases}1 &amp; (i=j)\\ 0 &amp; (i\ne j)\end{cases}\iff 列が正規直交系\]</p>
+<p>(2) \[\|Q\mathbf{x}\|^2=(Q\mathbf{x})^\top(Q\mathbf{x})=\mathbf{x}^\top Q^\top Q\,\mathbf{x}=\mathbf{x}^\top I\mathbf{x}=\|\mathbf{x}\|^2\]</p>
+<p>非負なので平方根をとって \(\|Q\mathbf{x}\|=\|\mathbf{x}\|\)。</p>
+<p>(3) \(\det(Q^\top Q)=\det I=1\)。左辺は \(\det Q^\top\det Q=(\det Q)^2\)(\(\det Q^\top=\det Q\))。よって \((\det Q)^2=1\)、\(\det Q=\pm1\)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>長さを保つ(2)から内積・角度も保存され(\(\mathbf{x}\cdot\mathbf{y}=\frac14(\|\mathbf{x}+\mathbf{y}\|^2-\|\mathbf{x}-\mathbf{y}\|^2)\) で復元できる)、直交行列は「形を変えない変換」= 回転(\(\det=+1\))と鏡映(\(\det=-1\))の総称だと分かります。数値計算で直交行列が愛される理由は、掛けても<b>誤差を拡大しない</b>から(第10章の条件数 \(\kappa(Q)=1\))。3DCG・ロボティクスの姿勢表現もすべて直交行列です。</p>
+</section>
+
+<section class="sol" id="a8-4">
+<div class="phead"><span class="pnum">解 8.4</span><span class="lv lv2">★★</span><span class="ptag">部分空間への射影</span></div>
+<h4>方針</h4>
+<p>\(A^\top A\) と \(A^\top\mathbf{b}\) を作って \(2\times2\) の正規方程式を解き、\(\mathbf{p}=A\hat{\mathbf{x}}\) を計算。最後に残差と各列の内積を確認。</p>
+<h4>解答</h4>
+<p>\[A^\top A=\begin{pmatrix}1 &amp; 1 &amp; 0\\ 1 &amp; 0 &amp; 1\end{pmatrix}\begin{pmatrix}1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{pmatrix}=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix},\qquad A^\top\mathbf{b}=\begin{pmatrix}2\\ 2\end{pmatrix}\]</p>
+<p>正規方程式 \(\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix}\hat{\mathbf{x}}=\begin{pmatrix}2\\ 2\end{pmatrix}\) を解く。対称性から \(\hat{x}_1=\hat{x}_2\) が見え、\(3\hat{x}_1=2\)。よって</p>
+<p>\[\hat{\mathbf{x}}=\left(\frac23,\ \frac23\right)^\top,\qquad \mathbf{p}=A\hat{\mathbf{x}}=\left(\frac43,\ \frac23,\ \frac23\right)^\top\]</p>
+<p>残差は \(\mathbf{b}-\mathbf{p}=\left(-\frac13,\ \frac13,\ \frac13\right)^\top\)。各列との内積:</p>
+<p>\[(1,1,0)\cdot\left(-\tfrac13,\tfrac13,\tfrac13\right)=-\tfrac13+\tfrac13=0,\qquad (1,0,1)\cdot\left(-\tfrac13,\tfrac13,\tfrac13\right)=-\tfrac13+\tfrac13=0\]</p>
+<p>で確かに直交する(まとめて \(A^\top(\mathbf{b}-\mathbf{p})=\mathbf{0}\))。</p>
+<h4 class="alt">ポイント</h4>
+<p>残差 \((-1,1,1)/3\) の方向は、問8.2 で作った \(\mathbf{q}_3=(-1,1,1)/\sqrt3\) と同じ — つまり<b>列空間の直交補空間</b>の方向です。\(\mathbf{b}\) は「列空間の中の成分 \(\mathbf{p}\)」と「直交する成分(残差)」にただ一通りに分解される。この直交分解こそ射影の本質で、問1.5の直線版を平面(一般には任意次元の部分空間)へ拡張したものです。</p>
+</section>
+
+<section class="sol" id="a8-5">
+<div class="phead"><span class="pnum">解 8.5</span><span class="lv lv3">★★★</span><span class="ptag">最小二乗法による直線当てはめ</span></div>
+<h4>方針</h4>
+<p>各データ点の「通ってほしい」条件 \(a+bx_i=y_i\) を並べると、式4本・未知数2個の過剰決定系。正規方程式に落とす。</p>
+<h4>解答</h4>
+<p>(1) \[\underbrace{\begin{pmatrix}1 &amp; 0\\ 1 &amp; 1\\ 1 &amp; 2\\ 1 &amp; 3\end{pmatrix}}_{A}\begin{pmatrix}a\\ b\end{pmatrix}=\underbrace{\begin{pmatrix}1\\ 2\\ 2\\ 3\end{pmatrix}}_{\mathbf{y}}\]</p>
+<p>4点は一直線上にないので厳密解はない。</p>
+<p>(2) \[A^\top A=\begin{pmatrix}4 &amp; 6\\ 6 &amp; 14\end{pmatrix},\qquad A^\top\mathbf{y}=\begin{pmatrix}8\\ 15\end{pmatrix}\]</p>
+<p>(\(\sum x_i=6,\ \sum x_i^2=14,\ \sum y_i=8,\ \sum x_iy_i=0+2+4+9=15\)。)行列式は \(4\cdot14-36=20\) で、2次の逆行列公式より</p>
+<p>\[\begin{pmatrix}a\\ b\end{pmatrix}=\frac{1}{20}\begin{pmatrix}14 &amp; -6\\ -6 &amp; 4\end{pmatrix}\begin{pmatrix}8\\ 15\end{pmatrix}=\frac{1}{20}\begin{pmatrix}112-90\\ -48+60\end{pmatrix}=\begin{pmatrix}11/10\\ 3/5\end{pmatrix}\]</p>
+<p>すなわち最良の直線は</p>
+<p>\[y=1.1+0.6x\]</p>
+<p>(3) 予測値は \(x=0,1,2,3\) で \(1.1,\ 1.7,\ 2.3,\ 2.9\)。残差 \(e_i=y_i-\hat{y}_i\) は</p>
+<p>\[e=(-0.1,\ 0.3,\ -0.3,\ 0.1)\]</p>
+<p>\(\sum e_i=-0.1+0.3-0.3+0.1=0\)、\(\sum x_ie_i=0+0.3-0.6+0.3=0\)。ともに \(0\) である。</p>
+<h4 class="alt">ポイント</h4>
+<p>(3)の2つの \(0\) は偶然ではなく、正規方程式 \(A^\top(\mathbf{y}-A\hat{\mathbf{x}})=\mathbf{0}\) の2つの行(残差が \(A\) の各列 — 全1ベクトルと \(x\) の列 — に直交する)そのものです。統計学の単回帰の公式は、この正規方程式を成分で書き下したものにほかなりません。「回帰=射影」という視点は、多変数・多項式回帰にもそのまま拡張されます。</p>
+</section>
+
+<section class="sol" id="a8-6">
+<div class="phead"><span class="pnum">解 8.6</span><span class="lv lv3">★★★</span><span class="ptag">正規方程式の導出</span></div>
+<h4>方針</h4>
+<p>\(A\mathbf{x}\) は列空間 \(\operatorname{Col}A\) 内を動く。\(\mathbf{b}\) に最も近い点は「残差が \(\operatorname{Col}A\) に垂直」な点 — この幾何条件を式にする。</p>
+<h4>解答</h4>
+<p>\(\|A\mathbf{x}-\mathbf{b}\|\) の最小化は、「\(\operatorname{Col}A\) 内で \(\mathbf{b}\) に最も近い点 \(A\hat{\mathbf{x}}\) を探す」ことと同じ。最短であるためには残差 \(\mathbf{r}=\mathbf{b}-A\hat{\mathbf{x}}\) が \(\operatorname{Col}A\) のすべてのベクトルと直交することが必要十分である。(もし直交しない成分があれば、その方向に \(A\hat{\mathbf{x}}\) を少し動かして距離をさらに縮められるから。厳密には:任意の \(\mathbf{x}\) に対し \(A\mathbf{x}-A\hat{\mathbf{x}}\in\operatorname{Col}A\) なので、直交分解とピタゴラスの定理(問8.8)より</p>
+<p>\[\|A\mathbf{x}-\mathbf{b}\|^2=\|\underbrace{A\mathbf{x}-A\hat{\mathbf{x}}}_{\in\operatorname{Col}A}\|^2+\|\underbrace{A\hat{\mathbf{x}}-\mathbf{b}}_{\perp\operatorname{Col}A}\|^2\ \ge\ \|A\hat{\mathbf{x}}-\mathbf{b}\|^2\]</p>
+<p>となり、\(\hat{\mathbf{x}}\) が最小を与える。)</p>
+<p>「\(\mathbf{r}\) が \(\operatorname{Col}A\) と直交」\(\iff\)「\(A\) の各列 \(\mathbf{a}_j\) と直交:\(\mathbf{a}_j^\top\mathbf{r}=0\ (\forall j)\)」\(\iff\)</p>
+<p>\[A^\top(\mathbf{b}-A\hat{\mathbf{x}})=\mathbf{0}\iff A^\top A\,\hat{\mathbf{x}}=A^\top\mathbf{b}\]</p>
+<p><b>一意性</b>:\(\operatorname{rank}A=n\)(列が一次独立)なら、\(\mathbf{x}\ne\mathbf{0}\Rightarrow A\mathbf{x}\ne\mathbf{0}\Rightarrow \mathbf{x}^\top A^\top A\mathbf{x}=\|A\mathbf{x}\|^2\gt0\)。よって \(A^\top A\mathbf{x}=\mathbf{0}\) は \(\mathbf{x}=\mathbf{0}\) しか持たず、\(n\) 次正方行列 \(A^\top A\) は正則。したがって \(\hat{\mathbf{x}}=(A^\top A)^{-1}A^\top\mathbf{b}\) がただ1つ定まる。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>導出の核は「最短 \(\iff\) 垂直」という初等幾何の事実だけです。なお \((A^\top A)^{-1}A^\top\) は \(A\) の擬似逆行列(問10.5)であり、機械学習の線形回帰の解析解として必ず再会します。実装上は \(A^\top A\) を作ると条件数が2乗されて誤差に弱くなるため、QR分解(問8.7)やSVD経由で解くのが数値的な定石です。</p>
+</section>
+
+<section class="sol" id="a8-7">
+<div class="phead"><span class="pnum">解 8.7</span><span class="lv lv2">★★</span><span class="ptag">QR分解</span></div>
+<h4>方針</h4>
+<p>列 \(\mathbf{a}_1,\mathbf{a}_2\) にグラム・シュミット。\(R\) の成分は途中で使った係数(\(r_{ij}=\mathbf{q}_i\cdot\mathbf{a}_j\))で、自動的に上三角になる。</p>
+<h4>解答</h4>
+<p>\(\mathbf{a}_1=(1,1,0)^\top\):\(r_{11}=\|\mathbf{a}_1\|=\sqrt2\)、\(\mathbf{q}_1=\dfrac{1}{\sqrt2}(1,1,0)^\top\)。</p>
+<p>\(\mathbf{a}_2=(1,0,1)^\top\):\(r_{12}=\mathbf{q}_1\cdot\mathbf{a}_2=\dfrac{1}{\sqrt2}=\dfrac{\sqrt2}{2}\)。射影を引くと</p>
+<p>\[\mathbf{a}_2-r_{12}\mathbf{q}_1=(1,0,1)^\top-\frac12(1,1,0)^\top=\left(\frac12,\ -\frac12,\ 1\right)^\top\]</p>
+<p>そのノルムは \(r_{22}=\sqrt{\frac14+\frac14+1}=\sqrt{\frac32}=\dfrac{\sqrt6}{2}\)、正規化して \(\mathbf{q}_2=\dfrac{1}{\sqrt6}(1,-1,2)^\top\)。</p>
+<p>\[Q=\begin{pmatrix}\frac{1}{\sqrt2} &amp; \frac{1}{\sqrt6}\\ \frac{1}{\sqrt2} &amp; -\frac{1}{\sqrt6}\\ 0 &amp; \frac{2}{\sqrt6}\end{pmatrix},\qquad R=\begin{pmatrix}\sqrt2 &amp; \frac{\sqrt2}{2}\\ 0 &amp; \frac{\sqrt6}{2}\end{pmatrix}\]</p>
+<p>検算(第2列):\(QR\) の第2列 \(=r_{12}\mathbf{q}_1+r_{22}\mathbf{q}_2=\frac12(1,1,0)^\top+\frac12(1,-1,2)^\top=(1,0,1)^\top=\mathbf{a}_2\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>QR分解は「グラム・シュミットの帳簿つき版」:\(Q\) が直交化の結果、\(R\) が「元の列を \(\mathbf{q}\) たちでどう作るか」の記録です。最小二乗問題は \(A=QR\) を代入すると \(R\hat{\mathbf{x}}=Q^\top\mathbf{b}\) という三角系に化けて、\(A^\top A\) を作らずに安定に解けます。NumPyの <code>lstsq</code> など実務の最小二乗ソルバの標準ルートです。</p>
+</section>
+
+<section class="sol" id="a8-8">
+<div class="phead"><span class="pnum">解 8.8</span><span class="lv lv1">★</span><span class="ptag">ピタゴラスの定理</span></div>
+<h4>方針</h4>
+<p>\(\|\mathbf{a}+\mathbf{b}\|^2\) を内積で展開し、直交条件で交差項を消す。</p>
+<h4>解答</h4>
+<p>\[\|\mathbf{a}+\mathbf{b}\|^2=\|\mathbf{a}\|^2+2\,\mathbf{a}\cdot\mathbf{b}+\|\mathbf{b}\|^2=\|\mathbf{a}\|^2+\|\mathbf{b}\|^2\]</p>
+<p>(仮定 \(\mathbf{a}\cdot\mathbf{b}=0\) を用いた)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>紀元前の定理が、内積の展開1行に圧縮されました。この等式は「直交分解すればノルム2乗は成分ごとに足せる」という形で、最小二乗の最適性(問8.6)、分散の分解(統計)、パーセバルの等式(フーリエ)まで、いたるところで働きます。</p>
+</section>
+
+<section class="sol" id="a8-9">
+<div class="phead"><span class="pnum">解 8.9</span><span class="lv lv3">★★★</span><span class="ptag">直交補空間</span></div>
+<h4>方針</h4>
+<p>(1)は条件を方程式にするだけ。(2)は「包含 \(\subseteq\)」+「次元が等しい」の2段構え — 部分空間の一致証明の定跡。</p>
+<h4>解答</h4>
+<p>(1) \(\mathbf{v}=(x,y,z)\) が \(W^{\perp}\) に入る条件は \((1,1,1)\cdot\mathbf{v}=0\)、すなわち</p>
+<p>\[W^{\perp}=\{(x,y,z)\mid x+y+z=0\}\]</p>
+<p>— 原点を通り \((1,1,1)\) を法線とする平面(次元2、基底は例えば \((1,-1,0),(1,0,-1)\))。</p>
+<p>(2) <b>包含</b>:\(\mathbf{w}\in W\) をとる。任意の \(\mathbf{v}\in W^{\perp}\) は \(W\) のすべての元と直交するから、特に \(\mathbf{v}\cdot\mathbf{w}=0\)。つまり \(\mathbf{w}\) は \(W^{\perp}\) のすべての元と直交し、\(\mathbf{w}\in(W^{\perp})^{\perp}\)。よって \(W\subseteq(W^{\perp})^{\perp}\)。</p>
+<p><b>次元</b>:\(\dim W=k\) とし、\(W\) の基底を行に並べた \(k\times n\) 行列を \(B\) とすると \(W^{\perp}=\operatorname{Null}B\)。\(\operatorname{rank}B=k\) と rank-nullity(問5.8)より \(\dim W^{\perp}=n-k\)。同じ式をもう一度 \(W^{\perp}\) に適用して \(\dim(W^{\perp})^{\perp}=n-(n-k)=k=\dim W\)。</p>
+<p>包含があり次元が等しい部分空間は一致するので \((W^{\perp})^{\perp}=W\)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>「2回直交補をとると元に戻る」は、\(\mathbb{R}^n=W\oplus W^{\perp}\)(どのベクトルも \(W\) 成分と垂直成分に一意分解できる)という直交分解の裏返しです。行列の言葉では「\(\operatorname{Null}A\) は \(A\) の行空間の直交補空間」であり、行空間・列空間・零空間たち(4つの基本部分空間)が直交ペアをなす、という美しい全体像につながります。</p>
+</section>
+
+<section class="sol" id="a8-10">
+<div class="phead"><span class="pnum">解 8.10</span><span class="lv lv2">★★</span><span class="ptag">関数空間の内積</span></div>
+<h4>方針</h4>
+<p>定義どおり積分を計算して \(0\) を確認するだけ。</p>
+<h4>解答</h4>
+<p>\[\langle 1,\ x-\tfrac12\rangle=\int_0^1 1\cdot\left(x-\frac12\right)dx=\left[\frac{x^2}{2}-\frac{x}{2}\right]_0^1=\frac12-\frac12=0\]</p>
+<p>よって直交する。</p>
+<p><b>入口として</b>:これは「関数の空間に内積・直交という幾何を持ち込める」ことの最小の実例であり、三角関数系 \(\{1,\cos 2\pi x,\sin 2\pi x,\dots\}\) が互いに直交することを使って関数を直交基底で展開する<b>フーリエ級数</b>(信号処理・画像圧縮の心臓部)の出発点である。</p>
+<h4 class="alt">ポイント</h4>
+<p>フーリエ係数の公式 \(c_k=\langle f,\ \text{基底関数}\rangle/\|\text{基底関数}\|^2\) は、正規直交基底の座標公式(問8.1ポイント)そのもの。第1章で学んだ「内積で座標を取る」技術が、無限次元の関数空間でもそのまま通用する — 線形代数を抽象的に整備した最大の配当です。多項式の直交化(ルジャンドル多項式)は、まさに \(\{1,x,x^2,\dots\}\) へのグラム・シュミットです。</p>
+</section>
+
+<header class="chap" id="ch9">
+<p class="chnum">第9章</p>
+<h2>対称行列と二次形式 — 解答解説</h2>
+<p class="chsub">スペクトル定理と正定値性</p>
+</header>
+
+<section class="sol" id="a9-1">
+<div class="phead"><span class="pnum">解 9.1</span><span class="lv lv1">★</span><span class="ptag">対称行列の固有値・固有ベクトル</span></div>
+<h4>方針</h4>
+<p>第7章の手順どおり。最後に固有ベクトルの内積を確認する。</p>
+<h4>解答</h4>
+<p>\[\det(A-\lambda I)=(2-\lambda)^2-1=\lambda^2-4\lambda+3=(\lambda-3)(\lambda-1)\]</p>
+<p>より固有値は \(\lambda=3,\ 1\)。</p>
+<p>\(\lambda=3\):\((A-3I)=\begin{pmatrix}-1 &amp; 1\\ 1 &amp; -1\end{pmatrix}\) より \(v_1=v_2\)、固有ベクトルは \(\mathbf{v}_1=(1,\,1)\)。</p>
+<p>\(\lambda=1\):\((A-I)=\begin{pmatrix}1 &amp; 1\\ 1 &amp; 1\end{pmatrix}\) より \(v_1+v_2=0\)、固有ベクトルは \(\mathbf{v}_2=(1,\,-1)\)。</p>
+<p><b>直交性</b>:\(\mathbf{v}_1\cdot\mathbf{v}_2=1-1=0\)。確かに直交している。</p>
+<p>検算:\(\operatorname{tr}A=4=3+1\)、\(\det A=3=3\cdot1\)。</p>
+<h4 class="alt">ポイント</h4>
+<p>直交性は偶然ではなく対称行列の必然です(証明は問9.6)。図形的には、\(A\) は \((1,1)\) 方向に3倍・\((1,-1)\) 方向に1倍する変換で、単位円を軸が \(45^\circ\) 傾いた楕円に写します。固有ベクトル=楕円の主軸、固有値=軸の長さ。この「楕円の絵」が二次形式(問9.3)・PCA(問9.7)・SVD(第10章)まで一貫して効きます。</p>
+</section>
+
+<section class="sol" id="a9-2">
+<div class="phead"><span class="pnum">解 9.2</span><span class="lv lv2">★★</span><span class="ptag">直交対角化とスペクトル分解</span></div>
+<h4>方針</h4>
+<p>固有ベクトルを<b>正規化してから</b>並べると \(Q\) は直交行列になり、\(Q^{-1}=Q^\top\) で逆行列計算が不要になる。分解は各ランク1行列 \(\mathbf{q}_i\mathbf{q}_i^\top\) を成分で書いて足す。</p>
+<h4>解答</h4>
+<p>正規化した固有ベクトルは \(\mathbf{q}_1=\dfrac{1}{\sqrt2}(1,1)^\top,\ \mathbf{q}_2=\dfrac{1}{\sqrt2}(1,-1)^\top\)。並べて</p>
+<p>\[Q=\frac{1}{\sqrt2}\begin{pmatrix}1 &amp; 1\\ 1 &amp; -1\end{pmatrix},\qquad Q^\top AQ=\begin{pmatrix}3 &amp; 0\\ 0 &amp; 1\end{pmatrix}=D\]</p>
+<p>(\(Q^\top Q=I\) は列の正規直交性から。検算は \(AQ=QD\):\(A\mathbf{q}_1=3\mathbf{q}_1,\ A\mathbf{q}_2=\mathbf{q}_2\) で成立。)</p>
+<p><b>スペクトル分解</b>:</p>
+<p>\[\mathbf{q}_1\mathbf{q}_1^\top=\frac{1}{2}\begin{pmatrix}1 &amp; 1\\ 1 &amp; 1\end{pmatrix},\qquad \mathbf{q}_2\mathbf{q}_2^\top=\frac{1}{2}\begin{pmatrix}1 &amp; -1\\ -1 &amp; 1\end{pmatrix}\]</p>
+<p>\[3\,\mathbf{q}_1\mathbf{q}_1^\top+1\cdot\mathbf{q}_2\mathbf{q}_2^\top=\begin{pmatrix}\frac32 &amp; \frac32\\ \frac32 &amp; \frac32\end{pmatrix}+\begin{pmatrix}\frac12 &amp; -\frac12\\ -\frac12 &amp; \frac12\end{pmatrix}=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix}=A\]</p>
+<p>確かに再構成できた。</p>
+<h4 class="alt">ポイント</h4>
+<p>スペクトル分解は「\(A\) =(方向 \(\mathbf{q}_i\) への射影 \(\mathbf{q}_i\mathbf{q}_i^\top\))×(倍率 \(\lambda_i\))の和」という読み方ができます。行列を<b>ランク1の部品に分解して、大事な部品(大きい \(\lambda\))だけ残す</b> — この発想がPCAの次元削減、そして第10章の低ランク近似・画像圧縮に直結します。対称行列では逆行列いらず(\(Q^{-1}=Q^\top\))という計算上の恩恵も大きい。</p>
+</section>
+
+<section class="sol" id="a9-3">
+<div class="phead"><span class="pnum">解 9.3</span><span class="lv lv2">★★</span><span class="ptag">二次形式と最大・最小</span></div>
+<h4>方針</h4>
+<p>交差項 \(2xy\) の係数 \(2\) を半分ずつ非対角に配る。(3)は固有ベクトルの座標系(問9.2)に乗り換えると二乗和になり、最大・最小が読める。</p>
+<h4>解答</h4>
+<p>(1) \[q(x,y)=\begin{pmatrix}x &amp; y\end{pmatrix}\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix}\begin{pmatrix}x\\ y\end{pmatrix}\]</p>
+<p>すなわち \(A=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix}\)(問9.1の行列)。展開して \(2x^2+x y+yx+2y^2=2x^2+2xy+2y^2\) で一致。</p>
+<p>(2) 固有値は \(3,\ 1\) でともに正。よって \(A\) は正定値(\(\mathbf{x}\ne\mathbf{0}\) なら \(q\gt0\))。</p>
+<p>(3) 固有ベクトルの正規直交基底で新座標 \((X,Y)\) をとる(\(\mathbf{x}=Q(X,Y)^\top\)、具体的には \(X=\frac{x+y}{\sqrt2},\ Y=\frac{x-y}{\sqrt2}\))。直交変換はノルムを保つので、単位円は単位円 \(X^2+Y^2=1\) のまま。二次形式は</p>
+<p>\[q=\mathbf{x}^\top A\mathbf{x}=(X,Y)\,Q^\top AQ\begin{pmatrix}X\\ Y\end{pmatrix}=3X^2+Y^2\]</p>
+<p>\(X^2+Y^2=1\) のもとで \(3X^2+Y^2=1+2X^2\) は \(X^2\in[0,1]\) で単調だから</p>
+<p>\[\max q=3\ \left(方向\ \pm\tfrac{1}{\sqrt2}(1,1)\right),\qquad \min q=1\ \left(方向\ \pm\tfrac{1}{\sqrt2}(1,-1)\right)\]</p>
+<p>(直接代入でも \(q\!\left(\tfrac{1}{\sqrt2},\tfrac{1}{\sqrt2}\right)=1+1+1=3\)、\(q\!\left(\tfrac{1}{\sqrt2},-\tfrac{1}{\sqrt2}\right)=1-1+1=1\) で確認できる。)</p>
+<h4 class="alt">ポイント</h4>
+<p>「単位球面上の \(\mathbf{x}^\top A\mathbf{x}\) の最大・最小=最大・最小固有値、達成方向=固有ベクトル」— これはレイリー商 \(R(\mathbf{x})=\frac{\mathbf{x}^\top A\mathbf{x}}{\mathbf{x}^\top\mathbf{x}}\) の言葉で一般に成り立つ、応用上きわめて重要な事実です。PCAの「分散最大の方向」(問9.7)、行列ノルム(問10.8)、振動の固有振動数など、"最適な方向を探す問題"の多くがこの形に帰着します。等高線 \(q=const\) が楕円(主軸=固有ベクトル)になる絵も添えて記憶しましょう。</p>
+</section>
+
+<section class="sol" id="a9-4">
+<div class="phead"><span class="pnum">解 9.4</span><span class="lv lv2">★★</span><span class="ptag">シルベスターの判定法</span></div>
+<h4>方針</h4>
+<p>首座小行列式を左上から順に3つ。固有値は特性多項式を「\((2-\lambda)\) でくくる」と因数分解できる。</p>
+<h4>解答</h4>
+<p><b>首座小行列式</b>:</p>
+<p>\[\Delta_1=2\gt0,\qquad \Delta_2=\det\begin{pmatrix}2 &amp; -1\\ -1 &amp; 2\end{pmatrix}=4-1=3\gt0\]</p>
+<p>\[\Delta_3=\det A=2\{(2)(2)-1\}-(-1)\{(-1)(2)-0\}+0=2\cdot3-2=4\gt0\]</p>
+<p>3つとも正なので、シルベスターの判定法により \(A\) は正定値。</p>
+<p><b>固有値</b>:第1行で展開して</p>
+<p>\[\det(A-\lambda I)=(2-\lambda)\{(2-\lambda)^2-1\}+\{-(2-\lambda)\}=(2-\lambda)\{(2-\lambda)^2-2\}\]</p>
+<p>よって \(\lambda=2\) または \((2-\lambda)^2=2\)、すなわち</p>
+<p>\[\lambda=2-\sqrt2,\ \ 2,\ \ 2+\sqrt2\]</p>
+<p>(検算:和 \(=6=\operatorname{tr}A\)、積 \(=(4-2)\cdot2=4=\det A\)。)すべて正であり、固有値判定でも正定値と分かる。</p>
+<h4 class="alt">ポイント</h4>
+<p>この \(A\) は関数の2階微分 \(-f''\) を離散化した<b>2階差分行列</b>(両端固定)で、数値解析・画像処理(平滑化・エッジ)の常連です。グラフラプラシアン(問11.8)の親戚でもあります。シルベスター法は固有値を求めずに済むぶん手計算では速い一方、判定できるのは「正定値かどうか」のみ(半正定値の判定には使えない)ことに注意。</p>
+</section>
+
+<section class="sol" id="a9-5">
+<div class="phead"><span class="pnum">解 9.5</span><span class="lv lv3">★★★</span><span class="ptag">実対称行列の固有値は実数</span></div>
+<h4>方針</h4>
+<p>複素固有値の可能性を認めて出発し、スカラー \(\bar{\mathbf{v}}^\top A\mathbf{v}\) を2通りに評価して \(\lambda=\bar\lambda\) を絞り出す。鍵は「スカラーは転置しても不変」と「\(A\) が実対称」。</p>
+<h4>解答</h4>
+<p>複素数の範囲で \(A\mathbf{v}=\lambda\mathbf{v}\)、\(\mathbf{v}\ne\mathbf{0}\) とする(\(\bar{\phantom{v}}\) は成分ごとの複素共役)。スカラー</p>
+<p>\[s=\bar{\mathbf{v}}^\top A\mathbf{v}\]</p>
+<p>を2通りに計算する。</p>
+<p><b>評価1</b>:固有方程式を代入して</p>
+<p>\[s=\bar{\mathbf{v}}^\top(\lambda\mathbf{v})=\lambda\,\bar{\mathbf{v}}^\top\mathbf{v}=\lambda\|\mathbf{v}\|^2\]</p>
+<p>ここで \(\bar{\mathbf{v}}^\top\mathbf{v}=\sum_i|v_i|^2=\|\mathbf{v}\|^2\gt0\)(\(\mathbf{v}\ne\mathbf{0}\))。</p>
+<p><b>評価2</b>:\(s\) は \(1\times1\) なので転置しても変わらない:\(s=s^\top=\mathbf{v}^\top A^\top\bar{\mathbf{v}}=\mathbf{v}^\top A\bar{\mathbf{v}}\)(\(A^\top=A\))。一方、固有方程式の両辺の複素共役をとると、\(A\) が実行列であることから \(A\bar{\mathbf{v}}=\bar\lambda\bar{\mathbf{v}}\)。よって</p>
+<p>\[s=\mathbf{v}^\top(\bar\lambda\bar{\mathbf{v}})=\bar\lambda\,\mathbf{v}^\top\bar{\mathbf{v}}=\bar\lambda\|\mathbf{v}\|^2\]</p>
+<p>2つの評価を比べて \(\lambda\|\mathbf{v}\|^2=\bar\lambda\|\mathbf{v}\|^2\)。\(\|\mathbf{v}\|^2\gt0\) で割って \(\lambda=\bar\lambda\)、すなわち \(\lambda\) は実数である。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>回転行列(問2.6)の固有値が複素数になることと対照的に、対称行列では虚数が出る余地が構造的に封じられています。だからこそ共分散行列の固有値(=分散)やエネルギーが常に実数として意味をもつ。この証明の「スカラーを2通りに評価して挟む」手筋は問9.6でもそのまま使う、対称性議論の基本形です。複素行列では \(A^*=A\)(エルミート行列)が同じ役割を果たします(量子力学の物理量)。</p>
+</section>
+
+<section class="sol" id="a9-6">
+<div class="phead"><span class="pnum">解 9.6</span><span class="lv lv3">★★★</span><span class="ptag">固有ベクトルの直交性</span></div>
+<h4>方針</h4>
+<p>内積 \(\mathbf{u}^\top\mathbf{v}\) に \(\lambda\) を掛けたものを、\(A\) を「左右に渡す」ことで \(\mu\) 倍にすり替える。</p>
+<h4>解答</h4>
+<p>\(A\mathbf{u}=\lambda\mathbf{u}\)、\(A\mathbf{v}=\mu\mathbf{v}\)、\(\lambda\ne\mu\) とする。</p>
+<p>\[\lambda(\mathbf{u}\cdot\mathbf{v})=(\lambda\mathbf{u})^\top\mathbf{v}=(A\mathbf{u})^\top\mathbf{v}=\mathbf{u}^\top A^\top\mathbf{v}=\mathbf{u}^\top A\mathbf{v}=\mathbf{u}^\top(\mu\mathbf{v})=\mu(\mathbf{u}\cdot\mathbf{v})\]</p>
+<p>(途中で \(A^\top=A\) を使った)。移項して</p>
+<p>\[(\lambda-\mu)(\mathbf{u}\cdot\mathbf{v})=0\]</p>
+<p>\(\lambda-\mu\ne0\) だから \(\mathbf{u}\cdot\mathbf{v}=0\)。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>「\(A\) を内積の左から右へ渡すとき、料金として転置がつく(\((A\mathbf{u})^\top\mathbf{v}=\mathbf{u}^\top A^\top\mathbf{v}\))が、対称ならタダで渡れる」— この1点がすべてです。問9.5(実数性)・本問(直交性)に、重複固有値の場合の処理を加えると、スペクトル定理「実対称行列は直交対角化可能」が完成します(完全証明は帰納法によるため本書では割愛しますが、部品は今そろいました)。</p>
+</section>
+
+<section class="sol" id="a9-7">
+<div class="phead"><span class="pnum">解 9.7</span><span class="lv lv3">★★★</span><span class="ptag">PCA(主成分分析)</span></div>
+<h4>方針</h4>
+<p>各 \(\mathbf{x}_k\mathbf{x}_k^\top\)(ランク1行列)を作って足し、\(1/4\)。あとは対称行列の固有値問題(問9.1と同型)。</p>
+<h4>解答</h4>
+<p>(1) \[\mathbf{x}_1\mathbf{x}_1^\top=\begin{pmatrix}4 &amp; 2\\ 2 &amp; 1\end{pmatrix},\quad \mathbf{x}_2\mathbf{x}_2^\top=\begin{pmatrix}1 &amp; 2\\ 2 &amp; 4\end{pmatrix}\]</p>
+<p>\(\mathbf{x}_3=-\mathbf{x}_1,\ \mathbf{x}_4=-\mathbf{x}_2\) は符号が消えて同じ行列を与えるので、和は</p>
+<p>\[\sum_{k=1}^4\mathbf{x}_k\mathbf{x}_k^\top=2\begin{pmatrix}4 &amp; 2\\ 2 &amp; 1\end{pmatrix}+2\begin{pmatrix}1 &amp; 2\\ 2 &amp; 4\end{pmatrix}=\begin{pmatrix}10 &amp; 8\\ 8 &amp; 10\end{pmatrix}\]</p>
+<p>\[S=\frac14\begin{pmatrix}10 &amp; 8\\ 8 &amp; 10\end{pmatrix}=\begin{pmatrix}5/2 &amp; 2\\ 2 &amp; 5/2\end{pmatrix}\]</p>
+<p>(2) \(\det(S-\lambda I)=(5/2-\lambda)^2-4=0\) より \(5/2-\lambda=\pm2\)、固有値は</p>
+<p>\[\lambda_1=\frac92,\qquad \lambda_2=\frac12\]</p>
+<p>\(\lambda_1=9/2\):\((S-\tfrac92I)=\begin{pmatrix}-2 &amp; 2\\ 2 &amp; -2\end{pmatrix}\) より固有ベクトルは \((1,1)\) 方向。<b>第1主成分は \(\mathbf{q}_1=\dfrac{1}{\sqrt2}(1,1)\)</b>(\(\lambda_2\) の方向は \(\tfrac{1}{\sqrt2}(1,-1)\))。</p>
+<p>(3) 寄与率は</p>
+<p>\[\frac{\lambda_1}{\lambda_1+\lambda_2}=\frac{9/2}{9/2+1/2}=\frac{9}{10}=90\%\]</p>
+<h4 class="alt">ポイント</h4>
+<p>データ点を図示すると対角線 \(y=x\) の周りに伸びて散らばっており、「一番散らばる方向」= \((1,1)/\sqrt2\) を \(S\) の最大固有値の固有ベクトルが正確に言い当てています(理由は問9.3のレイリー商:方向 \(\mathbf{q}\) へ射影したデータの分散が \(\mathbf{q}^\top S\mathbf{q}\) になるから)。2次元を1次元に落としても分散の90%が残る — これがPCAによる次元削減・特徴抽出の全メカニズムです。実データでは \(S\) を直接固有分解する代わりに、データ行列のSVD(問10.6)で同じものを安定に計算します。</p>
+</section>
+
+<section class="sol" id="a9-8">
+<div class="phead"><span class="pnum">解 9.8</span><span class="lv lv2">★★</span><span class="ptag">正定値性と \(B^\top B\)</span></div>
+<h4>方針</h4>
+<p>(1)は定義確認:二次形式が \(\|B\mathbf{x}\|^2\) に化けるのが急所。(2)はスペクトル定理で \(A\) を開き、対角の平方根をとって組み立てる。</p>
+<h4>解答</h4>
+<p>(1) <b>対称性</b>:\((B^\top B)^\top=B^\top(B^\top)^\top=B^\top B\)。<b>正定値性</b>:任意の \(\mathbf{x}\ne\mathbf{0}\) に対し</p>
+<p>\[\mathbf{x}^\top(B^\top B)\mathbf{x}=(B\mathbf{x})^\top(B\mathbf{x})=\|B\mathbf{x}\|^2\]</p>
+<p>\(B\) は正則なので \(\mathbf{x}\ne\mathbf{0}\Rightarrow B\mathbf{x}\ne\mathbf{0}\)、よって \(\|B\mathbf{x}\|^2\gt0\)。ゆえに \(B^\top B\) は正定値。(証明終)</p>
+<p>(2) スペクトル定理より \(A=QDQ^\top\)(\(Q\) 直交、\(D=\operatorname{diag}(\lambda_1,\dots,\lambda_n)\)、正定値性より各 \(\lambda_i\gt0\))。\(\sqrt{D}=\operatorname{diag}(\sqrt{\lambda_1},\dots,\sqrt{\lambda_n})\) と定め、</p>
+<p>\[B=\sqrt{D}\,Q^\top\]</p>
+<p>とおく。\(\det B=\left(\prod_i\sqrt{\lambda_i}\right)\det Q^\top\ne0\) なので \(B\) は正則。そして</p>
+<p>\[B^\top B=Q\sqrt{D}\,\sqrt{D}\,Q^\top=QDQ^\top=A\]</p>
+<p>(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>まとめると「\(A\) が対称正定値 \(\iff\) ある正則 \(B\) で \(A=B^\top B\)」— 正定値行列は"何かの二乗"だ、という特徴づけです。実用では \(B\) を下三角にとる<b>コレスキー分解</b>が標準で、正規方程式の求解や多変量正規乱数の生成(\(\mathbf{z}\sim N(0,I)\) に \(B^\top\) を掛けて共分散 \(A\) を実現)に日常的に使われます。ガウス過程・カルマンフィルタの実装でも必ず出会う分解です。</p>
+</section>
+
+<header class="chap" id="ch10">
+<p class="chnum">第10章</p>
+<h2>特異値分解(SVD) — 解答解説</h2>
+<p class="chsub">低ランク近似・擬似逆行列・PCA</p>
+</header>
+
+<section class="sol" id="a10-1">
+<div class="phead"><span class="pnum">解 10.1</span><span class="lv lv2">★★</span><span class="ptag">SVDの計算</span></div>
+<h4>方針</h4>
+<p>\(A^\top A\) は対称なので第9章の方法で直交対角化できる。その固有値の平方根が特異値、固有ベクトルが \(V\)。\(U\) は公式 \(\mathbf{u}_i=A\mathbf{v}_i/\sigma_i\) で作る。</p>
+<h4>解答</h4>
+<p>(1) \[A^\top A=\begin{pmatrix}3 &amp; 4\\ 0 &amp; 5\end{pmatrix}\begin{pmatrix}3 &amp; 0\\ 4 &amp; 5\end{pmatrix}=\begin{pmatrix}25 &amp; 20\\ 20 &amp; 25\end{pmatrix}\]</p>
+<p>特性方程式は \((25-\lambda)^2-400=0\)、\(25-\lambda=\pm20\) より固有値は \(45,\ 5\)。固有ベクトルは(問9.1と同じ形なので)\(\lambda=45\) に \(\mathbf{v}_1=\frac{1}{\sqrt2}(1,1)^\top\)、\(\lambda=5\) に \(\mathbf{v}_2=\frac{1}{\sqrt2}(1,-1)^\top\)。</p>
+<p>(2) 特異値は \(\sigma_1=\sqrt{45}=3\sqrt5,\ \sigma_2=\sqrt5\)。左特異ベクトルは</p>
+<p>\[A\mathbf{v}_1=\frac{1}{\sqrt2}\begin{pmatrix}3\\ 9\end{pmatrix}\ \Rightarrow\ \mathbf{u}_1=\frac{A\mathbf{v}_1}{3\sqrt5}=\frac{1}{\sqrt{10}}\begin{pmatrix}1\\ 3\end{pmatrix}\]</p>
+<p>\[A\mathbf{v}_2=\frac{1}{\sqrt2}\begin{pmatrix}3\\ -1\end{pmatrix}\ \Rightarrow\ \mathbf{u}_2=\frac{A\mathbf{v}_2}{\sqrt5}=\frac{1}{\sqrt{10}}\begin{pmatrix}3\\ -1\end{pmatrix}\]</p>
+<p>(\(\mathbf{u}_1\cdot\mathbf{u}_2=\frac{3-3}{10}=0\):自動的に直交している。)</p>
+<p>(3) \[U=\frac{1}{\sqrt{10}}\begin{pmatrix}1 &amp; 3\\ 3 &amp; -1\end{pmatrix},\quad \Sigma=\begin{pmatrix}3\sqrt5 &amp; 0\\ 0 &amp; \sqrt5\end{pmatrix},\quad V=\frac{1}{\sqrt2}\begin{pmatrix}1 &amp; 1\\ 1 &amp; -1\end{pmatrix}\]</p>
+<p><b>検算</b>:まず \(\Sigma V^\top=\frac{1}{\sqrt2}\begin{pmatrix}3\sqrt5 &amp; 3\sqrt5\\ \sqrt5 &amp; -\sqrt5\end{pmatrix}\)。続けて</p>
+<p>\[U\Sigma V^\top=\frac{1}{\sqrt{20}}\begin{pmatrix}1 &amp; 3\\ 3 &amp; -1\end{pmatrix}\begin{pmatrix}3\sqrt5 &amp; 3\sqrt5\\ \sqrt5 &amp; -\sqrt5\end{pmatrix}=\frac{1}{2\sqrt5}\begin{pmatrix}6\sqrt5 &amp; 0\\ 8\sqrt5 &amp; 10\sqrt5\end{pmatrix}=\begin{pmatrix}3 &amp; 0\\ 4 &amp; 5\end{pmatrix}=A\]</p>
+<p>(補助検算:\(\sigma_1\sigma_2=3\sqrt5\cdot\sqrt5=15=|\det A|\)。)</p>
+<h4 class="alt">ポイント</h4>
+<p>幾何学的には「\(V^\top\) で回転 → \(\Sigma\) で軸ごとに \(3\sqrt5\) 倍・\(\sqrt5\) 倍 → \(U\) で回転」:単位円は必ず楕円に写り、その半軸長が特異値、軸の向きが \(\mathbf{u}_i\) です。\(A\) 自身は対称でなく固有ベクトルも直交しませんが、SVDなら<b>入力側・出力側それぞれに直交基底</b>を用意することで、どんな行列も"対角"にできる — これが対角化との決定的な違いです。</p>
+</section>
+
+<section class="sol" id="a10-2">
+<div class="phead"><span class="pnum">解 10.2</span><span class="lv lv2">★★</span><span class="ptag">ランク1行列の特異値</span></div>
+<h4>方針</h4>
+<p>定義どおり \(A^\top A\) の固有値の平方根。ランク1なら非零特異値は1個だけのはず。</p>
+<h4>解答</h4>
+<p>\[A^\top A=\begin{pmatrix}1 &amp; 2\\ 2 &amp; 4\end{pmatrix}\begin{pmatrix}1 &amp; 2\\ 2 &amp; 4\end{pmatrix}=\begin{pmatrix}5 &amp; 10\\ 10 &amp; 20\end{pmatrix}\]</p>
+<p>\(\det(A^\top A-\lambda I)=(5-\lambda)(20-\lambda)-100=\lambda^2-25\lambda=\lambda(\lambda-25)\) より固有値は \(25,\ 0\)。よって特異値は</p>
+<p>\[\sigma_1=5,\qquad \sigma_2=0\]</p>
+<p><b>確認</b>:\(A=\mathbf{u}\mathbf{v}^\top\)、\(\mathbf{u}=\mathbf{v}=(1,2)^\top\) で \(\|\mathbf{u}\|=\|\mathbf{v}\|=\sqrt5\)。よって \(\|\mathbf{u}\|\,\|\mathbf{v}\|=\sqrt5\cdot\sqrt5=5=\sigma_1\)。一致する。(実際、\(\mathbf{u}\mathbf{v}^\top=\|\mathbf{u}\|\|\mathbf{v}\|\cdot\hat{\mathbf{u}}\hat{\mathbf{v}}^\top\)(\(\hat{\phantom{u}}\) は単位ベクトル)はそれ自体がSVDの形をしている。)</p>
+<h4 class="alt">ポイント</h4>
+<p>「非零特異値の個数=ランク」(証明は問10.7)の最小実例です。特異値 \(0\) の存在は行列が潰れている(特異である)ことの定量的な表現で、さらに「\(\sigma_2\) が \(0\) に近い」=「ほとんど特異」という<b>連続的な尺度</b>にもなります。数値計算で「実質的なランク」を決めるときは、丸め誤差より大きい特異値を数える — \(\det\) では代用できない、SVDならではの芸当です。</p>
+</section>
+
+<section class="sol" id="a10-3">
+<div class="phead"><span class="pnum">解 10.3</span><span class="lv lv3">★★★</span><span class="ptag">低ランク近似と Eckart–Young 定理</span></div>
+<h4>方針</h4>
+<p>\(A_1\) は最大特異値の項だけ残したもの。誤差 \(E=A-A_1\) は残りの項 \(\sigma_2\mathbf{u}_2\mathbf{v}_2^\top\) になるはずなので、ノルムは特異値で読める。</p>
+<h4>解答</h4>
+<p>(1) \[A_1=\sigma_1\mathbf{u}_1\mathbf{v}_1^\top=3\sqrt5\cdot\frac{1}{\sqrt{10}}\begin{pmatrix}1\\ 3\end{pmatrix}\cdot\frac{1}{\sqrt2}\begin{pmatrix}1 &amp; 1\end{pmatrix}=\frac{3\sqrt5}{\sqrt{20}}\begin{pmatrix}1 &amp; 1\\ 3 &amp; 3\end{pmatrix}=\frac{3}{2}\begin{pmatrix}1 &amp; 1\\ 3 &amp; 3\end{pmatrix}=\begin{pmatrix}1.5 &amp; 1.5\\ 4.5 &amp; 4.5\end{pmatrix}\]</p>
+<p>(2) \[E=A-A_1=\begin{pmatrix}3-1.5 &amp; 0-1.5\\ 4-4.5 &amp; 5-4.5\end{pmatrix}=\begin{pmatrix}1.5 &amp; -1.5\\ -0.5 &amp; 0.5\end{pmatrix}\]</p>
+<p>これはSVDの第2項 \(\sigma_2\mathbf{u}_2\mathbf{v}_2^\top=\sqrt5\cdot\frac{1}{\sqrt{20}}\begin{pmatrix}3 &amp; -3\\ -1 &amp; 1\end{pmatrix}=\frac12\begin{pmatrix}3 &amp; -3\\ -1 &amp; 1\end{pmatrix}\) に等しい。ゆえに \(E\) の特異値は \(\{\sqrt5,\ 0\}\) であり</p>
+<p>\[\|E\|_2=\sigma_{\max}(E)=\sqrt5,\qquad \|E\|_F=\sqrt{1.5^2+1.5^2+0.5^2+0.5^2}=\sqrt{5}\]</p>
+<p>どちらも \(\sigma_2=\sqrt5\) に一致する(ランク1の誤差行列では \(\|E\|_2=\|E\|_F\))。</p>
+<h4 class="alt">ポイント</h4>
+<p><b>Eckart–Young の定理</b>:「ランク \(k\) 以下のあらゆる行列 \(B\) の中で、\(\|A-B\|\) を最小にするのは \(A_k=\sum_{i\le k}\sigma_i\mathbf{u}_i\mathbf{v}_i^\top\) であり、最小誤差は \(\|A-A_k\|_2=\sigma_{k+1}\)、\(\|A-A_k\|_F=\sqrt{\sigma_{k+1}^2+\cdots}\)」。つまり<b>切り捨てた特異値がそのまま誤差</b>です(この一般証明は本書のレベルを超えるため、事実として認めて使います)。特異値の減衰が速いデータほど少ない成分でよく近似できる — 画像圧縮(問10.4)・ノイズ除去・推薦システムの理論的支柱です。</p>
+</section>
+
+<section class="sol" id="a10-4">
+<div class="phead"><span class="pnum">解 10.4</span><span class="lv lv2">★★</span><span class="ptag">SVD画像圧縮の圧縮率</span></div>
+<h4>方針</h4>
+<p>成分ごとに「\(\sigma_i\)(1個)+\(\mathbf{u}_i\)(512個)+\(\mathbf{v}_i\)(512個)」を数えて20倍し、\(512^2\) と比べる。</p>
+<h4>解答</h4>
+<p>1成分あたり保存する数値は \(512+512+1=1025\) 個。\(k=20\) 成分では</p>
+<p>\[20\times1025=20{,}500\ 個\]</p>
+<p>元の画像は \(512\times512=262{,}144\) 画素。割合は</p>
+<p>\[\frac{20500}{262144}\approx0.078=約7.8\%\]</p>
+<p>すなわち元の約 \(\dfrac{1}{13}\) のデータ量で、画像の主要な構造(\(\sigma_1,\dots,\sigma_{20}\) が担う部分)を保持できる。</p>
+<h4 class="alt">ポイント</h4>
+<p>一般式は \(\dfrac{k(m+n+1)}{mn}\)。自然画像は特異値が急速に減衰するため小さな \(k\) でも見た目が保たれ、逆に細かいテクスチャやノイズは小さい特異値に押し込められているので、打ち切りが<b>ノイズ除去</b>としても働きます。実務のJPEGはSVDでなくブロックDCTを使いますが、「良い基底に展開して小さい係数を捨てる」という思想は同一。NumPyの <code>np.linalg.svd</code> で数行で実験できるので、手元の画像でぜひ試してください。</p>
+</section>
+
+<section class="sol" id="a10-5">
+<div class="phead"><span class="pnum">解 10.5</span><span class="lv lv3">★★★</span><span class="ptag">擬似逆行列(ムーア・ペンローズ逆行列)</span></div>
+<h4>方針</h4>
+<p>\(A\) は対称でランク1。SVDは実質1成分。\(A^{+}\) は「非零特異値だけ逆数にして、\(U\) と \(V\) の役割を入れ替える」。</p>
+<h4>解答</h4>
+<p>(1) \(A\) は対称で固有値 \(2,\ 0\)(\(\operatorname{tr}=2,\ \det=0\))。固有ベクトルは \(\lambda=2\) に \((1,1)/\sqrt2\)、\(\lambda=0\) に \((1,-1)/\sqrt2\)。対称半正定値行列では固有分解がそのままSVDになるから</p>
+<p>\[\sigma_1=2,\quad \mathbf{u}_1=\mathbf{v}_1=\frac{1}{\sqrt2}\begin{pmatrix}1\\ 1\end{pmatrix},\qquad \sigma_2=0\]</p>
+<p>擬似逆行列は非零特異値の項だけで作られ、</p>
+<p>\[A^{+}=\mathbf{v}_1\,\frac{1}{\sigma_1}\,\mathbf{u}_1^\top=\frac{1}{2}\cdot\frac{1}{2}\begin{pmatrix}1 &amp; 1\\ 1 &amp; 1\end{pmatrix}=\frac{1}{4}\begin{pmatrix}1 &amp; 1\\ 1 &amp; 1\end{pmatrix}\]</p>
+<p>(検算:\(AA^{+}A=A\)、\(A^{+}AA^{+}=A^{+}\)、\(AA^{+}\) と \(A^{+}A\) はともに対称 — ムーア・ペンローズの4条件をすべて満たす。実際 \(AA^{+}=\frac12\begin{pmatrix}1 &amp; 1\\ 1 &amp; 1\end{pmatrix}\) は \(\operatorname{Col}A\) への射影行列になっている。)</p>
+<p>(2) \[\hat{\mathbf{x}}=A^{+}\begin{pmatrix}1\\ 0\end{pmatrix}=\frac{1}{4}\begin{pmatrix}1\\ 1\end{pmatrix}=\left(\frac14,\ \frac14\right)^\top\]</p>
+<p><b>直接確認</b>:\(A\mathbf{x}=(x_1+x_2)\begin{pmatrix}1\\ 1\end{pmatrix}\) なので、\(s=x_1+x_2\) とおくと残差の2乗は</p>
+<p>\[\|A\mathbf{x}-(1,0)^\top\|^2=(s-1)^2+s^2\]</p>
+<p>これは \(s=\frac12\) で最小(値 \(\frac12\))。すなわち残差最小の解は「\(x_1+x_2=\frac12\) を満たす全ベクトル」(直線状に無数にある)。その中でノルム \(x_1^2+x_2^2\) が最小になるのは対称性より \(x_1=x_2=\frac14\) のとき — まさに \(\hat{\mathbf{x}}\) である。</p>
+<h4 class="alt">ポイント</h4>
+<p>擬似逆行列は「逆行列が存在しない行列にも、常に定義できる最良の代役」:\(A^{+}\mathbf{b}\) は<b>①残差 \(\|A\mathbf{x}-\mathbf{b}\|\) を最小にし、②その中でノルム最小</b>の解を返します。列がすべて独立なら \(A^{+}=(A^\top A)^{-1}A^\top\) となって第8章の最小二乗解に一致 — つまり擬似逆行列は正規方程式の完全な一般化です。NumPyの <code>np.linalg.pinv</code> の中身はまさにこのSVD構成で、ランク落ちにも安定に対応します。</p>
+</section>
+
+<section class="sol" id="a10-6">
+<div class="phead"><span class="pnum">解 10.6</span><span class="lv lv3">★★★</span><span class="ptag">SVDとPCAの関係</span></div>
+<h4>方針</h4>
+<p>\(X^\top X=\sum_k\mathbf{x}_k\mathbf{x}_k^\top\)(行ごとの外積の和)に気づけば、問9.7 の計算がそのまま使える。</p>
+<h4>解答</h4>
+<p>(1) データ点を行に並べた行列では \(X^\top X=\sum_{k=1}^{4}\mathbf{x}_k\mathbf{x}_k^\top\) となるので、問9.7(1)より</p>
+<p>\[X^\top X=\begin{pmatrix}10 &amp; 8\\ 8 &amp; 10\end{pmatrix}\]</p>
+<p>固有値は \(10\pm8=18,\ 2\)。よって \(X\) の特異値は</p>
+<p>\[\sigma_1=\sqrt{18}=3\sqrt2,\qquad \sigma_2=\sqrt2\]</p>
+<p>(2) \(X^\top X\) の最大固有値 \(18\) の固有ベクトルは \((10-\lambda)v_1+8v_2=0\) より \((1,1)\) 方向、正規化して \(\mathbf{v}_1=\frac{1}{\sqrt2}(1,1)^\top\)。これは問9.7 で求めた第1主成分と<b>一致</b>する。</p>
+<p>(3) \(S=\frac14X^\top X\) より、固有ベクトルは共通で、固有値は \(\lambda_i=\frac{\sigma_i^2}{4}\)。一般にデータ数 \(N\) なら</p>
+<p>\[\sigma_i^2=N\lambda_i\]</p>
+<p>(確認:\(\sigma_1^2=18=4\cdot\frac92\)、\(\sigma_2^2=2=4\cdot\frac12\)。)</p>
+<h4 class="alt">ポイント</h4>
+<p>PCA=「中心化したデータ行列のSVD」。右特異ベクトル \(\mathbf{v}_i\) が主成分の方向、特異値の2乗が(\(N\) 倍の)分散、そして \(X\mathbf{v}_i=\sigma_i\mathbf{u}_i\) の \(\sigma_i\mathbf{u}_i\) が各データの主成分スコアです。実務で共分散行列を作らずSVDを使うのは、①\(X^\top X\) を作ると条件数が2乗されて精度が落ちる、②低ランク近似(必要な上位成分だけの計算)と自然につながる、から。scikit-learn の PCA も内部はSVDです。</p>
+</section>
+
+<section class="sol" id="a10-7">
+<div class="phead"><span class="pnum">解 10.7</span><span class="lv lv2">★★</span><span class="ptag">ランクと特異値</span></div>
+<h4>方針</h4>
+<p>「正則行列を掛けてもランク不変」を認めれば2行。その補題自体も核の比較で示せる。</p>
+<h4>解答</h4>
+<p><b>補題</b>:\(P\) が正則なら \(\operatorname{rank}(PA)=\operatorname{rank}A\)。実際 \(PA\mathbf{x}=\mathbf{0}\iff A\mathbf{x}=\mathbf{0}\)(\(P\) 正則より)なので両者の零空間が一致し、rank-nullity(問5.8)からランクも一致する。同様に \(\operatorname{rank}(AQ)=\operatorname{rank}A\)(\(Q\) 正則。転置してランク不変 \(\operatorname{rank}M^\top=\operatorname{rank}M\) を使えば行側の場合に帰着する)。</p>
+<p><b>本題</b>:\(U,V\) は直交行列だから正則。よって</p>
+<p>\[\operatorname{rank}A=\operatorname{rank}(U\Sigma V^\top)=\operatorname{rank}\Sigma\]</p>
+<p>\(\Sigma\) は対角行列なので、そのランクは非零対角成分の個数、すなわち非零特異値の個数に等しい。(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>ここまでで、ランク(本問)・ノルム(問10.8)・条件数・行列式の絶対値(\(=\prod\sigma_i\))・4つの基本部分空間(\(\operatorname{Col}A=\operatorname{span}\{\mathbf{u}_i\}_{\sigma_i\gt0}\)、\(\operatorname{Null}A=\operatorname{span}\{\mathbf{v}_i\}_{\sigma_i=0}\))— 行列の主要な情報が<b>すべて特異値分解から読める</b>ことが見えてきます。SVDが「行列のレントゲン写真」と呼ばれるゆえんです。</p>
+</section>
+
+<section class="sol" id="a10-8">
+<div class="phead"><span class="pnum">解 10.8</span><span class="lv lv2">★★</span><span class="ptag">行列ノルムと条件数</span></div>
+<h4>方針</h4>
+<p>(1)は両側を素直に計算して比較。(2)は比を取るだけ。意味の説明は「入力の相対誤差が何倍まで拡大されうるか」。</p>
+<h4>解答</h4>
+<p>(1) 成分から:</p>
+<p>\[\|A\|_F=\sqrt{3^2+0^2+4^2+5^2}=\sqrt{9+16+25}=\sqrt{50}=5\sqrt2\]</p>
+<p>特異値から:\(\sqrt{\sigma_1^2+\sigma_2^2}=\sqrt{45+5}=\sqrt{50}=5\sqrt2\)。一致する。(一般証明:\(\|A\|_F^2=\operatorname{tr}(A^\top A)=A^\top A\ の固有値の和=\sum\sigma_i^2\)。)</p>
+<p>(2) \[\kappa(A)=\frac{\sigma_{\max}}{\sigma_{\min}}=\frac{3\sqrt5}{\sqrt5}=3\]</p>
+<p><b>悪条件の意味</b>:\(A\mathbf{x}=\mathbf{b}\) を解くとき、入力 \(\mathbf{b}\)(や \(A\))の相対誤差が、解 \(\mathbf{x}\) では最悪 \(\kappa(A)\) 倍に拡大されうる。\(\kappa\) が大きい(例:\(10^{8}\))と、データの僅かなノイズや丸め誤差だけで解が大きく暴れ、計算結果が信用できなくなる。</p>
+<h4 class="alt">ポイント</h4>
+<p>幾何で言えば、\(\kappa\) は「\(A\) が単位円を写した楕円の、長軸÷短軸」。細長い楕円ほど逆向きの復元が不安定です。\(\kappa=3\) は良条件、直交行列は \(\kappa=1\) で最良(第8章でQR分解が好まれた理由)。正規方程式で \(A^\top A\) を作ると \(\kappa\) が2乗される、倍精度浮動小数点の有効桁は約16桁なので \(\kappa\gtrsim10^{16}\) では桁が全滅する — 数値計算の実務で最初に確認すべき量です。</p>
+</section>
+
+<section class="sol" id="a10-9">
+<div class="phead"><span class="pnum">解 10.9</span><span class="lv lv3">★★★</span><span class="ptag">SVDの存在証明</span></div>
+<h4>方針</h4>
+<p>第9章の道具(スペクトル定理・半正定値)を \(A^\top A\) に適用し、\(\mathbf{u}_i=A\mathbf{v}_i/\sigma_i\) の正規直交性を内積計算で確かめるのが山場。</p>
+<h4>解答</h4>
+<p><b>手順1(\(A^\top A\) の性質)</b>:\((A^\top A)^\top=A^\top A\) で対称。また任意の \(\mathbf{x}\) に対し \(\mathbf{x}^\top A^\top A\mathbf{x}=\|A\mathbf{x}\|^2\ge0\) なので半正定値。よって固有値はすべて実数かつ非負である(負の固有値 \(\lambda\) があれば、その固有ベクトルで \(\mathbf{x}^\top A^\top A\mathbf{x}=\lambda\|\mathbf{x}\|^2\lt0\) となり矛盾)。</p>
+<p><b>手順2(\(V\) の構成)</b>:スペクトル定理により \(A^\top A\) の正規直交固有基底 \(\mathbf{v}_1,\dots,\mathbf{v}_n\) がとれる。固有値を降順に \(\sigma_1^2\ge\cdots\ge\sigma_r^2\gt0=\sigma_{r+1}^2=\cdots=\sigma_n^2\) と書く(\(\sigma_i\ge0\)。\(r\) は正の固有値の個数)。</p>
+<p><b>手順3(\(U\) の構成)</b>:\(i\le r\) に対し \(\mathbf{u}_i=\dfrac{1}{\sigma_i}A\mathbf{v}_i\) と定める。このとき \(i,j\le r\) で</p>
+<p>\[\mathbf{u}_i^\top\mathbf{u}_j=\frac{1}{\sigma_i\sigma_j}(A\mathbf{v}_i)^\top(A\mathbf{v}_j)=\frac{1}{\sigma_i\sigma_j}\mathbf{v}_i^\top(A^\top A\mathbf{v}_j)=\frac{\sigma_j^2}{\sigma_i\sigma_j}\mathbf{v}_i^\top\mathbf{v}_j=\begin{cases}1 &amp; (i=j)\\ 0 &amp; (i\ne j)\end{cases}\]</p>
+<p>すなわち \(\{\mathbf{u}_1,\dots,\mathbf{u}_r\}\) は \(\mathbb{R}^m\) の正規直交系。これを \(\mathbb{R}^m\) の正規直交基底 \(\{\mathbf{u}_1,\dots,\mathbf{u}_m\}\) に拡張する(グラム・シュミット)。</p>
+<p><b>手順4(組み立て)</b>:\(i\le r\) では定義より \(A\mathbf{v}_i=\sigma_i\mathbf{u}_i\)。\(i\gt r\) では \(\|A\mathbf{v}_i\|^2=\mathbf{v}_i^\top A^\top A\mathbf{v}_i=\sigma_i^2\|\mathbf{v}_i\|^2=0\) より \(A\mathbf{v}_i=\mathbf{0}\)。まとめると、\(V=(\mathbf{v}_1\ \cdots\ \mathbf{v}_n)\)、\(U=(\mathbf{u}_1\ \cdots\ \mathbf{u}_m)\)、\(\Sigma\) を対角に \(\sigma_1,\dots\) を並べた \(m\times n\) 行列として、すべての基底ベクトルで</p>
+<p>\[AV=U\Sigma\]</p>
+<p>が成り立つ(第 \(i\) 列どうしが上の2つの場合そのもの)。\(V\) は直交行列なので右から \(V^\top\) を掛けて</p>
+<p>\[A=U\Sigma V^\top\]</p>
+<p>(証明終)</p>
+<h4 class="alt">ポイント</h4>
+<p>証明の芯は2点だけ:①\(A^\top A\) が対称半正定値だから第9章の全装備が使える、②\(A\mathbf{v}_i\) たちの直交性が \(A^\top A\) の固有方程式から<b>自動的に</b>出る(手順3の計算)。対角化は「できる行列・できない行列」がありましたが、SVDに例外はありません — どんな \(A\) でも \(A^\top A\) は必ず対称半正定値だからです。本書で積み上げた道具(スペクトル定理・rank-nullity・グラム・シュミット)が最後に一つの定理へ合流する、締めくくりにふさわしい証明です。</p>
+</section>
+
+<header class="chap" id="ch11">
+<p class="chnum">第11章</p>
+<h2>発展 — 解答解説</h2>
+<p class="chsub">ジョルダン標準形・行列関数・数値線形代数入門</p>
+</header>
+
+<section class="sol" id="a11-1">
+<div class="phead"><span class="pnum">解 11.1</span><span class="lv lv2">★★</span><span class="ptag">最小多項式</span></div>
+<h4>方針</h4>
+<p>最小多項式は特性多項式 \((\lambda-2)^2\) の約数(ケーリー・ハミルトン)。候補は \(\lambda-2\) と \((\lambda-2)^2\) の2つしかないので、次数の低い方から実際に代入して調べる。</p>
+<h4>解答</h4>
+<p>\[B-2I=\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}\ne O,\qquad (B-2I)^2=\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}=O\]</p>
+<p>1次式 \(\lambda-2\) では零化されず、\((\lambda-2)^2\) で初めて零化される。よって最小多項式は</p>
+<p>\[m(\lambda)=(\lambda-2)^2\]</p>
+<p><b>整合性</b>:\(m(\lambda)\) は \(\lambda=2\) を重根にもつ。判定法「最小多項式が重根をもたない \(\iff\) 対角化可能」に照らすと、\(B\) は対角化不可能 — 問7.10 で固有空間の次元不足から得た結論と一致する。</p>
+<h4 class="alt">ポイント</h4>
+<p>対角化可能なら \(B=PDP^{-1}\) で、\(D\) の相異なる対角値 \(\lambda_i\) たちに対し \(\prod_i(B-\lambda_iI)=P\prod_i(D-\lambda_iI)P^{-1}=O\) となり、重根なしの多項式で零化できます。逆に重根が必要になるのは、\((B-\lambda I)\) を1回当てても消えない「ずれ」(冪零成分 \(N=B-2I\))が残っているから。最小多項式は「行列の真の複雑さ」を測る、特性多項式より精密なものさしです。</p>
+</section>
+
+<section class="sol" id="a11-2">
+<div class="phead"><span class="pnum">解 11.2</span><span class="lv lv3">★★★</span><span class="ptag">ジョルダン標準形への変換</span></div>
+<h4>方針</h4>
+<p>固有ベクトル \(\mathbf{v}\) が1本しか無いとき、不足分は「\((B-\lambda I)\) で \(\mathbf{v}\) に写るベクトル」\(\mathbf{w}\) で補う。\(P=(\mathbf{v}\ \mathbf{w})\) と並べれば、\(B\mathbf{v}=\lambda\mathbf{v}\)、\(B\mathbf{w}=\mathbf{v}+\lambda\mathbf{w}\) がそのままジョルダン形を作る。</p>
+<h4>解答</h4>
+<p>(1) \[\det(B-\lambda I)=(2-\lambda)(4-\lambda)+1=\lambda^2-6\lambda+9=(\lambda-3)^2\]</p>
+<p>固有値は \(\lambda=3\)(代数的重複度2)。</p>
+<p>\[(B-3I)=\begin{pmatrix}-1 &amp; 1\\ -1 &amp; 1\end{pmatrix}\]</p>
+<p>はランク1なので固有空間は1次元:\(-v_1+v_2=0\) より \(\mathbf{v}=(1,\,1)^\top\) のみ。独立な固有ベクトルが1本足りず、対角化できない。</p>
+<p>(2) 一般化固有ベクトル:\((B-3I)\mathbf{w}=\mathbf{v}\) すなわち \(-w_1+w_2=1\)(2つの行は同じ式)。解の1つとして</p>
+<p>\[\mathbf{w}=(0,\,1)^\top\]</p>
+<p>(3) \(P=\begin{pmatrix}1 &amp; 0\\ 1 &amp; 1\end{pmatrix}\)、\(\det P=1\) より \(P^{-1}=\begin{pmatrix}1 &amp; 0\\ -1 &amp; 1\end{pmatrix}\)。</p>
+<p>\[BP=\begin{pmatrix}B\mathbf{v} &amp; B\mathbf{w}\end{pmatrix}=\begin{pmatrix}3 &amp; 1\\ 3 &amp; 4\end{pmatrix},\qquad P^{-1}BP=\begin{pmatrix}1 &amp; 0\\ -1 &amp; 1\end{pmatrix}\begin{pmatrix}3 &amp; 1\\ 3 &amp; 4\end{pmatrix}=\begin{pmatrix}3 &amp; 1\\ 0 &amp; 3\end{pmatrix}\]</p>
+<p>確かにジョルダン標準形 \(\begin{pmatrix}3 &amp; 1\\ 0 &amp; 3\end{pmatrix}\) になる。</p>
+<h4 class="alt">ポイント</h4>
+<p>検算の見方:\(B\mathbf{w}=(1,4)^\top=\mathbf{v}+3\mathbf{w}\) — 第2列の「\(\mathbf{v}\) 成分1、\(\mathbf{w}\) 成分3」がジョルダンブロックの \(\begin{pmatrix}1\\ 3\end{pmatrix}\) にそのまま写っています。一般の \(n\) 次でも「どんな行列もジョルダンブロックのブロック対角にできる」(ジョルダン標準形の存在定理。完全証明は本書のレベルを超えるので事実として述べます)。対角化の"完全版"として、\(A^n\) や \(e^{tA}\)(問11.4)の計算、微分方程式の重解の場合(\(te^{\lambda t}\) 型の解の出所)を統一的に説明します。</p>
+</section>
+
+<section class="sol" id="a11-3">
+<div class="phead"><span class="pnum">解 11.3</span><span class="lv lv3">★★★</span><span class="ptag">行列指数関数と回転</span></div>
+<h4>方針</h4>
+<p>\(A^2=-I\) から \(A\) の冪は周期4で循環(\(i^2=-1\) と同じ構造)。級数を \(I\) の係数と \(A\) の係数に仕分けると、\(\cos\) と \(\sin\) のテイラー級数が現れる。</p>
+<h4>解答</h4>
+<p>まず \(A^2=\begin{pmatrix}0 &amp; 1\\ -1 &amp; 0\end{pmatrix}\begin{pmatrix}0 &amp; 1\\ -1 &amp; 0\end{pmatrix}=\begin{pmatrix}-1 &amp; 0\\ 0 &amp; -1\end{pmatrix}=-I\)。よって \(A^3=-A,\ A^4=I,\dots\) と周期4で循環し、一般に \(A^{2m}=(-1)^mI\)、\(A^{2m+1}=(-1)^mA\)。級数を偶奇に分けると</p>
+<p>\[e^{tA}=\sum_{m=0}^{\infty}\frac{t^{2m}}{(2m)!}A^{2m}+\sum_{m=0}^{\infty}\frac{t^{2m+1}}{(2m+1)!}A^{2m+1}=\underbrace{\left(\sum_{m}\frac{(-1)^mt^{2m}}{(2m)!}\right)}_{\cos t}I+\underbrace{\left(\sum_{m}\frac{(-1)^mt^{2m+1}}{(2m+1)!}\right)}_{\sin t}A\]</p>
+<p>\[\therefore\quad e^{tA}=(\cos t)I+(\sin t)A=\begin{pmatrix}\cos t &amp; \sin t\\ -\sin t &amp; \cos t\end{pmatrix}\]</p>
+<p><b>意味</b>:これは角度 \(t\) の回転行列(第2章の \(R(\theta)\) と比べると回転の向きが逆、すなわち \(R(-t)\)。\(A\) を転置すれば反時計回り \(R(t)\) が得られる)。長さを変えない直交行列である。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(A^2=-I\) は「\(A\) が虚数単位 \(i\) の行列版」であることを意味し、計算全体がオイラーの公式 \(e^{it}=\cos t+i\sin t\) の完全な写しになっています。微分方程式の言葉では、\(\mathbf{x}'=A\mathbf{x}\) の解 \(\mathbf{x}(t)=e^{tA}\mathbf{x}(0)\) は原点まわりの等速円運動 — \(A\) は「回転を生み出す生成子」です。ロボティクスやCGで回転を滑らかに補間する技術(回転群とその生成子)の最初の一歩がここにあります。</p>
+</section>
+
+<section class="sol" id="a11-4">
+<div class="phead"><span class="pnum">解 11.4</span><span class="lv lv3">★★★</span><span class="ptag">冪零成分をもつ行列の指数関数</span></div>
+<h4>方針</h4>
+<p>スカラー部分 \(2tI\) と冪零部分 \(tN\) に割る。\(e^{2tI}=e^{2t}I\) は自明、\(e^{tN}\) は \(N^2=O\) で級数が2項で切れる。</p>
+<h4>解答</h4>
+<p>\(tB=2tI+tN\)、\(N=\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}\)。\(I\) はどんな行列とも可換なので \(2tI\) と \(tN\) は可換であり、\(e^{tB}=e^{2tI}e^{tN}\) が使える。</p>
+<p>\(e^{2tI}=e^{2t}I\)。また \(N^2=O\)(問11.1)より級数は</p>
+<p>\[e^{tN}=I+tN+\frac{t^2}{2}N^2+\cdots=I+tN=\begin{pmatrix}1 &amp; t\\ 0 &amp; 1\end{pmatrix}\]</p>
+<p>よって</p>
+<p>\[e^{tB}=e^{2t}\begin{pmatrix}1 &amp; t\\ 0 &amp; 1\end{pmatrix}=\begin{pmatrix}e^{2t} &amp; te^{2t}\\ 0 &amp; e^{2t}\end{pmatrix}\]</p>
+<p>(検算:\(t=0\) で \(I\)。また \(\frac{d}{dt}e^{tB}\big|_{t=0}=\begin{pmatrix}2 &amp; 1\\ 0 &amp; 2\end{pmatrix}=B\)。)</p>
+<h4 class="alt">ポイント</h4>
+<p>非対角に現れた \(te^{2t}\) に注目 — 微分方程式で特性方程式が重解をもつとき解に \(te^{\lambda t}\) が混ざる、あの現象の正体がこれです(ジョルダンブロックの冪零部分が \(t\) の多項式を生む)。なお \(e^{X+Y}=e^Xe^Y\) は<b>可換なときだけ</b>成り立つ点に注意(非可換だと一般に不成立)。「対角化 \(\to\) \(e^{tA}=Pe^{tD}P^{-1}\)、対角化不能 \(\to\) ジョルダン+冪零の打ち切り級数」という2本立てで、任意の線形微分方程式系 \(\mathbf{x}'=A\mathbf{x}\) が解けるようになりました。</p>
+</section>
+
+<section class="sol" id="a11-5">
+<div class="phead"><span class="pnum">解 11.5</span><span class="lv lv2">★★</span><span class="ptag">ケーリー・ハミルトンによる逆行列</span></div>
+<h4>方針</h4>
+<p>\(10I\) を左辺に残す形に整理し、\(A\) でくくる。</p>
+<h4>解答</h4>
+<p>\(A^2-7A+10I=O\) より \(10I=7A-A^2=A(7I-A)\)。両辺を \(10\) で割ると</p>
+<p>\[A\cdot\frac{7I-A}{10}=I\qquad\therefore\ A^{-1}=\frac{1}{10}(7I-A)=\frac{1}{10}\begin{pmatrix}7-4 &amp; -1\\ -2 &amp; 7-3\end{pmatrix}=\frac{1}{10}\begin{pmatrix}3 &amp; -1\\ -2 &amp; 4\end{pmatrix}\]</p>
+<p>第2章の公式では \(\det A=10\) より \(A^{-1}=\dfrac{1}{10}\begin{pmatrix}3 &amp; -1\\ -2 &amp; 4\end{pmatrix}\)。一致する。</p>
+<h4 class="alt">ポイント</h4>
+<p>定数項(\(=\det A\))が非零なら、特性多項式の関係式から逆行列が「\(A\) の多項式」として取り出せる — 逆行列すら \(A\) 自身の冪の一次結合で書ける、という構造的な事実です。一般に \(A\) の任意の冪・任意の行列関数は、\(n\) 次行列なら次数 \(n-1\) 以下の多項式 \(c_0I+c_1A+\cdots+c_{n-1}A^{n-1}\) に必ず簡約できます(ケーリー・ハミルトンで次数下げ)。数式処理や制御理論(可制御性行列)で活躍する視点です。</p>
+</section>
+
+<section class="sol" id="a11-6">
+<div class="phead"><span class="pnum">解 11.6</span><span class="lv lv3">★★★</span><span class="ptag">冪乗法(最大固有値の数値計算)</span></div>
+<h4>方針</h4>
+<p>反復は行列ベクトル積2回。原理は「初期ベクトルを固有ベクトルで展開すると、反復のたびに最大固有値の成分だけが相対的に太る」。</p>
+<h4>解答</h4>
+<p><b>反復</b>:</p>
+<p>\[\mathbf{x}_1=A\mathbf{x}_0=\begin{pmatrix}2\\ 1\end{pmatrix},\qquad \mathbf{x}_2=A\mathbf{x}_1=\begin{pmatrix}4+1\\ 2+2\end{pmatrix}=\begin{pmatrix}5\\ 4\end{pmatrix}\]</p>
+<p><b>レイリー商</b>:\(A\mathbf{x}_2=(10+4,\ 5+8)^\top=(14,\ 13)^\top\) より</p>
+<p>\[\frac{\mathbf{x}_2^\top A\mathbf{x}_2}{\mathbf{x}_2^\top\mathbf{x}_2}=\frac{5\cdot14+4\cdot13}{5^2+4^2}=\frac{70+52}{41}=\frac{122}{41}\approx2.976\]</p>
+<p>2回の反復で早くも最大固有値 \(3\) のすぐ近くに来ている。</p>
+<p><b>原理</b>:固有ベクトル \(\mathbf{v}_1=(1,1)^\top\)(\(\lambda_1=3\))、\(\mathbf{v}_2=(1,-1)^\top\)(\(\lambda_2=1\))で初期ベクトルを展開すると \(\mathbf{x}_0=\frac12\mathbf{v}_1+\frac12\mathbf{v}_2\)。よって</p>
+<p>\[\mathbf{x}_k=A^k\mathbf{x}_0=\frac12\,3^k\mathbf{v}_1+\frac12\,1^k\mathbf{v}_2=3^k\left(\frac12\mathbf{v}_1+\frac12\left(\frac{1}{3}\right)^k\mathbf{v}_2\right)\]</p>
+<p>括弧内の第2項が \((\lambda_2/\lambda_1)^k=(1/3)^k\) の速さで消えるため、\(\mathbf{x}_k\) の方向は \(\mathbf{v}_1\) に幾何級数的に収束する(実際 \(\mathbf{x}_2=\frac92\mathbf{v}_1+\frac12\mathbf{v}_2=(5,4)^\top\) で、\(\mathbf{v}_1\) 成分が9倍優勢)。収束の速さは<b>固有値の比 \(|\lambda_2/\lambda_1|\)</b> で決まる。</p>
+<h4 class="alt">ポイント</h4>
+<p>冪乗法の1反復は行列ベクトル積1回だけ:疎な巨大行列(非零成分だけ計算)でも動くのが最大の強みで、Webグラフ規模のPageRank(問7.8)はまさにこの方法で計算されます。実装では毎回ノルムで正規化してオーバーフローを防ぎ、レイリー商(対称行列では誤差が2乗のオーダーで縮む高精度な推定)で固有値を読み取ります。「固有値がすべてを支配する」という第7章以来のテーマの、計算アルゴリズム側の結論です。</p>
+</section>
+
+<section class="sol" id="a11-7">
+<div class="phead"><span class="pnum">解 11.7</span><span class="lv lv2">★★</span><span class="ptag">作用素ノルムの特徴づけ</span></div>
+<h4>方針</h4>
+<p>直交行列がノルムを保つ(問8.3)ことで \(U,V\) を消し、対角行列 \(\Sigma\) だけの最大化問題に落とす。フロベニウスの方は \(\operatorname{tr}(AB)=\operatorname{tr}(BA)\)(問2.10)で \(V\) を消す。</p>
+<h4>解答</h4>
+<p><b>作用素ノルム</b>:\(U\) は直交なので \(\|A\mathbf{x}\|=\|U\Sigma V^\top\mathbf{x}\|=\|\Sigma V^\top\mathbf{x}\|\)。\(\mathbf{y}=V^\top\mathbf{x}\) とおくと、\(V^\top\) も直交だから \(\|\mathbf{y}\|=\|\mathbf{x}\|\) で、\(\mathbf{x}\ne\mathbf{0}\) と \(\mathbf{y}\ne\mathbf{0}\) は1対1に対応する。よって</p>
+<p>\[\|A\|_2=\max_{\mathbf{y}\ne\mathbf{0}}\frac{\|\Sigma\mathbf{y}\|}{\|\mathbf{y}\|}\]</p>
+<p>ここで \(\|\Sigma\mathbf{y}\|^2=\sum_i\sigma_i^2y_i^2\le\sigma_{\max}^2\sum_iy_i^2=\sigma_{\max}^2\|\mathbf{y}\|^2\)。等号は \(\mathbf{y}=\mathbf{e}_1\)(最大特異値の座標だけのベクトル)で達成される。ゆえに \(\|A\|_2=\sigma_{\max}\)。(証明終)</p>
+<p><b>フロベニウスノルム</b>:\(\|A\|_F^2=\sum_{i,j}a_{ij}^2=\operatorname{tr}(A^\top A)\)(\(A^\top A\) の第 \(j\) 対角成分が第 \(j\) 列の2乗和)。SVDを代入し、\(\operatorname{tr}(AB)=\operatorname{tr}(BA)\) を使うと</p>
+<p>\[\operatorname{tr}(A^\top A)=\operatorname{tr}(V\Sigma^\top\Sigma V^\top)=\operatorname{tr}(\Sigma^\top\Sigma V^\top V)=\operatorname{tr}(\Sigma^\top\Sigma)=\sum_i\sigma_i^2\]</p>
+<p>(証明終)</p>
+<p><b>数値確認</b>(問10.1の \(A\)):\(\|A\|_2=3\sqrt5\approx6.71\)、\(\|A\|_F=\sqrt{45+5}=\sqrt{50}=5\sqrt2\)(成分からの \(\sqrt{9+16+25}\) と一致)。</p>
+<h4 class="alt">ポイント</h4>
+<p>\(\|A\|_2\) は「\(A\) がベクトルを最大何倍まで引き伸ばせるか」の正確な値で、誤差解析(\(\|A\mathbf{x}\|\le\|A\|_2\|\mathbf{x}\|\))・ニューラルネットの安定性(スペクトルノルム正則化)・反復法の収束判定に直結します。証明の要は「<b>直交変換はノルムの世界では透明人間</b>」という一点 — 第8章の直交性が、第10章のSVDを実用の計算道具に変える瞬間です。</p>
+</section>
+
+<section class="sol" id="a11-8">
+<div class="phead"><span class="pnum">解 11.8</span><span class="lv lv3">★★★</span><span class="ptag">グラフラプラシアンとスペクトラルクラスタリング入門</span></div>
+<h4>方針</h4>
+<p>定義どおり \(D,A\) を書いて引く。固有値は特性多項式を「\((1-\lambda)\) でくくる」と因数分解できる。フィードラー・ベクトルは成分の符号を頂点に貼って観察する。</p>
+<h4>解答</h4>
+<p>(1) 次数は頂点 \(1,2,3\) の順に \(1,2,1\)。</p>
+<p>\[D=\begin{pmatrix}1 &amp; 0 &amp; 0\\ 0 &amp; 2 &amp; 0\\ 0 &amp; 0 &amp; 1\end{pmatrix},\quad A=\begin{pmatrix}0 &amp; 1 &amp; 0\\ 1 &amp; 0 &amp; 1\\ 0 &amp; 1 &amp; 0\end{pmatrix},\quad L=D-A=\begin{pmatrix}1 &amp; -1 &amp; 0\\ -1 &amp; 2 &amp; -1\\ 0 &amp; -1 &amp; 1\end{pmatrix}\]</p>
+<p>(2) \(L\) の各行の和は \(0\) なので \(L(1,1,1)^\top=\mathbf{0}\):\((1,1,1)^\top\) は固有値 \(0\) の固有ベクトル。特性多項式は第1行で展開して</p>
+<p>\[\det(L-\lambda I)=(1-\lambda)\{(2-\lambda)(1-\lambda)-1\}-(1-\lambda)=(1-\lambda)\{\lambda^2-3\lambda\}=-\lambda(\lambda-1)(\lambda-3)\]</p>
+<p>よって固有値は</p>
+<p>\[\lambda=0,\ 1,\ 3\]</p>
+<p>(検算:和 \(=4=\operatorname{tr}L\)。)</p>
+<p>(3) 固有値 \(0\) の重複度は \(1\)。このグラフは全体がひとつながり(連結成分1個)なので、「重複度=連結成分数」が成り立っている。2番目に小さい固有値 \(\lambda_2=1\) の固有ベクトルは \((L-I)\mathbf{v}=\mathbf{0}\) を解いて</p>
+<p>\[\mathbf{v}=(1,\ 0,\ -1)^\top\]</p>
+<p>成分の符号は、頂点 \(1\) が正・頂点 \(3\) が負・中央の頂点 \(2\) がちょうど \(0\)(境界)。符号で頂点を2分すると \(\{1\}\) と \(\{3\}\) に分かれ、<b>グラフを真ん中で切る自然な2分割</b>を指し示している。</p>
+<h4 class="alt">ポイント</h4>
+<p>ラプラシアンの二次形式は \(\mathbf{x}^\top L\mathbf{x}=\sum_{(i,j)\in E}(x_i-x_j)^2\)(辺の両端の値の差の2乗和)であり、常に \(\ge0\) — 第9章の言葉で半正定値です。差が全部 \(0\) になる(=連結成分ごとに定数)ベクトルが固有値 \(0\) の固有空間で、だから「重複度=成分数」。\(\lambda_2\)(代数的連結度)は「グラフの切れやすさ」を測り、フィードラー・ベクトルの符号で分割するのが<b>スペクトラルクラスタリング</b>の原型 — 画像のセグメンテーションやコミュニティ検出で実際に使われる、固有値理論の現代的な出口です。なお問9.4 の行列はこのラプラシアンの対角に \(+1\) を足したもの(境界条件つき差分行列)で、本書の題材が最後に一つの輪につながります。</p>
+</section>
+
+
+<footer class="book">
+<p>『情報系のための線形代数 解答解説集』 全11章・103問。姉妹編『問題集』とセットで学習してください。</p>
+<p>本書に登場する数値計算(行列の積・逆行列・行列式・階数・固有値・特異値分解・最小二乗解など全129項目)は、計算機代数システム SymPy による厳密計算で全件検証済みです。</p>
+</footer>
+</div>
+</body>
+</html>

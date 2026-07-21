@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>情報系のための線形代数 問題集 — 基礎から大学院レベルまで</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  chtml: { matchFontHeight: true }
+};
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+:root{
+  --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
+  --accent:#1f4e8c; --accent-soft:#eef2f8;
+  --lv1:#2f7d4f; --lv2:#1f4e8c; --lv3:#a83232;
+  --rule:#d8d8d2;
+  --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --sans:"Yu Gothic Medium","Yu Gothic","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.95;font-feature-settings:"palt";}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.15rem 5rem}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.5;letter-spacing:.02em}
+/* --- 表紙 --- */
+header.book{padding:4.2rem 0 2.2rem;border-bottom:3px double var(--accent)}
+header.book .series{color:var(--accent);font-family:var(--sans);font-weight:700;
+  letter-spacing:.35em;font-size:.8rem;margin:0 0 .9rem}
+header.book h1{font-size:2.05rem;margin:0 0 .5rem}
+header.book .subtitle{color:var(--sub);margin:0 0 1.4rem;font-size:1.02rem}
+header.book .meta{font-size:.82rem;color:var(--sub);line-height:2}
+/* --- 目次 --- */
+nav.toc{margin:2.2rem 0;padding:1.3rem 1.5rem;background:var(--card);
+  border:1px solid var(--rule);border-radius:6px}
+nav.toc h2{font-size:1.05rem;margin:0 0 .7rem;color:var(--accent)}
+nav.toc ol{margin:0;padding-left:1.4rem}
+nav.toc li{margin:.28rem 0;font-size:.95rem}
+nav.toc .cnt{color:var(--sub);font-size:.8rem;margin-left:.5em}
+/* --- 章トビラ --- */
+header.chap{margin:4.5rem 0 1.6rem;padding-top:2.2rem;border-top:1px solid var(--rule)}
+header.chap .chnum{font-family:var(--serif);color:var(--accent);font-size:1rem;
+  letter-spacing:.25em;margin:0}
+header.chap h2{font-size:1.75rem;margin:.15rem 0 .2rem}
+header.chap .chsub{color:var(--sub);margin:0;font-size:.98rem}
+/* --- 説明ボックス類 --- */
+.why,.learn,.keybox,.howto{margin:1.4rem 0;padding:1.1rem 1.35rem;border-radius:6px;
+  background:var(--card);border:1px solid var(--rule)}
+.why{border-left:4px solid var(--accent)}
+.why h3,.learn h3,.keybox h3,.howto h3{margin:0 0 .55rem;font-size:1.02rem;color:var(--accent)}
+.learn ul,.keybox ul{margin:.2rem 0;padding-left:1.35rem}
+.learn li,.keybox li{margin:.3rem 0}
+.keybox{background:var(--accent-soft);border-color:transparent}
+.keybox b.term{color:var(--accent)}
+/* --- 問題カード --- */
+section.prob,section.sol{margin:1.7rem 0;padding:1.15rem 1.35rem 1.05rem;
+  background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
+  border-radius:6px}
+section.prob{border-left-color:var(--accent)}
+.phead{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.5rem}
+.pnum{font-family:var(--serif);font-weight:700;font-size:1.08rem;color:var(--accent)}
+.lv{font-size:.72rem;font-weight:700;color:#fff;border-radius:3px;padding:.12rem .5rem;letter-spacing:.05em}
+.lv1{background:var(--lv1)}.lv2{background:var(--lv2)}.lv3{background:var(--lv3)}
+.ptag{font-size:.78rem;color:var(--sub)}
+section.prob p,section.sol p{margin:.55rem 0}
+ol.sublist{padding-left:1.6rem;margin:.4rem 0}
+ol.sublist li{margin:.35rem 0}
+/* --- 解説の段階 --- */
+section.sol{border-left-color:var(--accent)}
+section.sol h4{font-family:var(--sans);font-size:.85rem;letter-spacing:.15em;
+  color:#fff;background:var(--accent);display:inline-block;
+  padding:.14rem .8rem;border-radius:3px;margin:1.05rem 0 .35rem}
+section.sol h4.alt{background:var(--sub)}
+.note{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:var(--accent-soft);
+  border-radius:5px;font-size:.94rem}
+.note b:first-child{color:var(--accent)}
+.warn{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:#faf1ee;
+  border-left:3px solid var(--lv3);border-radius:0 5px 5px 0;font-size:.94rem}
+.warn b:first-child{color:var(--lv3)}
+/* --- 表 --- */
+table{border-collapse:collapse;margin:1rem 0;font-size:.93rem;width:100%}
+th,td{border:1px solid var(--rule);padding:.42rem .7rem;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+/* --- 章末 --- */
+.check{margin:2.2rem 0 0;padding:1rem 1.3rem;border:1px dashed var(--accent);border-radius:6px}
+.check h3{margin:0 0 .5rem;font-size:.98rem;color:var(--accent)}
+.check ul{margin:0;padding-left:1.35rem}
+footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
+  color:var(--sub);font-size:.82rem;line-height:1.9}
+mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+@media (max-width:520px){
+  body{font-size:15.5px}
+  header.book h1{font-size:1.65rem}
+  .wrap{padding:0 .9rem 4rem}
+  section.prob,section.sol{padding:1rem 1rem .9rem}
+}
+@media print{
+  body{background:#fff}
+  header.chap{break-before:page;border-top:none}
+  section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
+  nav.toc a{color:var(--ink)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="book">
+<p class="series">情報系のための線形代数</p>
+<h1>問題集</h1>
+<p class="subtitle">基礎から大学院レベルまで — 独学のための全11章・103問</p>
+<p class="meta">対象:情報系の大学生・大学院進学をめざす人(数学の講義がない環境での独学を想定)<br>
+構成:序章+全11章103問(★基礎 41問/★★標準 38問/★★★応用 24問)<br>
+姉妹編『解答解説集』とセットで学習してください。</p>
+</header>
+
+<nav class="toc">
+<h2>目次</h2>
+<ol>
+<li><a href="#ch0">序章 線形代数への招待</a><span class="cnt">なぜ学ぶのか・本書の使い方</span></li>
+<li><a href="#ch1">第1章 ベクトル</a><span class="cnt">空間とデータの言葉/10問</span></li>
+<li><a href="#ch2">第2章 行列</a><span class="cnt">線形変換という操作/10問</span></li>
+<li><a href="#ch3">第3章 連立一次方程式</a><span class="cnt">掃き出し法とランク/10問</span></li>
+<li><a href="#ch4">第4章 行列式</a><span class="cnt">体積・可逆性・符号/9問</span></li>
+<li><a href="#ch5">第5章 ベクトル空間</a><span class="cnt">基底・次元・部分空間/10問</span></li>
+<li><a href="#ch6">第6章 線形写像</a><span class="cnt">表現行列と基底変換/8問</span></li>
+<li><a href="#ch7">第7章 固有値と固有ベクトル</a><span class="cnt">対角化とその威力/11問</span></li>
+<li><a href="#ch8">第8章 内積空間と直交性</a><span class="cnt">直交化・QR・最小二乗法/10問</span></li>
+<li><a href="#ch9">第9章 対称行列と二次形式</a><span class="cnt">スペクトル定理と正定値性/8問</span></li>
+<li><a href="#ch10">第10章 特異値分解(SVD)</a><span class="cnt">低ランク近似・擬似逆行列・PCA/9問</span></li>
+<li><a href="#ch11">第11章 発展</a><span class="cnt">ジョルダン標準形・行列関数・数値線形代数/8問</span></li>
+</ol>
+</nav>
+
+<header class="chap" id="ch0">
+<p class="chnum">序章</p>
+<h2>線形代数への招待</h2>
+<p class="chsub">— なぜ学ぶのか・本書の使い方</p>
+</header>
+
+<h3>線形代数とは何か</h3>
+<p>線形代数は、<b>ベクトル</b>(数を並べたもの=データの入れ物)と<b>行列</b>(ベクトルを別のベクトルに写す「まっすぐな」操作=線形変換)を扱う数学です。「まっすぐな関係(比例と足し算だけで書ける関係)」に限定するからこそ、理論は完全に整備され、計算は高速なアルゴリズムに乗ります。世の中の複雑な問題も、局所的には線形で近似できることが多く、だからこそ線形代数は応用数学の共通言語になっています。</p>
+
+<div class="why">
+<h3>情報系のどこに現れるか</h3>
+<p>情報系の主要分野は、ほとんどが線形代数の上に建っています。</p>
+<ul>
+<li><b>画像処理・コンピュータビジョン</b> — グレースケール画像はピクセル値を並べた行列そのもの。フィルタは線形変換、カメラ幾何やステレオマッチングの誤差最小化は最小二乗法(第8章)、画像圧縮は特異値分解(第10章)。</li>
+<li><b>機械学習・深層学習</b> — 特徴量はベクトル、ニューラルネットの層は「行列積+非線形関数」。GPUが速いのは行列積が速いから。主成分分析(PCA)は固有値問題(第9・10章)。</li>
+<li><b>CG・ゲーム</b> — 回転・拡大縮小・射影はすべて行列(第2章)。</li>
+<li><b>検索・ネットワーク解析</b> — GoogleのPageRankは巨大な行列の固有ベクトル(第7章)。グラフの性質はラプラシアン行列の固有値に現れる(第11章)。</li>
+<li><b>信号処理・データ圧縮</b> — フーリエ変換は直交基底への座標変換(第8章)。推薦システムは行列の低ランク近似(第10章)。</li>
+<li><b>数値計算・シミュレーション</b> — 微分方程式を離散化すると巨大な連立一次方程式になる(第3章)。解けるかどうか・精度が出るかどうかは条件数が決める(第10・11章)。</li>
+</ul>
+</div>
+
+<h3>本書の構成 — 学習マップ</h3>
+<p>「具体 → 構造 → スペクトル → 分解と応用」の4段階で、計算練習から大学院レベルの道具までを一本道でつなぎます。</p>
+<table>
+<tr><th>部</th><th>章</th><th>テーマ</th><th>おおよその水準</th></tr>
+<tr><td>第I部 具体で掴む</td><td>1〜4章</td><td>数ベクトル・行列・連立一次方程式・行列式</td><td>学部1年前期</td></tr>
+<tr><td>第II部 構造を知る</td><td>5〜6章</td><td>ベクトル空間・基底・次元・線形写像</td><td>学部1年後期〜2年</td></tr>
+<tr><td>第III部 スペクトルを読む</td><td>7〜9章</td><td>固有値・直交性・対称行列・二次形式</td><td>学部2〜3年・院試の主戦場</td></tr>
+<tr><td>第IV部 分解して使う</td><td>10〜11章</td><td>SVD・擬似逆行列・ジョルダン標準形・行列関数・数値線形代数</td><td>学部3年〜大学院基礎</td></tr>
+</table>
+
+<div class="howto">
+<h3>本書の使い方</h3>
+<ul>
+<li><b>1問につきまず15分、自力で考える。</b>手が止まっても、その15分が解説の吸収率を数倍にします。</li>
+<li>解けなければ『解答解説集』の<b>「方針」だけを読んで</b>もう一度自力で。それでも詰まったら「解答」へ。</li>
+<li>解説を読んだ問題は、<b>翌日以降に何も見ずにノートへ再現</b>する(写経ではなく再構成)。</li>
+<li>難易度は ★基礎(定義の確認と計算練習)/★★標準(定期試験・院試の基礎)/★★★応用(院試・研究への接続)。<b>1周目は★と★★だけでも構いません。</b>★★★は2周目で。</li>
+<li>各章末の「到達確認」に自分の言葉で答えられたら次章へ。</li>
+</ul>
+</div>
+
+<h3>記号表</h3>
+<table>
+<tr><th>記号</th><th>意味</th></tr>
+<tr><td>\(\mathbb{R},\ \mathbb{R}^n\)</td><td>実数全体、実数を \(n\) 個並べたベクトルの全体(\(n\) 次元数ベクトル空間)</td></tr>
+<tr><td>\(\mathbf{a},\ \mathbf{x}\)</td><td>ベクトル(太字)。特に断らなければ縦ベクトル(列ベクトル)</td></tr>
+<tr><td>\(A^\top\)</td><td>行列 \(A\) の転置(行と列の入れ替え)</td></tr>
+<tr><td>\(A^{-1}\)</td><td>\(A\) の逆行列</td></tr>
+<tr><td>\(I,\ O\)</td><td>単位行列、零行列</td></tr>
+<tr><td>\(\det A\)</td><td>行列式</td></tr>
+<tr><td>\(\operatorname{tr} A\)</td><td>トレース(対角成分の和)</td></tr>
+<tr><td>\(\operatorname{rank} A\)</td><td>階数(ランク)</td></tr>
+<tr><td>\(\mathbf{a}\cdot\mathbf{b},\ \langle \mathbf{a},\mathbf{b}\rangle\)</td><td>内積</td></tr>
+<tr><td>\(\|\mathbf{a}\|\)</td><td>ノルム(長さ)</td></tr>
+<tr><td>\(\operatorname{span}\{\mathbf{v}_1,\dots,\mathbf{v}_k\}\)</td><td>ベクトルたちの一次結合全体が張る空間</td></tr>
+<tr><td>\(\dim V\)</td><td>ベクトル空間 \(V\) の次元</td></tr>
+<tr><td>\(\operatorname{Ker} T,\ \operatorname{Im} T\)</td><td>線形写像 \(T\) の核(零に写るものの集合)と像</td></tr>
+<tr><td>\(\lambda,\ \sigma_i\)</td><td>固有値、特異値</td></tr>
+</table>
+
+<h3>前提知識</h3>
+<p>高校数学の「ベクトルの基本演算」「三角関数」「数列と帰納法」を仮定します。行列を高校で習っていなくても問題ありません — 第2章で定義から始めます。証明問題では「定義に戻って一歩ずつ書く」練習をしますが、必要な論法はすべて解説側で丁寧に展開します。</p>
+
+<header class="chap" id="ch1">
+<p class="chnum">第1章</p>
+<h2>ベクトル</h2>
+<p class="chsub">— 空間とデータの言葉</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>データをベクトルで表した瞬間、「足す・伸ばす・角度を測る」という幾何の道具がそのままデータに使えるようになります。内積は「似ている度合い」、ノルムは「大きさ」、射影は「一番近い近似」。検索エンジンが文書の類似度を測るのも、機械学習が特徴量を扱うのも、すべてこの章の演算の組合せです。ここでの計算規則は、本書全体の「文法」になります。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>ベクトルの和・スカラー倍・一次結合を、成分計算と図形的意味の両方で扱える</li>
+<li>内積からノルム・なす角・直交を計算できる</li>
+<li>正射影ベクトルを公式暗記ではなく「残差が直交する」条件から導ける</li>
+<li>コーシー・シュワルツの不等式を証明でき、コサイン類似度として応用できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">内積</b>:\(\mathbf{a}\cdot\mathbf{b}=a_1b_1+\cdots+a_nb_n\)、<b class="term">ノルム</b>:\(\|\mathbf{a}\|=\sqrt{\mathbf{a}\cdot\mathbf{a}}\)</li>
+<li><b class="term">なす角</b>:\(\cos\theta=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|\,\|\mathbf{b}\|}\)、<b class="term">直交</b>:\(\mathbf{a}\cdot\mathbf{b}=0\)</li>
+<li><b class="term">正射影</b>:\(\operatorname{proj}_{\mathbf{a}}\mathbf{b}=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|^2}\,\mathbf{a}\)</li>
+<li><b class="term">コーシー・シュワルツの不等式</b>:\(|\mathbf{a}\cdot\mathbf{b}|\le\|\mathbf{a}\|\,\|\mathbf{b}\|\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q1-1">
+<div class="phead"><span class="pnum">問 1.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">ベクトルの演算</span></div>
+<p>\(\mathbf{a}=(2,\,-1,\,3)\)、\(\mathbf{b}=(1,\,4,\,-2)\) とする。\(2\mathbf{a}-3\mathbf{b}\) と \(\mathbf{a}+\mathbf{b}\) を求めよ。</p>
+</section>
+
+<section class="prob" id="q1-2">
+<div class="phead"><span class="pnum">問 1.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">一次結合</span></div>
+<p>\(\mathbf{c}=(5,\,1)\) を、\(\mathbf{a}=(2,\,1)\) と \(\mathbf{b}=(1,\,-1)\) の一次結合 \(s\mathbf{a}+t\mathbf{b}\) の形で表せ。</p>
+</section>
+
+<section class="prob" id="q1-3">
+<div class="phead"><span class="pnum">問 1.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">ノルムと内積</span></div>
+<p>\(\mathbf{u}=(1,\,2,\,2)\)、\(\mathbf{v}=(2,\,-2,\,1)\) について \(\|\mathbf{u}\|\)、\(\|\mathbf{v}\|\)、\(\mathbf{u}\cdot\mathbf{v}\) を求め、2つのベクトルの位置関係について分かることを述べよ。</p>
+</section>
+
+<section class="prob" id="q1-4">
+<div class="phead"><span class="pnum">問 1.4</span><span class="lv lv1">★ 基礎</span><span class="ptag">なす角</span></div>
+<p>\(\mathbf{a}=(1,\,\sqrt{3})\) と \(\mathbf{b}=(1,\,0)\) のなす角 \(\theta\)(\(0\le\theta\le\pi\))を求めよ。</p>
+</section>
+
+<section class="prob" id="q1-5">
+<div class="phead"><span class="pnum">問 1.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">正射影</span></div>
+<p>\(\mathbf{b}=(3,\,4)\) の \(\mathbf{a}=(1,\,1)\) 方向への正射影ベクトル \(\mathbf{p}\) を求めよ。さらに残差 \(\mathbf{b}-\mathbf{p}\) が \(\mathbf{a}\) と直交することを確かめよ。</p>
+</section>
+
+<section class="prob" id="q1-6">
+<div class="phead"><span class="pnum">問 1.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">正規化</span></div>
+<p>\(\mathbf{a}=(3,\,-4)\) と同じ向きの単位ベクトルを求めよ。</p>
+</section>
+
+<section class="prob" id="q1-7">
+<div class="phead"><span class="pnum">問 1.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">内積の展開</span></div>
+<p>\(\|\mathbf{a}\|=2\)、\(\|\mathbf{b}\|=3\)、\(\mathbf{a}\cdot\mathbf{b}=-3\) のとき、\(\|\mathbf{a}+\mathbf{b}\|\) と、\(\mathbf{a},\mathbf{b}\) のなす角を求めよ。(成分は与えられていないことに注意。)</p>
+</section>
+
+<section class="prob" id="q1-8">
+<div class="phead"><span class="pnum">問 1.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">中線定理の証明</span></div>
+<p>任意のベクトル \(\mathbf{a},\mathbf{b}\in\mathbb{R}^n\) に対して、次の<b>平行四辺形の法則</b>を証明せよ。</p>
+<p>\[\|\mathbf{a}+\mathbf{b}\|^2+\|\mathbf{a}-\mathbf{b}\|^2=2\|\mathbf{a}\|^2+2\|\mathbf{b}\|^2\]</p>
+</section>
+
+<section class="prob" id="q1-9">
+<div class="phead"><span class="pnum">問 1.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">コーシー・シュワルツの不等式</span></div>
+<p>任意の \(\mathbf{a},\mathbf{b}\in\mathbb{R}^n\) に対して \(|\mathbf{a}\cdot\mathbf{b}|\le\|\mathbf{a}\|\,\|\mathbf{b}\|\) が成り立つことを証明せよ。また、等号が成り立つのはどのようなときか述べよ。</p>
+<p>(ヒント:実数 \(t\) に対する \(f(t)=\|\mathbf{a}-t\mathbf{b}\|^2\) を考える。)</p>
+</section>
+
+<section class="prob" id="q1-10">
+<div class="phead"><span class="pnum">問 1.10</span><span class="lv lv3">★★★ 応用</span><span class="ptag">コサイン類似度(情報検索)</span></div>
+<p>文書を「各単語の出現回数を並べたベクトル」で表す。単語(行列, 学習, 料理)の出現回数が、文書1で \(\mathbf{d}_1=(2,\,1,\,0)\)、文書2で \(\mathbf{d}_2=(1,\,1,\,1)\)、文書3で \(\mathbf{d}_3=(0,\,1,\,2)\) だったとする。</p>
+<ol class="sublist">
+<li>コサイン類似度 \(\cos(\mathbf{d}_1,\mathbf{d}_2)\) と \(\cos(\mathbf{d}_1,\mathbf{d}_3)\) を求めよ。</li>
+<li>文書1に内容が近いのは文書2と文書3のどちらか。また、類似度に内積そのものではなく「なす角のコサイン」を使う利点を述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>「一次結合」とは何か、図形的なイメージとともに説明できる</li>
+<li>内積の符号・大きさから、2つのベクトルの関係(向きの近さ)を読み取れる</li>
+<li>正射影の公式を「残差が直交する」という条件から導出できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch2">
+<p class="chnum">第2章</p>
+<h2>行列</h2>
+<p class="chsub">— 線形変換という操作</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>行列は「数の表」ではなく、<b>ベクトルを別のベクトルに写す機械(線形変換)</b>です。積の定義が一見奇妙なのは、「変換を続けて行うこと(合成)」が積になるように設計されているから。CGの回転、画像フィルタ、ニューラルネットの層、グラフの隣接関係 — 情報系で「操作」や「関係」を表すとき、その正体はほぼ行列です。この章では計算規則と幾何的な意味を同時に手に入れます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>行列の和・スカラー倍・積を正しく計算でき、積の「2つの見方」(行×列/列の一次結合)を使い分けられる</li>
+<li>積が非可換であること(\(AB\ne BA\))を具体例で説明できる</li>
+<li>転置と逆行列の計算規則(\((AB)^\top=B^\top A^\top\) など)を証明つきで使える</li>
+<li>回転・剪断などの行列を幾何的な変換として読める</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">積の定義</b>:\((AB)_{ij}=\sum_k a_{ik}b_{kj}\)(\(A\) の第 \(i\) 行と \(B\) の第 \(j\) 列の内積)</li>
+<li><b class="term">積のもう1つの見方</b>:\(A\mathbf{x}\) は「\(A\) の列ベクトルたちの、係数 \(\mathbf{x}\) による一次結合」</li>
+<li><b class="term">転置</b>:\((AB)^\top=B^\top A^\top\)(順序が逆になる)</li>
+<li><b class="term">逆行列</b>:\(AA^{-1}=A^{-1}A=I\)。2次では \(ad-bc\ne0\) のとき \(\begin{pmatrix}a &amp; b\\ c &amp; d\end{pmatrix}^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d &amp; -b\\ -c &amp; a\end{pmatrix}\)</li>
+<li><b class="term">回転行列</b>:\(R(\theta)=\begin{pmatrix}\cos\theta &amp; -\sin\theta\\ \sin\theta &amp; \cos\theta\end{pmatrix}\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q2-1">
+<div class="phead"><span class="pnum">問 2.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">行列の演算</span></div>
+<p>\(A=\begin{pmatrix}1 &amp; 2\\ 3 &amp; 4\end{pmatrix}\)、\(B=\begin{pmatrix}2 &amp; 0\\ 1 &amp; 3\end{pmatrix}\) について、\(A+B\)、\(3A\)、\(AB\) を求めよ。</p>
+</section>
+
+<section class="prob" id="q2-2">
+<div class="phead"><span class="pnum">問 2.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">積の「列の一次結合」解釈</span></div>
+<p>\(A=\begin{pmatrix}1 &amp; 2\\ 3 &amp; 4\end{pmatrix}\)、\(\mathbf{x}=\begin{pmatrix}x_1\\ x_2\end{pmatrix}\) とする。\(A\mathbf{x}\) を計算し、それが \(A\) の2つの列ベクトルの一次結合として書けることを確かめよ。</p>
+</section>
+
+<section class="prob" id="q2-3">
+<div class="phead"><span class="pnum">問 2.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">非可換性</span></div>
+<p>問2.1の \(A,B\) について \(BA\) を計算し、\(AB\ne BA\) であることを確かめよ。</p>
+</section>
+
+<section class="prob" id="q2-4">
+<div class="phead"><span class="pnum">問 2.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">転置の規則</span></div>
+<ol class="sublist">
+<li>問2.1の \(A,B\) について \((AB)^\top\) と \(B^\top A^\top\) をそれぞれ計算し、一致することを確かめよ。</li>
+<li>一般のサイズの行列 \(A,B\)(積が定義できるとする)について \((AB)^\top=B^\top A^\top\) を成分計算で証明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-5">
+<div class="phead"><span class="pnum">問 2.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">2次の逆行列</span></div>
+<p>\(A=\begin{pmatrix}2 &amp; 1\\ 5 &amp; 3\end{pmatrix}\) の逆行列を求め、\(AA^{-1}=I\) となることを検算せよ。</p>
+</section>
+
+<section class="prob" id="q2-6">
+<div class="phead"><span class="pnum">問 2.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">回転行列の合成</span></div>
+<p>回転行列 \(R(\theta)=\begin{pmatrix}\cos\theta &amp; -\sin\theta\\ \sin\theta &amp; \cos\theta\end{pmatrix}\) について、\(R(\alpha)R(\beta)=R(\alpha+\beta)\) を示せ。この等式の幾何学的な意味も述べよ。</p>
+</section>
+
+<section class="prob" id="q2-7">
+<div class="phead"><span class="pnum">問 2.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">剪断変換の幾何</span></div>
+<p>剪断(せんだん)行列 \(S=\begin{pmatrix}1 &amp; 1\\ 0 &amp; 1\end{pmatrix}\) による変換で、単位正方形の4頂点 \((0,0),(1,0),(0,1),(1,1)\) はそれぞれどこに写るか。変換後の図形はどんな形か。</p>
+</section>
+
+<section class="prob" id="q2-8">
+<div class="phead"><span class="pnum">問 2.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">帰納法による行列の累乗</span></div>
+<p>\(S=\begin{pmatrix}1 &amp; 1\\ 0 &amp; 1\end{pmatrix}\) について、すべての自然数 \(n\) で \(S^n=\begin{pmatrix}1 &amp; n\\ 0 &amp; 1\end{pmatrix}\) が成り立つことを数学的帰納法で証明せよ。</p>
+</section>
+
+<section class="prob" id="q2-9">
+<div class="phead"><span class="pnum">問 2.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">逆行列の規則の証明</span></div>
+<p>\(A,B\) をともに正則(逆行列をもつ)な \(n\) 次正方行列とする。次を証明せよ。</p>
+<ol class="sublist">
+<li>\(AB\) も正則で、\((AB)^{-1}=B^{-1}A^{-1}\)</li>
+<li>\(A^\top\) も正則で、\((A^\top)^{-1}=(A^{-1})^\top\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-10">
+<div class="phead"><span class="pnum">問 2.10</span><span class="lv lv3">★★★ 応用</span><span class="ptag">トレースの性質</span></div>
+<p>\(n\) 次正方行列 \(A,B\) について、\(\operatorname{tr}(AB)=\operatorname{tr}(BA)\) を成分計算で証明せよ。ここで \(\operatorname{tr}\) は対角成分の和である。また、\(AB\ne BA\) であっても常にこの等式が成り立つことの面白さを一言述べよ。</p>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>行列の積の定義を「なぜそう定義するのか(合成が積になる)」まで含めて説明できる</li>
+<li>\(A\mathbf{x}\) を「列の一次結合」として読み替えられる</li>
+<li>\((AB)^\top,\ (AB)^{-1}\) で順序が逆転する理由を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch3">
+<p class="chnum">第3章</p>
+<h2>連立一次方程式</h2>
+<p class="chsub">— 掃き出し法とランク</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>物理シミュレーション、回路解析、CGのレンダリング、機械学習の最適化 — 計算機で解かれる問題の多くは、最後には巨大な連立一次方程式 \(A\mathbf{x}=\mathbf{b}\) に行き着きます。これを機械的に解く<b>掃き出し法(ガウスの消去法)</b>は、数値計算で最も重要なアルゴリズムの1つです。さらに「解が1つか・無数か・存在しないか」は<b>ランク</b>という量で完全に分類できます。計算手順と理論が一体になる、線形代数最初のクライマックスです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>拡大係数行列に行基本変形を施し、機械的に解を求められる(掃き出し法)</li>
+<li>簡約階段形(RREF)とランクを求め、解の個数(一意・無数・なし)を判定できる</li>
+<li>解が無数にある場合に、解全体を「特殊解+斉次解」の形で表せる</li>
+<li>掃き出し法で逆行列を計算でき、LU分解の仕組みを説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">行基本変形</b>:① 2つの行の交換 ② ある行の定数倍(\(\ne0\)) ③ ある行に他の行の定数倍を加える — いずれも解集合を変えない</li>
+<li><b class="term">簡約階段形(RREF)</b>:各行の先頭の \(1\)(ピボット)が右下へ階段状に並び、ピボットの列は他が全部 \(0\) の形</li>
+<li><b class="term">ランク</b>:\(\operatorname{rank}A=\)(RREFのピボットの個数)=(本質的に独立な式の本数)</li>
+<li><b class="term">解の判定</b>(未知数 \(n\) 個):解が存在 \(\iff \operatorname{rank}A=\operatorname{rank}(A\mid\mathbf{b})\)。存在するとき、一意 \(\iff \operatorname{rank}A=n\)、自由度は \(n-\operatorname{rank}A\)</li>
+<li><b class="term">解の構造</b>:(一般解)=(1つの特殊解)+(斉次方程式 \(A\mathbf{x}=\mathbf{0}\) の一般解)</li>
+</ul>
+</div>
+
+<section class="prob" id="q3-1">
+<div class="phead"><span class="pnum">問 3.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">2元の消去</span></div>
+<p>連立方程式 \(\begin{cases}x+2y=5\\ 3x+4y=11\end{cases}\) を、拡大係数行列 \(\left(\begin{array}{cc|c}1 &amp; 2 &amp; 5\\ 3 &amp; 4 &amp; 11\end{array}\right)\) への行基本変形で解け。</p>
+</section>
+
+<section class="prob" id="q3-2">
+<div class="phead"><span class="pnum">問 3.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">3元の掃き出し</span></div>
+<p>次の連立方程式を掃き出し法で解け。</p>
+<p>\[\begin{cases}x+y+z=6\\ 2x+3y+z=11\\ x+2y+3z=14\end{cases}\]</p>
+</section>
+
+<section class="prob" id="q3-3">
+<div class="phead"><span class="pnum">問 3.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">簡約階段形とランク</span></div>
+<p>行列 \(A=\begin{pmatrix}1 &amp; 2 &amp; 1 &amp; 3\\ 2 &amp; 4 &amp; 0 &amp; 4\\ 1 &amp; 2 &amp; 3 &amp; 5\end{pmatrix}\) を簡約階段形(RREF)まで変形し、\(\operatorname{rank}A\) を求めよ。ピボットのある列はどれか。</p>
+</section>
+
+<section class="prob" id="q3-4">
+<div class="phead"><span class="pnum">問 3.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">解が無数にある場合</span></div>
+<p>次の連立方程式の解をすべて求め、「特殊解+斉次解」の形で表せ。</p>
+<p>\[\begin{cases}x+2y+z=3\\ 2x+4y=4\\ x+2y+3z=5\end{cases}\]</p>
+</section>
+
+<section class="prob" id="q3-5">
+<div class="phead"><span class="pnum">問 3.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">解が存在しない場合</span></div>
+<p>問3.4の左辺はそのままに、右辺だけを \((3,\,4,\,6)\) に変えた連立方程式には解が存在しないことを、掃き出し法とランクの両方の観点から示せ。</p>
+</section>
+
+<section class="prob" id="q3-6">
+<div class="phead"><span class="pnum">問 3.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">斉次方程式と零空間</span></div>
+<p>問3.4と同じ係数行列 \(A\) に対する斉次方程式 \(A\mathbf{x}=\mathbf{0}\) の解をすべて求めよ。その解の集合(\(A\) の<b>零空間</b>)と、問3.4の解集合との関係を述べよ。</p>
+</section>
+
+<section class="prob" id="q3-7">
+<div class="phead"><span class="pnum">問 3.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">パラメータによる場合分け</span></div>
+<p>実数 \(a\) を係数に含む連立方程式 \(\begin{cases}x+ay=1\\ ax+y=1\end{cases}\) について、解が「ただ1つ」「無数」「存在しない」となる \(a\) の条件をそれぞれ求め、解が存在する場合は解も求めよ。</p>
+</section>
+
+<section class="prob" id="q3-8">
+<div class="phead"><span class="pnum">問 3.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">掃き出し法による逆行列</span></div>
+<p>\(A=\begin{pmatrix}1 &amp; 1 &amp; 0\\ 0 &amp; 1 &amp; 1\\ 0 &amp; 0 &amp; 1\end{pmatrix}\) の逆行列を、\((A\mid I)\) を \((I\mid A^{-1})\) に変形するガウス・ジョルダン法で求めよ。</p>
+</section>
+
+<section class="prob" id="q3-9">
+<div class="phead"><span class="pnum">問 3.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">LU分解</span></div>
+<p>\(A=\begin{pmatrix}2 &amp; 1\\ 4 &amp; 5\end{pmatrix}\) を、下三角行列 \(L\)(対角成分1)と上三角行列 \(U\) の積 \(A=LU\) に分解せよ。さらにこの分解を使い、\(A\mathbf{x}=\begin{pmatrix}4\\ 14\end{pmatrix}\) を「前進代入 \(L\mathbf{y}=\mathbf{b}\) → 後退代入 \(U\mathbf{x}=\mathbf{y}\)」の2段階で解け。</p>
+</section>
+
+<section class="prob" id="q3-10">
+<div class="phead"><span class="pnum">問 3.10</span><span class="lv lv3">★★★ 応用</span><span class="ptag">多項式補間(応用)</span></div>
+<p>3点 \((1,2),\ (2,3),\ (3,6)\) をすべて通る放物線 \(y=ax^2+bx+c\) を求めたい。条件を \(a,b,c\) に関する連立一次方程式として立式し、解け。</p>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>行基本変形が「解集合を変えない」理由を説明できる</li>
+<li>ランクと右辺の関係から、解の個数(0個・1個・無数)を判定できる</li>
+<li>解が無数にある場合の解集合を「特殊解+零空間」として幾何的にイメージできる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch4">
+<p class="chnum">第4章</p>
+<h2>行列式</h2>
+<p class="chsub">— 体積・可逆性・符号</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>行列式 \(\det A\) は、線形変換 \(A\) の<b>体積拡大率(符号つき)</b>という1つの数です。\(\det A=0\) なら空間がぺしゃんこに潰れる — つまり逆行列がなく、連立方程式の解も一意でない。たった1つの数が「正則かどうか」を完全に判定します。CG・CVでの面積/体積計算やヤコビアン(変数変換の拡大率)、幾何アルゴリズムの左折・右折判定など、応用でも「符号つき体積」として直接活躍します。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>2次・3次の行列式を計算でき、余因子展開で次数を下げられる</li>
+<li>行基本変形が行列式に与える影響(交換で符号反転・加算で不変など)を使いこなせる</li>
+<li>\(\det(AB)=\det A\,\det B\)、「正則 \(\iff\det\ne0\)」を使える</li>
+<li>行列式を面積・体積として読み、ヴァンデルモンド行列式・クラメルの公式を扱える</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">2次</b>:\(\det\begin{pmatrix}a &amp; b\\ c &amp; d\end{pmatrix}=ad-bc\)。<b class="term">3次</b>はサラスの方法または余因子展開</li>
+<li><b class="term">余因子展開</b>:\(\det A=\sum_j a_{ij}(-1)^{i+j}M_{ij}\)(\(M_{ij}\) は \(i\) 行 \(j\) 列を除いた小行列式)。どの行・列で展開してもよい</li>
+<li><b class="term">行変形の影響</b>:行の交換で \(-1\) 倍/ある行の \(c\) 倍で \(c\) 倍/他の行の定数倍を加えても<b>不変</b></li>
+<li><b class="term">積の公式</b>:\(\det(AB)=\det A\,\det B\)。<b class="term">転置</b>:\(\det A^\top=\det A\)</li>
+<li><b class="term">正則性判定</b>:\(A\) が正則 \(\iff \det A\ne0\)。\(|\det A|\) は単位体積の拡大率</li>
+</ul>
+</div>
+
+<section class="prob" id="q4-1">
+<div class="phead"><span class="pnum">問 4.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">行列式の計算</span></div>
+<p>次の行列式を計算せよ。</p>
+<p>\[(1)\ \det\begin{pmatrix}3 &amp; 1\\ 4 &amp; 2\end{pmatrix}\qquad (2)\ \det\begin{pmatrix}1 &amp; 2 &amp; 3\\ 0 &amp; 1 &amp; 4\\ 5 &amp; 6 &amp; 0\end{pmatrix}\]</p>
+</section>
+
+<section class="prob" id="q4-2">
+<div class="phead"><span class="pnum">問 4.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">三角行列の行列式</span></div>
+<p>上三角行列の行列式は対角成分の積に等しいことを、余因子展開を用いて説明せよ。また \(\det\begin{pmatrix}2 &amp; 5 &amp; 1\\ 0 &amp; 3 &amp; 7\\ 0 &amp; 0 &amp; 4\end{pmatrix}\) を求めよ。</p>
+</section>
+
+<section class="prob" id="q4-3">
+<div class="phead"><span class="pnum">問 4.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">行変形と行列式</span></div>
+<p>3次正方行列 \(A\) が \(\det A=5\) を満たすとする。次の値を求めよ。</p>
+<ol class="sublist">
+<li>\(\det(2A)\)</li>
+<li>\(A\) の第1行と第2行を交換した行列の行列式</li>
+<li>\(A\) の第2行に第1行の3倍を加えた行列の行列式</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-4">
+<div class="phead"><span class="pnum">問 4.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">4次の余因子展開</span></div>
+<p>零成分の多さを活かして、次の行列式を余因子展開で計算せよ。</p>
+<p>\[\det\begin{pmatrix}1 &amp; 0 &amp; 2 &amp; 0\\ 0 &amp; 3 &amp; 0 &amp; 4\\ 5 &amp; 0 &amp; 6 &amp; 0\\ 0 &amp; 7 &amp; 0 &amp; 8\end{pmatrix}\]</p>
+</section>
+
+<section class="prob" id="q4-5">
+<div class="phead"><span class="pnum">問 4.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">積の行列式</span></div>
+<p>\(A=\begin{pmatrix}1 &amp; 2\\ 3 &amp; 4\end{pmatrix}\)、\(B=\begin{pmatrix}2 &amp; 0\\ 1 &amp; 3\end{pmatrix}\) について \(\det A\)、\(\det B\)、\(\det(AB)\) をそれぞれ計算し、\(\det(AB)=\det A\,\det B\) が成り立つことを確かめよ。この等式の幾何学的な解釈も述べよ。</p>
+</section>
+
+<section class="prob" id="q4-6">
+<div class="phead"><span class="pnum">問 4.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">特異になる条件</span></div>
+<p>行列 \(\begin{pmatrix}1 &amp; x\\ x &amp; 4\end{pmatrix}\) が正則で<b>ない</b>(特異である)ような実数 \(x\) をすべて求めよ。</p>
+</section>
+
+<section class="prob" id="q4-7">
+<div class="phead"><span class="pnum">問 4.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">面積と体積</span></div>
+<ol class="sublist">
+<li>ベクトル \((3,\,1)\) と \((1,\,2)\) が張る平行四辺形の面積を求めよ。</li>
+<li>ベクトル \((1,0,0),\ (1,1,0),\ (1,1,1)\) が張る平行六面体の体積を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-8">
+<div class="phead"><span class="pnum">問 4.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ヴァンデルモンドの行列式</span></div>
+<p>\(V=\begin{pmatrix}1 &amp; 1 &amp; 1\\ 1 &amp; 2 &amp; x\\ 1 &amp; 4 &amp; x^2\end{pmatrix}\) について \(\det V\) を \(x\) の式で求め、因数分解せよ。\(V\) が特異になる \(x\) の値は何を意味するか、問3.10(3点を通る放物線)と関連づけて述べよ。</p>
+</section>
+
+<section class="prob" id="q4-9">
+<div class="phead"><span class="pnum">問 4.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">クラメルの公式と計算量</span></div>
+<ol class="sublist">
+<li>クラメルの公式を用いて \(\begin{pmatrix}3 &amp; 1\\ 4 &amp; 2\end{pmatrix}\begin{pmatrix}x\\ y\end{pmatrix}=\begin{pmatrix}5\\ 8\end{pmatrix}\) を解け。</li>
+<li>\(n\) 次の行列式を余因子展開だけで愚直に計算すると、およそ \(n!\) 個の積の項が現れる。一方、掃き出し法による行列式計算(あるいは連立方程式の求解)は約 \(n^3\) 回程度の演算で済む。\(n=20\) のときの両者の規模を比較し、クラメルの公式を実用計算に使うべきでない理由を述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>「\(\det A=0\iff\) 正則でない \(\iff\) 空間が潰れる」を自分の言葉で説明できる</li>
+<li>行変形3種それぞれが行列式に与える影響を即答できる</li>
+<li>行列式を「符号つき面積・体積」として読める</li>
+</ul>
+</div>
+
+<header class="chap" id="ch5">
+<p class="chnum">第5章</p>
+<h2>ベクトル空間</h2>
+<p class="chsub">— 基底・次元・部分空間</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>ここから線形代数は「計算」から「構造」へ進みます。和とスカラー倍さえ定義できれば、多項式も、音声信号も、画像も、すべて「ベクトル」— これが<b>ベクトル空間</b>という抽象化です。<b>基底</b>は座標系の選択、<b>次元</b>はデータの本質的な自由度。「データは高次元に見えて実は低次元の部分空間に乗っている」という発想は、次元削減・圧縮・誤り訂正符号の出発点であり、「良い基底を選び直す」ことはフーリエ変換・PCA・SVDに共通する核心です。この章の言葉を持つと、後半の全章が一気に読みやすくなります。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>部分集合が部分空間かどうかを3条件で判定できる</li>
+<li>一次独立・従属を定義に基づいて判定・証明できる</li>
+<li>基底と次元を求め、基底に関する座標を計算できる(多項式の空間でも)</li>
+<li>行列の列空間・零空間を求め、階数・退化次数の定理(rank-nullity)を証明つきで使える</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">部分空間</b>:\(W\subseteq\mathbb{R}^n\) が ① \(\mathbf{0}\in W\) ② 和で閉じる ③ スカラー倍で閉じる、を満たすこと</li>
+<li><b class="term">一次独立</b>:\(c_1\mathbf{v}_1+\cdots+c_k\mathbf{v}_k=\mathbf{0}\) ならば \(c_1=\cdots=c_k=0\) しかない</li>
+<li><b class="term">基底</b>:一次独立で、かつ空間全体を張る(span する)ベクトルの組。<b class="term">次元</b> \(\dim V\)=基底のベクトルの本数(選び方によらず一定)</li>
+<li><b class="term">座標</b>:基底 \(\{\mathbf{b}_1,\dots,\mathbf{b}_n\}\) が決まれば、各 \(\mathbf{v}\) は \(\mathbf{v}=c_1\mathbf{b}_1+\cdots+c_n\mathbf{b}_n\) と<b>一意に</b>書け、\((c_1,\dots,c_n)\) が座標</li>
+<li><b class="term">階数・退化次数の定理</b>:\(m\times n\) 行列 \(A\) について \(\operatorname{rank}A+\dim(\operatorname{Null}A)=n\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q5-1">
+<div class="phead"><span class="pnum">問 5.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">部分空間の判定</span></div>
+<p>次の \(\mathbb{R}^3\) または \(\mathbb{R}^2\) の部分集合は部分空間か。理由とともに判定せよ。</p>
+<ol class="sublist">
+<li>\(W_1=\{(x,y,z)\mid x+y+z=0\}\subseteq\mathbb{R}^3\)</li>
+<li>\(W_2=\{(x,y)\mid x\ge0\}\subseteq\mathbb{R}^2\)</li>
+<li>\(W_3=\{(x,y)\mid xy=0\}\subseteq\mathbb{R}^2\)(座標軸の合併)</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-2">
+<div class="phead"><span class="pnum">問 5.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">一次独立の判定</span></div>
+<p>\(\mathbf{v}_1=(1,1,0)\)、\(\mathbf{v}_2=(1,0,1)\)、\(\mathbf{v}_3=(0,1,1)\) は一次独立か判定せよ。また \(\mathbf{v}_3\) を \(\mathbf{w}=(2,1,1)\) に取り替えた組 \(\{\mathbf{v}_1,\mathbf{v}_2,\mathbf{w}\}\) についても判定せよ。</p>
+</section>
+
+<section class="prob" id="q5-3">
+<div class="phead"><span class="pnum">問 5.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">部分空間の基底と次元</span></div>
+<p>平面 \(W=\{(x,y,z)\mid x+y+z=0\}\subseteq\mathbb{R}^3\) の基底を1組求め、\(\dim W\) を答えよ。</p>
+</section>
+
+<section class="prob" id="q5-4">
+<div class="phead"><span class="pnum">問 5.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">span への所属判定</span></div>
+<p>\(U=\operatorname{span}\{(1,1,0),\ (1,0,1)\}\subseteq\mathbb{R}^3\) とする。\((3,1,2)\) と \((1,1,1)\) はそれぞれ \(U\) に属するか。属する場合は一次結合の係数も求めよ。</p>
+</section>
+
+<section class="prob" id="q5-5">
+<div class="phead"><span class="pnum">問 5.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">基底に関する座標</span></div>
+<p>\(\mathbb{R}^2\) の基底 \(B=\{(1,1),\ (1,-1)\}\) に関する、ベクトル \((5,1)\) の座標を求めよ。</p>
+</section>
+
+<section class="prob" id="q5-6">
+<div class="phead"><span class="pnum">問 5.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">多項式空間の基底</span></div>
+<p>次数2以下の多項式全体のなすベクトル空間を \(P_2\) とする(\(\dim P_2=3\))。</p>
+<ol class="sublist">
+<li>\(\{1+x,\ x+x^2,\ 1+x^2\}\) が \(P_2\) の基底であることを示せ。</li>
+<li>この基底に関する \(2+3x+x^2\) の座標を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-7">
+<div class="phead"><span class="pnum">問 5.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">列空間・零空間</span></div>
+<p>\(A=\begin{pmatrix}1 &amp; 2 &amp; 1\\ 2 &amp; 4 &amp; 0\\ 3 &amp; 6 &amp; 1\end{pmatrix}\) について、\(\operatorname{rank}A\)、列空間 \(\operatorname{Col}A\) の基底、零空間 \(\operatorname{Null}A\) の基底をそれぞれ求めよ。さらに \(\operatorname{rank}A+\dim(\operatorname{Null}A)\) の値を確かめよ。</p>
+</section>
+
+<section class="prob" id="q5-8">
+<div class="phead"><span class="pnum">問 5.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">階数・退化次数の定理の証明</span></div>
+<p>線形写像 \(T:\mathbb{R}^n\to\mathbb{R}^m\)(行列 \(A\) による \(T(\mathbf{x})=A\mathbf{x}\))について、</p>
+<p>\[\dim(\operatorname{Ker}T)+\dim(\operatorname{Im}T)=n\]</p>
+<p>を証明せよ。(ヒント:\(\operatorname{Ker}T\) の基底を \(\mathbb{R}^n\) 全体の基底に拡張し、付け足したベクトルの像が \(\operatorname{Im}T\) の基底になることを示す。)</p>
+</section>
+
+<section class="prob" id="q5-9">
+<div class="phead"><span class="pnum">問 5.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">本数と従属性</span></div>
+<p>\(n\) 次元ベクトル空間 \(V\) の中の \(n+1\) 本のベクトル \(\mathbf{v}_1,\dots,\mathbf{v}_{n+1}\) は、必ず一次従属であることを証明せよ。</p>
+</section>
+
+<section class="prob" id="q5-10">
+<div class="phead"><span class="pnum">問 5.10</span><span class="lv lv3">★★★ 応用</span><span class="ptag">パリティ検査行列(符号理論への入口)</span></div>
+<p>通信路符号の検査条件を模した行列 \(H=\begin{pmatrix}1 &amp; 1 &amp; 1 &amp; 0\\ 0 &amp; 1 &amp; 1 &amp; 1\end{pmatrix}\) を考える。条件 \(H\mathbf{x}=\mathbf{0}\) を満たすベクトル \(\mathbf{x}\in\mathbb{R}^4\) の全体(\(H\) の零空間)の基底と次元を求めよ。</p>
+<p class="note">※実際の誤り訂正符号は \(0,1\) の2元体 \(\mathrm{GF}(2)\) 上で考えるが、ここでは実数の範囲で「検査条件を満たす空間=零空間」という構造を体験する。</p>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>部分空間の3条件を暗唱でき、反例(閉じていない例)を自分で作れる</li>
+<li>「基底=独立+張る」「次元=自由度」を自分の言葉で説明できる</li>
+<li>rank-nullity 定理を式で書け、\(A\mathbf{x}=\mathbf{b}\) の解の自由度と結びつけられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch6">
+<p class="chnum">第6章</p>
+<h2>線形写像</h2>
+<p class="chsub">— 表現行列と基底変換</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>この章の主役は「<b>行列は線形写像の、基底を選んだときの座標表現にすぎない</b>」という視点の転換です。同じ写像でも、基底(モノサシ)を変えれば行列は姿を変える — そして<b>うまい基底を選べば行列は対角になり、写像の正体が丸見えになる</b>。これが次章の対角化、さらにPCA・SVDへ続く本書後半の背骨です。微分もフィルタもニューラルネットの層も線形写像。写像そのものと、その表現(行列)を区別できるようになることが、この章のゴールです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>写像が線形かどうかを定義から判定できる</li>
+<li>線形写像の標準行列(標準基底に関する表現行列)を作れる</li>
+<li>核(Ker)と像(Im)を求め、単射・全射を判定できる</li>
+<li>「合成=行列の積」「基底変換=\(P^{-1}AP\)」を計算・説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">線形写像</b>:\(T(\mathbf{u}+\mathbf{v})=T(\mathbf{u})+T(\mathbf{v})\)、\(T(c\mathbf{u})=cT(\mathbf{u})\)。必然的に \(T(\mathbf{0})=\mathbf{0}\)</li>
+<li><b class="term">標準行列</b>:標準基底ベクトル \(\mathbf{e}_1,\dots,\mathbf{e}_n\) の像を<b>列に並べた</b>行列。\(T(\mathbf{x})=A\mathbf{x}\)</li>
+<li><b class="term">核と像</b>:\(\operatorname{Ker}T=\{\mathbf{x}\mid T(\mathbf{x})=\mathbf{0}\}\)(=零空間)、\(\operatorname{Im}T\)(=列空間)。単射 \(\iff \operatorname{Ker}T=\{\mathbf{0}\}\)</li>
+<li><b class="term">合成</b>:\(T\circ S\) の行列は(\(T\) の行列)×(\(S\) の行列)。右側が先に作用</li>
+<li><b class="term">基底変換</b>:基底 \(B\) のベクトルを列に並べた行列を \(P\) とすると、\(B\) に関する表現行列は \([T]_B=P^{-1}AP\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q6-1">
+<div class="phead"><span class="pnum">問 6.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">線形性の判定</span></div>
+<p>次の写像 \(\mathbb{R}^2\to\mathbb{R}^2\) または \(\mathbb{R}^2\to\mathbb{R}\) は線形写像か。理由とともに判定せよ。</p>
+<ol class="sublist">
+<li>\(T_1(x,y)=(2x+y,\ x-y)\)</li>
+<li>\(T_2(x,y)=(x+1,\ y)\)</li>
+<li>\(T_3(x,y)=xy\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-2">
+<div class="phead"><span class="pnum">問 6.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">標準行列</span></div>
+<p>問6.1の \(T_1(x,y)=(2x+y,\ x-y)\) の標準行列(標準基底に関する表現行列)を求めよ。</p>
+</section>
+
+<section class="prob" id="q6-3">
+<div class="phead"><span class="pnum">問 6.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">核と像</span></div>
+<p>行列 \(A=\begin{pmatrix}1 &amp; 1 &amp; 0\\ 0 &amp; 1 &amp; 1\end{pmatrix}\) の定める線形写像 \(T:\mathbb{R}^3\to\mathbb{R}^2\)、\(T(\mathbf{x})=A\mathbf{x}\) について、\(\operatorname{Im}T\) と \(\operatorname{Ker}T\) を求めよ。\(T\) は単射か、全射か。また次元の関係 \(\dim\operatorname{Ker}T+\dim\operatorname{Im}T=3\) を確認せよ。</p>
+</section>
+
+<section class="prob" id="q6-4">
+<div class="phead"><span class="pnum">問 6.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">合成と行列の積</span></div>
+<p>\(S,T:\mathbb{R}^2\to\mathbb{R}^2\) の標準行列をそれぞれ \(B=\begin{pmatrix}2 &amp; 0\\ 1 &amp; 3\end{pmatrix}\)、\(A=\begin{pmatrix}1 &amp; 2\\ 3 &amp; 4\end{pmatrix}\) とする。合成写像 \(T\circ S\)(先に \(S\)、あとで \(T\))の標準行列が積 \(AB\) になる理由を説明し、ベクトル \(\mathbf{x}=(1,0)\) で「\(S\) してから \(T\)」と「\(AB\) を一度に掛ける」が一致することを確かめよ。</p>
+</section>
+
+<section class="prob" id="q6-5">
+<div class="phead"><span class="pnum">問 6.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">うまい基底での表現行列</span></div>
+<p>直線 \(y=x\) に関する対称移動(鏡映)\(T:\mathbb{R}^2\to\mathbb{R}^2\) の標準行列は \(A=\begin{pmatrix}0 &amp; 1\\ 1 &amp; 0\end{pmatrix}\) である。基底 \(B=\{\mathbf{b}_1,\mathbf{b}_2\}\)、\(\mathbf{b}_1=(1,1)\)、\(\mathbf{b}_2=(1,-1)\) に関する表現行列 \([T]_B\) を、\(T(\mathbf{b}_1),T(\mathbf{b}_2)\) を \(B\) で展開することで求めよ。結果はどんな形になるか。</p>
+</section>
+
+<section class="prob" id="q6-6">
+<div class="phead"><span class="pnum">問 6.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">基底変換の公式</span></div>
+<p>問6.5の設定で、\(P=\begin{pmatrix}1 &amp; 1\\ 1 &amp; -1\end{pmatrix}\)(基底ベクトルを列に並べた行列)とする。\(P^{-1}\) を求め、\(P^{-1}AP\) を計算して、問6.5 の \([T]_B\) と一致することを確かめよ。</p>
+</section>
+
+<section class="prob" id="q6-7">
+<div class="phead"><span class="pnum">問 6.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">単射・全射の特徴づけ</span></div>
+<p>線形写像 \(T:V\to W\) について、次を証明せよ。</p>
+<ol class="sublist">
+<li>\(T\) が単射 \(\iff \operatorname{Ker}T=\{\mathbf{0}\}\)</li>
+<li>\(V=\mathbb{R}^n,\ W=\mathbb{R}^m\)、\(T(\mathbf{x})=A\mathbf{x}\) のとき:\(T\) が全射 \(\iff \operatorname{rank}A=m\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-8">
+<div class="phead"><span class="pnum">問 6.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">微分は線形写像(表現行列)</span></div>
+<p>次数2以下の多項式の空間 \(P_2\)(基底 \(\{1,x,x^2\}\))上で、微分 \(D(f)=f'\) を写像 \(D:P_2\to P_2\) とみなす。</p>
+<ol class="sublist">
+<li>基底 \(\{1,x,x^2\}\) に関する \(D\) の表現行列 \(M\) を求めよ。</li>
+<li>\(\operatorname{Ker}D\)、\(\operatorname{Im}D\) を求め、次元の関係を確認せよ。</li>
+<li>\(M^3\) を計算せよ。その結果は微分のどんな性質を表しているか。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>「行列の列=基底ベクトルの像」から、写像を見て行列を即座に書ける</li>
+<li>核・像・単射・全射・ランクの関係を1枚の図として説明できる</li>
+<li>\(P^{-1}AP\) の3つの因子がそれぞれ「座標変換→写像→座標逆変換」であることを説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch7">
+<p class="chnum">第7章</p>
+<h2>固有値と固有ベクトル</h2>
+<p class="chsub">— 対角化とその威力</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>固有ベクトルは、変換 \(A\) をかけても<b>向きが変わらず、\(\lambda\) 倍に伸縮するだけ</b>の特別な方向です。この「変換の軸」を基底に選ぶと(第6章の基底変換)、行列は対角になり、複雑な作用が完全にほどけます。累乗 \(A^n\) が一瞬で計算でき、漸化式は閉じた式になり、マルコフ連鎖の行き着く先(=GoogleのPageRank)や振動・拡散の様子が固有値だけで読める。大学院入試でも最頻出、機械学習でもPCA・スペクトラルクラスタリングとして主役 — 線形代数のハイライトです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>特性方程式から固有値・固有ベクトル・固有空間を計算できる</li>
+<li>対角化 \(P^{-1}AP=D\) を実行し、\(A^n\) の計算や漸化式に応用できる</li>
+<li>トレース=固有値の和、行列式=固有値の積を証明つきで使える</li>
+<li>マルコフ連鎖の定常分布を固有ベクトルとして求められる</li>
+<li>対角化できない行列の存在と、その判定(重複度の不一致)を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">定義</b>:\(A\mathbf{v}=\lambda\mathbf{v}\)、\(\mathbf{v}\ne\mathbf{0}\)。\(\lambda\) が固有値、\(\mathbf{v}\) が固有ベクトル</li>
+<li><b class="term">特性方程式</b>:\(\det(A-\lambda I)=0\) の解が固有値。各 \(\lambda\) の<b class="term">固有空間</b>は \(\operatorname{Null}(A-\lambda I)\)</li>
+<li><b class="term">対角化</b>:一次独立な固有ベクトルが \(n\) 本とれるとき、それらを列に並べた \(P\) で \(P^{-1}AP=D=\operatorname{diag}(\lambda_1,\dots,\lambda_n)\)</li>
+<li><b class="term">累乗</b>:\(A^n=PD^nP^{-1}\)(\(D^n\) は対角成分を \(n\) 乗するだけ)</li>
+<li><b class="term">不変量</b>:\(\operatorname{tr}A=\sum\lambda_i\)、\(\det A=\prod\lambda_i\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q7-1">
+<div class="phead"><span class="pnum">問 7.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">三角行列の固有値</span></div>
+<p>\(A=\begin{pmatrix}3 &amp; 1\\ 0 &amp; 2\end{pmatrix}\) の固有値と、各固有値に対する固有ベクトルを1本ずつ求めよ。</p>
+</section>
+
+<section class="prob" id="q7-2">
+<div class="phead"><span class="pnum">問 7.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">固有値・固有ベクトルの計算</span></div>
+<p>\(A=\begin{pmatrix}4 &amp; 1\\ 2 &amp; 3\end{pmatrix}\) の固有値と固有ベクトルをすべて求めよ。(この \(A\) は問7.4〜7.6・7.11でも使う。)</p>
+</section>
+
+<section class="prob" id="q7-3">
+<div class="phead"><span class="pnum">問 7.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">3次・重複固有値</span></div>
+<p>\(A=\begin{pmatrix}1 &amp; 2 &amp; 2\\ 2 &amp; 1 &amp; 2\\ 2 &amp; 2 &amp; 1\end{pmatrix}\) の固有値と各固有空間の基底を求めよ。(ヒント:すべての成分が \(1\) の行列 \(J\) を使って \(A=2J-I\) と書けることを利用すると速い。)</p>
+</section>
+
+<section class="prob" id="q7-4">
+<div class="phead"><span class="pnum">問 7.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">対角化</span></div>
+<p>問7.2 の \(A=\begin{pmatrix}4 &amp; 1\\ 2 &amp; 3\end{pmatrix}\) を対角化せよ。すなわち正則行列 \(P\) と対角行列 \(D\) を求め、\(P^{-1}AP=D\) を検算せよ。</p>
+</section>
+
+<section class="prob" id="q7-5">
+<div class="phead"><span class="pnum">問 7.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">行列の n 乗</span></div>
+<p>問7.4 の対角化を用いて \(A^n\)(\(n\) は自然数)を成分の式で求めよ。\(n=1\) を代入して \(A\) に戻ることを確認せよ。</p>
+</section>
+
+<section class="prob" id="q7-6">
+<div class="phead"><span class="pnum">問 7.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">トレース・行列式と固有値</span></div>
+<p>問7.2 の結果で \(\operatorname{tr}A=\lambda_1+\lambda_2\)、\(\det A=\lambda_1\lambda_2\) が成り立つことを確認せよ。さらに一般の2次正方行列についてこの2つの関係式を証明せよ。</p>
+</section>
+
+<section class="prob" id="q7-7">
+<div class="phead"><span class="pnum">問 7.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">フィボナッチ数列の一般項</span></div>
+<p>フィボナッチ数列 \(F_0=0,\ F_1=1,\ F_{n+1}=F_n+F_{n-1}\) は、行列を使って</p>
+<p>\[\begin{pmatrix}F_{n+1}\\ F_n\end{pmatrix}=\begin{pmatrix}1 &amp; 1\\ 1 &amp; 0\end{pmatrix}\begin{pmatrix}F_n\\ F_{n-1}\end{pmatrix}\]</p>
+<p>と書ける。この行列の固有値・固有ベクトルを求めて対角化の考え方を適用し、一般項(ビネの公式)</p>
+<p>\[F_n=\frac{\varphi^n-\psi^n}{\sqrt{5}},\qquad \varphi=\frac{1+\sqrt5}{2},\ \psi=\frac{1-\sqrt5}{2}\]</p>
+<p>を導け。\(n=10\) で \(F_{10}=55\) となることも確認せよ。</p>
+</section>
+
+<section class="prob" id="q7-8">
+<div class="phead"><span class="pnum">問 7.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">マルコフ連鎖と定常分布(PageRankの原理)</span></div>
+<p>2つの状態A・Bを行き来するユーザーの1ステップの遷移を、確率の列ベクトル \(\mathbf{p}_k\) に対して \(\mathbf{p}_{k+1}=M\mathbf{p}_k\)、</p>
+<p>\[M=\begin{pmatrix}0.7 &amp; 0.4\\ 0.3 &amp; 0.6\end{pmatrix}\]</p>
+<p>で表す(各列の和は \(1\))。</p>
+<ol class="sublist">
+<li>\(M\) の固有値を求めよ。(片方が \(1\) になることを確認せよ。)</li>
+<li>固有値 \(1\) の固有ベクトルで、成分の和が \(1\) のもの(定常分布 \(\boldsymbol{\pi}\))を求めよ。</li>
+<li>任意の初期分布から \(\mathbf{p}_k\) が \(\boldsymbol{\pi}\) に収束する理由を、もう1つの固有値を使って説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-9">
+<div class="phead"><span class="pnum">問 7.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">相異なる固有値と一次独立性</span></div>
+<p>\(A\) の固有値 \(\lambda_1,\dots,\lambda_m\) が相異なるとき、対応する固有ベクトル \(\mathbf{v}_1,\dots,\mathbf{v}_m\) は一次独立であることを証明せよ。</p>
+</section>
+
+<section class="prob" id="q7-10">
+<div class="phead"><span class="pnum">問 7.10</span><span class="lv lv2">★★ 標準</span><span class="ptag">対角化できない行列</span></div>
+<p>\(A=\begin{pmatrix}2 &amp; 1\\ 0 &amp; 2\end{pmatrix}\) の固有値と固有空間を求め、この行列が対角化<b>できない</b>ことを説明せよ。</p>
+</section>
+
+<section class="prob" id="q7-11">
+<div class="phead"><span class="pnum">問 7.11</span><span class="lv lv2">★★ 標準</span><span class="ptag">ケーリー・ハミルトンの定理</span></div>
+<p>問7.2 の \(A=\begin{pmatrix}4 &amp; 1\\ 2 &amp; 3\end{pmatrix}\) の特性多項式は \(\lambda^2-7\lambda+10\) であった。\(A^2-7A+10I\) を実際に計算し、零行列になること(ケーリー・ハミルトンの定理)を確認せよ。</p>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>\(A\mathbf{v}=\lambda\mathbf{v}\) の図形的な意味(向きを変えない方向)を説明できる</li>
+<li>対角化の手順(固有値→固有空間→\(P\) を組む→検算)を淀みなく実行できる</li>
+<li>「対角化可能 \(\iff\) 一次独立な固有ベクトルが \(n\) 本」と、その反例を挙げられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch8">
+<p class="chnum">第8章</p>
+<h2>内積空間と直交性</h2>
+<p class="chsub">— 直交化・QR・最小二乗法</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>直交する基底は「もつれのない座標系」です。座標は内積を1回とるだけで求まり、長さはピタゴラスの定理で分解でき、数値計算は誤差に強くなる。そして実データの方程式 \(A\mathbf{x}=\mathbf{b}\) はたいてい厳密には解けません(式の数 \(\gt\) 未知数)— そこで「誤差が最小になる解」を求めるのが<b>最小二乗法</b>で、その正体は<b>列空間への直交射影</b>です。回帰分析、カメラキャリブレーション、信号のノイズ除去、フーリエ展開 — 応用数学の半分はこの章の上に建っています。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>正規直交基底を判定・活用でき、グラム・シュミットの直交化を実行できる</li>
+<li>直交行列の性質(ノルム保存・\(Q^\top Q=I\))を証明つきで使える</li>
+<li>部分空間への射影を正規方程式 \(A^\top A\hat{\mathbf{x}}=A^\top\mathbf{b}\) で計算できる</li>
+<li>データへの直線当てはめ(最小二乗回帰)を実行でき、原理を導出できる</li>
+<li>QR分解・直交補空間・関数空間の内積へ視野を広げられる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">正規直交系</b>:\(\mathbf{q}_i\cdot\mathbf{q}_j=\begin{cases}1 &amp; (i=j)\\ 0 &amp; (i\ne j)\end{cases}\)。座標は \(c_i=\mathbf{q}_i\cdot\mathbf{v}\) で即座に求まる</li>
+<li><b class="term">グラム・シュミットの直交化</b>:\(\mathbf{u}_k=\mathbf{a}_k-\sum_{i\lt k}\dfrac{\mathbf{u}_i\cdot\mathbf{a}_k}{\mathbf{u}_i\cdot\mathbf{u}_i}\mathbf{u}_i\)(既にできた方向への射影を引き去る)</li>
+<li><b class="term">直交行列</b>:\(Q^\top Q=I\)。\(\|Q\mathbf{x}\|=\|\mathbf{x}\|\)(長さ・角度を保つ)、\(\det Q=\pm1\)</li>
+<li><b class="term">正規方程式</b>:\(\|A\mathbf{x}-\mathbf{b}\|\) の最小化 \(\iff A^\top A\hat{\mathbf{x}}=A^\top\mathbf{b}\)(残差 \(\perp\) 列空間)</li>
+<li><b class="term">直交補空間</b>:\(W^{\perp}=\{\mathbf{v}\mid \mathbf{v}\cdot\mathbf{w}=0\ (\forall\mathbf{w}\in W)\}\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q8-1">
+<div class="phead"><span class="pnum">問 8.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">正規直交基底の確認</span></div>
+<p>\(\mathbf{a}_1=(1,2,2),\ \mathbf{a}_2=(2,-2,1),\ \mathbf{a}_3=(2,1,-2)\) が互いに直交することを確かめ、それぞれを正規化して \(\mathbb{R}^3\) の正規直交基底を作れ。</p>
+</section>
+
+<section class="prob" id="q8-2">
+<div class="phead"><span class="pnum">問 8.2</span><span class="lv lv2">★★ 標準</span><span class="ptag">グラム・シュミットの直交化</span></div>
+<p>\(\mathbf{a}_1=(1,1,0),\ \mathbf{a}_2=(1,0,1),\ \mathbf{a}_3=(0,1,1)\) にグラム・シュミットの直交化を適用し、直交系 \(\mathbf{u}_1,\mathbf{u}_2,\mathbf{u}_3\) を作れ。さらに正規化して正規直交基底 \(\mathbf{q}_1,\mathbf{q}_2,\mathbf{q}_3\) を求めよ。</p>
+</section>
+
+<section class="prob" id="q8-3">
+<div class="phead"><span class="pnum">問 8.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">直交行列の性質</span></div>
+<p>\(Q\) を \(n\) 次正方行列とする。次を証明せよ。</p>
+<ol class="sublist">
+<li>\(Q^\top Q=I\ \iff\ Q\) の列ベクトルたちが正規直交系をなす</li>
+<li>\(Q^\top Q=I\) のとき、任意の \(\mathbf{x}\) について \(\|Q\mathbf{x}\|=\|\mathbf{x}\|\)(長さを保つ)</li>
+<li>\(Q^\top Q=I\) のとき、\(\det Q=\pm1\)</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-4">
+<div class="phead"><span class="pnum">問 8.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">部分空間への射影</span></div>
+<p>\(A=\begin{pmatrix}1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{pmatrix}\)、\(\mathbf{b}=(1,1,1)^\top\) とする。\(\mathbf{b}\) の、\(A\) の列空間への正射影 \(\mathbf{p}\) を、正規方程式 \(A^\top A\hat{\mathbf{x}}=A^\top\mathbf{b}\) を解いて求めよ。また残差 \(\mathbf{b}-\mathbf{p}\) が \(A\) の両方の列と直交することを確かめよ。</p>
+</section>
+
+<section class="prob" id="q8-5">
+<div class="phead"><span class="pnum">問 8.5</span><span class="lv lv3">★★★ 応用</span><span class="ptag">最小二乗法による直線当てはめ</span></div>
+<p>データ点 \((x,y)=(0,1),\ (1,2),\ (2,2),\ (3,3)\) に、直線 \(y=a+bx\) を最小二乗法で当てはめたい。</p>
+<ol class="sublist">
+<li>4点を通そうとする方程式を \(A\begin{pmatrix}a\\ b\end{pmatrix}=\mathbf{y}\) の形に立式せよ(厳密には解けないことに注意)。</li>
+<li>正規方程式を解いて最良の \(a,b\) を求めよ。</li>
+<li>各点での残差を計算し、残差の和 \(\sum e_i\) と \(\sum x_ie_i\) がともに \(0\) になることを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-6">
+<div class="phead"><span class="pnum">問 8.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">正規方程式の導出</span></div>
+<p>\(A\) を \(m\times n\) 行列(\(m\ge n\))とする。\(\|A\mathbf{x}-\mathbf{b}\|\) を最小にする \(\hat{\mathbf{x}}\) が満たすべき条件が正規方程式 \(A^\top A\hat{\mathbf{x}}=A^\top\mathbf{b}\) であることを、「残差が列空間と直交する」という幾何学的条件から導け。また \(\operatorname{rank}A=n\) のとき解が一意である理由も述べよ。</p>
+</section>
+
+<section class="prob" id="q8-7">
+<div class="phead"><span class="pnum">問 8.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">QR分解</span></div>
+<p>問8.4 の \(A=\begin{pmatrix}1 &amp; 1\\ 1 &amp; 0\\ 0 &amp; 1\end{pmatrix}\) を、列にグラム・シュミットを適用して \(A=QR\)(\(Q\) は正規直交な列をもつ \(3\times2\)、\(R\) は \(2\times2\) 上三角)に分解せよ。</p>
+</section>
+
+<section class="prob" id="q8-8">
+<div class="phead"><span class="pnum">問 8.8</span><span class="lv lv1">★ 基礎</span><span class="ptag">ピタゴラスの定理</span></div>
+<p>\(\mathbf{a}\perp\mathbf{b}\)(すなわち \(\mathbf{a}\cdot\mathbf{b}=0\))のとき、\(\|\mathbf{a}+\mathbf{b}\|^2=\|\mathbf{a}\|^2+\|\mathbf{b}\|^2\) を証明せよ。</p>
+</section>
+
+<section class="prob" id="q8-9">
+<div class="phead"><span class="pnum">問 8.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">直交補空間</span></div>
+<ol class="sublist">
+<li>\(W=\operatorname{span}\{(1,1,1)\}\subseteq\mathbb{R}^3\) の直交補空間 \(W^{\perp}\) を求めよ。</li>
+<li>\(\mathbb{R}^n\) の部分空間 \(W\) について \((W^{\perp})^{\perp}=W\) を証明せよ。(ヒント:\(W\subseteq(W^{\perp})^{\perp}\) を示したうえで、\(\dim W^{\perp}=n-\dim W\) を用いて次元を比較する。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-10">
+<div class="phead"><span class="pnum">問 8.10</span><span class="lv lv2">★★ 標準</span><span class="ptag">関数空間の内積</span></div>
+<p>区間 \([0,1]\) 上の連続関数の空間に、内積を \(\langle f,g\rangle=\displaystyle\int_0^1 f(x)g(x)\,dx\) で定める。定数関数 \(1\) と関数 \(x-\dfrac12\) がこの内積で直交することを示せ。この事実は何の入口になっているか、一言述べよ。</p>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>グラム・シュミット法を「射影を引き去る」操作として図で説明できる</li>
+<li>正規方程式を丸暗記でなく「残差 \(\perp\) 列空間」から導出できる</li>
+<li>最小二乗回帰を行列の言葉(\(A,\ \mathbf{b},\ \hat{\mathbf{x}}\))で定式化できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch9">
+<p class="chnum">第9章</p>
+<h2>対称行列と二次形式</h2>
+<p class="chsub">— スペクトル定理と正定値性</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>対称行列(\(A^\top=A\))は線形代数で最も行儀のよいクラスです:固有値は必ず実数、異なる固有値の固有ベクトルは必ず直交、そして<b>必ず直交行列で対角化できる</b>(スペクトル定理)。そしてデータの世界に現れる行列 — 共分散行列、ヘッセ行列、グラフラプラシアン、カーネル行列 — はほとんどが対称です。二次形式の<b>正定値性</b>は「エネルギーが正」「関数の極小」「距離が定義できる」ことの数学的表現。この章の締めくくりに、統計・機械学習の看板技術 <b>PCA(主成分分析)</b> が「共分散行列の固有値問題」にすぎないことを自分の手で確かめます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>対称行列を直交行列で対角化し、スペクトル分解 \(A=\sum\lambda_i\mathbf{q}_i\mathbf{q}_i^\top\) を書ける</li>
+<li>二次形式を行列で表し、正定値性を固有値・首座小行列式で判定できる</li>
+<li>「固有値は実数」「固有ベクトルは直交」を証明できる</li>
+<li>共分散行列の固有ベクトルとしてPCAの第1主成分・寄与率を計算できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">スペクトル定理</b>:実対称行列は \(A=QDQ^\top\)(\(Q\) は直交行列、\(D\) は実対角)と直交対角化できる</li>
+<li><b class="term">スペクトル分解</b>:\(A=\lambda_1\mathbf{q}_1\mathbf{q}_1^\top+\cdots+\lambda_n\mathbf{q}_n\mathbf{q}_n^\top\)(ランク1行列の和)</li>
+<li><b class="term">二次形式</b>:\(q(\mathbf{x})=\mathbf{x}^\top A\mathbf{x}\)(\(A\) は対称にとれる)</li>
+<li><b class="term">正定値</b>:\(\mathbf{x}\ne\mathbf{0}\Rightarrow \mathbf{x}^\top A\mathbf{x}\gt0\)\(\iff\)全固有値 \(\gt0\)\(\iff\)首座小行列式がすべて \(\gt0\)(シルベスターの判定法)</li>
+<li><b class="term">共分散行列</b>:平均0のデータ \(\mathbf{x}_1,\dots,\mathbf{x}_N\) に対し \(S=\frac{1}{N}\sum\mathbf{x}_k\mathbf{x}_k^\top\)。最大固有値の固有ベクトルが第1主成分</li>
+</ul>
+</div>
+
+<section class="prob" id="q9-1">
+<div class="phead"><span class="pnum">問 9.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">対称行列の固有値・固有ベクトル</span></div>
+<p>対称行列 \(A=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix}\) の固有値と固有ベクトルを求め、<b>固有ベクトルどうしが直交している</b>ことを確認せよ。(この \(A\) は問9.2・9.3でも使う。)</p>
+</section>
+
+<section class="prob" id="q9-2">
+<div class="phead"><span class="pnum">問 9.2</span><span class="lv lv2">★★ 標準</span><span class="ptag">直交対角化とスペクトル分解</span></div>
+<p>問9.1 の結果を用いて \(A=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix}\) を直交行列 \(Q\) で対角化せよ(\(Q^\top AQ=D\))。さらにスペクトル分解</p>
+<p>\[A=\lambda_1\mathbf{q}_1\mathbf{q}_1^\top+\lambda_2\mathbf{q}_2\mathbf{q}_2^\top\]</p>
+<p>を成分計算で確かめよ。</p>
+</section>
+
+<section class="prob" id="q9-3">
+<div class="phead"><span class="pnum">問 9.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">二次形式と最大・最小</span></div>
+<p>二次形式 \(q(x,y)=2x^2+2xy+2y^2\) について:</p>
+<ol class="sublist">
+<li>\(q(x,y)=\mathbf{x}^\top A\mathbf{x}\) となる対称行列 \(A\) を求めよ。</li>
+<li>\(A\) が正定値であることを固有値で確認せよ。</li>
+<li>単位円 \(x^2+y^2=1\) 上での \(q\) の最大値・最小値と、それを与える方向を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-4">
+<div class="phead"><span class="pnum">問 9.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">シルベスターの判定法</span></div>
+<p>\(A=\begin{pmatrix}2 &amp; -1 &amp; 0\\ -1 &amp; 2 &amp; -1\\ 0 &amp; -1 &amp; 2\end{pmatrix}\) が正定値であることを、首座小行列式(左上の \(1\times1,\ 2\times2,\ 3\times3\) 小行列式)を計算して示せ。また固有値が \(2-\sqrt2,\ 2,\ 2+\sqrt2\) であることを確かめ、すべて正であることを見よ。</p>
+</section>
+
+<section class="prob" id="q9-5">
+<div class="phead"><span class="pnum">問 9.5</span><span class="lv lv3">★★★ 応用</span><span class="ptag">実対称行列の固有値は実数</span></div>
+<p>実対称行列 \(A\) の固有値はすべて実数であることを証明せよ。(ヒント:複素数の範囲で \(A\mathbf{v}=\lambda\mathbf{v},\ \mathbf{v}\ne\mathbf{0}\) とし、共役転置をとった \(\bar{\mathbf{v}}^\top A\mathbf{v}\) を2通りに評価する。)</p>
+</section>
+
+<section class="prob" id="q9-6">
+<div class="phead"><span class="pnum">問 9.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">固有ベクトルの直交性</span></div>
+<p>実対称行列 \(A\) の相異なる固有値 \(\lambda\ne\mu\) に属する固有ベクトル \(\mathbf{u},\mathbf{v}\) は直交する(\(\mathbf{u}\cdot\mathbf{v}=0\))ことを証明せよ。</p>
+</section>
+
+<section class="prob" id="q9-7">
+<div class="phead"><span class="pnum">問 9.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">PCA(主成分分析)</span></div>
+<p>平均が \(\mathbf{0}\) の4つのデータ点 \(\mathbf{x}_1=(2,1),\ \mathbf{x}_2=(1,2),\ \mathbf{x}_3=(-2,-1),\ \mathbf{x}_4=(-1,-2)\) がある。</p>
+<ol class="sublist">
+<li>共分散行列 \(S=\dfrac{1}{4}\displaystyle\sum_{k=1}^{4}\mathbf{x}_k\mathbf{x}_k^\top\) を計算せよ。</li>
+<li>\(S\) の固有値・固有ベクトルを求め、第1主成分(最大固有値の方向)を答えよ。</li>
+<li>第1主成分の寄与率(最大固有値 ÷ 固有値の総和)を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-8">
+<div class="phead"><span class="pnum">問 9.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">正定値性と \(B^\top B\)</span></div>
+<ol class="sublist">
+<li>\(B\) が正則な正方行列のとき、\(A=B^\top B\) は対称かつ正定値であることを示せ。</li>
+<li>逆に、対称正定値な \(A\) に対して \(A=B^\top B\) を満たす正則行列 \(B\) が存在することを、スペクトル定理 \(A=QDQ^\top\) を使って示せ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>「対称なら:固有値実数・固有ベクトル直交・直交対角化可能」を証明の流れごと説明できる</li>
+<li>正定値の3つの同値条件(定義・固有値・首座小行列式)を使い分けられる</li>
+<li>PCAの手順(中心化→共分散行列→固有値問題→寄与率)を自力で実行できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch10">
+<p class="chnum">第10章</p>
+<h2>特異値分解(SVD)</h2>
+<p class="chsub">— 低ランク近似・擬似逆行列・PCA</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>対角化(第7章)は正方行列限定、直交対角化(第9章)は対称行列限定でした。<b>特異値分解(SVD)\(A=U\Sigma V^\top\) は、どんな行列にも</b> — 長方形でも、ランク落ちでも — 例外なく存在する究極の分解です。意味は「どんな線形写像も、回転 → 軸ごとの伸縮 → 回転」。特異値の大きい成分だけ残す<b>低ランク近似</b>は画像圧縮・ノイズ除去・推薦システムの理論的基盤(Eckart–Young定理)であり、<b>擬似逆行列</b>は解けない方程式に常に「最良の答え」を与え、PCAの実務計算もSVDで行われます。数値計算・CV・機械学習で最も出番の多い分解 — 本書のクライマックスです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>\(A^\top A\) の固有値問題からSVDを手計算で構成できる(\(2\times2\))</li>
+<li>低ランク近似を作り、誤差(作用素ノルム・フロベニウスノルム)を特異値で読める</li>
+<li>SVD画像圧縮の圧縮率を見積もれる</li>
+<li>擬似逆行列 \(A^{+}\) を構成し、最小ノルム最小二乗解との関係を説明できる</li>
+<li>PCA・ランク・行列ノルム・条件数がすべてSVDで統一的に読めることを理解する</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">SVD</b>:\(A=U\Sigma V^\top\)(\(U,V\) は直交行列、\(\Sigma\) は対角に \(\sigma_1\ge\sigma_2\ge\cdots\ge0\))。任意の \(m\times n\) 行列で存在</li>
+<li><b class="term">特異値</b>:\(\sigma_i=\sqrt{A^\top A\ の固有値}\)。\(V\) の列 \(\mathbf{v}_i\) は \(A^\top A\) の固有ベクトル、\(\mathbf{u}_i=A\mathbf{v}_i/\sigma_i\)</li>
+<li><b class="term">低ランク近似</b>:\(A_k=\sum_{i=1}^{k}\sigma_i\mathbf{u}_i\mathbf{v}_i^\top\) がランク \(k\) 以下での最良近似(Eckart–Young)</li>
+<li><b class="term">擬似逆行列</b>:\(A^{+}=V\Sigma^{+}U^\top\)(\(\Sigma^{+}\):非零特異値を逆数に、転置)。\(A^{+}\mathbf{b}\) は最小ノルム最小二乗解</li>
+<li><b class="term">ノルムと条件数</b>:\(\|A\|_2=\sigma_1\)、\(\|A\|_F=\sqrt{\sum\sigma_i^2}\)、\(\kappa(A)=\sigma_{\max}/\sigma_{\min}\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q10-1">
+<div class="phead"><span class="pnum">問 10.1</span><span class="lv lv2">★★ 標準</span><span class="ptag">SVDの計算</span></div>
+<p>\(A=\begin{pmatrix}3 &amp; 0\\ 4 &amp; 5\end{pmatrix}\) の特異値分解 \(A=U\Sigma V^\top\) を、次の手順で求めよ。</p>
+<ol class="sublist">
+<li>\(A^\top A\) を計算し、その固有値と正規直交固有ベクトル \(\mathbf{v}_1,\mathbf{v}_2\) を求めよ。</li>
+<li>特異値 \(\sigma_1\ge\sigma_2\) と、左特異ベクトル \(\mathbf{u}_i=A\mathbf{v}_i/\sigma_i\) を求めよ。</li>
+<li>\(U,\Sigma,V\) を書き下し、\(U\Sigma V^\top=A\) を検算せよ。</li>
+</ol>
+<p>(この \(A\) は問10.3・10.8でも使う。)</p>
+</section>
+
+<section class="prob" id="q10-2">
+<div class="phead"><span class="pnum">問 10.2</span><span class="lv lv2">★★ 標準</span><span class="ptag">ランク1行列の特異値</span></div>
+<p>\(A=\begin{pmatrix}1 &amp; 2\\ 2 &amp; 4\end{pmatrix}\) の特異値をすべて求めよ。また、この行列が \(A=\mathbf{u}\mathbf{v}^\top\)(\(\mathbf{u}=\mathbf{v}=(1,2)^\top\))というランク1の形をもつことを使って、非零特異値が \(\|\mathbf{u}\|\,\|\mathbf{v}\|\) に一致することを確かめよ。</p>
+</section>
+
+<section class="prob" id="q10-3">
+<div class="phead"><span class="pnum">問 10.3</span><span class="lv lv3">★★★ 応用</span><span class="ptag">低ランク近似と Eckart–Young 定理</span></div>
+<p>問10.1 の \(A=\begin{pmatrix}3 &amp; 0\\ 4 &amp; 5\end{pmatrix}\) について:</p>
+<ol class="sublist">
+<li>最良ランク1近似 \(A_1=\sigma_1\mathbf{u}_1\mathbf{v}_1^\top\) を成分で求めよ。</li>
+<li>誤差行列 \(E=A-A_1\) を求め、その作用素ノルム \(\|E\|_2\) とフロベニウスノルム \(\|E\|_F\) を計算せよ。結果を \(\sigma_2\) と比較せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-4">
+<div class="phead"><span class="pnum">問 10.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">SVD画像圧縮の圧縮率</span></div>
+<p>\(512\times512\) 画素のグレースケール画像を1枚の行列とみなし、SVDの上位 \(k=20\) 成分だけを保存する(\(\sigma_i,\ \mathbf{u}_i,\ \mathbf{v}_i\) を \(i=1,\dots,20\) について保存)。保存すべき数値の個数を求め、元の画像(全画素値)に対する割合(圧縮率)をパーセントで見積もれ。</p>
+</section>
+
+<section class="prob" id="q10-5">
+<div class="phead"><span class="pnum">問 10.5</span><span class="lv lv3">★★★ 応用</span><span class="ptag">擬似逆行列(ムーア・ペンローズ逆行列)</span></div>
+<p>特異な行列 \(A=\begin{pmatrix}1 &amp; 1\\ 1 &amp; 1\end{pmatrix}\) を考える。</p>
+<ol class="sublist">
+<li>\(A\) のSVDを構成し、擬似逆行列 \(A^{+}=V\Sigma^{+}U^\top\) を成分で求めよ。</li>
+<li>解をもたない方程式 \(A\mathbf{x}=(1,0)^\top\) に対し、\(\hat{\mathbf{x}}=A^{+}(1,0)^\top\) を計算せよ。この \(\hat{\mathbf{x}}\) が「残差最小の解のうちノルム最小のもの」であることを直接確認せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-6">
+<div class="phead"><span class="pnum">問 10.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">SVDとPCAの関係</span></div>
+<p>問9.7 のデータを行に並べた行列 \(X=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\\ -2 &amp; -1\\ -1 &amp; -2\end{pmatrix}\) を考える。</p>
+<ol class="sublist">
+<li>\(X^\top X\) を計算し、\(X\) の特異値を求めよ。</li>
+<li>\(X\) の第1右特異ベクトル \(\mathbf{v}_1\) が、問9.7 の第1主成分と一致することを確かめよ。</li>
+<li>共分散行列 \(S=\frac{1}{4}X^\top X\) の固有値 \(\lambda_i\) と特異値の間の関係式を書け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-7">
+<div class="phead"><span class="pnum">問 10.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">ランクと特異値</span></div>
+<p>\(A=U\Sigma V^\top\) のとき、\(\operatorname{rank}A\) は非零特異値の個数に等しいことを証明せよ。(ヒント:正則行列を掛けてもランクは変わらない。)</p>
+</section>
+
+<section class="prob" id="q10-8">
+<div class="phead"><span class="pnum">問 10.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">行列ノルムと条件数</span></div>
+<p>問10.1 の \(A=\begin{pmatrix}3 &amp; 0\\ 4 &amp; 5\end{pmatrix}\)(特異値 \(3\sqrt5,\ \sqrt5\))について:</p>
+<ol class="sublist">
+<li>フロベニウスノルム \(\|A\|_F=\sqrt{\sum_{i,j}a_{ij}^2}\) を成分から計算し、\(\sqrt{\sigma_1^2+\sigma_2^2}\) と一致することを確かめよ。</li>
+<li>条件数 \(\kappa(A)=\sigma_{\max}/\sigma_{\min}\) を求めよ。条件数が大きい(悪条件の)行列では何が起きるか、一言で説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-9">
+<div class="phead"><span class="pnum">問 10.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">SVDの存在証明</span></div>
+<p>任意の \(m\times n\) 実行列 \(A\)(\(\operatorname{rank}A=r\))に対して特異値分解が存在することを、次の筋道で証明せよ:\(A^\top A\) が対称半正定値であることを示し、その正規直交固有基底 \(\{\mathbf{v}_i\}\)(固有値 \(\sigma_i^2\ge0\)、降順)をとり、\(\sigma_i\gt0\) に対して \(\mathbf{u}_i=A\mathbf{v}_i/\sigma_i\) と定めると \(\{\mathbf{u}_i\}\) が正規直交系になることを確かめて、\(A=U\Sigma V^\top\) を組み立てる。</p>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>SVDの構成手順(\(A^\top A\) の固有値問題 → \(\sigma_i\) → \(\mathbf{u}_i\))を自力で実行できる</li>
+<li>「上位 \(k\) 成分を残す=最良ランク \(k\) 近似」を圧縮・ノイズ除去と結びつけて説明できる</li>
+<li>ランク・ノルム・条件数・擬似逆行列を、すべて特異値の言葉で言い換えられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch11">
+<p class="chnum">第11章</p>
+<h2>発展</h2>
+<p class="chsub">— ジョルダン標準形・行列関数・数値線形代数入門</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>最終章は、本書のその先 — 大学院で出会う世界 — への橋渡しです。対角化できない行列にも完全な標準形を与える<b>ジョルダン標準形</b>。微分方程式・制御理論・連続時間システムの言語である<b>行列指数関数 \(e^{tA}\)</b>。巨大行列の固有値を計算機で実際に求める<b>冪乗法</b>(PageRankの実装)。そしてネットワークの構造を固有値で読む<b>グラフラプラシアン</b>(スペクトラルクラスタリング)。どの話題も、第7〜10章で鍛えた「固有値で世界を見る」力がそのまま通用します。全問を解き終えたとき、大学院レベルの教科書・論文を読む足場が完成しているはずです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>最小多項式を計算し、対角化可能性との関係を説明できる</li>
+<li>対角化できない \(2\times2\) 行列をジョルダン標準形に変換できる</li>
+<li>行列指数関数 \(e^{tA}\) を定義から計算できる(回転生成・冪零の場合)</li>
+<li>ケーリー・ハミルトンの定理で逆行列を表せる</li>
+<li>冪乗法の反復とレイリー商で最大固有値を数値的に推定できる</li>
+<li>グラフラプラシアンの固有値から連結性・クラスタ構造を読める</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">最小多項式</b>:\(m(A)=O\) となるモニック多項式のうち次数最小のもの。<b>重根をもたない \(\iff\) 対角化可能</b></li>
+<li><b class="term">ジョルダン標準形</b>:対角化できない行列も \(P^{-1}AP=\begin{pmatrix}\lambda &amp; 1\\ 0 &amp; \lambda\end{pmatrix}\) 型のブロックまでは必ず簡約できる(\(P\) には一般化固有ベクトルを使う)</li>
+<li><b class="term">行列指数関数</b>:\(e^{A}=\displaystyle\sum_{k=0}^{\infty}\frac{A^k}{k!}\)。微分方程式 \(\mathbf{x}'=A\mathbf{x}\) の解は \(\mathbf{x}(t)=e^{tA}\mathbf{x}(0)\)</li>
+<li><b class="term">冪乗法</b>:\(\mathbf{x}_{k+1}=A\mathbf{x}_k\) の反復は最大固有値の固有ベクトル方向へ収束。推定値はレイリー商 \(\frac{\mathbf{x}^\top A\mathbf{x}}{\mathbf{x}^\top\mathbf{x}}\)</li>
+<li><b class="term">グラフラプラシアン</b>:\(L=D-A\)(次数行列 − 隣接行列)。半正定値で、固有値 \(0\) の重複度 = 連結成分の個数</li>
+</ul>
+</div>
+
+<section class="prob" id="q11-1">
+<div class="phead"><span class="pnum">問 11.1</span><span class="lv lv2">★★ 標準</span><span class="ptag">最小多項式</span></div>
+<p>\(B=\begin{pmatrix}2 &amp; 1\\ 0 &amp; 2\end{pmatrix}\)(問7.10の対角化できない行列)について、\(B-2I\) と \((B-2I)^2\) を計算し、\(B\) の最小多項式を求めよ。その結果は「最小多項式が重根をもたない \(\iff\) 対角化可能」という判定法とどう整合するか。</p>
+</section>
+
+<section class="prob" id="q11-2">
+<div class="phead"><span class="pnum">問 11.2</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ジョルダン標準形への変換</span></div>
+<p>\(B=\begin{pmatrix}2 &amp; 1\\ -1 &amp; 4\end{pmatrix}\) について:</p>
+<ol class="sublist">
+<li>固有値を求め、固有空間の次元を調べて、対角化できないことを確認せよ。</li>
+<li>固有ベクトル \(\mathbf{v}\) と、一般化固有ベクトル \(\mathbf{w}\)(\((B-\lambda I)\mathbf{w}=\mathbf{v}\) の解)を求めよ。</li>
+<li>\(P=(\mathbf{v}\ \ \mathbf{w})\) として \(P^{-1}BP\) を計算し、ジョルダン標準形 \(\begin{pmatrix}\lambda &amp; 1\\ 0 &amp; \lambda\end{pmatrix}\) になることを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-3">
+<div class="phead"><span class="pnum">問 11.3</span><span class="lv lv3">★★★ 応用</span><span class="ptag">行列指数関数と回転</span></div>
+<p>\(A=\begin{pmatrix}0 &amp; 1\\ -1 &amp; 0\end{pmatrix}\) とする。\(A^2=-I\) を確かめたうえで、定義 \(e^{tA}=\displaystyle\sum_{k=0}^{\infty}\frac{(tA)^k}{k!}\) の級数を偶数次・奇数次に分けて計算し、\(e^{tA}\) を三角関数で表せ。得られた行列はどんな変換か。</p>
+</section>
+
+<section class="prob" id="q11-4">
+<div class="phead"><span class="pnum">問 11.4</span><span class="lv lv3">★★★ 応用</span><span class="ptag">冪零成分をもつ行列の指数関数</span></div>
+<p>\(B=\begin{pmatrix}2 &amp; 1\\ 0 &amp; 2\end{pmatrix}\) について、\(tB=2tI+tN\)(\(N=\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}\))と分解し、\(2tI\) と \(tN\) が可換であることを利用して \(e^{tB}\) を求めよ。(可換な行列では \(e^{X+Y}=e^{X}e^{Y}\) が成り立つことは認めてよい。)</p>
+</section>
+
+<section class="prob" id="q11-5">
+<div class="phead"><span class="pnum">問 11.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">ケーリー・ハミルトンによる逆行列</span></div>
+<p>\(A=\begin{pmatrix}4 &amp; 1\\ 2 &amp; 3\end{pmatrix}\) は \(A^2-7A+10I=O\) を満たした(問7.11)。この式を変形して \(A^{-1}\) を \(A\) と \(I\) の一次結合で表し、成分を求めて、第2章の逆行列公式の結果と一致することを確かめよ。</p>
+</section>
+
+<section class="prob" id="q11-6">
+<div class="phead"><span class="pnum">問 11.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">冪乗法(最大固有値の数値計算)</span></div>
+<p>\(A=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix}\)(固有値 \(3,1\))に対して、初期ベクトル \(\mathbf{x}_0=(1,0)^\top\) から冪乗法 \(\mathbf{x}_{k+1}=A\mathbf{x}_k\) を2回反復して \(\mathbf{x}_1,\mathbf{x}_2\) を求めよ。\(\mathbf{x}_2\) におけるレイリー商 \(\dfrac{\mathbf{x}_2^\top A\mathbf{x}_2}{\mathbf{x}_2^\top\mathbf{x}_2}\) を計算し、最大固有値 \(3\) に近づいていることを確認せよ。また、この方法が最大固有値の方向に収束する原理と収束の速さを、固有ベクトル分解を用いて説明せよ。</p>
+</section>
+
+<section class="prob" id="q11-7">
+<div class="phead"><span class="pnum">問 11.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">作用素ノルムの特徴づけ</span></div>
+<p>作用素ノルム(スペクトルノルム)を \(\|A\|_2=\displaystyle\max_{\mathbf{x}\ne\mathbf{0}}\frac{\|A\mathbf{x}\|}{\|\mathbf{x}\|}\) で定義する。SVD \(A=U\Sigma V^\top\) を用いて \(\|A\|_2=\sigma_{\max}\) を証明せよ。また \(\|A\|_F^2=\operatorname{tr}(A^\top A)=\sum_i\sigma_i^2\) を示せ。(問10.1 の \(A=\begin{pmatrix}3 &amp; 0\\ 4 &amp; 5\end{pmatrix}\) で数値を確認してよい。)</p>
+</section>
+
+<section class="prob" id="q11-8">
+<div class="phead"><span class="pnum">問 11.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">グラフラプラシアンとスペクトラルクラスタリング入門</span></div>
+<p>3頂点の道グラフ \(1-2-3\)(辺は \(\{1,2\}\) と \(\{2,3\}\))について:</p>
+<ol class="sublist">
+<li>次数行列 \(D\) と隣接行列 \(A\) から、ラプラシアン \(L=D-A\) を書け。</li>
+<li>\((1,1,1)^\top\) が固有値 \(0\) の固有ベクトルであることを確かめ、\(L\) の固有値をすべて求めよ。</li>
+<li>「固有値 \(0\) の重複度=グラフの連結成分の個数」が本例で成り立つことを確認し、2番目に小さい固有値の固有ベクトル(フィードラー・ベクトル)の成分の符号が、グラフをどう分割しているか観察せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認</h3>
+<ul>
+<li>「対角化 → ジョルダン」という標準形の階層と、その使い分けを説明できる</li>
+<li>\(e^{tA}\) が微分方程式 \(\mathbf{x}'=A\mathbf{x}\) の解を与える仕組みを述べられる</li>
+<li>冪乗法・レイリー商・グラフラプラシアンを、固有値理論の応用として位置づけられる</li>
+</ul>
+</div>
+
+
+<footer class="book">
+<p>『情報系のための線形代数 問題集』 全11章・103問。姉妹編『解答解説集』とセットで学習してください。</p>
+<p>本書に登場する数値計算(行列の積・逆行列・行列式・階数・固有値・特異値分解・最小二乗解など全129項目)は、計算機代数システム SymPy による厳密計算で全件検証済みです。</p>
+</footer>
+</div>
+</body>
+</html>
