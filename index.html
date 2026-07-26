@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>情報系のための数学 問題集シリーズ — 基礎から大学院レベルまで</title>
+<meta name="description" content="情報系の大学生・大学院進学をめざす人のための、独学用の数学問題集シリーズ。線形代数・微分積分・最適化・確率・統計を、基礎から大学院レベルまで全416問。問題集と解答解説集をセットで公開しています。">
+<style>
+:root{
+  --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
+  --accent:#1f4e8c; --accent-soft:#eef2f8;
+  --lv1:#2f7d4f; --lv2:#1f4e8c; --lv3:#a83232;
+  --rule:#d8d8d2;
+  --q:#1f4e8c;   /* 問題集 */
+  --a:#1e6b5a;   /* 解答解説集 */
+  --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --sans:"Yu Gothic Medium","Yu Gothic","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.95;font-feature-settings:"palt";}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.15rem 5rem}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.5;letter-spacing:.02em}
+/* --- 表紙 --- */
+header.book{padding:4.2rem 0 2.2rem;border-bottom:3px double var(--accent)}
+header.book .series{color:var(--accent);font-family:var(--sans);font-weight:700;
+  letter-spacing:.35em;font-size:.8rem;margin:0 0 .9rem}
+header.book h1{font-size:2.05rem;margin:0 0 .5rem}
+header.book .subtitle{color:var(--sub);margin:0 0 1.4rem;font-size:1.02rem}
+header.book .meta{font-size:.82rem;color:var(--sub);line-height:2}
+/* --- 使い方 --- */
+.howto{margin:2.2rem 0;padding:1.1rem 1.35rem;border-radius:6px;
+  background:var(--card);border:1px solid var(--rule)}
+.howto h2{margin:0 0 .55rem;font-size:1.02rem;color:var(--accent)}
+.howto ul{margin:.2rem 0;padding-left:1.35rem}
+.howto li{margin:.3rem 0;font-size:.95rem}
+/* --- 書棚の見出し --- */
+.shelf-head{margin:3rem 0 .2rem;padding-top:2rem;border-top:1px solid var(--rule)}
+.shelf-head p.chnum{font-family:var(--serif);color:var(--accent);font-size:1rem;
+  letter-spacing:.25em;margin:0}
+.shelf-head h2{font-size:1.75rem;margin:.15rem 0 .2rem}
+.shelf-head p.chsub{color:var(--sub);margin:0;font-size:.98rem}
+/* --- 教科カード --- */
+article.book-card{margin:1.6rem 0;padding:1.25rem 1.45rem 1.2rem;
+  background:var(--card);border:1px solid var(--rule);
+  border-left:4px solid var(--accent);border-radius:6px;
+  transition:box-shadow .15s ease}
+article.book-card:hover{box-shadow:0 2px 10px rgba(34,38,46,.07)}
+article.book-card h3{font-size:1.4rem;margin:0 0 .12rem}
+article.book-card .series-name{margin:0 0 .7rem;font-size:.8rem;color:var(--sub);
+  letter-spacing:.06em}
+article.book-card .summary{margin:0 0 .8rem;font-size:.95rem}
+/* トピックのタグ列 */
+ul.topics{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem;margin:0 0 .95rem;padding:0}
+ul.topics li{background:var(--accent-soft);color:var(--accent);border-radius:3px;
+  padding:.1rem .55rem;font-size:.78rem;line-height:1.8}
+/* 規模と難易度 */
+.stats{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:0 0 1rem;font-size:.85rem}
+.stats .scale{font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--ink)}
+.stats .sep{color:var(--rule)}
+.lv{font-size:.72rem;font-weight:700;color:#fff;border-radius:3px;
+  padding:.12rem .5rem;letter-spacing:.05em;white-space:nowrap}
+.lv1{background:var(--lv1)}.lv2{background:var(--lv2)}.lv3{background:var(--lv3)}
+/* 2つのリンクボタン */
+.links{display:flex;gap:.6rem;flex-wrap:wrap;margin:0}
+.go{display:inline-block;padding:.55rem 1.3rem;border-radius:5px;color:#fff;
+  font-weight:700;font-size:.95rem;letter-spacing:.05em;text-decoration:none}
+.go:hover{text-decoration:none;filter:brightness(1.15)}
+.go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.go.q{background:var(--q)}
+.go.a{background:var(--a)}
+/* --- noscript フォールバック --- */
+noscript ul.plain{margin:1.5rem 0;padding:1.1rem 1.35rem 1.1rem 2.6rem;
+  background:var(--card);border:1px solid var(--rule);border-radius:6px}
+noscript ul.plain li{margin:.3rem 0}
+/* --- 奥付 --- */
+footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
+  color:var(--sub);font-size:.82rem;line-height:1.9}
+@media (max-width:520px){
+  body{font-size:15.5px}
+  header.book{padding:3rem 0 1.8rem}
+  header.book h1{font-size:1.65rem}
+  .wrap{padding:0 .9rem 4rem}
+  article.book-card{padding:1.1rem 1.05rem 1rem}
+  article.book-card h3{font-size:1.25rem}
+  .links{flex-direction:column}
+  .go{text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="book">
+<p class="series">情報系のための数学</p>
+<h1>問題集シリーズ</h1>
+<p class="subtitle">基礎から大学院レベルまで — 独学のための3分野・全48章・416問</p>
+<p class="meta">対象:情報系の大学生・大学院進学をめざす人(数学の講義がない環境での独学を想定)<br>
+各分野は『問題集』と『解答解説集』の2冊組で、問題番号が完全に対応しています(問 3.4 の解説は 解 3.4)。<br>
+リンクはすべて新しいタブで開きます。問題集と解答解説集の両方を開いておけば、タブを行き来しながら学習できます。</p>
+</header>
+
+<div class="howto">
+<h2>学習の進め方</h2>
+<ul>
+<li><b>1問につきまず15分、自力で考える。</b>手が止まっても、その15分が解説の吸収率を数倍にします。</li>
+<li>解けなければ『解答解説集』の<b>「方針」だけを読んで</b>もう一度自力で。それでも詰まったら「解答」へ。</li>
+<li>解説を読んだ問題は、<b>翌日以降に何も見ずにノートへ再現</b>する(写経ではなく再構成)。</li>
+<li><b>1周目は★と★★だけでも構いません。</b>★★★は2周目で。各章末の「到達確認」に自分の言葉で答えられたら次章へ。</li>
+<li>分野をまたぐ順序に決まりはありませんが、<b>線形代数 → 微分積分・最適化 → 確率・統計</b>の順が最も引っかかりが少ない構成です。</li>
+</ul>
+</div>
+
+<div class="shelf-head">
+<p class="chnum">収録タイトル</p>
+<h2>3分野 6冊</h2>
+<p class="chsub">— 各分野、問題集と解答解説集のセット</p>
+</div>
+
+<main id="shelf"></main>
+
+<noscript>
+<ul class="plain">
+<li>情報系のための線形代数 — <a href="linear-algebra/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="linear-algebra/solutions.html" target="_blank" rel="noopener">解答解説集</a></li>
+<li>情報系のための微分積分・最適化 — <a href="calculus-optimization/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="calculus-optimization/solutions.html" target="_blank" rel="noopener">解答解説集</a></li>
+<li>情報系のための確率・統計 — <a href="probability-statistics/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="probability-statistics/solutions.html" target="_blank" rel="noopener">解答解説集</a></li>
+</ul>
+</noscript>
+
+<footer class="book">
+数式の表示には MathJax を使用しています。読み込みに数秒かかることがあります。<br>
+各冊は印刷用のスタイルを備えています。PDF にする場合はブラウザの印刷機能から「PDF に保存」を選んでください。<br>
+前提知識は高校数学まで。ただし『微分積分・最適化』は第II部以降でベクトル・行列を、『確率・統計』は1変数の微分積分を使うため、上の順序で進めると詰まりにくくなります。
+</footer>
+
+</div>
+
+<script>
+// 収録タイトルの一覧。
+// 教科を追加するときは、<id>/workbook.html と <id>/solutions.html を置いたうえで、
+// この配列にブロックを1つ足すだけでカードが増えます(id = ディレクトリ名)。
+const BOOKS = [
+  {
+    id: "linear-algebra",
+    subject: "線形代数",
+    series: "情報系のための線形代数",
+    chapters: 11, problems: 103,
+    levels: [41, 38, 24],
+    summary: "ベクトルと行列から出発し、固有値・直交性を経て、特異値分解(SVD)と数値線形代数まで。機械学習・画像処理・CG の共通言語をつくります。",
+    topics: ["ベクトルと行列", "連立一次方程式", "行列式", "基底と次元", "固有値と対角化", "内積と直交性", "二次形式", "SVD"]
+  },
+  {
+    id: "calculus-optimization",
+    subject: "微分積分・最適化",
+    series: "情報系のための微分積分・最適化",
+    chapters: 19, problems: 159,
+    levels: [48, 76, 35],
+    appendix: "主要公式集",
+    summary: "1変数の微積分から多変数・凸解析へ進み、勾配降下法・ニュートン法・KKT条件・双対性まで。学習アルゴリズムが「なぜ動くのか」に届きます。",
+    topics: ["極限と微分", "テイラー展開", "積分と広義積分", "偏微分と勾配", "ヘッセ行列", "重積分", "凸集合と凸関数", "勾配降下法", "KKT条件", "双対性"]
+  },
+  {
+    id: "probability-statistics",
+    subject: "確率・統計",
+    series: "情報系のための確率・統計",
+    chapters: 18, problems: 154,
+    levels: [52, 62, 40],
+    appendix: "数表",
+    summary: "確率の基礎から、推定・検定・回帰、ベイズ統計、マルコフ連鎖とカルマンフィルタ、情報理論、そして測度論的確率論の入口まで。",
+    topics: ["条件付き確率とベイズ", "確率変数と分布", "多次元確率変数", "大数の法則とCLT", "点推定・区間推定", "仮説検定", "回帰分析", "ベイズ統計", "確率過程", "情報理論"]
+  }
+];
+
+const LV_LABEL = ["★ 基礎", "★★ 標準", "★★★ 応用"];
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+document.getElementById("shelf").innerHTML = BOOKS.map(b => `
+<article class="book-card">
+  <h3>${esc(b.subject)}</h3>
+  <p class="series-name">${esc(b.series)}</p>
+  <p class="summary">${esc(b.summary)}</p>
+  <ul class="topics">${b.topics.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+  <p class="stats">
+    <span class="scale">全${b.chapters}章・${b.problems}問</span>
+    <span class="sep">|</span>
+    ${b.levels.map((n, i) => `<span class="lv lv${i + 1}">${LV_LABEL[i]} ${n}</span>`).join("")}
+    ${b.appendix ? `<span class="sep">|</span><span>付録 ${esc(b.appendix)}</span>` : ""}
+  </p>
+  <p class="links">
+    <a class="go q" href="${b.id}/workbook.html" target="_blank" rel="noopener">問題集を開く</a>
+    <a class="go a" href="${b.id}/solutions.html" target="_blank" rel="noopener">解答解説集を開く</a>
+  </p>
+</article>`).join("");
+</script>
+</body>
+</html>
