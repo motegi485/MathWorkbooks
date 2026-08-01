@@ -12,7 +12,7 @@
 
 | 分野 | 規模 | 難易度内訳（★/★★/★★★） | 付録 |
 |---|---|---|---|
-| [線形代数](linear-algebra/workbook.html) | 全11章・103問 | 41 / 38 / 24 | — |
+| [線形代数](linear-algebra/workbook.html) | 全11章・103問 | 23 / 48 / 32 | — |
 | [微分積分・最適化](calculus-optimization/workbook.html) | 全19章・159問 | 48 / 76 / 35 | 主要公式集 |
 | [確率・統計](probability-statistics/workbook.html) | 全18章・154問 | 52 / 62 / 40 | 数表 |
 

@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>情報系のための確率・統計 問題集 — 基礎から大学院レベルまで</title>
+<meta name="description" content="情報系の大学生・大学院進学をめざす人のための、独学用の確率・統計問題集。確率の基礎とベイズの定理・確率変数と分布・大数の法則と中心極限定理・推定・検定・回帰分析から、ベイズ統計・マルコフ連鎖・カルマンフィルタ・情報理論・信頼性工学・測度論の入口まで全18章154問+付録の数表。">
 <script>
 window.MathJax = {
   tex: {
@@ -635,7 +636,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <ol class="sublist">
 <li>\(P(Z\le 1.5)\) を求めよ。</li>
 <li>\(P(|Z|\le 1.96)\) を求めよ。</li>
-<li>\(P(-1&lt;Z<2)\) を求めよ。</li>
+<li>\(P(-1&lt;Z&lt;2)\) を求めよ。</li>
 </ol>
 </section>
 
@@ -644,7 +645,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <p>グレースケール画像のある領域の画素輝度 \(X\) は \(N(120,\,15^2)\) に従うとする。\(\Phi(2)=0.9772\)、\(z_{0.01}=2.326\) を用いてよい。</p>
 <ol class="sublist">
 <li>\(P(X>150)\) を求めよ。</li>
-<li>\(P(90&lt;X<150)\) を求めよ。</li>
+<li>\(P(90&lt;X&lt;150)\) を求めよ。</li>
 <li>輝度の上位1%にあたるしきい値を求めよ。</li>
 </ol>
 </section>
@@ -798,7 +799,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <section class="prob" id="q5-8">
 <div class="phead"><span class="pnum">問 5.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">2変量正規の条件付き分布</span></div>
-<p>\((X,Y)\) が要点欄の2変量標準正規分布に従うとする(\(|\rho|<1\))。</p>
+<p>\((X,Y)\) が要点欄の2変量標準正規分布に従うとする(\(|\rho|&lt;1\))。</p>
 <ol class="sublist">
 <li>指数部の2次式を \(y\) について平方完成し、\(x^2-2\rho xy+y^2=(y-\rho x)^2+(1-\rho^2)x^2\) を確かめよ。</li>
 <li>(1) を用いて周辺密度が \(f_X(x)=\dfrac{1}{\sqrt{2\pi}}e^{-x^2/2}\)(標準正規)であることを示せ。</li>
@@ -857,7 +858,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li><b class="term">全分散の法則</b>:\(V[X]=E\bigl[V[X\mid Y]\bigr]+V\bigl[E[X\mid Y]\bigr]\)(内側のばらつきの平均+平均のばらつき)</li>
 <li><b class="term">モーメント母関数(MGF)</b>:\(M_X(t)=E[e^{tX}]\)。\(M_X^{(k)}(0)=E[X^k]\)</li>
 <li>\(X\perp Y\) ⇒ \(M_{X+Y}(t)=M_X(t)M_Y(t)\)。MGFが(0の近傍で)一致すれば分布も一致</li>
-<li>主要なMGF:\(\mathrm{Ber}(p)\!:1-p+pe^t\)、\(B(n,p)\!:(1-p+pe^t)^n\)、\(\mathrm{Po}(\lambda)\!:e^{\lambda(e^t-1)}\)、\(\mathrm{Exp}(\lambda)\!:\dfrac{\lambda}{\lambda-t}\ (t<\lambda)\)、\(N(\mu,\sigma^2)\!:e^{\mu t+\sigma^2t^2/2}\)</li>
+<li>主要なMGF:\(\mathrm{Ber}(p)\!:1-p+pe^t\)、\(B(n,p)\!:(1-p+pe^t)^n\)、\(\mathrm{Po}(\lambda)\!:e^{\lambda(e^t-1)}\)、\(\mathrm{Exp}(\lambda)\!:\dfrac{\lambda}{\lambda-t}\ (t&lt;\lambda)\)、\(N(\mu,\sigma^2)\!:e^{\mu t+\sigma^2t^2/2}\)</li>
 </ul>
 </div>
 
@@ -979,7 +980,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <div class="phead"><span class="pnum">問 7.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">チェビシェフの不等式</span></div>
 <p>\(E[X]=100\)、\(\sigma=5\) とする。</p>
 <ol class="sublist">
-<li>チェビシェフの不等式で \(P(90&lt;X<110)\) の下界を与えよ。</li>
+<li>チェビシェフの不等式で \(P(90&lt;X&lt;110)\) の下界を与えよ。</li>
 <li>\(X\sim N(100,25)\) のときの実際の値と比較し、チェビシェフの不等式の性格を述べよ。</li>
 </ol>
 </section>
@@ -997,7 +998,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <div class="phead"><span class="pnum">問 7.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">大数の弱法則</span></div>
 <ol class="sublist">
 <li>チェビシェフの不等式から \(P(|\bar{X}_n-\mu|\ge\varepsilon)\le\dfrac{\sigma^2}{n\varepsilon^2}\) を導き、大数の弱法則を証明せよ。</li>
-<li>\(\sigma=10\) のとき、\(P(|\bar{X}_n-\mu|<1)\ge0.95\) を保証する標本サイズ \(n\) を(1)の上界を使って求めよ。</li>
+<li>\(\sigma=10\) のとき、\(P(|\bar{X}_n-\mu|&lt;1)\ge0.95\) を保証する標本サイズ \(n\) を(1)の上界を使って求めよ。</li>
 </ol>
 </section>
 
@@ -1438,7 +1439,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <section class="prob" id="q11-3">
 <div class="phead"><span class="pnum">問 11.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">1標本t検定(片側)</span></div>
-<p>バッテリー容量の規格は「平均250以上」である。\(n=16\) 個の測定で \(\bar{x}=248\)、\(u=8\) を得た。\(H_0:\mu=250\) 対 \(H_1:\mu<250\) を有意水準5%で検定せよ。\(t_{0.05}(15)=1.753\) を用いてよい。結論の述べ方にも注意すること。</p>
+<p>バッテリー容量の規格は「平均250以上」である。\(n=16\) 個の測定で \(\bar{x}=248\)、\(u=8\) を得た。\(H_0:\mu=250\) 対 \(H_1:\mu&lt;250\) を有意水準5%で検定せよ。\(t_{0.05}(15)=1.753\) を用いてよい。結論の述べ方にも注意すること。</p>
 </section>
 
 <section class="prob" id="q11-4">
@@ -1890,7 +1891,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <section class="prob" id="q15-5">
 <div class="phead"><span class="pnum">問 15.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">観測が来ないとき</span></div>
-<p>状態 \(x_t=x_{t-1}+w_t\)(\(a=1,\ Q=0.5\))で、現在 \(P=1\) とする。トンネル進入などで観測が5周期得られない場合、5周期後の誤差分散を求めよ。一般に「予測だけを続けると分散はどう育つか」を、\(a=1\) の場合と \(|a|<1\)(減衰系)の場合について論ぜよ。</p>
+<p>状態 \(x_t=x_{t-1}+w_t\)(\(a=1,\ Q=0.5\))で、現在 \(P=1\) とする。トンネル進入などで観測が5周期得られない場合、5周期後の誤差分散を求めよ。一般に「予測だけを続けると分散はどう育つか」を、\(a=1\) の場合と \(|a|&lt;1\)(減衰系)の場合について論ぜよ。</p>
 </section>
 
 <section class="prob" id="q15-6">
@@ -2070,7 +2071,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li><b class="term">直列系</b>(全部生きて動く):\(R=\prod R_i\)、故障率は加算 \(\lambda=\sum\lambda_i\)</li>
 <li><b class="term">並列系</b>(1つ生きれば動く、独立):\(R=1-\prod(1-R_i)\)</li>
 <li><b class="term">2oo3(多数決/TMR)</b>:\(R_{\mathrm{TMR}}=3R^2-2R^3\)</li>
-<li><b class="term">ワイブル分布</b>:\(R(t)=\exp\left(-\left(\dfrac{t}{\eta}\right)^m\right)\)。\(m<1\):初期故障、\(m=1\):偶発(指数)、\(m>1\):摩耗 — バスタブ曲線の3領域</li>
+<li><b class="term">ワイブル分布</b>:\(R(t)=\exp\left(-\left(\dfrac{t}{\eta}\right)^m\right)\)。\(m&lt;1\):初期故障、\(m=1\):偶発(指数)、\(m>1\):摩耗 — バスタブ曲線の3領域</li>
 <li><b class="term">コールドスタンバイ</b>(同一部品2個・切替完全):\(R(t)=e^{-\lambda t}(1+\lambda t)\)、MTTF \(=2/\lambda\)</li>
 <li><b class="term">可用性</b> \(A=\dfrac{\mathrm{MTTF}}{\mathrm{MTTF}+\mathrm{MTTR}}\)(MTTR:平均修復時間)</li>
 <li>無故障 \(T\) 時間の95%上側限界:\(\lambda_U=\dfrac{\ln20}{T}\approx\dfrac{3}{T}\)(問10.7)</li>
@@ -2113,7 +2114,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <ol class="sublist">
 <li>B10寿命(10%が故障する時間、すなわち \(R(t)=0.9\) となる \(t\))を求めよ(\(\ln0.9=-0.105\) を用いてよい)。</li>
 <li>ワイブル分布の故障率が \(\lambda(t)=\dfrac{m}{\eta}\left(\dfrac{t}{\eta}\right)^{m-1}\) であることを、\(\lambda(t)=-\dfrac{d}{dt}\ln R(t)\) から導け。</li>
-<li>\(m\) の値(\(<1\)、\(=1\)、\(>1\))とバスタブ曲線の3領域の対応を述べよ。</li>
+<li>\(m\) の値(\(&lt;1\)、\(=1\)、\(>1\))とバスタブ曲線の3領域の対応を述べよ。</li>
 </ol>
 </section>
 
@@ -2129,7 +2130,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <section class="prob" id="q17-6">
 <div class="phead"><span class="pnum">問 17.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">安全目標の実証に必要な走行時間</span></div>
-<p>ある危険故障の故障率を「\(\lambda<10^{-8}\)/時間」と、無故障の実地試験のみで信頼度95%で実証したい。</p>
+<p>ある危険故障の故障率を「\(\lambda&lt;10^{-8}\)/時間」と、無故障の実地試験のみで信頼度95%で実証したい。</p>
 <ol class="sublist">
 <li>問10.7の3のルールを用いて、必要な総試験時間 \(T\) を求めよ。</li>
 <li>1台あたり年500時間走行するとして、何台×何年に相当するか概算せよ。</li>
@@ -2188,7 +2189,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li><b class="term">測度の連続性</b>:\(A_1\subseteq A_2\subseteq\cdots\) なら \(P\!\left(\bigcup A_n\right)=\lim P(A_n)\)(減少列も同様)</li>
 <li>可算加法性の帰結:可算集合は(連続分布の下で)確率0。\(P(X=c)=0\) でも \(P(X\in\mathbb{R})=1\) — 非可算和は足し算ではない</li>
 <li><b class="term">収束の3概念</b>:分布収束(CDFの収束)⇐ 確率収束(\(P(|X_n-X|>\varepsilon)\to0\))⇐ 概収束(\(P(X_n\to X)=1\))。逆向きは一般に不成立</li>
-<li><b class="term">ボレル・カンテリの第1補題</b>:\(\sum P(A_n)<\infty\) ⇒ \(P(A_n\text{ が無限個起こる})=0\)</li>
+<li><b class="term">ボレル・カンテリの第1補題</b>:\(\sum P(A_n)&lt;\infty\) ⇒ \(P(A_n\text{ が無限個起こる})=0\)</li>
 <li><b class="term">特性関数</b> \(\varphi_X(t)=E[e^{itX}]\):常に存在(\(|e^{itX}|=1\))。一意性定理・レヴィの連続性定理により、分布の同定・収束をφで扱える(MGFの上位互換)</li>
 </ul>
 </div>
@@ -2243,7 +2244,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <section class="prob" id="q18-6">
 <div class="phead"><span class="pnum">問 18.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ボレル・カンテリの補題</span></div>
 <ol class="sublist">
-<li>第1補題「\(\sum_n P(A_n)<\infty\) ならば、\(A_n\) が無限個起こる確率は0」を証明せよ。(ヒント:「無限個起こる」\(=\bigcap_{N}\bigcup_{n\ge N}A_n\)。減少列に対する測度の連続性と劣加法性 \(P(\bigcup_{n\ge N}A_n)\le\sum_{n\ge N}P(A_n)\) を使う。)</li>
+<li>第1補題「\(\sum_n P(A_n)&lt;\infty\) ならば、\(A_n\) が無限個起こる確率は0」を証明せよ。(ヒント:「無限個起こる」\(=\bigcap_{N}\bigcup_{n\ge N}A_n\)。減少列に対する測度の連続性と劣加法性 \(P(\bigcup_{n\ge N}A_n)\le\sum_{n\ge N}P(A_n)\) を使う。)</li>
 <li>応用:\(P(|X_n-X|>\varepsilon)\le\dfrac{C}{n^2}\)(ある定数 \(C\)、任意の \(\varepsilon>0\) で \(C\) は \(\varepsilon\) に依存してよい)が成り立つなら、\(X_n\to X\) が概収束であることを示せ。問18.5の列はなぜこの判定に引っかからないかも述べよ。</li>
 </ol>
 </section>

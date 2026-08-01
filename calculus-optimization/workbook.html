@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>情報系のための微分積分・最適化 問題集 — 基礎から大学院レベルまで</title>
+<meta name="description" content="情報系の大学生・大学院進学をめざす人のための、独学用の微分積分・最適化問題集。極限・微分・テイラー展開・積分・広義積分から、偏微分と勾配・ヘッセ行列・重積分・凸解析・勾配降下法・ニュートン法・KKT条件・双対性まで全19章159問+付録の主要公式集。">
 <script>
 window.MathJax = {
   tex: {
@@ -144,7 +145,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li><a href="#ch16">第16章 不等式制約とKKT条件</a><span class="cnt">現代最適化の中心定理/8問</span></li>
 <li><a href="#ch17">第17章 双対性</a><span class="cnt">裏側から見る最適化/8問</span></li>
 <li><a href="#ch18">第18章 機械学習と最適化</a><span class="cnt">SGD・正則化・損失最小化/8問</span></li>
-<li><a href="#ch19">第19章 厳密な解析学への入口</a><span class="cnt">ε-δ論法と一様収束/8問</span></li>
+<li><a href="#ch19">第19章 ε-δ論法</a><span class="cnt">量化子の順序と一様連続/8問</span></li>
 <li><a href="#appendix">付録 主要公式集</a><span class="cnt">微分・積分・テイラー展開・凸性と最適化</span></li>
 </ol>
 </nav>
@@ -181,7 +182,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <tr><td>第I部 一変数の微分積分</td><td>1〜6章</td><td>極限・微分・テイラー展開・積分・広義積分</td><td>学部1年前期</td></tr>
 <tr><td>第II部 多変数の微分積分</td><td>7〜10章</td><td>偏微分・勾配・ヘッセ行列・極値・重積分</td><td>学部1年後期〜2年</td></tr>
 <tr><td>第III部 最適化</td><td>11〜17章</td><td>定式化・凸性・勾配降下法・ニュートン法・ラグランジュ乗数・KKT・双対性</td><td>学部2〜3年・院試の主戦場</td></tr>
-<tr><td>第IV部 大学院への接続</td><td>18〜19章</td><td>機械学習の最適化(SGD・正則化)・厳密な解析学(ε-δ・一様収束)</td><td>学部3年〜大学院基礎</td></tr>
+<tr><td>第IV部 大学院への接続</td><td>18〜19章</td><td>機械学習の最適化(SGD・正則化)・厳密な解析学(ε-δ・一様連続)</td><td>学部3年〜大学院基礎</td></tr>
 </table>
 
 <div class="howto">
@@ -2245,7 +2246,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <ol class="sublist">
 <li>ラグランジュ関数 \(\mathcal L(x,\mu)=x^2+\mu(1-x)\) を \(x\) について最小化し、双対関数 \(q(\mu)=\mu-\dfrac{\mu^2}4\) を導け。</li>
 <li>双対問題 \(\max_{\mu\ge0}q(\mu)\) を解き、\(\mu^*=2\)、\(d^*=1\) を求めよ。\(p^*=d^*\)(強双対・ギャップ0)を確認せよ。</li>
-<li>\(\mu^*=2\) が問16.1(2) の KKT 乗数と一致することを確認せよ — 双対問題の最適変数は KKT の乗数そのものである。</li>
+<li>この主問題そのものに KKT 条件(第16章)を直接当てて乗数を求め、\(\mu^*=2\) と一致することを確認せよ — 双対問題の最適変数は KKT の乗数そのものである。</li>
 </ol>
 </section>
 
