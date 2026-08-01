@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>情報系のための確率・統計 解答解説集 — 基礎から大学院レベルまで</title>
+<title>情報系のための確率・統計 解答解説集 — 大学基礎から大学院入試への橋渡し</title>
 <meta name="description" content="『情報系のための確率・統計 問題集』全18章154問の解答解説集。各問を「方針・解答・ポイント」の3段構成で詳解し、画像処理・車載システム・機械学習への応用まで解説します。問題番号は問題集と完全に対応。">
 <script>
 window.MathJax = {
@@ -119,7 +119,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <header class="book">
 <p class="series">情報系のための確率・統計</p>
 <h1>解答解説集</h1>
-<p class="subtitle">基礎から大学院レベルまで — 全18章・154問の詳解</p>
+<p class="subtitle">大学基礎から大学院入試への橋渡し — 全18章・154問の詳解</p>
 <p class="meta">本書は『問題集』の姉妹編です。問題番号は完全に対応しています(問 3.4 の解説は 解 3.4)。</p>
 </header>
 
@@ -213,19 +213,20 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a1-5">
+
 <div class="phead"><span class="pnum">解 1.5</span><span class="lv lv2">★★</span><span class="ptag">誕生日問題</span></div>
 <h4>方針</h4>
-<p>「一致する組がある」の余事象「全員の誕生日がバラバラ」を数える。1人ずつ加えていき、それまでの誰とも重ならない確率を掛けていく。</p>
+<p>「一致する組がある」の余事象「全員の誕生日が異なる」を数える。365人を超える場合は鳩の巣原理を使う。</p>
 <h4>解答</h4>
-<p>(1) 全員異なる確率は</p>
-<p>\[\frac{365}{365}\cdot\frac{364}{365}\cdots\frac{365-n+1}{365}=\frac{365!}{(365-n)!\,365^n}\]</p>
-<p>よって \(p_n=1-\dfrac{365!}{(365-n)!\,365^n}\)。</p>
-<p>(2) \(n=23\) のとき、積を計算すると全員異なる確率は \(0.4927\) となり、</p>
-<p>\[p_{23}\approx 1-0.4927=0.5073>\frac12\]</p>
-<p>(\(n=22\) では \(p_{22}\approx0.476\) でまだ \(1/2\) 未満。23人が境目。)</p>
-<p>(3) 直感が外れるのは、「<b>特定の誰か</b>と自分が一致する」(確率 \(1/365\) ずつ)ではなく、「\(\binom{23}{2}=253\) 組の<b>どこかのペア</b>で一致する」確率だから。比べる組の数が人数の2乗のオーダーで増えるため、少人数でも一致が起こりやすい。</p>
+<p>(1) <span class="math">&#92;(1&#92;le n&#92;le365&#92;)</span> のとき、全員の誕生日が異なる確率は</p>
+<p><span class="math">&#92;[&#92;prod_{j=0}^{n-1}&#92;frac{365-j}{365}=&#92;frac{365!}{(365-n)!&#92;,365^n}&#92;]</span></p>
+<p>したがって <span class="math">&#92;(p_n=1-&#92;dfrac{365!}{(365-n)!&#92;,365^n}&#92;)</span>。一方、<span class="math">&#92;(n&#92;ge366&#92;)</span> なら少なくとも2人が同じ日に割り当てられるので <span class="math">&#92;(p_n=1&#92;)</span> である。</p>
+<p>(2) <span class="math">&#92;(n=23&#92;)</span> のとき、全員異なる確率は約0.4927であり、</p>
+<p><span class="math">&#92;[p_{23}&#92;approx1-0.4927=0.5073&gt;&#92;frac12&#92;]</span></p>
+<p>（<span class="math">&#92;(n=22&#92;)</span> では <span class="math">&#92;(p_{22}&#92;approx0.476&#92;)</span> であり、23人が初めて0.5を超える。）</p>
+<p>(3) 比較されるのは特定の1組ではなく、全体の <span class="math">&#92;(&#92;binom{n}{2}&#92;)</span> 組である。この組数が人数の2乗のオーダーで増えるため、人数が365よりはるかに少なくても、どこかの組で一致しやすい。</p>
 <h4 class="alt">ポイント</h4>
-<p>情報系では<b>ハッシュ衝突</b>の見積もりとして重要です。\(m\) 通りの値に一様に割り当てるとき、約 \(1.18\sqrt{m}\) 個で衝突確率が50%に達します(\(m=365\) なら \(1.18\sqrt{365}\approx22.5\) 人 — 本問と整合)。ハッシュ長を \(b\) ビットにしても総当たりでなく \(2^{b/2}\) 程度で衝突が見つかる、という<b>バースデー攻撃</b>の根拠がこの計算です。</p>
+<p>情報系ではハッシュ衝突の見積りとして重要である。<span class="math">&#92;(m&#92;)</span> 通りへ独立かつ一様に割り当てる同じモデルでは、およそ <span class="math">&#92;(1.18&#92;sqrt m&#92;)</span> 個で衝突確率が50%に達する。これはバースデー攻撃の基本的な見積りでもある。</p>
 </section>
 
 <section class="sol" id="a1-6">
@@ -389,17 +390,18 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a2-9">
+
 <div class="phead"><span class="pnum">解 2.9</span><span class="lv lv3">★★★</span><span class="ptag">RANSACの反復回数</span></div>
 <h4>方針</h4>
-<p>(1) は独立に4回インライアを引く積。(2) は「\(N\) 回全部失敗」の余事象で不等式を解く — 問1.3の定石。</p>
+<p>(1) は問題文で指定した独立近似の下で確率を掛ける。(2) は「<span class="math">&#92;(N&#92;)</span> 回とも失敗」の余事象を使う。</p>
 <h4>解答</h4>
-<p>(1) インライア率は \(1-0.5=0.5\)。4点すべてインライアの確率は(点の数が十分多く独立とみなせるとして)</p>
-<p>\[w=(0.5)^4=0.0625\]</p>
-<p>(2) \(N\) 回すべて失敗する確率は \((1-w)^N=(0.9375)^N\)。求める条件は</p>
-<p>\[1-(0.9375)^N\ge 0.99\iff (0.9375)^N\le 0.01\iff N\ge\frac{\ln 0.01}{\ln 0.9375}=\frac{-4.605}{-0.06454}\approx 71.4\]</p>
-<p>よって最小の \(N\) は <b>72回</b>。</p>
+<p>(1) 1点がインライアである確率は0.5なので、4点すべてがインライアである確率は</p>
+<p><span class="math">&#92;[w=(0.5)^4=0.0625&#92;]</span></p>
+<p>(2) 各試行も独立とするため、<span class="math">&#92;(N&#92;)</span> 回とも失敗する確率は <span class="math">&#92;((1-w)^N=(0.9375)^N&#92;)</span>。したがって</p>
+<p><span class="math">&#92;[1-(0.9375)^N&#92;ge0.99&#92;iff N&#92;ge&#92;frac{&#92;ln0.01}{&#92;ln0.9375}&#92;approx71.4&#92;]</span></p>
+<p>よって必要な最小回数は <b>72回</b>。</p>
 <h4 class="alt">ポイント</h4>
-<p>これが実際に使われる RANSAC の反復回数の設計式 \(N=\dfrac{\ln(1-P)}{\ln\bigl(1-(1-\varepsilon)^s\bigr)}\) です(\(\varepsilon\):外れ値率、\(s\):最小サンプル数、\(P\):成功保証確率)。対応点の半分が誤りでも72回で99%成功 — 乱択アルゴリズムの威力です。ただし \(s\) に対して指数的に敏感で、たとえば基礎行列推定(\(s=8\))では同条件で \(N\approx1177\) 回に跳ね上がります。特徴量マッチングの品質(\(\varepsilon\) を下げる)が計算量に直結する理由です。</p>
+<p>全対応点が有限で、インライアがちょうど <span class="math">&#92;(I&#92;)</span> 個、総数が <span class="math">&#92;(M&#92;)</span> 個であり、1回の試行内では重複なしに4点を選ぶなら、厳密な成功確率は <span class="math">&#92;(&#92;binom{I}{4}/&#92;binom{M}{4}&#92;)</span> である。本問の <span class="math">&#92;((I/M)^4&#92;)</span> は、母集団が十分大きい場合などに用いる標準近似である。</p>
 </section>
 
 <section class="sol" id="a2-10">
@@ -497,15 +499,16 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a3-7">
-<div class="phead"><span class="pnum">解 3.7</span><span class="lv lv2">★★</span><span class="ptag">ポアソン近似(イメージセンサ)</span></div>
+
+<div class="phead"><span class="pnum">解 3.7</span><span class="lv lv2">★★</span><span class="ptag">ポアソン近似（イメージセンサ）</span></div>
 <h4>方針</h4>
-<p>厳密には二項分布。\(n\) 大・\(p\) 小・\(np=\lambda=2\) なのでポアソン近似の適用場面。</p>
+<p>厳密には二項分布である。試行回数が大きく、各試行の成功確率が小さく、平均 <span class="math">&#92;(np&#92;)</span> が適度な大きさなのでポアソン近似を用いる。</p>
 <h4>解答</h4>
-<p>(1) 各画素の欠陥有無は独立なベルヌーイ試行なので \(X\sim B(10^6,\ 2\times10^{-6})\)。\(n=10^6\) が大きく \(p=2\times10^{-6}\) が小さく、\(np=2\) が適度なので \(X\approx\mathrm{Po}(2)\) と近似できる。</p>
-<p>(2) \(P(X\ge1)=1-P(X=0)\approx 1-e^{-2}=0.8647\)。</p>
-<p>(3) 厳密値 0.86466 と小数第5位まで一致しており、実用上は区別できない精度。二項係数 \(\binom{10^6}{k}\) の計算を完全に回避できるのが近似の価値。</p>
+<p>(1) <span class="math">&#92;(X&#92;sim B(10^6,2&#92;times10^{-6})&#92;)</span>。ここで <span class="math">&#92;(np=2&#92;)</span> なので <span class="math">&#92;(X&#92;approx&#92;mathrm{Po}(2)&#92;)</span> と近似する。</p>
+<p>(2) <span class="math">&#92;[P(X&#92;ge1)&#92;approx1-e^{-2}=0.8646647&#92;cdots&#92;]</span></p>
+<p>(3) 問題文の表示精度では厳密値と一致しており、この事象の確率を求める用途には非常に精度が高い。大きな二項係数を直接扱わずに済むことも利点である。</p>
 <h4 class="alt">ポイント</h4>
-<p>「<b>大量の機会 × まれな発生</b>」はすべてポアソン:製造欠陥、まれな故障、サーバへの同時アクセス、放射線計数。近似誤差は \(np^2\) のオーダーで、目安として \(n\ge100\)、\(p\le0.05\) 程度なら十分実用的です。二項分布の極限としての厳密な導出は問6.7(MGF)で行います。</p>
+<p>独立なベルヌーイ変数の和に対するポアソン近似には、近似誤差を各成功確率の2乗和（本問では <span class="math">&#92;(np^2=4&#92;times10^{-6}&#92;)</span>）で評価する定理がある。ただし「<span class="math">&#92;(n&#92;)</span> と <span class="math">&#92;(p&#92;)</span> がこの値なら常に十分」とする単一の規則はなく、必要精度と対象事象に応じて厳密値または誤差評価も確認する。</p>
 </section>
 
 <section class="sol" id="a3-8">
@@ -536,17 +539,20 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a3-10">
+
 <div class="phead"><span class="pnum">解 3.10</span><span class="lv lv3">★★★</span><span class="ptag">サンクトペテルブルクのパラドックス</span></div>
 <h4>方針</h4>
-<p>\(P(X=2^k)=(1/2)^k\)。期待値の級数を実際に書いてみる。</p>
+<p>初めて表が出る回数を <span class="math">&#92;(K&#92;)</span> とすると、<span class="math">&#92;(P(K=k)=2^{-k}&#92;)</span> である。</p>
 <h4>解答</h4>
-<p>(1) \[E=\sum_{k=1}^{\infty}2^k\left(\frac12\right)^k=\sum_{k=1}^{\infty}1=\infty\]</p>
-<p>期待値は発散する(存在しない)。</p>
-<p>(2) 期待値が無限大でも、賞金が \(2^k\) 円を超える確率は \((1/2)^k\) で急減する:たとえば1024円を超える確率は0.1%未満で、巨額の賞金はまず実現しない。期待値は「同じゲームを無限回繰り返したときの平均」であり、1回きりの意思決定の価値とは別物である。現実の意思決定では、(a) 金額の効用は逓減する(\(\log\) 効用なら期待効用は有限)、(b) 胴元の支払い能力に上限がある(上限 \(2^{30}\) 円なら期待値は約30円)、(c) 分散・リスクも評価に入れる、といった補正が必要になる。</p>
+<p>(1) 賞金を <span class="math">&#92;(X=2^K&#92;)</span> とすれば、非負確率変数の期待値は</p>
+<p><span class="math">&#92;[E[X]=&#92;sum_{k=1}^{&#92;infty}2^k 2^{-k}=&#92;sum_{k=1}^{&#92;infty}1=+&#92;infty&#92;]</span></p>
+<p>したがって期待値は有限ではなく、<span class="math">&#92;(X&#92;)</span> は可積分でない。「期待値が存在しない」ではなく、拡張された意味で期待値は <span class="math">&#92;(+&#92;infty&#92;)</span> である。</p>
+<p>(2) 巨額賞金の確率は急速に小さく、1回だけの意思決定では資産制約・破産リスク・金額に対する効用の逓減などを無視できない。また胴元の支払能力にも限界がある。例えば賞金を <span class="math">&#92;(Y=&#92;min(2^K,2^{30})&#92;)</span> と明確に上限設定すると、</p>
+<p><span class="math">&#92;[E[Y]=&#92;sum_{k=1}^{29}1+2^{30}P(K&#92;ge30)=29+2=31&#92;]</span></p>
+<p>となり、有限の31円である。結論は「期待値を捨てる」ことではなく、実際の支払規則と意思決定者の効用・制約をモデルへ含める必要がある、ということである。</p>
 <h4 class="alt">ポイント</h4>
-<p>期待値が定義できるためには級数(積分)の<b>絶対収束</b> \(\sum|x|p(x)&lt;\infty\) が必要で、それが成り立たない分布は実在します(連続版の代表がコーシー分布、問18.7)。「とりあえず期待値」の適用限界を知ることは、リスク評価や強化学習の報酬設計で実務的に重要です。可積分性の厳密な扱いは第18章で再訪します。</p>
+<p>有限な通常の期待値を使うには <span class="math">&#92;(E[|X|]&lt;&#92;infty&#92;)</span> が必要である。非負確率変数では期待値を <span class="math">&#92;([0,+&#92;infty]&#92;)</span> の値として常に定義でき、本問はその値が無限大になる例である。</p>
 </section>
-
 
 <header class="chap" id="ch4">
 <p class="chnum">第4章</p>
@@ -593,28 +599,33 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a4-4">
+
 <div class="phead"><span class="pnum">解 4.4</span><span class="lv lv1">★</span><span class="ptag">標準正規分布</span></div>
 <h4>方針</h4>
-<p>対称性 \(\Phi(-z)=1-\Phi(z)\) を使えば負の側の表は不要。</p>
+<p>対称性 <span class="math">&#92;(&#92;Phi(-z)=1-&#92;Phi(z)&#92;)</span> を使う。</p>
 <h4>解答</h4>
-<p>(1) \(P(Z\le1.5)=\Phi(1.5)=0.9332\)。</p>
-<p>(2) \(P(|Z|\le1.96)=\Phi(1.96)-\Phi(-1.96)=2\Phi(1.96)-1=2\times0.9750-1=0.95\)。</p>
-<p>(3) \(P(-1&lt;Z&lt;2)=\Phi(2)-\Phi(-1)=0.9772-(1-0.8413)=0.9772-0.1587=0.8186\)。</p>
+<p>(1) <span class="math">&#92;(P(Z&#92;le1.5)=&#92;Phi(1.5)=0.9332&#92;)</span>。</p>
+<p>(2) <span class="math">&#92;(P(|Z|&#92;le1.96)=2&#92;Phi(1.96)-1=2&#92;times0.9750-1=0.9500&#92;)</span>。</p>
+<p>(3) 与えられた表の値を用いると</p>
+<p><span class="math">&#92;[P(-1&lt;Z&lt;2)=0.9772-(1-0.8413)=0.9772-0.1587=0.8185&#92;]</span></p>
 <h4 class="alt">ポイント</h4>
-<p>「1.96 ↔ 両側95%」「1.645 ↔ 片側95%」の対応は、この先の区間推定・検定で毎回使う基本語彙です。巻末付録に正規分布表を収録してあるので、以後は自由に引いてください。</p>
+<p>表の値は丸められているため、最終結果もその精度に合わせる。両側95%に対応する1.96と、片側95%に対応する約1.645は、区間推定と検定で繰り返し使う。</p>
 </section>
 
 <section class="sol" id="a4-5">
+
 <div class="phead"><span class="pnum">解 4.5</span><span class="lv lv1">★</span><span class="ptag">標準化</span></div>
 <h4>方針</h4>
-<p>\(Z=(X-120)/15\) で標準正規に変換してから表を引く。</p>
+<p><span class="math">&#92;(Z=(X-120)/15&#92;)</span> で標準化する。</p>
 <h4>解答</h4>
-<p>(1) \(P(X>150)=P\!\left(Z>\dfrac{150-120}{15}\right)=P(Z>2)=1-0.9772=0.0228\)。</p>
-<p>(2) \(P(90&lt;X&lt;150)=P(-2&lt;Z&lt;2)=2\times0.9772-1=0.9545\)。</p>
-<p>(3) \(P(X>x)=0.01\) となるのは \(Z\) が \(z_{0.01}=2.326\) のとき:</p>
-<p>\[x=120+2.326\times15\approx 154.9\]</p>
+<p>(1) <span class="math">&#92;(P(X&gt;150)=P(Z&gt;2)=1-0.9772=0.0228&#92;)</span>。</p>
+<p>(2) 問題文で与えられた丸め値をそのまま使うと、</p>
+<p><span class="math">&#92;[P(90&lt;X&lt;150)=P(-2&lt;Z&lt;2)=2&#92;times0.9772-1=0.9544&#92;]</span></p>
+<p>である。より多くの桁を持つ標準正規分布の値を使えば約0.9545となる。</p>
+<p>(3) 上側1%点が <span class="math">&#92;(z_{0.01}=2.326&#92;)</span> なので、</p>
+<p><span class="math">&#92;[x=120+2.326&#92;times15=154.89&#92;approx154.9&#92;]</span></p>
 <h4 class="alt">ポイント</h4>
-<p>標準化は「\(\mu\) を原点、\(\sigma\) を物差しにして測り直す」操作で、あらゆる正規分布の計算を1枚の表に帰着させます。\(\pm2\sigma\) に約95%、\(\pm3\sigma\) に約99.7% という感覚は、しきい値設計・外れ値検出・品質管理図の共通言語です。(3) のように「確率 → 値」と逆に引く操作(分位点)は、区間推定(第10章)の中核になります。</p>
+<p>途中で丸めた表の値から、表より細かい桁を作らないことが大切である。標準化は、平均を原点、標準偏差を単位として測り直す操作である。</p>
 </section>
 
 <section class="sol" id="a4-6">
@@ -642,16 +653,17 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a4-8">
-<div class="phead"><span class="pnum">解 4.8</span><span class="lv lv2">★★</span><span class="ptag">逆関数法(乱数生成)</span></div>
+
+<div class="phead"><span class="pnum">解 4.8</span><span class="lv lv2">★★</span><span class="ptag">逆関数法（乱数生成）</span></div>
 <h4>方針</h4>
-<p>\(Y\le y\) を \(U\) の条件に翻訳し、\(U\) が一様であることを使う。</p>
+<p><span class="math">&#92;(Y&#92;le y&#92;)</span> を <span class="math">&#92;(U&#92;)</span> の条件へ変換する。<span class="math">&#92;(U=0&#92;)</span> は起こらないため対数は確率1で定義される。</p>
 <h4>解答</h4>
-<p>\(y>0\) に対して</p>
-<p>\[P(Y\le y)=P\!\left(-\frac{1}{\lambda}\ln U\le y\right)=P(\ln U\ge -\lambda y)=P(U\ge e^{-\lambda y})=1-e^{-\lambda y}\]</p>
-<p>(最後は \(U\sim U(0,1)\) より \(P(U\ge u)=1-u\)。)これは \(\mathrm{Exp}(\lambda)\) の分布関数に一致するので \(Y\sim\mathrm{Exp}(\lambda)\)。</p>
-<p>一般に、分布関数 \(F\) が連続な逆関数を持てば \(F^{-1}(U)\) は \(F\) に従う(<b>逆関数法</b>)。計算機の一様乱数 \(U\) に \(-\lambda^{-1}\ln U\) を施すだけで指数乱数が得られる。</p>
+<p><span class="math">&#92;(y&#92;ge0&#92;)</span> に対し、</p>
+<p><span class="math">&#92;[P(Y&#92;le y)=P(U&#92;ge e^{-&#92;lambda y})=1-e^{-&#92;lambda y}&#92;]</span></p>
+<p>となる。<span class="math">&#92;(y&lt;0&#92;)</span> ではこの確率は0なので、これは <span class="math">&#92;(&#92;mathrm{Exp}(&#92;lambda)&#92;)</span> の分布関数と一致する。</p>
+<p>したがって、一様乱数 <span class="math">&#92;(U&#92;)</span> を生成して <span class="math">&#92;(-&#92;lambda^{-1}&#92;ln U&#92;)</span> に変換すれば指数乱数を得る。ただし実装では0を返さない一様乱数の仕様を確認するか、0を安全に除外する。</p>
 <h4 class="alt">ポイント</h4>
-<p>シミュレーション(モンテカルロ法、問7.8)の基礎技術です。正規分布は \(F^{-1}\) が閉じた式で書けないため、2つの一様乱数から極座標で作るボックス=ミュラー法(問4.9・5.9と同じ「2次元化」の構図)などが使われます。「一様乱数さえあれば任意の分布が作れる」— 乱数生成の統一原理です。</p>
+<p>一般に連続で狭義単調な分布関数 <span class="math">&#92;(F&#92;)</span> なら、<span class="math">&#92;(F^{-1}(U)&#92;)</span> は分布関数 <span class="math">&#92;(F&#92;)</span> に従う。一般化逆関数を使えば、より広い場合にも拡張できる。</p>
 </section>
 
 <section class="sol" id="a4-9">
@@ -701,17 +713,17 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a5-2">
+
 <div class="phead"><span class="pnum">解 5.2</span><span class="lv lv1">★</span><span class="ptag">共分散と相関係数</span></div>
 <h4>方針</h4>
-<p>\(E[XY]\) は全マスの \(xy\times\)確率の和。\(\mathrm{Cov}=E[XY]-E[X]E[Y]\)。</p>
+<p><span class="math">&#92;(E[XY]&#92;)</span> は全組合せについて <span class="math">&#92;(xy&#92;)</span> と確率を掛けて足す。</p>
 <h4>解答</h4>
-<p>\(E[X]=0.6\)(前問)。\(E[Y]=0\times0.2+1\times0.4+2\times0.4=1.2\)。</p>
-<p>\(E[XY]\) は \(x=1\) の行だけが効いて \(1\cdot1\cdot0.2+1\cdot2\cdot0.3=0.8\)。よって</p>
-<p>\[\mathrm{Cov}[X,Y]=0.8-0.6\times1.2=0.08\]</p>
-<p>\(V[X]=0.6-0.36=0.24\)(ベルヌーイ)、\(E[Y^2]=0.4+4\times0.4=2.0\) より \(V[Y]=2.0-1.44=0.56\)。</p>
-<p>\[\rho=\frac{0.08}{\sqrt{0.24\times0.56}}=\frac{0.08}{0.3666}\approx 0.218\]</p>
+<p><span class="math">&#92;(E[X]=0.6&#92;)</span>、<span class="math">&#92;(E[Y]=1.2&#92;)</span>、<span class="math">&#92;(E[XY]=0.8&#92;)</span> なので、</p>
+<p><span class="math">&#92;[&#92;mathrm{Cov}[X,Y]=0.8-0.6&#92;times1.2=0.08&#92;]</span></p>
+<p>また <span class="math">&#92;(V[X]=0.24&#92;)</span>、<span class="math">&#92;(V[Y]=0.56&#92;)</span> より、</p>
+<p><span class="math">&#92;[&#92;rho=&#92;frac{0.08}{&#92;sqrt{0.24&#92;times0.56}}&#92;approx0.218&#92;]</span></p>
 <h4 class="alt">ポイント</h4>
-<p>\(\mathrm{Cov}>0\) は「\(X\) が大きいとき \(Y\) も大きめ」という<b>直線的な共変</b>の傾向。相関係数はそれをスケール不要の \([-1,1]\) に規格化した量で、単位を変えても値が変わりません(\(\rho\) が \(aX+b\) の変換で不変)。0.218 は「弱い正の相関」— 強弱の感覚は第8章の散布図・データ分析で養います。</p>
+<p>相関係数は平行移動と正の尺度変更では不変である。一般に <span class="math">&#92;(a,c&#92;ne0&#92;)</span> に対し、<span class="math">&#92;(&#92;mathrm{Corr}(aX+b,cY+d)=&#92;mathrm{sgn}(ac)&#92;,&#92;mathrm{Corr}(X,Y)&#92;)</span> であり、片方だけを負の倍率で反転すると相関の符号も反転する。</p>
 </section>
 
 <section class="sol" id="a5-3">
@@ -727,30 +739,31 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a5-4">
+
 <div class="phead"><span class="pnum">解 5.4</span><span class="lv lv2">★★</span><span class="ptag">無相関だが独立でない例</span></div>
 <h4>方針</h4>
-<p>\(\mathrm{Cov}[X,X^2]=E[X^3]-E[X]E[X^2]\)。対称性で奇数次モーメントは0。従属性は「\(X\) を知れば \(Y\) が決まる」ことを事象で表す。</p>
+<p>対称性から奇数次モーメントが0になることを使う。独立性は具体的な事象で反証する。</p>
 <h4>解答</h4>
-<p>(1) \(X\) の密度は \(\frac12\)(\(-1\le x\le1\))で対称なので \(E[X]=0\)、\(E[X^3]=\displaystyle\int_{-1}^1\frac{x^3}{2}dx=0\)。よって</p>
-<p>\[\mathrm{Cov}[X,Y]=E[X^3]-E[X]\,E[X^2]=0-0=0\]</p>
-<p>(2) 例として \(A=\{X>1/2\}\)、\(B=\{Y>1/4\}=\{|X|>1/2\}\) をとると、\(P(A)=\frac14\)、\(P(B)=\frac12\)、\(P(A\cap B)=P(X>1/2)=\frac14\)。</p>
-<p>\[P(A\cap B)=\frac14\neq \frac14\times\frac12=\frac18=P(A)P(B)\]</p>
-<p>よって独立でない。(そもそも \(Y=X^2\) は \(X\) の値で完全に決まる。)</p>
-<p>(3) 相関係数が捉えるのは<b>直線的な</b>関係だけである。\(Y=X^2\) のような対称な曲線関係は \(\rho=0\) でも強い依存を持つ。「\(\rho=0\) だから無関係」と結論してはならない。</p>
+<p>(1) <span class="math">&#92;(E[X]=E[X^3]=0&#92;)</span> なので、</p>
+<p><span class="math">&#92;[&#92;mathrm{Cov}[X,Y]=E[X^3]-E[X]E[X^2]=0&#92;]</span></p>
+<p>(2) <span class="math">&#92;(A=&#92;{X&gt;1/2&#92;}&#92;)</span>、<span class="math">&#92;(B=&#92;{Y&gt;1/4&#92;}=&#92;{|X|&gt;1/2&#92;}&#92;)</span> とすると、<span class="math">&#92;(P(A)=1/4&#92;)</span>、<span class="math">&#92;(P(B)=1/2&#92;)</span>、<span class="math">&#92;(P(A&#92;cap B)=1/4&#92;)</span> である。これは <span class="math">&#92;(P(A)P(B)=1/8&#92;)</span> と異なるので独立でない。</p>
+<p>(3) 相関係数が捉えるのは線形な関係であり、0でも非線形な依存が残り得る。</p>
 <h4 class="alt">ポイント</h4>
-<p>「独立 ⇒ 無相関」の逆が成り立たない代表例で、院試でも定番です。非線形な依存まで捉えたければ、散布図を見る・相互情報量(第16章)を使う、が実務の答えになります。相互情報量ならこの例で \(I(X;Y)>0\) となり、依存が正しく検出されます。</p>
+<p>散布図や、より一般的な依存尺度も併用する。本問のように連続な <span class="math">&#92;(X&#92;)</span> から <span class="math">&#92;(Y=X^2&#92;)</span> が誤差なく決まる理想化モデルでは、同時分布は低次元の曲線上に集中し、連続変数としての相互情報量は単に正というだけでなく <span class="math">&#92;(+&#92;infty&#92;)</span> になる。量子化や観測雑音を入れれば有限値となる。</p>
 </section>
 
 <section class="sol" id="a5-5">
+
 <div class="phead"><span class="pnum">解 5.5</span><span class="lv lv2">★★</span><span class="ptag">相関するセンサの平均</span></div>
 <h4>方針</h4>
-<p>\(V[X+Y]=V[X]+V[Y]+2\mathrm{Cov}\)、\(\mathrm{Cov}=\rho\sigma^2\)、定数倍は2乗。</p>
+<p><span class="math">&#92;(&#92;mathrm{Cov}[X,Y]=&#92;rho&#92;sigma^2&#92;)</span> を和の分散公式へ代入する。</p>
 <h4>解答</h4>
-<p>(1) \[V\!\left[\frac{X+Y}{2}\right]=\frac{1}{4}\left(V[X]+V[Y]+2\rho\sigma^2\right)=\frac{2\sigma^2+2\rho\sigma^2}{4}=\frac{\sigma^2(1+\rho)}{2}\]</p>
-<p>(2) \(\dfrac{4\times1.5}{2}=3\)。</p>
-<p>(3) \(\rho=0\)(独立)なら \(\sigma^2/2\) — 分散が半減する。\(\rho=1\)(完全相関)なら \(\sigma^2\) — <b>まったく減らない</b>。平均化がノイズ低減に効くのは、誤差が互いに独立(に近い)ときだけで、共通の原因で同じ方向にずれる誤差(系統誤差)は何台平均しても消えない。</p>
+<p>(1)</p>
+<p><span class="math">&#92;[V&#92;!&#92;left[&#92;frac{X+Y}{2}&#92;right]=&#92;frac14&#92;left(2&#92;sigma^2+2&#92;rho&#92;sigma^2&#92;right)=&#92;frac{&#92;sigma^2(1+&#92;rho)}2&#92;]</span></p>
+<p>(2) <span class="math">&#92;(&#92;sigma^2=4&#92;)</span>、<span class="math">&#92;(&#92;rho=0.5&#92;)</span> なので分散は3。</p>
+<p>(3) <span class="math">&#92;(&#92;rho=0&#92;)</span> なら分散は <span class="math">&#92;(&#92;sigma^2/2&#92;)</span>、<span class="math">&#92;(&#92;rho=1&#92;)</span> なら <span class="math">&#92;(&#92;sigma^2&#92;)</span> である。したがって元の各センサより分散が小さくなるのは <span class="math">&#92;(&#92;rho&lt;1&#92;)</span> のときで、負の相関なら低減効果はさらに大きい。<span class="math">&#92;(&#92;rho=0&#92;)</span> は無相関を意味するだけで、一般には独立性まで保証しない。</p>
 <h4 class="alt">ポイント</h4>
-<p>センサフュージョン(第15章)や分散投資の設計原理そのものです。同型センサを並べても電源ノイズ・温度・振動など共通要因で \(\rho>0\) になりがちで、カメラ+レーダー+LiDARのような<b>原理の異なるセンサ</b>の組み合わせが好まれるのは、誤差の独立性(\(\rho\approx0\))を稼ぐためです。問2.7(共通原因故障)と同じ思想が、故障だけでなく誤差にも現れています。</p>
+<p>2台の平均で必要なのはこの分散式であり、独立性そのものではない。ただし台数を増やした平均や分布全体を論じる場合には、全ての共分散構造やより強い仮定が必要になる。共通原因による正の相関が大きいほど平均化の効果は弱い。</p>
 </section>
 
 <section class="sol" id="a5-6">
@@ -893,14 +906,17 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a6-7">
-<div class="phead"><span class="pnum">解 6.7</span><span class="lv lv2">★★</span><span class="ptag">MGFによる極限(二項→ポアソン)</span></div>
+
+<div class="phead"><span class="pnum">解 6.7</span><span class="lv lv2">★★</span><span class="ptag">MGFによる極限（二項→ポアソン）</span></div>
 <h4>方針</h4>
-<p>\(B(n,p)\) のMGF \((1-p+pe^t)^n\) に \(p=\lambda/n\) を代入し、\((1+a/n)^n\to e^a\) を使う。</p>
+<p>二項分布のMGFへ <span class="math">&#92;(p=&#92;lambda/n&#92;)</span> を代入し、指数関数の基本極限を使う。</p>
 <h4>解答</h4>
-<p>\[M_{X_n}(t)=\left(1-\frac{\lambda}{n}+\frac{\lambda}{n}e^t\right)^n=\left(1+\frac{\lambda(e^t-1)}{n}\right)^n\ \xrightarrow[n\to\infty]{}\ e^{\lambda(e^t-1)}\]</p>
-<p>右辺は \(\mathrm{Po}(\lambda)\) のMGF(問6.2)。MGFの収束は分布の収束を意味する(レヴィの連続性定理、第18章)ので、\(B(n,\lambda/n)\) はポアソン分布に収束する。</p>
+<p>(1) 任意の実数 <span class="math">&#92;(t&#92;)</span> に対し、</p>
+<p><span class="math">&#92;[M_{X_n}(t)=&#92;left(1+&#92;frac{&#92;lambda(e^t-1)}n&#92;right)^n&#92;longrightarrow e^{&#92;lambda(e^t-1)}&#92;]</span></p>
+<p>右辺は <span class="math">&#92;(&#92;mathrm{Po}(&#92;lambda)&#92;)</span> のMGFである。</p>
+<p>(2) 各 <span class="math">&#92;(M_{X_n}&#92;)</span> は実数全体で有限であり、極限も0の近傍で有限な確率分布のMGFである。したがってMGFの連続定理により、<span class="math">&#92;(X_n&#92;)</span> は <span class="math">&#92;(&#92;mathrm{Po}(&#92;lambda)&#92;)</span> へ分布収束する。</p>
 <h4 class="alt">ポイント</h4>
-<p>問3.7で数値的に確認した近似が、ここで定理になりました。「PMFの各点の極限を直接計算する」よりも、MGFという1つの関数の極限を取る方がはるかに見通しがよい — 同じ戦略で中心極限定理も証明できます(問18.7、特性関数版)。近似(実務)と極限定理(理論)が母関数で橋渡しされる、確率論の美しい風景です。</p>
+<p>ここで使うのはMGFに対する連続定理である。特性関数に対するレヴィの連続性定理と混同しない。特性関数なら常に存在する一方、MGFを使う議論では0の近傍での存在条件が重要になる。</p>
 </section>
 
 <section class="sol" id="a6-8">
@@ -916,19 +932,20 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a6-9">
+
 <div class="phead"><span class="pnum">解 6.9</span><span class="lv lv3">★★★</span><span class="ptag">最良予測としての条件付き期待値</span></div>
 <h4>方針</h4>
-<p>ヒント通り分解し、交差項を「\(Y\) で条件付けてから平均」で消す。ピタゴラスの定理の確率版。</p>
+<p><span class="math">&#92;(&#92;widehat X=E[X&#92;mid Y]&#92;)</span> とおき、平方を展開する。仮定により全ての項は可積分である。</p>
 <h4>解答</h4>
-<p>\(\hat{X}=E[X\mid Y]\) とおき、\(X-g(Y)=(X-\hat{X})+(\hat{X}-g(Y))\) と分解すると</p>
-<p>\[E[(X-g(Y))^2]=E[(X-\hat{X})^2]+E[(\hat{X}-g(Y))^2]+2E[(X-\hat{X})(\hat{X}-g(Y))]\]</p>
-<p>交差項を全期待値の法則で評価する。\(Y\) を固定すると \(\hat{X}-g(Y)\) は定数なので</p>
-<p>\[E[(X-\hat{X})(\hat{X}-g(Y))\mid Y]=(\hat{X}-g(Y))\,E[X-\hat{X}\mid Y]=(\hat{X}-g(Y))\bigl(E[X\mid Y]-\hat{X}\bigr)=0\]</p>
-<p>よって交差項の(無条件)期待値も0。したがって</p>
-<p>\[E[(X-g(Y))^2]=E[(X-\hat{X})^2]+E[(\hat{X}-g(Y))^2]\ \ge\ E[(X-\hat{X})^2]\]</p>
-<p>等号は \(g(Y)=\hat{X}=E[X\mid Y]\)(確率1で)のとき。すなわち条件付き期待値が平均二乗誤差最小の予測である。</p>
+<p><span class="math">&#92;(X-g(Y)=(X-&#92;widehat X)+(&#92;widehat X-g(Y))&#92;)</span> なので、</p>
+<p><span class="math">&#92;[E[(X-g(Y))^2]=E[(X-&#92;widehat X)^2]+E[(&#92;widehat X-g(Y))^2]+2E[(X-&#92;widehat X)(&#92;widehat X-g(Y))]&#92;]</span></p>
+<p><span class="math">&#92;(&#92;widehat X-g(Y)&#92;)</span> は <span class="math">&#92;(Y&#92;)</span> の可測関数だから、条件付き期待値の引き出し性により、</p>
+<p><span class="math">&#92;[E[(X-&#92;widehat X)(&#92;widehat X-g(Y))&#92;mid Y]=(&#92;widehat X-g(Y))E[X-&#92;widehat X&#92;mid Y]=0&#92;]</span></p>
+<p>したがって交差項は0であり、</p>
+<p><span class="math">&#92;[E[(X-g(Y))^2]=E[(X-&#92;widehat X)^2]+E[(&#92;widehat X-g(Y))^2]&#92;ge E[(X-&#92;widehat X)^2]&#92;]</span></p>
+<p>等号は <span class="math">&#92;(g(Y)=&#92;widehat X&#92;)</span> が確率1で成り立つとき、かつそのときに限る。よって条件付き期待値が平均二乗誤差を最小にする。</p>
 <h4 class="alt">ポイント</h4>
-<p>この定理は本書後半の背骨です:回帰関数(第12章)は \(E[Y\mid X=x]\) の推定であり、カルマンフィルタ(第15章)は正規性の下で \(E[x_t\mid \text{観測列}]\) を逐次計算する装置です。証明の構図「誤差 \(X-\hat X\) は \(Y\) のどんな関数とも直交する」は、線形代数の<b>正射影</b>(最小二乗法)と完全に同型 — 条件付き期待値とは \(L^2\) 空間での射影に他なりません(姉妹編・線形代数の最小二乗の章と見比べてみてください)。</p>
+<p>これは <span class="math">&#92;(L^2&#92;)</span> 空間における直交射影の定理である。二乗可積分性は単なる技術的飾りではなく、平均二乗誤差と内積を有限に扱うための条件である。</p>
 </section>
 
 
@@ -1121,17 +1138,19 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a8-6">
+
 <div class="phead"><span class="pnum">解 8.6</span><span class="lv lv2">★★</span><span class="ptag">t分布 — なぜ裾が重いのか</span></div>
 <h4>方針</h4>
-<p>\(T\) を「標準正規 ÷ \(\sqrt{\chi^2/自由度}\)」の形に変形して定義に当てはめる。</p>
+<p><span class="math">&#92;(T&#92;)</span> を「標準正規 ÷ カイ二乗変数から作った独立な平方根」の形へ変形する。</p>
 <h4>解答</h4>
-<p>(1) 基本定理より \(Z=\dfrac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim N(0,1)\)、\(W=\dfrac{(n-1)U^2}{\sigma^2}\sim\chi^2(n-1)\)、しかも両者は独立。すると</p>
-<p>\[T=\frac{\bar{X}-\mu}{U/\sqrt{n}}=\frac{(\bar{X}-\mu)/(\sigma/\sqrt{n})}{U/\sigma}=\frac{Z}{\sqrt{W/(n-1)}}\]</p>
-<p>これは \(t(n-1)\) の定義そのもの。</p>
-<p>(2) 分母の \(U\) は確率変数であり、たまたま小さく出ることがある。そのとき \(|T|\) は(\(\sigma\) で割った場合より)大きく振れる。この「分母のゆらぎ」の分だけ極端な値が出やすくなり、裾が重くなる。\(n\) が大きくなると \(U\) が \(\sigma\) に集中し(一致性)、ゆらぎが消えて正規分布に近づく。</p>
-<p>(3) \(t_{0.025}(9)=2.262>1.960=z_{0.025}\)。\(n=10\) で正規表(1.960)を使うと、区間は本来より狭く、検定は本来より棄却しやすくなる — 「95%」と申告しながら実際の信頼水準はそれ未満、という<b>過大申告</b>になる。小標本では必ず \(t\) 表を使う。</p>
+<p>(1) 正規母集団の基本定理より、</p>
+<p><span class="math">&#92;[Z=&#92;frac{&#92;bar X-&#92;mu}{&#92;sigma/&#92;sqrt n}&#92;sim N(0,1),&#92;qquad W=&#92;frac{(n-1)U^2}{&#92;sigma^2}&#92;sim&#92;chi^2(n-1)&#92;]</span></p>
+<p>であり、<span class="math">&#92;(Z&#92;)</span> と <span class="math">&#92;(W&#92;)</span> は独立である。したがって</p>
+<p><span class="math">&#92;[T=&#92;frac{Z}{&#92;sqrt{W/(n-1)}}&#92;sim t(n-1)&#92;]</span></p>
+<p>(2) 推定された分母 <span class="math">&#92;(U&#92;)</span> は確率的に小さくなることがあり、そのとき比の絶対値が大きくなる。この追加の不確かさが正規分布より重い裾として現れる。</p>
+<p>(3) <span class="math">&#92;(2.262&gt;1.960&#92;)</span> なので、自由度9で正規分布の臨界値を代用すると信頼区間を狭く作り、検定では棄却しやすくなる。</p>
 <h4 class="alt">ポイント</h4>
-<p>「未知の \(\sigma\) を推定で置き換えた代償が、裾の重さとして分布に現れる」— 不確かさは消えず、形を変えて残る、という統計の一般原則です。自由度30程度で \(t_{0.025}\approx2.04\) とほぼ正規に近づくため、「\(n\ge30\) なら正規で代用」という経験則が生まれました。第10・11章の区間・検定で毎回この分布を使います。</p>
+<p>自由度が増えるとt分布は標準正規分布へ近づくが、「標本数30以上なら必ず正規で代用してよい」は便宜的な経験則にすぎない。例えば自由度29でも両側95%の臨界値は約2.045で、1.960とは一致しない。正規母集団で母分散が未知ならt分布が厳密なので、計算機が使える場面では標本数にかかわらずt分布を用いるのが自然である。</p>
 </section>
 
 <section class="sol" id="a8-7">
@@ -1184,28 +1203,30 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a9-2">
+
 <div class="phead"><span class="pnum">解 9.2</span><span class="lv lv1">★</span><span class="ptag">ベルヌーイのMLE</span></div>
 <h4>方針</h4>
-<p>尤度は \(p^k(1-p)^{n-k}\)(に組合せ定数)。対数を取って微分。</p>
+<p>内点では対数尤度を微分し、端のデータでは元の尤度を境界上で比較する。</p>
 <h4>解答</h4>
-<p>\(\ell(p)=k\ln p+(n-k)\ln(1-p)+\text{const}\)。</p>
-<p>\[\ell'(p)=\frac{k}{p}-\frac{n-k}{1-p}=0\iff k(1-p)=(n-k)p\iff \hat{p}=\frac{k}{n}\]</p>
-<p>(\(\ell''&lt;0\) より最大。)成功指示変数 \(X_i\) を使えば \(\hat{p}=\bar{X}\) で、\(E[\hat{p}]=E[X_1]=p\)(不偏)、独立性より</p>
-<p>\[V[\hat{p}]=\frac{V[X_1]}{n}=\frac{p(1-p)}{n}\]</p>
+<p><span class="math">&#92;(0&lt;k&lt;n&#92;)</span> では</p>
+<p><span class="math">&#92;[&#92;ell'(p)=&#92;frac{k}{p}-&#92;frac{n-k}{1-p}=0&#92;iff&#92;widehat p=&#92;frac{k}{n}&#92;]</span></p>
+<p>かつ2階微分は負なので一意な最大点である。<span class="math">&#92;(k=0&#92;)</span> なら尤度 <span class="math">&#92;((1-p)^n&#92;)</span> は <span class="math">&#92;(p=0&#92;)</span> で最大、<span class="math">&#92;(k=n&#92;)</span> なら <span class="math">&#92;(p^n&#92;)</span> は <span class="math">&#92;(p=1&#92;)</span> で最大である。よって全ての場合に <span class="math">&#92;(&#92;widehat p=k/n=&#92;bar X&#92;)</span>。</p>
+<p><span class="math">&#92;[E[&#92;widehat p]=p,&#92;qquad V[&#92;widehat p]=&#92;frac{p(1-p)}n&#92;]</span></p>
 <h4 class="alt">ポイント</h4>
-<p>「観測された成功率で \(p\) を推定する」という当たり前の答えが、最尤原理から<b>導かれる</b>ことが重要です。分散 \(p(1-p)/n\) は問7.8(モンテカルロ)・問10.4(比率の区間)で既に主役でした。対数を取るのは、積を和に変えて微分を楽にする定石で、数値計算でもアンダーフロー回避に必須の操作です。</p>
+<p>対数尤度の微分式は <span class="math">&#92;(p=0,1&#92;)</span> で使えない。最尤法では、停留点だけでなくパラメータ空間の境界も調べる。</p>
 </section>
 
 <section class="sol" id="a9-3">
+
 <div class="phead"><span class="pnum">解 9.3</span><span class="lv lv1">★</span><span class="ptag">ポアソンのMLE</span></div>
 <h4>方針</h4>
-<p>PMFの積の対数を取り、\(\lambda\) で微分。</p>
+<p>観測の総和が正なら内点で微分し、総和が0なら尤度を境界まで調べる。</p>
 <h4>解答</h4>
-<p>\[\ell(\lambda)=\sum_{i=1}^n\left(-\lambda+x_i\ln\lambda-\ln x_i!\right)=-n\lambda+\left(\sum x_i\right)\ln\lambda+\text{const}\]</p>
-<p>\[\ell'(\lambda)=-n+\frac{\sum x_i}{\lambda}=0\iff \hat{\lambda}=\frac{\sum x_i}{n}=\bar{x}\]</p>
-<p>(\(\ell''=-\sum x_i/\lambda^2&lt;0\) より最大。)</p>
+<p><span class="math">&#92;(S=&#92;sum_i x_i&gt;0&#92;)</span> のとき、</p>
+<p><span class="math">&#92;[&#92;ell(&#92;lambda)=-n&#92;lambda+S&#92;ln&#92;lambda+&#92;mathrm{const},&#92;qquad &#92;ell'(&#92;lambda)=-n+&#92;frac{S}{&#92;lambda}&#92;]</span></p>
+<p>より <span class="math">&#92;(&#92;widehat&#92;lambda=S/n=&#92;bar x&#92;)</span>。2階微分は負である。全観測が0なら尤度は <span class="math">&#92;(e^{-n&#92;lambda}&#92;)</span> であり、<span class="math">&#92;(&#92;lambda&#92;ge0&#92;)</span> 上の最大点は境界 <span class="math">&#92;(&#92;lambda=0&#92;)</span>。この場合も <span class="math">&#92;(&#92;widehat&#92;lambda=&#92;bar x=0&#92;)</span> である。</p>
 <h4 class="alt">ポイント</h4>
-<p>ポアソンでは平均=\(\lambda\) なので「標本平均で推定」は自然ですが、これも導出の結果です。画像処理では、複数フレームの同一画素のカウント平均が光量 \(\lambda\) のMLEになる — フレーム平均(問7.7)は最尤推定でもあった、という統一的な見方が得られます。推定誤差の評価は問9.9で完成します。</p>
+<p><span class="math">&#92;(&#92;lambda=0&#92;)</span> では分布が0へ退化する。対数にして微分する方法だけでは、この正しい境界解を見落とす。</p>
 </section>
 
 <section class="sol" id="a9-4">
@@ -1222,17 +1243,20 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a9-5">
+
 <div class="phead"><span class="pnum">解 9.5</span><span class="lv lv2">★★</span><span class="ptag">正規分布のMLE</span></div>
 <h4>方針</h4>
-<p>\(\mu\) と \(\sigma^2\) それぞれで偏微分して0。\(\sigma^2\) を1つの変数として微分するのがコツ。</p>
+<p>まず <span class="math">&#92;(&#92;mu&#92;)</span>、次に <span class="math">&#92;(&#92;sigma^2&#92;)</span> で最大化する。非定数標本という仮定により残差平方和は正である。</p>
 <h4>解答</h4>
-<p>(1) \[\ell(\mu,\sigma^2)=-\frac{n}{2}\ln(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\mu)^2\]</p>
-<p>\(\dfrac{\partial\ell}{\partial\mu}=\dfrac{1}{\sigma^2}\sum(x_i-\mu)=0\) より \(\hat{\mu}=\bar{x}\)。</p>
-<p>\(\dfrac{\partial\ell}{\partial\sigma^2}=-\dfrac{n}{2\sigma^2}+\dfrac{1}{2\sigma^4}\sum(x_i-\hat{\mu})^2=0\) より</p>
-<p>\[\hat{\sigma}^2=\frac{1}{n}\sum(x_i-\bar{x})^2=s^2\]</p>
-<p>(2) 問8.4より \(E[S^2]=\dfrac{n-1}{n}\sigma^2\) なので、MLEは分散を平均 \(\dfrac{n-1}{n}\) 倍に過小評価する。不偏にしたものが \(u^2=\dfrac{n}{n-1}s^2\)。まとめると:MLE=\(s^2\)(\(n\) 割り、偏りあり)、不偏推定量=\(u^2\)(\(n-1\) 割り)。</p>
+<p>(1) 対数尤度は</p>
+<p><span class="math">&#92;[&#92;ell=-&#92;frac n2&#92;ln(2&#92;pi&#92;sigma^2)-&#92;frac{1}{2&#92;sigma^2}&#92;sum_{i=1}^n(x_i-&#92;mu)^2&#92;]</span></p>
+<p>であり、微分から</p>
+<p><span class="math">&#92;[&#92;widehat&#92;mu=&#92;bar x,&#92;qquad &#92;widehat&#92;sigma^2=&#92;frac1n&#92;sum_{i=1}^n(x_i-&#92;bar x)^2=s^2&#92;]</span></p>
+<p>を得る。</p>
+<p>(2) <span class="math">&#92;(E[s^2]=(n-1)&#92;sigma^2/n&#92;)</span> なので分散のMLEは下方へ偏る。不偏分散は <span class="math">&#92;(u^2=ns^2/(n-1)&#92;)</span> である。</p>
+<p>(3) 全観測値が同じ <span class="math">&#92;(c&#92;)</span> なら <span class="math">&#92;(&#92;mu=c&#92;)</span> とした残差平方和は0で、尤度は <span class="math">&#92;((2&#92;pi&#92;sigma^2)^{-n/2}&#92;)</span>。<span class="math">&#92;(&#92;sigma^2&#92;downarrow0&#92;)</span> で無限大になるが、パラメータ空間には <span class="math">&#92;(&#92;sigma^2=0&#92;)</span> が含まれない。したがって上限は達成されず、通常の正規密度モデル内にMLEは存在しない。</p>
 <h4 class="alt">ポイント</h4>
-<p>「\(\mu\) の推定に使った \(\bar{x}\) がデータに寄り添いすぎる」ことが過小評価の源(問8.4 (3))で、最尤法はそれを自動では補正しません。機械学習で訓練誤差が汎化誤差を過小評価する構図と同型です。もう一点:\(\hat{\mu}=\bar{x}\) は「二乗和 \(\sum(x_i-\mu)^2\) の最小化」でもあり、正規モデルの最尤法=<b>最小二乗法</b>。この対応が第12章(回帰)の理論的根拠になります。</p>
+<p>公式を使う前に、最大値がパラメータ空間内で実際に達成されるかを確認する。退化分布を別モデルとして許すかどうかは、通常の正規密度モデルとは別の定義上の選択である。</p>
 </section>
 
 <section class="sol" id="a9-6">
@@ -1265,32 +1289,36 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a9-8">
+
 <div class="phead"><span class="pnum">解 9.8</span><span class="lv lv3">★★★</span><span class="ptag">フィッシャー情報量とクラメール・ラオ下限</span></div>
 <h4>方針</h4>
-<p>スコア(対数尤度の1階微分)を作り、\(X\) がベルヌーイであることを使って期待値を取る。2階微分でも同じ値になることを確認。</p>
+<p><span class="math">&#92;(0&lt;p&lt;1&#92;)</span> なのでスコアと2階微分は有限に扱え、通常の正則条件を適用できる。</p>
 <h4>解答</h4>
-<p>(1) スコアは \(\dfrac{\partial}{\partial p}\ln f=\dfrac{x}{p}-\dfrac{1-x}{1-p}\)。\(x\in\{0,1\}\) なので、\(x=1\)(確率 \(p\))で値 \(1/p\)、\(x=0\)(確率 \(1-p\))で値 \(-1/(1-p)\)。よって</p>
-<p>\[I(p)=E[(\text{スコア})^2]=p\cdot\frac{1}{p^2}+(1-p)\cdot\frac{1}{(1-p)^2}=\frac1p+\frac{1}{1-p}=\frac{1}{p(1-p)}\]</p>
-<p>2階微分では \(\dfrac{\partial^2}{\partial p^2}\ln f=-\dfrac{x}{p^2}-\dfrac{1-x}{(1-p)^2}\) で、</p>
-<p>\[-E\!\left[\frac{\partial^2}{\partial p^2}\ln f\right]=\frac{E[X]}{p^2}+\frac{1-E[X]}{(1-p)^2}=\frac1p+\frac{1}{1-p}=\frac{1}{p(1-p)}\]</p>
-<p>両定義が一致。</p>
-<p>(2) クラメール・ラオ下限は \(\dfrac{1}{nI(p)}=\dfrac{p(1-p)}{n}\)。一方 \(V[\hat{p}]=\dfrac{p(1-p)}{n}\)(問9.2)でぴったり一致 — \(\hat{p}=\bar{X}\) は下限を達成する<b>有効推定量</b>である。</p>
+<p>(1) スコアは <span class="math">&#92;(X/p-(1-X)/(1-p)&#92;)</span> なので、</p>
+<p><span class="math">&#92;[I(p)=p&#92;frac1{p^2}+(1-p)&#92;frac1{(1-p)^2}=&#92;frac1{p(1-p)}&#92;]</span></p>
+<p>また対数尤度の2階微分を使っても、</p>
+<p><span class="math">&#92;[-E&#92;left[&#92;frac{&#92;partial^2}{&#92;partial p^2}&#92;log f(X;p)&#92;right]=&#92;frac1p+&#92;frac1{1-p}=&#92;frac1{p(1-p)}&#92;]</span></p>
+<p>となる。</p>
+<p>(2) <span class="math">&#92;(n&#92;)</span> 観測のクラメール・ラオ下限は <span class="math">&#92;(1/[nI(p)]=p(1-p)/n&#92;)</span>。これは <span class="math">&#92;(V[&#92;bar X]&#92;)</span> と一致するため、<span class="math">&#92;(&#92;bar X&#92;)</span> はこの正則な内点モデルで有効である。</p>
 <h4 class="alt">ポイント</h4>
-<p>\(I(p)\) は「1回の観測が \(p\) について運ぶ情報の量」で、\(p=1/2\) 付近で最小(4)、端で大きくなります — 五分五分のコインが一番見分けにくい、という直感の定量化です。下限を達成した以上、\(\bar{X}\) より分散の小さい不偏推定量は<b>存在しない</b>。「これ以上は原理的に無理」と言い切れるのが、この理論の価値です。</p>
+<p><span class="math">&#92;(p=0,1&#92;)</span> では上の式が特異になり、通常の内点に対するクラメール・ラオの議論をそのまま適用できない。境界では <span class="math">&#92;(&#92;bar X&#92;)</span> の分散自体は0である。</p>
 </section>
 
 <section class="sol" id="a9-9">
+
 <div class="phead"><span class="pnum">解 9.9</span><span class="lv lv3">★★★</span><span class="ptag">情報量の計算と漸近正規性</span></div>
 <h4>方針</h4>
-<p>スコアを作って2乗平均(または2階微分)。(3) は既知の \(V[\bar{X}]\) と下限を突き合わせる。</p>
+<p>1観測のスコアの分散を計算し、独立な <span class="math">&#92;(n&#92;)</span> 観測では情報量が <span class="math">&#92;(n&#92;)</span> 倍になることを使う。</p>
 <h4>解答</h4>
-<p>(1) \(\ln f=-\dfrac{(x-\mu)^2}{2\sigma^2}+\text{const}\)、スコア \(=\dfrac{x-\mu}{\sigma^2}\)。</p>
-<p>\[I(\mu)=E\!\left[\frac{(X-\mu)^2}{\sigma^4}\right]=\frac{\sigma^2}{\sigma^4}=\frac{1}{\sigma^2}\]</p>
-<p>(2) \(\ln f=-\lambda+x\ln\lambda-\ln x!\)、スコア \(=\dfrac{x}{\lambda}-1=\dfrac{x-\lambda}{\lambda}\)。</p>
-<p>\[I(\lambda)=\frac{E[(X-\lambda)^2]}{\lambda^2}=\frac{V[X]}{\lambda^2}=\frac{\lambda}{\lambda^2}=\frac{1}{\lambda}\]</p>
-<p>(3) 下限は \(\dfrac{1}{nI(\lambda)}=\dfrac{\lambda}{n}\)。一方 \(V[\bar{X}]=\dfrac{V[X]}{n}=\dfrac{\lambda}{n}\) で一致し、\(\hat{\lambda}=\bar{X}\) は有効推定量。漸近正規性より \(\hat{\lambda}\) は近似的に \(N\!\left(\lambda,\ \dfrac{\lambda}{n}\right)\) に従う。フォトンカウンティングでは、推定の標準偏差 \(\sqrt{\lambda/n}\)、相対誤差 \(\dfrac{\sqrt{\lambda/n}}{\lambda}=\dfrac{1}{\sqrt{n\lambda}}\) となり、精度は「集めた光子の総数 \(n\lambda\)」だけで決まる — フレーム数を増やすことと露光を伸ばすことが等価であることを意味する。</p>
+<p>(1) 正規分布のスコアは <span class="math">&#92;((X-&#92;mu)/&#92;sigma^2&#92;)</span> なので、</p>
+<p><span class="math">&#92;[I(&#92;mu)=&#92;frac{E[(X-&#92;mu)^2]}{&#92;sigma^4}=&#92;frac1{&#92;sigma^2}&#92;]</span></p>
+<p>(2) ポアソン分布のスコアは <span class="math">&#92;((X-&#92;lambda)/&#92;lambda&#92;)</span> なので、</p>
+<p><span class="math">&#92;[I(&#92;lambda)=&#92;frac{V[X]}{&#92;lambda^2}=&#92;frac1&#92;lambda&#92;]</span></p>
+<p>(3) 総情報量は <span class="math">&#92;(nI(&#92;lambda)=n/&#92;lambda&#92;)</span>、クラメール・ラオ下限は <span class="math">&#92;(&#92;lambda/n&#92;)</span> である。実際、</p>
+<p><span class="math">&#92;[V[&#92;widehat&#92;lambda]=V[&#92;bar X]=&#92;frac&#92;lambda n&#92;]</span></p>
+<p>なので下限を達成する。さらに中心極限定理（またはMLEの漸近正規性）から、<span class="math">&#92;(&#92;widehat&#92;lambda&#92;)</span> は漸近的に <span class="math">&#92;(N(&#92;lambda,&#92;lambda/n)&#92;)</span> に従う。絶対標準誤差は <span class="math">&#92;(&#92;sqrt{&#92;lambda/n}&#92;)</span> で <span class="math">&#92;(&#92;lambda&#92;)</span> とともに増えるが、相対標準誤差は <span class="math">&#92;(1/&#92;sqrt{n&#92;lambda}&#92;)</span> で、総期待カウント <span class="math">&#92;(n&#92;lambda&#92;)</span> とともに減る。</p>
 <h4 class="alt">ポイント</h4>
-<p>\(I(\mu)=1/\sigma^2\) は「ノイズが小さいほど1観測の情報が多い」、\(I(\lambda)=1/\lambda\) は「明るいほど1カウントあたりの情報は薄い(が総情報 \(n\lambda\cdot\frac1\lambda\cdot\lambda\)…ではなく総数で稼ぐ)」— 情報量は<b>実験設計の通貨</b>です。漸近分布 \(N(\theta,1/(nI))\) を使えば、MLEの誤差棒(問10章の信頼区間)が一般のモデルで書けるようになります。ショットノイズ限界(問3.8)が推定理論の言葉で再導出されたことにも注目してください。</p>
+<p>「1観測あたりのパラメータ情報量 <span class="math">&#92;(1/&#92;lambda&#92;)</span>」と「観測カウントのSN比」を混同しない。明るいほど絶対ゆらぎは大きいが、相対精度は改善する。</p>
 </section>
 
 
@@ -1416,15 +1444,17 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="sol" id="a11-3">
-<div class="phead"><span class="pnum">解 11.3</span><span class="lv lv1">★</span><span class="ptag">1標本t検定(片側)</span></div>
+
+<div class="phead"><span class="pnum">解 11.3</span><span class="lv lv1">★</span><span class="ptag">1標本t検定（片側）</span></div>
 <h4>方針</h4>
-<p>\(\sigma\) 未知・小標本なのでt検定。下側対立なので棄却域は \(T&lt;-t_{0.05}(15)=-1.753\)。</p>
+<p>帰無仮説 <span class="math">&#92;(&#92;mu&#92;ge250&#92;)</span> のうち、下側棄却域へ入る確率が最大になる境界 <span class="math">&#92;(&#92;mu=250&#92;)</span> でt統計量を較正する。</p>
 <h4>解答</h4>
-<p>\[T=\frac{248-250}{8/\sqrt{16}}=\frac{-2}{2}=-1.0\]</p>
-<p>\(-1.0>-1.753\) で棄却域に入らないので、\(H_0\) は<b>棄却できない</b>。結論:「規格割れ(\(\mu&lt;250\))と主張する統計的根拠は、このデータからは得られなかった」。</p>
-<p>注意:これは「\(\mu=250\) が正しいと証明された」ことを意味しない。差が小さいか、\(n=16\) では検出力が足りないだけかもしれない(次問)。</p>
+<p>境界での統計量は</p>
+<p><span class="math">&#92;[T=&#92;frac{248-250}{8/&#92;sqrt{16}}=-1.0&#92;]</span></p>
+<p>棄却域は <span class="math">&#92;(T&lt;-1.753&#92;)</span> である。<span class="math">&#92;(-1.0&#92;)</span> は棄却域に入らないため、<span class="math">&#92;(H_0:&#92;mu&#92;ge250&#92;)</span> を棄却できない。すなわち「母平均が250未満であると結論する十分な統計的証拠は得られなかった」。</p>
+<p>これは規格を満たすことの証明ではない。規格適合を積極的に示す目的なら、仮説の向きや非劣性マージンを含む別の試験設計が必要である。</p>
 <h4 class="alt">ポイント</h4>
-<p>「有意でない」の正しい読みは<b>判断保留</b>です。「異常なしを示せなかった」と「正常であることを示した」は別物 — 品質保証で「合格」と言いたいなら、同等性の枠組みや検出力の設計(問11.5)まで含めて主張する必要があります。片側か両側かは<b>データを見る前に</b>、問い(規格割れだけが問題か)から決めます。</p>
+<p>単純帰無仮説 <span class="math">&#92;(&#92;mu=250&#92;)</span> とだけ書く計算は、複合帰無仮説を境界で較正する手順の省略形である。実務上の結論と仮説集合を一致させることが重要である。</p>
 </section>
 
 <section class="sol" id="a11-4">
@@ -1801,18 +1831,17 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a14-5">
+
 <div class="phead"><span class="pnum">解 14.5</span><span class="lv lv2">★★</span><span class="ptag">ランダムウォークとPageRank</span></div>
 <h4>方針</h4>
-<p>リンク先を等確率で選ぶ遷移行列を書き、\(\boldsymbol{\pi}P=\boldsymbol{\pi}\) を解く。</p>
+<p>状態順をA, B, Cとして遷移行列を書き、定常方程式を解く。</p>
 <h4>解答</h4>
-<p>(1) 状態順を A, B, C として</p>
-<p>\[P=\begin{pmatrix}0&amp;1/2&amp;1/2\\0&amp;0&amp;1\\1&amp;0&amp;0\end{pmatrix}\]</p>
-<p>(2) \(\boldsymbol{\pi}P=\boldsymbol{\pi}\) より \(\pi_A=\pi_C\)、\(\pi_B=\tfrac12\pi_A\)、\(\pi_C=\tfrac12\pi_A+\pi_B\)。和が1で</p>
-<p>\[\boldsymbol{\pi}=(0.4,\ 0.2,\ 0.4)\]</p>
-<p>読み:ランダムに閲覧し続けたとき、滞在時間の割合が最も高いのは A と C(各40%)。「多くの(重要な)ページからリンクされるページほど重要」という再帰的な重要度が、定常分布として定まる — これが PageRank の基本形である。</p>
-<p>(3) \(\boldsymbol{\pi}P=\boldsymbol{\pi}\) を転置すると \(P^{\mathsf T}\boldsymbol{\pi}^{\mathsf T}=\boldsymbol{\pi}^{\mathsf T}\):\(\boldsymbol{\pi}^{\mathsf T}\) は \(P^{\mathsf T}\) の固有値1の固有ベクトル。実際 \(P^{\mathsf T}(0.4,0.2,0.4)^{\mathsf T}=(0.4,\ 0.2,\ 0.4)^{\mathsf T}\) が成分計算で確認できる。</p>
+<p>(1)</p>
+<p><span class="math">&#92;[P=&#92;begin{pmatrix}0&amp;1/2&amp;1/2&#92;&#92;0&amp;0&amp;1&#92;&#92;1&amp;0&amp;0&#92;end{pmatrix}&#92;]</span></p>
+<p>(2) <span class="math">&#92;(&#92;boldsymbol&#92;pi P=&#92;boldsymbol&#92;pi&#92;)</span> と成分和1から、<span class="math">&#92;(&#92;boldsymbol&#92;pi=(0.4,0.2,0.4)&#92;)</span>。この単純なランダム閲覧モデルでは、長時間の滞在割合をリンク構造に基づく重要度と読む。</p>
+<p>(3) 転置すれば <span class="math">&#92;(P^{&#92;mathsf T}&#92;boldsymbol&#92;pi^{&#92;mathsf T}=&#92;boldsymbol&#92;pi^{&#92;mathsf T}&#92;)</span> であり、列ベクトル <span class="math">&#92;(&#92;boldsymbol&#92;pi^{&#92;mathsf T}&#92;)</span> は固有値1の固有ベクトルである。</p>
 <h4 class="alt">ポイント</h4>
-<p>実際の PageRank は、リンクのないページや閉じた輪への対処として「確率 \(1-d\) でランダムなページへ飛ぶ」減衰(ダンピング、\(d\approx0.85\))を混ぜ、既約・非周期性を保証してから、べき乗法 \(\boldsymbol{\pi}_{t+1}=\boldsymbol{\pi}_tP\) で定常分布を計算します。巨大な疎行列の固有ベクトル計算が検索エンジンの心臓部だった — 線形代数と確率論の最も有名な合流点です。</p>
+<p>実用的なPageRankではテレポーテーションを混ぜ、ダングリングノードや閉じたクラスへ対処する。減衰係数として0.85は歴史的・説明用によく挙げられる値だが、普遍的な現在値や必須の既定値ではなく、実装・目的に応じて設定される。</p>
 </section>
 
 <section class="sol" id="a14-6">
@@ -1856,17 +1885,18 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a14-9">
+
 <div class="phead"><span class="pnum">解 14.9</span><span class="lv lv3">★★★</span><span class="ptag">隠れマルコフモデルの1ステップ</span></div>
 <h4>方針</h4>
-<p>(1) はベイズ更新(第2章・第13章)。(2) は事後分布に遷移行列を掛ける(全確率の公式)。</p>
+<p>観測でベイズ更新し、その事後分布を遷移モデルで1歩予測する。</p>
 <h4>解答</h4>
-<p>(1) 検知の尤度は \(P(\text{検知}\mid\text{湿})=0.8\)、\(P(\text{検知}\mid\text{乾})=0.1\)。</p>
-<p>\[P(\text{湿}\mid\text{検知})=\frac{0.2\times0.8}{0.2\times0.8+0.8\times0.1}=\frac{0.16}{0.24}=\frac23\]</p>
-<p>(2) 事後 \((\text{乾},\text{湿})=(\frac13,\frac23)\) を1歩進める。\(P(\text{乾}\to\text{湿})=0.1\)、\(P(\text{湿}\to\text{湿})=0.7\) より</p>
-<p>\[P(\text{次が湿})=\frac23\times0.7+\frac13\times0.1=\frac{0.7\times2+0.1}{3}=0.5\]</p>
-<p>(3) HMMのフィルタリングは「<b>観測でベイズ更新 → 遷移行列で1歩予測</b>」の交互反復で、いま実行したのがその1周期である。状態が連続(位置・速度)で、遷移と観測が線形ガウスの場合に、この同じ反復を閉じた式で回せるのがカルマンフィルタ(第15章)— HMMとKFは「離散か連続か」だけが違う兄弟である。</p>
+<p>(1)</p>
+<p><span class="math">&#92;[P(&#92;text{湿}&#92;mid&#92;text{検知})=&#92;frac{0.2&#92;times0.8}{0.2&#92;times0.8+0.8&#92;times0.1}=&#92;frac23&#92;]</span></p>
+<p>(2) 事後分布は（乾, 湿）<span class="math">&#92;(=(1/3,2/3)&#92;)</span> なので、</p>
+<p><span class="math">&#92;[P(&#92;text{次が湿})=&#92;frac13&#92;times0.1+&#92;frac23&#92;times0.7=0.5&#92;]</span></p>
+<p>(3) HMMもカルマンフィルタも、「状態モデルで予測し、観測尤度で更新する」というベイズフィルタの共通骨格を持つ。</p>
 <h4 class="alt">ポイント</h4>
-<p>センサは状態そのものでなく「状態の痕跡」しか見られない — この<b>隠れ</b>構造の下で信念(確率分布)を運ぶのがフィルタリングです。予測ステップは不確かさを増やし(遷移のぼかし)、更新ステップは減らす(観測の絞り込み)。音声認識・自然言語のHMM、ロボットのベイズフィルタ、路面状態推定まで、この2拍子が共通の心臓部です。</p>
+<p>違いは単に「離散か連続か」だけではない。典型的な有限状態HMMは離散状態と一般のカテゴリ観測モデルを扱い、標準カルマンフィルタは連続状態・線形遷移・線形観測・ガウス雑音という仮定により、平均と共分散だけで厳密な更新を閉じた形で行える。状態空間、遷移・観測モデル、分布仮定を区別して比較する。</p>
 </section>
 
 
@@ -1972,20 +2002,21 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a15-8">
+
 <div class="phead"><span class="pnum">解 15.8</span><span class="lv lv3">★★★</span><span class="ptag">3つの顔の同値性</span></div>
 <h4>方針</h4>
-<p>それぞれ独立に解いて同じ式に着地させる。(1) は第13章の公式、(2) は2次関数の最小化、(3) は微分=0。</p>
+<p>問題文の独立性・不偏性と正の分散を使い、3つを別々に解く。</p>
 <h4>解答</h4>
-<p>(1) <b>ベイズ</b>:事前 \(N(\hat x^-,P^-)\)、尤度 \(N(x,R)\) の正規–正規更新(問13.4)より、事後平均は精度重み付き平均</p>
-<p>\[\hat{x}=\frac{\hat{x}^-/P^-+y/R}{1/P^-+1/R}=\frac{R\,\hat{x}^-+P^-y}{P^-+R}=\hat{x}^-+\frac{P^-}{P^-+R}(y-\hat{x}^-)\]</p>
-<p>(2) <b>最小分散</b>:\(f(k)=(1-k)^2P^-+k^2R\) は下に凸で、\(f'(k)=-2(1-k)P^-+2kR=0\) より</p>
-<p>\[k^*=\frac{P^-}{P^-+R}=K\]</p>
-<p>(このとき最小分散は \(f(K)=\dfrac{P^-R}{P^-+R}=(1-K)P^-\) — 更新式の \(P\) と一致。)</p>
-<p>(3) <b>正則化つき最小二乗</b>:目的関数を \(x\) で微分して</p>
-<p>\[\frac{2(x-\hat{x}^-)}{P^-}-\frac{2(y-x)}{R}=0\iff x\left(\frac{1}{P^-}+\frac1R\right)=\frac{\hat{x}^-}{P^-}+\frac{y}{R}\]</p>
-<p>これは (1) と同じ精度重み付き平均。3つの導出がすべて \(\hat{x}=\hat{x}^-+K(y-\hat{x}^-)\)、\(K=\dfrac{P^-}{P^-+R}\) に一致する。</p>
+<p>(1) <b>ベイズ</b>：事後平均は精度重み付き平均であり、</p>
+<p><span class="math">&#92;[E[x&#92;mid y]=&#92;frac{R&#92;widehat x^-+P^-y}{P^-+R}=&#92;widehat x^-+&#92;frac{P^-}{P^-+R}(y-&#92;widehat x^-)&#92;]</span></p>
+<p>(2) <b>最小分散</b>：事前誤差と観測雑音が無相関なので、線形推定量の誤差分散は</p>
+<p><span class="math">&#92;[f(k)=(1-k)^2P^-+k^2R&#92;]</span></p>
+<p>である。<span class="math">&#92;(f'(k)=0&#92;)</span> から <span class="math">&#92;(k=P^-/(P^-+R)&#92;)</span>。独立性を仮定しなければ交差共分散項が加わり、この式は一般には成り立たない。</p>
+<p>(3) <b>正則化つき最小二乗</b>：目的関数の微分を0とすると、</p>
+<p><span class="math">&#92;[x&#92;left(&#92;frac1{P^-}+&#92;frac1R&#92;right)=&#92;frac{&#92;widehat x^-}{P^-}+&#92;frac yR&#92;]</span></p>
+<p>となり、(1) と同じ解を得る。したがって3つとも <span class="math">&#92;(K=P^-/(P^-+R)&#92;)</span> の更新式に一致する。</p>
 <h4 class="alt">ポイント</h4>
-<p>カルマンフィルタは、(a) ガウスの下での厳密なベイズフィルタ(HMMの連続版、問14.9)、(b) 線形不偏推定の中の最小分散(ガウスでなくても最良線形)、(c) 逐次最小二乗(正則化項=事前信念)という3つの理論の交差点にいます。だからこそ、仮定が多少崩れても「そこそこ最良」に働き、60年以上たった今も現役です。非線形への拡張(EKF/UKF)や、\(E[x\mid y]\) を最良予測とする根拠(問6.9)まで、本書の総決算と呼べる定理でした。</p>
+<p>ベイズ解としての一致には正規モデルが、最良線形不偏推定としての一致には2次モーメントと無相関性が、二乗目的関数との一致には指定された重みが効いている。「同じ式」になっても、それぞれの最適性を保証する仮定は区別しておく。</p>
 </section>
 
 
@@ -2032,18 +2063,20 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a16-4">
+
 <div class="phead"><span class="pnum">解 16.4</span><span class="lv lv2">★★</span><span class="ptag">ギブスの不等式</span></div>
 <h4>方針</h4>
-<p>\(-D\) を \(\ln\) に直し、\(\ln x\le x-1\) を \(x=q/p\) に適用する。</p>
+<p>まず0確率を含む場合を分ける。その後、<span class="math">&#92;(&#92;ln x&#92;le x-1&#92;)</span> を適用する。</p>
 <h4>解答</h4>
-<p>\(p(x)>0\) の点だけ和を取る。\(\ln\dfrac{q(x)}{p(x)}\le\dfrac{q(x)}{p(x)}-1\) より</p>
-<p>\[-D(p\,\|\,q)\ln2=\sum_x p(x)\ln\frac{q(x)}{p(x)}\le\sum_x p(x)\left(\frac{q(x)}{p(x)}-1\right)=\sum_x q(x)-\sum_x p(x)\le1-1=0\]</p>
-<p>よって \(D(p\,\|\,q)\ge0\)。等号には各点で \(\ln(q/p)=q/p-1\)、すなわち \(q(x)=p(x)\)(全点)が必要で、逆にそのとき \(D=0\)。</p>
-<p>系:\(q\) を一様分布(各 \(1/m\))とすると</p>
-<p>\[0\le D(p\,\|\,\text{一様})=\sum p(x)\log_2\bigl(m\,p(x)\bigr)=\log_2m-H(p)\]</p>
-<p>ゆえに \(H(p)\le\log_2m\)、等号は \(p\) が一様のとき — エントロピーは等確率で最大。</p>
+<p>ある点で <span class="math">&#92;(p(x)&gt;0&#92;)</span> かつ <span class="math">&#92;(q(x)=0&#92;)</span> なら、定義により <span class="math">&#92;(D(p&#92;|q)=+&#92;infty&#92;)</span> であり結論は直ちに成り立つ。以下、そのような点はないとする。</p>
+<p><span class="math">&#92;(S=&#92;{x:p(x)&gt;0&#92;}&#92;)</span> 上で <span class="math">&#92;(&#92;ln(q(x)/p(x))&#92;le q(x)/p(x)-1&#92;)</span> だから、</p>
+<p><span class="math">&#92;[-D(p&#92;|q)&#92;ln2&#92;le&#92;sum_{x&#92;in S}(q(x)-p(x))&#92;le1-1=0&#92;]</span></p>
+<p>よって <span class="math">&#92;(D(p&#92;|q)&#92;ge0&#92;)</span>。等号には、<span class="math">&#92;(S&#92;)</span> 上で <span class="math">&#92;(q(x)=p(x)&#92;)</span> かつ <span class="math">&#92;(S&#92;)</span> 外へ <span class="math">&#92;(q&#92;)</span> の確率質量がないことが必要十分で、すなわち <span class="math">&#92;(p=q&#92;)</span> である。</p>
+<p><span class="math">&#92;(m&#92;)</span> 点上の一様分布 <span class="math">&#92;(u&#92;)</span> を使うと、</p>
+<p><span class="math">&#92;[0&#92;le D(p&#92;|u)=&#92;log_2m-H(p)&#92;]</span></p>
+<p>なので <span class="math">&#92;(H(p)&#92;le&#92;log_2m&#92;)</span>、等号は一様分布のときに限る。</p>
 <h4 class="alt">ポイント</h4>
-<p>証明の心臓は \(\ln\) の凸性(接線 \(x-1\) の下にある)で、イェンセンの不等式の1回分に相当します。この非負性1本から、\(H\) の最大性、相互情報量の非負性(\(I=D\ge0\))、クロスエントロピーの下限(次問)がすべて系として落ちる — 情報理論の不等式群の「親」となる補題です。</p>
+<p><span class="math">&#92;(&#92;ln x&#92;)</span> は<b>凹関数</b>であり、そのグラフが <span class="math">&#92;(x=1&#92;)</span> における接線 <span class="math">&#92;(x-1&#92;)</span> 以下にあることが、使った不等式の幾何学的意味である。</p>
 </section>
 
 <section class="sol" id="a16-5">
@@ -2074,17 +2107,17 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a16-7">
+
 <div class="phead"><span class="pnum">解 16.7</span><span class="lv lv3">★★★</span><span class="ptag">相互情報量と画像レジストレーション</span></div>
 <h4>方針</h4>
-<p>周辺はどちらも \((0.5,0.5)\)。定義 \(I=\sum p\log_2\dfrac{p}{p_Xp_Y}\) に4マスを代入。</p>
+<p>周辺分布を求め、4つの組について定義へ代入する。</p>
 <h4>解答</h4>
-<p>(1) 周辺は \(P(X=0)=P(X=1)=0.5\)、\(Y\) も同じ。独立なら各マス \(0.25\) のはずなので</p>
-<p>\[I(X;Y)=2\times0.4\log_2\frac{0.4}{0.25}+2\times0.1\log_2\frac{0.1}{0.25}=0.8\log_21.6+0.2\log_20.4\]</p>
-<p>\[=0.8\times0.678+0.2\times(-1.322)=0.542-0.264=0.278\ \text{ビット}\]</p>
-<p>(2) 独立なら定義よりすべての \(\log\) の中身が1で \(I=0\)。</p>
-<p>(3) 正しく重なった位置では、一方の輝度を知ると他方の予想が絞れる(共有情報が大きい)ため \(I\) が大きく、ずれると対応が壊れて \(I\to0\)。そこで「\(I\) が最大になる変位・変形を探す」ことが位置合わせの規準になる。相互情報量は<b>関係の形を仮定しない</b>:可視光とサーモグラフィのように輝度の対応が非線形・非単調でも(暑い物が明るいとは限らない)、「対応の規則性」さえあれば検出できる。相関係数は直線的関係しか測れず(問5.4)、モダリティ間で符号が反転するだけで破綻する — MI基準がマルチモーダル医用画像・センサ画像の位置合わせの標準になった理由である。</p>
+<p>(1) 両周辺分布は <span class="math">&#92;((0.5,0.5)&#92;)</span> なので、</p>
+<p><span class="math">&#92;[I(X;Y)=0.8&#92;log_2 1.6+0.2&#92;log_2 0.4&#92;approx0.278&#92;&#92; &#92;text{ビット}&#92;]</span></p>
+<p>(2) 独立なら同時確率と周辺確率の積が一致するため <span class="math">&#92;(I(X;Y)=0&#92;)</span>。</p>
+<p>(3) 正しく対応した位置では一方の輝度が他方について情報を持つため、相互情報量が大きくなりやすい。位置がずれて対応が壊れると独立に近づくので、相互情報量を位置合わせの目的関数にできる。相関係数は線形関係の尺度だが、相互情報量は非線形・非単調な統計的依存も捉えられる。</p>
 <h4 class="alt">ポイント</h4>
-<p>\(I(X;Y)=D\bigl(p(x,y)\,\|\,p(x)p(y)\bigr)\) — 「同時分布が独立からどれだけ離れているか」が依存の普遍的な物差しです。実装ではヒストグラムから同時分布を推定して \(I\) を評価し、勾配法や探索で最大化します。特徴選択(ラベルとの \(I\) が大きい特徴を選ぶ)、決定木の情報利得など、機械学習でも同じ量が働いています。</p>
+<p>単なる符号反転 <span class="math">&#92;(Y=-X&#92;)</span> は相関係数が <span class="math">&#92;(-1&#92;)</span> となる完全な線形関係であり、相関が「破綻する」例ではない。相関が0でも依存する例としては <span class="math">&#92;(Y=X^2&#92;)</span> のような対称な非線形関係が適切である。実画像では相互情報量の推定法、補間、重なり領域にも結果が依存するため、最大化だけで自動的に正解が保証されるわけではない。</p>
 </section>
 
 
@@ -2120,33 +2153,35 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a17-3">
-<div class="phead"><span class="pnum">解 17.3</span><span class="lv lv2">★★</span><span class="ptag">並列冗長と多数決(TMR)</span></div>
+
+<div class="phead"><span class="pnum">解 17.3</span><span class="lv lv2">★★</span><span class="ptag">並列冗長と多数決（TMR）</span></div>
 <h4>方針</h4>
-<p>並列=「全滅」の余事象。TMRは二項分布 \(B(3,R)\) で「2以上正常」。</p>
+<p>並列は全滅の余事象、TMRは正常系統数が2以上となる二項確率で求める。</p>
 <h4>解答</h4>
-<p>(1) \(R_{\text{par}}=1-(1-0.99)^2=1-10^{-4}=0.9999\)。</p>
-<p>(2) 正常系統数は \(B(3,R)\)。2oo3が機能するのは正常が2または3のときで</p>
-<p>\[R_{\mathrm{TMR}}=\binom{3}{2}R^2(1-R)+R^3=3R^2-2R^3\]</p>
-<p>\(R=0.99\) で \(3(0.9801)-2(0.970299)=0.999702\)。</p>
-<p>(3) \[R_{\mathrm{TMR}}-R=3R^2-2R^3-R=-R(2R^2-3R+1)=R(1-R)(2R-1)\]</p>
-<p>\(0&lt;R&lt;1\) では \(R(1-R)>0\) なので符号は \(2R-1\) で決まり、\(R>\dfrac12\) のとき正。すなわち各系統が「当たる方が多い」限りで多数決は単独に勝ち、\(R&lt;1/2\) では逆に劣化する。</p>
+<p>(1) <span class="math">&#92;(1-(1-0.99)^2=0.9999&#92;)</span>。</p>
+<p>(2)</p>
+<p><span class="math">&#92;[R_{&#92;mathrm{TMR}}=&#92;binom32R^2(1-R)+R^3=3R^2-2R^3&#92;]</span></p>
+<p><span class="math">&#92;(R=0.99&#92;)</span> では0.999702。</p>
+<p>(3)</p>
+<p><span class="math">&#92;[R_{&#92;mathrm{TMR}}-R=R(1-R)(2R-1)&#92;]</span></p>
+<p>したがって、<span class="math">&#92;(0&#92;le R&#92;le1&#92;)</span> でTMRが単一系より厳密に有利なのは <span class="math">&#92;(1/2&lt;R&lt;1&#92;)</span>。<span class="math">&#92;(R=0,1/2,1&#92;)</span> では等しく、<span class="math">&#92;(0&lt;R&lt;1/2&#92;)</span> ではTMRの方が低い。</p>
 <h4 class="alt">ポイント</h4>
-<p>TMRは故障を<b>隠して動き続ける</b>(フェイルオペレーショナル)構成で、投票回路が単一故障点にならない設計が肝です。並列(0.9999)よりTMR(0.9997)が下なのは、TMRが「2重故障で即死」なぶん条件が厳しいから — その代わり故障系統の特定(どれが少数派か)ができる。多数決の \(R>1/2\) 条件は、問2.10の反復送信と同じ構造(コンドルセの陪審定理)である点も味わいどころです。</p>
+<p><span class="math">&#92;(R=1&#92;)</span> では単一系もTMRも完全なので、厳密な改善はない。また独立性、同一信頼度、完全な投票器という仮定が必要であり、共通原因故障や投票器故障を含めると式は変わる。</p>
 </section>
 
 <section class="sol" id="a17-4">
+
 <div class="phead"><span class="pnum">解 17.4</span><span class="lv lv2">★★</span><span class="ptag">ワイブル分布とB10寿命</span></div>
 <h4>方針</h4>
-<p>\(R(t)=0.9\) を \(t\) について解く。ハザードは \(-(\ln R)'\)。</p>
+<p>信頼度を時間について解き、対数信頼度を微分する。</p>
 <h4>解答</h4>
-<p>(1) \(\exp\left(-\left(\dfrac{t}{\eta}\right)^2\right)=0.9\iff\left(\dfrac{t}{\eta}\right)^2=-\ln0.9=0.105\)。</p>
-<p>\[t_{B10}=10^4\sqrt{0.105}\approx3.25\times10^3\ \text{時間}\]</p>
-<p>(2) \(\ln R(t)=-\left(\dfrac{t}{\eta}\right)^m\) より</p>
-<p>\[\lambda(t)=-\frac{d}{dt}\ln R(t)=\frac{m}{\eta}\left(\frac{t}{\eta}\right)^{m-1}\]</p>
-<p>(\(m=2\) なら故障率は時間に比例して増える:使うほど壊れやすい。)</p>
-<p>(3) \(m&lt;1\):故障率が減少 — 初期故障期(弱い個体が先に脱落;スクリーニングで除く)。\(m=1\):一定 — 偶発故障期(指数分布;本章前半の世界)。\(m>1\):増加 — 摩耗故障期(疲労・摩耗;予防交換が有効)。この3領域をつないだ形がバスタブ曲線である。</p>
+<p>(1)</p>
+<p><span class="math">&#92;[t_{B10}=10^4&#92;sqrt{-&#92;ln0.9}&#92;approx3.25&#92;times10^3&#92;&#92; &#92;text{時間}&#92;]</span></p>
+<p>(2)</p>
+<p><span class="math">&#92;[&#92;lambda(t)=-&#92;frac d{dt}&#92;ln R(t)=&#92;frac m&#92;eta&#92;left(&#92;frac t&#92;eta&#92;right)^{m-1}&#92;]</span></p>
+<p>(3) <span class="math">&#92;(m&lt;1&#92;)</span> なら減少故障率、<span class="math">&#92;(m=1&#92;)</span> なら一定故障率、<span class="math">&#92;(m&gt;1&#92;)</span> なら増加故障率である。これらは順に初期故障期・偶発故障期・摩耗故障期の局所モデルとして使える。</p>
 <h4 class="alt">ポイント</h4>
-<p>ワイブル分布は「\(m\) というダイヤル1つでバスタブの各領域を表せる」柔軟さで寿命解析の標準です(\(\ln(-\ln R)\) 対 \(\ln t\) が直線になるワイブルプロットで \(m,\eta\) をデータから推定)。B10のような分位点寿命は、平均(MTTF)よりも保証・保全計画に直結する量 — 「10%が壊れる前に交換する」予防保全の設計値です。指数分布(無記憶)を摩耗部品に使ってはいけない理由(問4.6)の、実務側の受け皿がここにあります。</p>
+<p>固定した1つの形状母数では故障率は単調減少・一定・単調増加のいずれかであり、減少してから一定となり、さらに増加する完全なバスタブ曲線を1本で表すことはできない。全期間を扱うには区分モデル、混合モデル、競合リスクなど別の構成が必要になる。</p>
 </section>
 
 <section class="sol" id="a17-5">
@@ -2163,16 +2198,18 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a17-6">
+
 <div class="phead"><span class="pnum">解 17.6</span><span class="lv lv3">★★★</span><span class="ptag">安全目標の実証に必要な走行時間</span></div>
 <h4>方針</h4>
-<p>3のルール \(T\ge\ln20/\lambda^*\approx3/\lambda^*\) に数値を入れる。桁を体感するのが目的。</p>
+<p>無故障観測の片側95%上限 <span class="math">&#92;(&#92;lambda_U=&#92;ln20/T&#92;)</span> を目標値以下にする。</p>
 <h4>解答</h4>
-<p>(1) \[T=\frac{\ln20}{10^{-8}}\approx\frac{3.0}{10^{-8}}=3\times10^8\ \text{時間}\]</p>
-<p>(この間、危険故障ゼロを観測して初めて「\(\lambda&lt;10^{-8}\)/時間(信頼度95%)」と言える。)</p>
-<p>(2) 1台あたり年500時間なら、\(3\times10^8/500=6\times10^5\) 台・年。たとえば1万台の試験車でも60年、10万台でも6年かかる計算になる。</p>
-<p>(3) 極低故障率の直接実証は、時間・費用の点で単独では非現実的である。実務では:(a) 目標故障率を冗長構成の各系に<b>分配</b>し、各系はより緩い(実証可能な)水準で示す(独立2系なら \(10^{-4}\) 級×2で \(10^{-8}\) 級、ただし共通原因(問2.7)の管理が前提)。(b) 加速寿命試験(温度・振動ストレスで時間を圧縮)や部品レベルの故障率データの積み上げ(問17.2)。(c) 設計・製造プロセスの保証と診断カバレッジ、系統的故障への対策。(d) シナリオベースのシミュレーションによる補完。統計的実証は最後の確認であり、安全は設計で作り込むもの — というのが規格の思想である。</p>
+<p>(1)</p>
+<p><span class="math">&#92;[T&#92;ge&#92;frac{&#92;ln20}{10^{-8}}&#92;approx2.996&#92;times10^8&#92;&#92; &#92;text{時間}&#92;]</span></p>
+<p>「厳密に <span class="math">&#92;(&#92;lambda&lt;10^{-8}&#92;)</span>」を上限値そのものと区別するなら、右辺より大きい試験時間が必要である。</p>
+<p>(2) 1台年あたり500時間なら約 <span class="math">&#92;(5.99&#92;times10^5&#92;)</span> 台年である。例えば1万台なら約60年、10万台なら約6年に相当する。</p>
+<p>(3) 直接の無故障走行試験だけでは、必要資源が目標故障率の逆数で増大する。加速試験、部品・サブシステム試験、設計解析、プロセス保証、診断、シミュレーションなど、適用条件と不確かさを明示した複数の証拠を組み合わせる必要がある。</p>
 <h4 class="alt">ポイント</h4>
-<p>「事故ゼロの走行距離をどれだけ積めば安全と言えるか」という自動運転の有名な論点(RAND研究などで知られる)の骨格計算です。0件データは \(\lambda=0\) の証明にならない(問10.7)、必要時間は目標の逆数に比例して爆発する — この2点を数式で言えることが、安全性の議論に統計リテラシーが必須である理由です。</p>
+<p>冗長系を評価するとき、2系統の故障率 <span class="math">&#92;(&#92;lambda_1,&#92;lambda_2&#92;)</span> を単純に掛けた <span class="math">&#92;(&#92;lambda_1&#92;lambda_2&#92;)</span> は単位が時間の逆数の2乗であり、システム故障率ではない。任務時間 <span class="math">&#92;(&#92;tau&#92;)</span> を固定し、各系の任務中故障確率が小さく <span class="math">&#92;(q_i&#92;approx&#92;lambda_i&#92;tau&#92;)</span>、かつ独立で「両方が任務中に故障すると危険」という明示的モデルなら、危険事象の任務確率を <span class="math">&#92;(q_1q_2&#92;)</span> と近似できる。連続運用の等価故障率は修復、順序、待機状態、共通原因などを含む状態モデルやフォールトツリーから別途導く。</p>
 </section>
 
 <section class="sol" id="a17-7">
@@ -2196,16 +2233,17 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </header>
 
 <section class="sol" id="a18-1">
+
 <div class="phead"><span class="pnum">解 18.1</span><span class="lv lv1">★</span><span class="ptag">σ-加法族の構成</span></div>
 <h4>方針</h4>
-<p>3条件(全体・補集合・可算和)を機械的に確認。最小のσ-加法族は「必要なものだけ足して閉じるまで」。</p>
+<p>全体集合、補集合、可算和について閉じているかを確認する。</p>
 <h4>解答</h4>
-<p>(1) \(\{\emptyset,\Omega\}\):\(\Omega\) を含み、互いに補集合で、和も \(\emptyset\) か \(\Omega\)。○。\(2^\Omega\):全部あるので何をしても閉じる。○(それぞれ最小・最大のσ-加法族)。</p>
-<p>(2) \(\{1,2\}\) と、その補集合 \(\{3,4\}\)、および \(\emptyset,\Omega\) が必要。この4つで補集合・和が閉じることを確認できるので</p>
-<p>\[\sigma(\{1,2\})=\bigl\{\emptyset,\ \{1,2\},\ \{3,4\},\ \Omega\bigr\}\]</p>
-<p>(3) σ-加法族で<b>ない</b>。たとえば \(\{1\}\in\mathcal{F}\) の補集合 \(\{2,3,4\}\) は入っているが、\(\{1,2\}\) の補集合 \(\{3,4\}\) が入っていない。また \(\{1\}\cup\{1,2\}=\{1,2\}\) は良いが \(\{2,3,4\}\cap\{1,2\}=\{2\}\)(補集合と和から作れるはず)が欠けている — 閉じていない。</p>
+<p>(1) <span class="math">&#92;(&#92;{&#92;emptyset,&#92;Omega&#92;}&#92;)</span> と <span class="math">&#92;(2^&#92;Omega&#92;)</span> は、それぞれ最小・最大のσ-加法族である。</p>
+<p>(2)</p>
+<p><span class="math">&#92;[&#92;sigma(&#92;{1,2&#92;})=&#92;{&#92;emptyset,&#92;{1,2&#92;},&#92;{3,4&#92;},&#92;Omega&#92;}&#92;]</span></p>
+<p>(3) σ-加法族ではない。例えば <span class="math">&#92;(&#92;{1,2&#92;}&#92;)</span> の補集合 <span class="math">&#92;(&#92;{3,4&#92;}&#92;)</span> が含まれていない。</p>
 <h4 class="alt">ポイント</h4>
-<p>σ-加法族は「確率を割り当ててよい質問(事象)の目録」です。(2) のように、粗い目録は「\(\{1,2\}\) に入ったか」しか問えない=<b>情報の粗さ</b>を表す、という読み方が重要で、これが条件付き期待値の厳密な定義や、時間とともに増える情報(フィルトレーション、確率過程の基礎)の言語になります。実数上で「すべての部分集合」に一様な確率を与えることは実はできず(バナッハ・タルスキー的な病的集合)、ボレル集合族というσ-加法族に制限する — 目録が必要な本当の理由はここにあります。</p>
+<p>実数上で全ての部分集合を可測にし、区間の長さと整合する平行移動不変・可算加法的な測度を保つことはできない。その障害を示す標準例は<b>ヴィタリ集合</b>のような非可測集合である。バナッハ＝タルスキーのパラドックスも非可測集合を利用するが、1次元の確率測度でσ-加法族が必要な理由を説明する直接の例としてはヴィタリ集合が適切である。</p>
 </section>
 
 <section class="sol" id="a18-2">
@@ -2249,14 +2287,17 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a18-5">
+
 <div class="phead"><span class="pnum">解 18.5</span><span class="lv lv3">★★★</span><span class="ptag">タイプライター列</span></div>
 <h4>方針</h4>
-<p>「確率(区間の幅)は0に向かう」が「どの点も無限回踏まれる」— 集団の性質と軌道1本の性質のずれを見る。</p>
+<p>各区間の幅は0へ縮むが、各点は世代ごとに繰り返し踏まれる。</p>
 <h4>解答</h4>
-<p>(1) 第 \(k\) 世代(幅 \(2^{-k}\) の区間 \(2^k\) 本)では \(P(X_n\neq0)=|I_n|=2^{-k}\)。\(n\to\infty\) で世代 \(k\to\infty\) だから \(P(|X_n-0|>\varepsilon)\le P(X_n\neq0)\to0\)(任意の \(\varepsilon\in(0,1)\))。よって \(X_n\to0\)(確率収束)。</p>
-<p>(2) 各世代の区間は \([0,1]\) を敷き詰めるので、どんな \(\omega\) も<b>各世代で必ず1回</b>どれかの区間に入る。したがって \(X_n(\omega)=1\) となる \(n\) が世代ごとに(無限個)存在し、数列 \(X_n(\omega)\) は0と1を無限に往復して収束しない。収束する \(\omega\) が1つもないのだから \(P(X_n\to0)=0\neq1\):概収束しない(確率収束はするのに!)。</p>
+<p>(1) 第 <span class="math">&#92;(k&#92;)</span> 世代の各区間の確率は <span class="math">&#92;(2^{-k}&#92;)</span>。<span class="math">&#92;(n&#92;to&#92;infty&#92;)</span> なら対応する世代も無限大へ進むので、任意の <span class="math">&#92;(0&lt;&#92;varepsilon&lt;1&#92;)</span> に対し、</p>
+<p><span class="math">&#92;[P(|X_n|&gt;&#92;varepsilon)=P(X_n=1)=2^{-k}&#92;longrightarrow0&#92;]</span></p>
+<p>よって0へ確率収束する。</p>
+<p>(2) 各世代の区間の和集合は <span class="math">&#92;([0,1]&#92;)</span> なので、任意の点は各世代で<b>少なくとも1回</b>踏まれる。二進分割の端点は2区間に入る場合があるが、結論は変わらない。一方、世代 <span class="math">&#92;(k&#92;ge2&#92;)</span> には4本以上の区間があり、固定した点を含まない区間もあるため、値0も各世代で現れる。したがって各点で0と1が無限回現れ、点ごとの数列は0へ収束しない。ゆえに概収束しない。</p>
 <h4 class="alt">ポイント</h4>
-<p>タイプライターのキャリッジのように区間が走るこの例は、「各時刻の失敗確率は0に向かう」のに「どの軌道も無限回失敗する」ことがありうる、という<b>集団と個の乖離</b>の決定版です。ずれの原因は失敗確率の減りが遅いこと:各世代の和が \(2^k\times2^{-k}=1\) で、\(\sum_nP(X_n\neq0)=\infty\)。もし和が収束すれば話は変わる — それが次問のボレル・カンテリです。</p>
+<p>閉区間を使う定義では「各世代でちょうど1回」とは限らない。確率0の端点の重複は確率収束には影響しないが、点ごとの主張では明示的に処理する必要がある。</p>
 </section>
 
 <section class="sol" id="a18-6">
@@ -2273,23 +2314,25 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 </section>
 
 <section class="sol" id="a18-7">
+
 <div class="phead"><span class="pnum">解 18.7</span><span class="lv lv3">★★★</span><span class="ptag">特性関数とCLTの証明スケッチ</span></div>
 <h4>方針</h4>
-<p>(1) は存在の普遍性がすべて。(2) は「独立和 → 積」「スケール → 引数の縮小」というMGFで学んだ操作(問6.7)をφで再演する。</p>
+<p>独立和を特性関数の積へ変換し、原点付近の2次展開を使う。</p>
 <h4>解答</h4>
-<p>(1) \(|e^{itX}|=1\) なので \(\varphi_X(t)=E[e^{itX}]\) は<b>どんな分布でも</b>存在する。MGFは \(E[e^{tX}]\) が発散して存在しないことがあり(コーシー分布はその代表;裾が重く \(E[e^{tX}]=\infty\)、そもそも \(E[X]\) すら存在しない — 問3.10の連続版)、MGFベースの理論はそこで止まる。特性関数なら、一意性定理(φが一致 ⇒ 分布が一致)とレヴィの連続性定理(φの各点収束 ⇒ 分布収束)が<b>無条件で</b>使え、あらゆる分布を同じ土俵で扱える。これが理論の主役がφである理由。</p>
-<p>(2) 独立性より \(\varphi_{X_1+\cdots+X_n}(t)=\varphi_X(t)^n\)、スケールより \(\varphi_{S_n}(t)=\varphi_X(t/\sqrt{n})^n\)。テイラー展開に \(E[X]=0\)、\(E[X^2]=1\) を入れると</p>
-<p>\[\varphi_X\!\left(\frac{t}{\sqrt{n}}\right)=1-\frac{t^2}{2n}+o\!\left(\frac1n\right)\]</p>
-<p>よって</p>
-<p>\[\varphi_{S_n}(t)=\left(1-\frac{t^2}{2n}+o\!\left(\frac1n\right)\right)^n\ \longrightarrow\ e^{-t^2/2}=\varphi_Z(t)\]</p>
-<p>(\((1+a_n/n)^n\to e^a\) 型の極限、問6.7と同型。)各 \(t\) でφが標準正規のφに収束したので、レヴィの連続性定理により \(S_n\) は \(N(0,1)\) に分布収束する — これが中心極限定理の証明の骨組みである。φの存在が無条件なので、必要な仮定は「分散が有限」だけでよい。</p>
+<p>(1) <span class="math">&#92;(|e^{itX}|=1&#92;)</span> なので特性関数は全ての確率分布で存在する。MGFは0以外の近傍で発散する場合があるため、この普遍性が特性関数の利点である。ただし、特性関数列の任意の点ごとの極限が自動的に分布収束を与えるわけではない。レヴィの連続性定理では、極限関数が0で連続であることが必要であり、そのとき極限は確率分布の特性関数になる。</p>
+<p>(2) 有限な2次モーメントと <span class="math">&#92;(E[X]=0&#92;)</span>、<span class="math">&#92;(E[X^2]=1&#92;)</span> から、<span class="math">&#92;(s&#92;to0&#92;)</span> で</p>
+<p><span class="math">&#92;[&#92;varphi_X(s)=1-&#92;frac{s^2}{2}+o(s^2)&#92;]</span></p>
+<p>である。独立性と尺度変換より、固定した <span class="math">&#92;(t&#92;)</span> に対して</p>
+<p><span class="math">&#92;[&#92;varphi_{S_n}(t)=&#92;left(&#92;varphi_X&#92;left(&#92;frac{t}{&#92;sqrt n}&#92;right)&#92;right)^n=&#92;left(1-&#92;frac{t^2}{2n}+o(n^{-1})&#92;right)^n&#92;longrightarrow e^{-t^2/2}&#92;]</span></p>
+<p>極限は標準正規分布の特性関数であり、特に0で連続である。したがってレヴィの連続性定理により <span class="math">&#92;(S_n&#92;)</span> は標準正規分布へ分布収束する。</p>
 <h4 class="alt">ポイント</h4>
-<p>第7章で「使う」だけだったCLTの、証明の設計図が手に入りました:<b>分布の収束を、変換(φ)の収束に翻訳する</b> — フーリエ変換で微分方程式を解く発想と同じで、実際φは分布のフーリエ変換です。仮定を外すと結論も変わり、分散無限のコーシー分布では平均 \(\bar X_n\) がいつまでも同じコーシー分布のまま(φで1行:\((e^{-|t|/n})^n=e^{-|t|}\))— 平均化がまったく効かない世界もある。ここから先、確率過程・確率微分方程式・統計的学習理論へ — 本書の測度論の扉はここまでですが、装備は整いました。</p>
+<p>レヴィの定理の連続性条件は技術的な飾りではない。例えば確率質量が無限遠へ逃げる列では、特性関数が各点で収束して見えても、その極限が特性関数にならない場合がある。本問では極限を既知の標準正規の特性関数と同定できるため条件を満たす。</p>
 </section>
 
 
 <footer class="book">
 <p>『情報系のための確率・統計 解答解説集』 全18章・154問。姉妹編『問題集』とセットで学習してください。</p>
+<p>Copyright © 2026 情報系のための数学 問題集シリーズ. All Rights Reserved.</p>
 </footer>
 </div>
 </body>

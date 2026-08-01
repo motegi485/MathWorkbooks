@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>情報系のための確率・統計 問題集 — 基礎から大学院レベルまで</title>
+<title>情報系のための確率・統計 問題集 — 大学基礎から大学院入試への橋渡し</title>
 <meta name="description" content="情報系の大学生・大学院進学をめざす人のための、独学用の確率・統計問題集。確率の基礎とベイズの定理・確率変数と分布・大数の法則と中心極限定理・推定・検定・回帰分析から、ベイズ統計・マルコフ連鎖・カルマンフィルタ・情報理論・信頼性工学・測度論の入口まで全18章154問+付録の数表。">
 <script>
 window.MathJax = {
@@ -119,7 +119,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <header class="book">
 <p class="series">情報系のための確率・統計</p>
 <h1>問題集</h1>
-<p class="subtitle">基礎から大学院レベルまで — 独学のための全18章・154問</p>
+<p class="subtitle">大学基礎から大学院入試への橋渡し — 独学のための全18章・154問</p>
 <p class="meta">対象:情報系の大学生・大学院進学をめざす人(確率・統計を未学習の状態からの独学を想定)<br>
 構成:序章+全18章154問(★基礎 52問/★★標準 62問/★★★応用 40問)+付録 数表<br>
 姉妹編『解答解説集』とセットで学習してください。</p>
@@ -280,11 +280,12 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q1-5">
+
 <div class="phead"><span class="pnum">問 1.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">誕生日問題</span></div>
-<p>\(n\) 人のグループで、誕生日(365日のいずれかで等確率、うるう年は無視)が一致する2人組が少なくとも1組いる確率を \(p_n\) とする。</p>
+<p>正の整数 <span class="math">&#92;(n&#92;)</span> に対し、<span class="math">&#92;(n&#92;)</span> 人のグループで、誕生日（365日のいずれかで等確率、各人の誕生日は独立、うるう年は無視）が一致する2人組が少なくとも1組いる確率を <span class="math">&#92;(p_n&#92;)</span> とする。</p>
 <ol class="sublist">
-<li>\(p_n\) を式で表せ。</li>
-<li>\(n=23\) のとき \(p_n>\dfrac12\) となることを確かめよ(数値計算には計算機を使ってよい)。</li>
+<li><span class="math">&#92;(1&#92;le n&#92;le365&#92;)</span> のときの <span class="math">&#92;(p_n&#92;)</span> を式で表せ。また、<span class="math">&#92;(n&#92;ge366&#92;)</span> の場合も答えよ。</li>
+<li><span class="math">&#92;(n=23&#92;)</span> のとき <span class="math">&#92;(p_n&gt;&#92;dfrac12&#92;)</span> となることを確かめよ（数値計算には計算機を使ってよい）。</li>
 <li>「365日の半分、183人くらい必要そう」という直感がなぜ大きく外れるのか、考察せよ。</li>
 </ol>
 </section>
@@ -407,11 +408,12 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q2-9">
+
 <div class="phead"><span class="pnum">問 2.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">RANSACの反復回数</span></div>
-<p>画像間の対応点からホモグラフィ(射影変換)を推定したい。対応点の50%は誤対応(外れ値)である。RANSACでは、最小構成の \(s=4\) 点を無作為に選んでモデルを仮組みする試行を繰り返す。</p>
+<p>画像間の対応点からホモグラフィ（射影変換）を推定したい。各点がインライアである確率を0.5とし、4点の選択ではインライアかどうかを独立とみなす標準的な近似モデルを用いる。RANSACでは、最小構成の <span class="math">&#92;(s=4&#92;)</span> 点を無作為に選んでモデルを仮組みする試行を、各回独立に繰り返す。</p>
 <ol class="sublist">
-<li>1回の試行で、選んだ4点がすべて正しい対応(インライア)である確率を求めよ。</li>
-<li>\(N\) 回の試行で少なくとも1回は(1)が起こる確率を \(0.99\) 以上にしたい。必要な最小の \(N\) を求めよ。必要なら \(\ln 0.01=-4.605\)、\(\ln 0.9375=-0.06454\) を用いてよい。</li>
+<li>1回の試行で、選んだ4点がすべて正しい対応（インライア）である確率を求めよ。</li>
+<li><span class="math">&#92;(N&#92;)</span> 回の試行で少なくとも1回は (1) が起こる確率を0.99以上にしたい。必要な最小の <span class="math">&#92;(N&#92;)</span> を求めよ。必要なら <span class="math">&#92;(&#92;ln 0.01=-4.605&#92;)</span>、<span class="math">&#92;(&#92;ln 0.9375=-0.06454&#92;)</span> を用いてよい。</li>
 </ol>
 </section>
 
@@ -670,8 +672,9 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q4-8">
-<div class="phead"><span class="pnum">問 4.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">逆関数法(乱数生成)</span></div>
-<p>\(U\sim U(0,1)\) とし、\(Y=-\dfrac{1}{\lambda}\ln U\) と定める。\(Y\sim\mathrm{Exp}(\lambda)\) であることを示せ。また、この事実が「一様乱数から指数乱数を作る方法」としてどう使えるか説明せよ。</p>
+
+<div class="phead"><span class="pnum">問 4.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">逆関数法（乱数生成）</span></div>
+<p><span class="math">&#92;(U&#92;)</span> は区間 <span class="math">&#92;((0,1)&#92;)</span> 上の一様分布に従う（したがって <span class="math">&#92;(0&lt;U&lt;1&#92;)</span> が確率1で成り立つ）とし、<span class="math">&#92;(Y=-&#92;dfrac{1}{&#92;lambda}&#92;ln U&#92;)</span> と定める。<span class="math">&#92;(Y&#92;sim&#92;mathrm{Exp}(&#92;lambda)&#92;)</span> であることを示せ。また、この事実が「一様乱数から指数乱数を作る方法」としてどう使えるか説明せよ。</p>
 </section>
 
 <section class="prob" id="q4-9">
@@ -904,8 +907,14 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q6-7">
-<div class="phead"><span class="pnum">問 6.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">MGFによる極限(二項→ポアソン)</span></div>
-<p>\(X_n\sim B\!\left(n,\dfrac{\lambda}{n}\right)\) のMGFが、\(n\to\infty\) で \(\mathrm{Po}(\lambda)\) のMGF \(e^{\lambda(e^t-1)}\) に収束することを示せ。(ヒント:\(\left(1+\frac{a}{n}\right)^n\to e^{a}\)。)これはポアソン近似(問3.7)の理論的正当化になっている。</p>
+
+<div class="phead"><span class="pnum">問 6.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">MGFによる極限（二項→ポアソン）</span></div>
+<p>固定した <span class="math">&#92;(&#92;lambda&gt;0&#92;)</span> に対し、<span class="math">&#92;(n&gt;&#92;lambda&#92;)</span> を満たす整数 <span class="math">&#92;(n&#92;)</span> について <span class="math">&#92;(X_n&#92;sim B(n,&#92;lambda/n)&#92;)</span> とする。MGFが0の共通近傍で存在し、そこである確率分布のMGFへ各点収束すれば分布収束する、というMGFの連続定理を用いてよい。</p>
+<ol class="sublist">
+<li><span class="math">&#92;(X_n&#92;)</span> のMGFが <span class="math">&#92;(n&#92;to&#92;infty&#92;)</span> で <span class="math">&#92;(&#92;mathrm{Po}(&#92;lambda)&#92;)</span> のMGF <span class="math">&#92;(e^{&#92;lambda(e^t-1)}&#92;)</span> に収束することを示せ。</li>
+<li>MGFの連続定理から <span class="math">&#92;(X_n&#92;)</span> が <span class="math">&#92;(&#92;mathrm{Po}(&#92;lambda)&#92;)</span> へ分布収束することを結論せよ。</li>
+</ol>
+<p>ヒント：<span class="math">&#92;(&#92;left(1+a/n&#92;right)^n&#92;to e^a&#92;)</span>。</p>
 </section>
 
 <section class="prob" id="q6-8">
@@ -918,8 +927,10 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q6-9">
+
 <div class="phead"><span class="pnum">問 6.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">最良予測としての条件付き期待値</span></div>
-<p>\(Y\) を観測して \(X\) を関数 \(g(Y)\) で予測する。平均二乗誤差 \(E[(X-g(Y))^2]\) を最小にする \(g\) は \(g(Y)=E[X\mid Y]\) であることを証明せよ。(ヒント:\(X-g(Y)=(X-E[X\mid Y])+(E[X\mid Y]-g(Y))\) と分解し、交差項が消えることを \(Y\) で条件付けて示す。)</p>
+<p><span class="math">&#92;(E[X^2]&lt;&#92;infty&#92;)</span> とする。<span class="math">&#92;(Y&#92;)</span> を観測して <span class="math">&#92;(X&#92;)</span> を予測する、<span class="math">&#92;(Y&#92;)</span> の可測関数 <span class="math">&#92;(g(Y)&#92;)</span> のうち <span class="math">&#92;(E[g(Y)^2]&lt;&#92;infty&#92;)</span> を満たすものを考える。平均二乗誤差 <span class="math">&#92;(E[(X-g(Y))^2]&#92;)</span> を最小にする予測が <span class="math">&#92;(g(Y)=E[X&#92;mid Y]&#92;)</span> であることを、確率1の同値を除いて証明せよ。</p>
+<p>ヒント：<span class="math">&#92;(X-g(Y)=(X-E[X&#92;mid Y])+(E[X&#92;mid Y]-g(Y))&#92;)</span> と分解し、交差項を <span class="math">&#92;(Y&#92;)</span> で条件付けて評価する。</p>
 </section>
 
 <div class="check">
@@ -1217,13 +1228,15 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q9-2">
+
 <div class="phead"><span class="pnum">問 9.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">ベルヌーイのMLE</span></div>
-<p>成功確率 \(p\) のベルヌーイ試行を \(n\) 回独立に行い、成功回数が \(k\) であった。対数尤度を最大化して最尤推定値 \(\hat{p}=\dfrac{k}{n}\) を導け。また \(\hat{p}=\bar{X}\)(成功指示変数の平均)が不偏であることと、その分散を求めよ。</p>
+<p>成功確率 <span class="math">&#92;(p&#92;in[0,1]&#92;)</span> のベルヌーイ試行を <span class="math">&#92;(n&#92;ge1&#92;)</span> 回独立に行い、成功回数が <span class="math">&#92;(k&#92;)</span> であった。<span class="math">&#92;(0&lt;k&lt;n&#92;)</span> では対数尤度を微分し、<span class="math">&#92;(k=0,n&#92;)</span> では尤度を境界も含めて調べ、全ての場合に最尤推定値が <span class="math">&#92;(&#92;widehat p=k/n&#92;)</span> となることを示せ。また <span class="math">&#92;(&#92;widehat p=&#92;bar X&#92;)</span> が不偏であることと、その分散を求めよ。</p>
 </section>
 
 <section class="prob" id="q9-3">
+
 <div class="phead"><span class="pnum">問 9.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">ポアソンのMLE</span></div>
-<p>画素への光子到来数のモデル \(\mathrm{Po}(\lambda)\) から i.i.d. 観測 \(x_1,\dots,x_n\) を得た。対数尤度を書き下し、最尤推定値が \(\hat{\lambda}=\bar{x}\) であることを導け。</p>
+<p>パラメータ空間を <span class="math">&#92;(&#92;lambda&#92;ge0&#92;)</span> とし、<span class="math">&#92;(&#92;mathrm{Po}(&#92;lambda)&#92;)</span> から i.i.d. 観測 <span class="math">&#92;(x_1,&#92;ldots,x_n&#92;)</span> を得た。少なくとも1つが正なら対数尤度を微分し、全観測が0の場合は境界を直接調べて、いずれも最尤推定値が <span class="math">&#92;(&#92;widehat&#92;lambda=&#92;bar x&#92;)</span> となることを示せ。</p>
 </section>
 
 <section class="prob" id="q9-4">
@@ -1236,11 +1249,13 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q9-5">
+
 <div class="phead"><span class="pnum">問 9.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">正規分布のMLE</span></div>
-<p>\(N(\mu,\sigma^2)\)(両方未知)からの i.i.d. 標本について:</p>
+<p><span class="math">&#92;(N(&#92;mu,&#92;sigma^2)&#92;)</span>（<span class="math">&#92;(&#92;mu&#92;in&#92;mathbb R,&#92; &#92;sigma^2&gt;0&#92;)</span>）からの i.i.d. 標本について、<span class="math">&#92;(n&#92;ge2&#92;)</span> かつ観測値には少なくとも2つの異なる値があるとする。</p>
 <ol class="sublist">
-<li>対数尤度 \(\ell(\mu,\sigma^2)\) を書き下し、\(\hat{\mu}=\bar{x}\)、\(\hat{\sigma}^2=\dfrac1n\sum(x_i-\bar{x})^2=s^2\) を導け。</li>
-<li>問8.4の結果を用いて \(\hat{\sigma}^2\) の偏りを述べ、不偏分散 \(u^2\) との関係を整理せよ。</li>
+<li>対数尤度を最大化し、<span class="math">&#92;(&#92;widehat&#92;mu=&#92;bar x&#92;)</span>、<span class="math">&#92;(&#92;widehat&#92;sigma^2=n^{-1}&#92;sum_i(x_i-&#92;bar x)^2&#92;)</span> を導け。</li>
+<li>問8.4の結果を用いて分散のMLEの偏りを述べ、不偏分散との関係を整理せよ。</li>
+<li>全観測値が等しい場合、<span class="math">&#92;(&#92;sigma^2&gt;0&#92;)</span> の通常の正規モデル内では分散のMLEが存在しない理由を述べよ。</li>
 </ol>
 </section>
 
@@ -1265,20 +1280,22 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q9-8">
+
 <div class="phead"><span class="pnum">問 9.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">フィッシャー情報量とクラメール・ラオ下限</span></div>
-<p>\(\mathrm{Ber}(p)\) について:</p>
+<p><span class="math">&#92;(&#92;mathrm{Ber}(p)&#92;)</span> で <span class="math">&#92;(0&lt;p&lt;1&#92;)</span> とする。この内点条件の下では、微分と期待値の交換などクラメール・ラオ下限に必要な正則条件が成り立つものとしてよい。</p>
 <ol class="sublist">
-<li>1観測の対数尤度 \(\ln f(x;p)=x\ln p+(1-x)\ln(1-p)\) から、フィッシャー情報量 \(I(p)=\dfrac{1}{p(1-p)}\) を、要点欄の2つの定義(スコアの2乗の期待値/2階微分の符号反転の期待値)の両方で計算せよ。</li>
-<li>\(\hat{p}=\bar{X}\) の分散とクラメール・ラオ下限 \(\dfrac{1}{nI(p)}\) を比較し、\(\hat{p}\) が有効推定量であることを示せ。</li>
+<li>1観測の対数尤度から、フィッシャー情報量 <span class="math">&#92;(I(p)=1/[p(1-p)]&#92;)</span> を、スコアの2乗の期待値と対数尤度の2階微分の両方から計算せよ。</li>
+<li><span class="math">&#92;(&#92;widehat p=&#92;bar X&#92;)</span> の分散とクラメール・ラオ下限 <span class="math">&#92;(1/[nI(p)]&#92;)</span> を比較し、有効推定量であることを示せ。</li>
 </ol>
 </section>
 
 <section class="prob" id="q9-9">
+
 <div class="phead"><span class="pnum">問 9.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">情報量の計算と漸近正規性</span></div>
 <ol class="sublist">
-<li>\(N(\mu,\sigma^2)\)(\(\sigma^2\) 既知)について \(I(\mu)=\dfrac{1}{\sigma^2}\) を示せ。</li>
-<li>\(\mathrm{Po}(\lambda)\) について \(I(\lambda)=\dfrac{1}{\lambda}\) を示せ。</li>
-<li>(2) を用いて、\(\hat{\lambda}=\bar{X}\) がクラメール・ラオ下限を達成すること、および漸近的に \(N\!\left(\lambda,\dfrac{\lambda}{n}\right)\) に従うことを述べよ。フォトンカウンティングで \(\lambda\) の推定誤差(標準偏差)が \(\sqrt{\lambda/n}\) となることの意味にも触れよ。</li>
+<li><span class="math">&#92;(N(&#92;mu,&#92;sigma^2)&#92;)</span>（<span class="math">&#92;(&#92;sigma^2&#92;)</span> 既知）について、1観測あたりの情報量が <span class="math">&#92;(I(&#92;mu)=1/&#92;sigma^2&#92;)</span> であることを示せ。</li>
+<li><span class="math">&#92;(&#92;mathrm{Po}(&#92;lambda)&#92;)</span> で <span class="math">&#92;(&#92;lambda&gt;0&#92;)</span> とし、1観測あたりの情報量が <span class="math">&#92;(I(&#92;lambda)=1/&#92;lambda&#92;)</span> であることを示せ。</li>
+<li><span class="math">&#92;(&#92;widehat&#92;lambda=&#92;bar X&#92;)</span> がクラメール・ラオ下限を達成し、漸近的に <span class="math">&#92;(N(&#92;lambda,&#92;lambda/n)&#92;)</span> に従うことを述べよ。絶対標準誤差と相対標準誤差も求め、その違いを説明せよ。</li>
 </ol>
 </section>
 
@@ -1438,8 +1455,9 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q11-3">
-<div class="phead"><span class="pnum">問 11.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">1標本t検定(片側)</span></div>
-<p>バッテリー容量の規格は「平均250以上」である。\(n=16\) 個の測定で \(\bar{x}=248\)、\(u=8\) を得た。\(H_0:\mu=250\) 対 \(H_1:\mu&lt;250\) を有意水準5%で検定せよ。\(t_{0.05}(15)=1.753\) を用いてよい。結論の述べ方にも注意すること。</p>
+
+<div class="phead"><span class="pnum">問 11.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">1標本t検定（片側）</span></div>
+<p>バッテリー容量の規格は「母平均250以上」である。正規母集団を仮定し、<span class="math">&#92;(n=16&#92;)</span> 個の測定で <span class="math">&#92;(&#92;bar x=248&#92;)</span>、不偏標準偏差 <span class="math">&#92;(u=8&#92;)</span> を得た。複合帰無仮説 <span class="math">&#92;(H_0:&#92;mu&#92;ge250&#92;)</span> 対 <span class="math">&#92;(H_1:&#92;mu&lt;250&#92;)</span> を有意水準5%で検定せよ。棄却確率が最大になる帰無仮説の境界 <span class="math">&#92;(&#92;mu=250&#92;)</span> で統計量を較正し、<span class="math">&#92;(t_{0.05}(15)=1.753&#92;)</span> を用いてよい。結論の述べ方にも注意すること。</p>
 </section>
 
 <section class="prob" id="q11-4">
@@ -1917,12 +1935,13 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q15-8">
+
 <div class="phead"><span class="pnum">問 15.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">3つの顔の同値性</span></div>
-<p>1回の更新(事前 \(N(\hat{x}^-,P^-)\)、観測 \(y\sim N(x,R)\))について、次の3つがすべて同じ答え \(\hat{x}=\hat{x}^-+K(y-\hat{x}^-)\)、\(K=\dfrac{P^-}{P^-+R}\) を与えることを示せ。</p>
+<p>スカラー状態の1回の更新を考える。<span class="math">&#92;(P^-&gt;0&#92;)</span>、<span class="math">&#92;(R&gt;0&#92;)</span> とし、事前分布は <span class="math">&#92;(x&#92;sim N(&#92;widehat x^-,P^-)&#92;)</span>、観測は <span class="math">&#92;(y=x+v&#92;)</span>、<span class="math">&#92;(v&#92;sim N(0,R)&#92;)</span> で、<span class="math">&#92;(v&#92;)</span> は事前誤差 <span class="math">&#92;(x-&#92;widehat x^-&#92;)</span> と独立とする。次の3つが同じ更新値 <span class="math">&#92;(&#92;widehat x=&#92;widehat x^-+K(y-&#92;widehat x^-)&#92;)</span>、<span class="math">&#92;(K=P^-/(P^-+R)&#92;)</span> を与えることを示せ。</p>
 <ol class="sublist">
-<li><b>ベイズ</b>:正規–正規の事後平均(問13.4の公式)。</li>
-<li><b>最小分散</b>:\(\hat{x}=(1-k)\hat{x}^-+ky\) の形の不偏な線形結合の中で、誤差分散 \((1-k)^2P^-+k^2R\) を最小にする \(k\)。</li>
-<li><b>正則化つき最小二乗</b>:\(\displaystyle\min_x\left\{\frac{(x-\hat{x}^-)^2}{P^-}+\frac{(y-x)^2}{R}\right\}\) の解。</li>
+<li><b>ベイズ</b>：正規–正規モデルの事後平均。</li>
+<li><b>最小分散</b>：<span class="math">&#92;(&#92;widetilde x=(1-k)&#92;widehat x^-+ky&#92;)</span> という不偏な線形推定量のうち、誤差分散を最小にする <span class="math">&#92;(k&#92;)</span>。</li>
+<li><b>正則化つき最小二乗</b>：<span class="math">&#92;(&#92;min_x&#92;{(x-&#92;widehat x^-)^2/P^-+(y-x)^2/R&#92;}&#92;)</span> の解。</li>
 </ol>
 </section>
 
@@ -2099,22 +2118,24 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q17-3">
-<div class="phead"><span class="pnum">問 17.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">並列冗長と多数決(TMR)</span></div>
-<p>ある任務時間での1系統の信頼度を \(R=0.99\) とする(故障は独立)。</p>
+
+<div class="phead"><span class="pnum">問 17.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">並列冗長と多数決（TMR）</span></div>
+<p>ある任務時間での1系統の信頼度を <span class="math">&#92;(R=0.99&#92;)</span> とする（故障は独立）。</p>
 <ol class="sublist">
-<li>2系統並列(どちらか生きていればよい)の信頼度を求めよ。</li>
-<li>3系統の2oo3多数決(TMR)の信頼度 \(3R^2-2R^3\) を求めよ。また、この式を「ちょうど2系統正常+3系統正常」の場合分けから導け。</li>
-<li>TMRが単一系より有利になる条件が \(R>1/2\) であることを示せ。</li>
+<li>2系統並列の信頼度を求めよ。</li>
+<li>3系統の2oo3多数決の信頼度を求め、場合分けから式 <span class="math">&#92;(3R^2-2R^3&#92;)</span> を導け。</li>
+<li><span class="math">&#92;(0&#92;le R&#92;le1&#92;)</span> でTMRと単一系を比較し、TMRが単一系より<b>厳密に</b>高信頼となる条件、および等しくなる境界値を全て求めよ。</li>
 </ol>
 </section>
 
 <section class="prob" id="q17-4">
+
 <div class="phead"><span class="pnum">問 17.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">ワイブル分布とB10寿命</span></div>
-<p>ある機械部品の寿命がワイブル分布(形状 \(m=2\)、尺度 \(\eta=10^4\) 時間)に従う。</p>
+<p>ある機械部品の寿命がワイブル分布（形状 <span class="math">&#92;(m=2&#92;)</span>、尺度 <span class="math">&#92;(&#92;eta=10^4&#92;)</span> 時間）に従う。</p>
 <ol class="sublist">
-<li>B10寿命(10%が故障する時間、すなわち \(R(t)=0.9\) となる \(t\))を求めよ(\(\ln0.9=-0.105\) を用いてよい)。</li>
-<li>ワイブル分布の故障率が \(\lambda(t)=\dfrac{m}{\eta}\left(\dfrac{t}{\eta}\right)^{m-1}\) であることを、\(\lambda(t)=-\dfrac{d}{dt}\ln R(t)\) から導け。</li>
-<li>\(m\) の値(\(&lt;1\)、\(=1\)、\(>1\))とバスタブ曲線の3領域の対応を述べよ。</li>
+<li>B10寿命、すなわち <span class="math">&#92;(R(t)=0.9&#92;)</span> となる時間を求めよ。<span class="math">&#92;(&#92;ln0.9=-0.105&#92;)</span> を用いてよい。</li>
+<li>故障率 <span class="math">&#92;(&#92;lambda(t)=-d&#92;ln R(t)/dt&#92;)</span> を計算せよ。</li>
+<li><span class="math">&#92;(m&lt;1,m=1,m&gt;1&#92;)</span> が、それぞれ減少・一定・増加する故障率を表すことを述べよ。これらはバスタブ曲線の各局面を<b>別々に近似</b>できるが、1つの固定した <span class="math">&#92;(m&#92;)</span> のワイブル分布だけでは通常、全期間のバスタブ形状を表せないことも説明せよ。</li>
 </ol>
 </section>
 
@@ -2233,11 +2254,12 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q18-5">
-<div class="phead"><span class="pnum">問 18.5</span><span class="lv lv3">★★★ 応用</span><span class="ptag">確率収束するが概収束しない列(タイプライター列)</span></div>
-<p>\(\Omega=[0,1]\)(一様確率)上で、区間の列を \([0,1]\);\([0,\tfrac12],[\tfrac12,1]\);\([0,\tfrac14],[\tfrac14,\tfrac12],[\tfrac12,\tfrac34],[\tfrac34,1]\);… と、幅を半分にしながら左から右へ走らせ、\(X_n=\mathbb{1}_{I_n}\)(\(n\) 番目の区間の指示関数)と定める。</p>
+
+<div class="phead"><span class="pnum">問 18.5</span><span class="lv lv3">★★★ 応用</span><span class="ptag">確率収束するが概収束しない列（タイプライター列）</span></div>
+<p><span class="math">&#92;(&#92;Omega=[0,1]&#92;)</span> に一様確率を入れる。第 <span class="math">&#92;(k&#92;)</span> 世代では、幅 <span class="math">&#92;(2^{-k}&#92;)</span> の閉区間 <span class="math">&#92;([j2^{-k},(j+1)2^{-k}]&#92;)</span>（<span class="math">&#92;(j=0,&#92;ldots,2^k-1&#92;)</span>）を左から順に並べる。端点では隣接区間が重なるが、区間の確率には影響しない。全世代を順につないだ列を <span class="math">&#92;(I_n&#92;)</span> とし、<span class="math">&#92;(X_n=&#92;mathbb 1_{I_n}&#92;)</span> と定める。</p>
 <ol class="sublist">
-<li>\(P(X_n\neq0)=|I_n|\to0\) を確認し、\(X_n\to0\)(確率収束)を示せ。</li>
-<li>任意の \(\omega\in[0,1]\) に対し、\(X_n(\omega)=1\) となる \(n\) が無限に存在すること(どの点も無限回「踏まれる」)を説明し、\(X_n(\omega)\) が0に収束する \(\omega\) は存在しない(概収束しない)ことを示せ。</li>
+<li><span class="math">&#92;(P(X_n&#92;ne0)=|I_n|&#92;to0&#92;)</span> を確認し、<span class="math">&#92;(X_n&#92;to0&#92;)</span> が確率収束であることを示せ。</li>
+<li>任意の <span class="math">&#92;(&#92;omega&#92;in[0,1]&#92;)</span> は各世代で少なくとも1つの区間に入るため、<span class="math">&#92;(X_n(&#92;omega)=1&#92;)</span> となる <span class="math">&#92;(n&#92;)</span> が無限に存在することを示せ。さらに0となる <span class="math">&#92;(n&#92;)</span> も無限に存在することを確認し、どの <span class="math">&#92;(&#92;omega&#92;)</span> でも0へ収束しないことを結論せよ。</li>
 </ol>
 </section>
 
@@ -2250,12 +2272,11 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </section>
 
 <section class="prob" id="q18-7">
+
 <div class="phead"><span class="pnum">問 18.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">特性関数とCLTの証明スケッチ</span></div>
 <ol class="sublist">
-<li>コーシー分布(密度 \(\dfrac{1}{\pi(1+x^2)}\))は期待値もMGFも持たないが、特性関数は \(\varphi(t)=e^{-|t|}\) として存在する(結果は認めてよい)。「MGFではなく特性関数を理論の主役にする」利点を述べよ。</li>
-<li>\(Z\sim N(0,1)\) の特性関数が \(\varphi_Z(t)=e^{-t^2/2}\) であることを認め、i.i.d.(平均0・分散1)の和 \(S_n=\dfrac{X_1+\cdots+X_n}{\sqrt{n}}\) の特性関数が
-\[\varphi_{S_n}(t)=\left(\varphi_X\!\left(\frac{t}{\sqrt{n}}\right)\right)^n=\left(1-\frac{t^2}{2n}+o\!\left(\frac1n\right)\right)^n\ \xrightarrow[n\to\infty]{}\ e^{-t^2/2}\]
-となることを、テイラー展開 \(\varphi_X(s)=1+isE[X]-\dfrac{s^2}{2}E[X^2]+o(s^2)\) から確かめよ。レヴィの連続性定理(特性関数の各点収束 ⇒ 分布収束)と合わせて、これが中心極限定理の証明の骨組みであることを述べよ。</li>
+<li>コーシー分布は期待値も0の近傍で有限なMGFも持たないが、特性関数 <span class="math">&#92;(&#92;varphi(t)=e^{-|t|}&#92;)</span> は存在する（結果は認めてよい）。特性関数を使う利点を述べよ。また、レヴィの連続性定理は「特性関数が各点収束し、その極限が0で連続である（同値に、ある確率分布の特性関数である）なら分布収束する」という条件を持つことを確認せよ。</li>
+<li><span class="math">&#92;(Z&#92;sim N(0,1)&#92;)</span> の特性関数が <span class="math">&#92;(e^{-t^2/2}&#92;)</span> であることを認める。平均0・分散1のi.i.d.変数について <span class="math">&#92;(S_n=(X_1+&#92;cdots+X_n)/&#92;sqrt n&#92;)</span> とし、有限な2次モーメントから得られる展開を使って、<span class="math">&#92;(&#92;varphi_{S_n}(t)&#92;to e^{-t^2/2}&#92;)</span> を示せ。この極限は0で連続な標準正規分布の特性関数なので、レヴィの連続性定理から中心極限定理を結論せよ。</li>
 </ol>
 </section>
 
@@ -2390,6 +2411,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <footer class="book">
 <p>『情報系のための確率・統計 問題集』 全18章・154問。姉妹編『解答解説集』とセットで学習してください。</p>
+<p>Copyright © 2026 情報系のための数学 問題集シリーズ. All Rights Reserved.</p>
 </footer>
 </div>
 </body>
