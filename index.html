@@ -230,8 +230,8 @@ document.getElementById("shelf").innerHTML = BOOKS.map(b => `
     <button class="go pdf" type="button" aria-expanded="false" aria-controls="pdf-${b.id}">PDFをダウンロード<span class="car">▼</span></button>
   </p>
   <div class="pdf-panel" id="pdf-${b.id}" hidden>
-    <a href="${b.id}/workbook.pdf" download>⤓ 問題集PDF<span class="meta">${b.pdf.workbook.pages}ページ / ${b.pdf.workbook.size}</span></a>
-    <a href="${b.id}/solutions.pdf" download>⤓ 解答解説集PDF<span class="meta">${b.pdf.solutions.pages}ページ / ${b.pdf.solutions.size}</span></a>
+    <a href="${b.id}/workbook.pdf" download target="_blank" rel="noopener">⤓ 問題集PDF<span class="meta">${b.pdf.workbook.pages}ページ / ${b.pdf.workbook.size}</span></a>
+    <a href="${b.id}/solutions.pdf" download target="_blank" rel="noopener">⤓ 解答解説集PDF<span class="meta">${b.pdf.solutions.pages}ページ / ${b.pdf.solutions.size}</span></a>
   </div>
 </article>`).join("");
 
