@@ -13,10 +13,16 @@ window.MathJax = {
     processEscapes: true
   },
   options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  // 長い数式は横スクロールさせず自動で折り返す(印刷・PDF で右端が切れるのを防ぐ)
+  output: {
+    font: 'mathjax-tex',
+    displayOverflow: 'linebreak',
+    linebreaks: { inline: true, width: '100%' }
+  },
   chtml: { matchFontHeight: true }
 };
 </script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.min.js"></script>
 <style>
 :root{
   --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
@@ -1512,7 +1518,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <h4>方針</h4>
 <p>期待度数は \(120/6=20\) ずつ。\(\chi^2=\sum(O-E)^2/E\)、自由度は \(6-1=5\)。</p>
 <h4>解答</h4>
-<p>\[\chi^2=\frac{(15-20)^2+(25-20)^2+(20-20)^2+(15-20)^2+(22-20)^2+(23-20)^2}{20}=\frac{25+25+0+25+4+9}{20}=\frac{88}{20}=4.4\]</p>
+<p>\[\begin{aligned}\chi^2&=\frac{(15-20)^2+(25-20)^2+(20-20)^2+(15-20)^2+(22-20)^2+(23-20)^2}{20}\\ &=\frac{25+25+0+25+4+9}{20}=\frac{88}{20}=4.4\end{aligned}\]</p>
 <p>\(4.4&lt;11.07=\chi^2_{0.05}(5)\) なので棄却できない:このデータから「サイコロが歪んでいる」とは言えない。</p>
 <h4 class="alt">ポイント</h4>
 <p>\((O-E)^2/E\) の形は、各セルの度数がほぼポアソン(分散≈平均=\(E\))であることに由来する標準化です。自由度が1減るのは「合計が120に固定」という制約のため(問8.4の \(n-1\) と同じ理屈)。乱数生成器の一様性テスト、カテゴリ分布のモデル検証など、離散データの検定の基本形です(期待度数が5未満のセルが多いときは近似が崩れるので併合や正確検定を)。</p>

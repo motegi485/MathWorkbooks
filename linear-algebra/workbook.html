@@ -13,10 +13,16 @@ window.MathJax = {
     processEscapes: true
   },
   options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  // 長い数式は横スクロールさせず自動で折り返す(印刷・PDF で右端が切れるのを防ぐ)
+  output: {
+    font: 'mathjax-tex',
+    displayOverflow: 'linebreak',
+    linebreaks: { inline: true, width: '100%' }
+  },
   chtml: { matchFontHeight: true }
 };
 </script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.min.js"></script>
 <style>
 :root{
   --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
