@@ -243,8 +243,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <h3>この章の要点</h3>
 <ul>
 <li><b class="term">内積</b>:\(\mathbf{a}\cdot\mathbf{b}=a_1b_1+\cdots+a_nb_n\)、<b class="term">ノルム</b>:\(\|\mathbf{a}\|=\sqrt{\mathbf{a}\cdot\mathbf{a}}\)</li>
-<li><b class="term">なす角</b>:\(\cos\theta=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|\,\|\mathbf{b}\|}\)、<b class="term">直交</b>:\(\mathbf{a}\cdot\mathbf{b}=0\)</li>
-<li><b class="term">正射影</b>:\(\operatorname{proj}_{\mathbf{a}}\mathbf{b}=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|^2}\,\mathbf{a}\)</li>
+<li><b class="term">なす角</b>（\(\mathbf{a},\mathbf{b}\ne\mathbf{0}\)）:\(\cos\theta=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|\,\|\mathbf{b}\|}\)、<b class="term">直交</b>:\(\mathbf{a}\cdot\mathbf{b}=0\)</li>
+<li><b class="term">正射影</b>（\(\mathbf{a}\ne\mathbf{0}\)）:\(\operatorname{proj}_{\mathbf{a}}\mathbf{b}=\dfrac{\mathbf{a}\cdot\mathbf{b}}{\|\mathbf{a}\|^2}\,\mathbf{a}\)</li>
 <li><b class="term">コーシー・シュワルツの不等式</b>:\(|\mathbf{a}\cdot\mathbf{b}|\le\|\mathbf{a}\|\,\|\mathbf{b}\|\)</li>
 </ul>
 </div>
@@ -715,7 +715,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <div class="why">
 <h3>なぜ学ぶのか</h3>
-<p>この章の主役は「<b>行列は線形写像の、基底を選んだときの座標表現にすぎない</b>」という視点の転換です。同じ写像でも、基底(モノサシ)を変えれば行列は姿を変える — そして<b>うまい基底を選べば行列は対角になり、写像の正体が丸見えになる</b>。これが次章の対角化、さらにPCA・SVDへ続く本書後半の背骨です。微分もフィルタもニューラルネットの層も線形写像。写像そのものと、その表現(行列)を区別できるようになることが、この章のゴールです。</p>
+<p>この章の主役は「<b>行列は線形写像の、基底を選んだときの座標表現にすぎない</b>」という視点の転換です。同じ写像でも、基底(モノサシ)を変えれば行列は姿を変える — そして<b>うまい基底を選べば行列は対角になり、写像の正体が丸見えになる</b>。これが次章の対角化、さらにPCA・SVDへ続く本書後半の背骨です。微分や線形フィルタ、ニューラルネットの線形層のうちバイアスを除いた部分も線形写像です。写像そのものと、その表現(行列)を区別できるようになることが、この章のゴールです。</p>
 </div>
 
 <div class="learn">
@@ -810,7 +810,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <div class="why">
 <h3>なぜ学ぶのか</h3>
-<p>固有ベクトルは、変換 \(A\) をかけても<b>向きが変わらず、\(\lambda\) 倍に伸縮するだけ</b>の特別な方向です。この「変換の軸」を基底に選ぶと(第6章の基底変換)、行列は対角になり、複雑な作用が完全にほどけます。累乗 \(A^n\) が一瞬で計算でき、漸化式は閉じた式になり、マルコフ連鎖の行き着く先(=GoogleのPageRank)や振動・拡散の様子が固有値だけで読める。大学院入試でも最頻出、機械学習でもPCA・スペクトラルクラスタリングとして主役 — 線形代数のハイライトです。</p>
+<p>固有ベクトルは、変換 \(A\) をかけても<b>同じ直線方向にとどまり、\(\lambda\) 倍に伸縮するだけ</b>の特別なベクトルです（\(\lambda\lt0\) ならベクトルの向きは反転します）。この「変換の軸」を基底に選ぶと(第6章の基底変換)、行列は対角になり、複雑な作用が完全にほどけます。累乗 \(A^n\) が一瞬で計算でき、漸化式は閉じた式になり、マルコフ連鎖の行き着く先(=GoogleのPageRank)や振動・拡散の様子が固有値だけで読める。大学院入試でも最頻出、機械学習でもPCA・スペクトラルクラスタリングとして主役 — 線形代数のハイライトです。</p>
 </div>
 
 <div class="learn">
@@ -831,7 +831,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li><b class="term">特性方程式</b>:\(\det(A-\lambda I)=0\) の解が固有値。各 \(\lambda\) の<b class="term">固有空間</b>は \(\operatorname{Null}(A-\lambda I)\)</li>
 <li><b class="term">対角化</b>:一次独立な固有ベクトルが \(n\) 本とれるとき、それらを列に並べた \(P\) で \(P^{-1}AP=D=\operatorname{diag}(\lambda_1,\dots,\lambda_n)\)</li>
 <li><b class="term">累乗</b>:\(A^n=PD^nP^{-1}\)(\(D^n\) は対角成分を \(n\) 乗するだけ)</li>
-<li><b class="term">不変量</b>:\(\operatorname{tr}A=\sum\lambda_i\)、\(\det A=\prod\lambda_i\)</li>
+<li><b class="term">不変量</b>:\(\operatorname{tr}A=\sum\lambda_i\)、\(\det A=\prod\lambda_i\)（固有値を複素数の範囲で代数的重複度だけ数える）</li>
 </ul>
 </div>
 
@@ -904,7 +904,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <div class="check">
 <h3>到達確認</h3>
 <ul>
-<li>\(A\mathbf{v}=\lambda\mathbf{v}\) の図形的な意味(向きを変えない方向)を説明できる</li>
+<li>\(A\mathbf{v}=\lambda\mathbf{v}\) の図形的な意味(同じ直線方向を保ち、\(\lambda\lt0\) なら向きは反転する)を説明できる</li>
 <li>対角化の手順(固有値→固有空間→\(P\) を組む→検算)を淀みなく実行できる</li>
 <li>「対角化可能 \(\iff\) 一次独立な固有ベクトルが \(n\) 本」と、その反例を挙げられる</li>
 </ul>
@@ -935,8 +935,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <div class="keybox">
 <h3>この章の要点</h3>
 <ul>
-<li><b class="term">正規直交系</b>:\(\mathbf{q}_i\cdot\mathbf{q}_j=\begin{cases}1 &amp; (i=j)\\ 0 &amp; (i\ne j)\end{cases}\)。座標は \(c_i=\mathbf{q}_i\cdot\mathbf{v}\) で即座に求まる</li>
-<li><b class="term">グラム・シュミットの直交化</b>:\(\mathbf{u}_k=\mathbf{a}_k-\sum_{i\lt k}\dfrac{\mathbf{u}_i\cdot\mathbf{a}_k}{\mathbf{u}_i\cdot\mathbf{u}_i}\mathbf{u}_i\)(既にできた方向への射影を引き去る)</li>
+<li><b class="term">正規直交系</b>:\(\mathbf{q}_i\cdot\mathbf{q}_j=\begin{cases}1 &amp; (i=j)\\ 0 &amp; (i\ne j)\end{cases}\)。\(\mathbf{v}\in\operatorname{span}\{\mathbf{q}_i\}\) の展開係数は \(c_i=\mathbf{q}_i\cdot\mathbf{v}\)（正規直交基底なら空間内の全ベクトルに適用できる）</li>
+<li><b class="term">グラム・シュミットの直交化</b>:一次独立な \(\mathbf{a}_1,\dots,\mathbf{a}_k\) に対し、\(\mathbf{u}_k=\mathbf{a}_k-\sum_{i\lt k}\dfrac{\mathbf{u}_i\cdot\mathbf{a}_k}{\mathbf{u}_i\cdot\mathbf{u}_i}\mathbf{u}_i\)(既にできた方向への射影を引き去る)</li>
 <li><b class="term">直交行列</b>:\(Q^\top Q=I\)。\(\|Q\mathbf{x}\|=\|\mathbf{x}\|\)(長さ・角度を保つ)、\(\det Q=\pm1\)</li>
 <li><b class="term">正規方程式</b>:\(\|A\mathbf{x}-\mathbf{b}\|\) の最小化 \(\iff A^\top A\hat{\mathbf{x}}=A^\top\mathbf{b}\)(残差 \(\perp\) 列空間)</li>
 <li><b class="term">直交補空間</b>:\(W^{\perp}=\{\mathbf{v}\mid \mathbf{v}\cdot\mathbf{w}=0\ (\forall\mathbf{w}\in W)\}\)</li>
@@ -1119,7 +1119,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <div class="why">
 <h3>なぜ学ぶのか</h3>
-<p>対角化(第7章)は正方行列限定、直交対角化(第9章)は対称行列限定でした。<b>特異値分解(SVD)\(A=U\Sigma V^\top\) は、どんな行列にも</b> — 長方形でも、ランク落ちでも — 例外なく存在する究極の分解です。意味は「どんな線形写像も、回転 → 軸ごとの伸縮 → 回転」。特異値の大きい成分だけ残す<b>低ランク近似</b>は画像圧縮・ノイズ除去・推薦システムの理論的基盤(Eckart–Young定理)であり、<b>擬似逆行列</b>は解けない方程式に常に「最良の答え」を与え、PCAの実務計算もSVDで行われます。数値計算・CV・機械学習で最も出番の多い分解 — 本書のクライマックスです。</p>
+<p>対角化(第7章)は正方行列限定、直交対角化(第9章)は対称行列限定でした。<b>特異値分解(SVD)\(A=U\Sigma V^\top\) は、どんな行列にも</b> — 長方形でも、ランク落ちでも — 例外なく存在する究極の分解です。意味は「どんな線形写像も、直交変換（回転・鏡映）→ 軸ごとの伸縮 → 直交変換」。特異値の大きい成分だけ残す<b>低ランク近似</b>は画像圧縮・ノイズ除去・推薦システムの理論的基盤(Eckart–Young定理)であり、<b>擬似逆行列</b>は解けない方程式に常に「最良の答え」を与え、PCAの実務計算もSVDで行われます。数値計算・CV・機械学習で最も出番の多い分解 — 本書のクライマックスです。</p>
 </div>
 
 <div class="learn">
@@ -1137,10 +1137,10 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <h3>この章の要点</h3>
 <ul>
 <li><b class="term">SVD</b>:\(A=U\Sigma V^\top\)(\(U,V\) は直交行列、\(\Sigma\) は対角に \(\sigma_1\ge\sigma_2\ge\cdots\ge0\))。任意の \(m\times n\) 行列で存在</li>
-<li><b class="term">特異値</b>:\(\sigma_i=\sqrt{A^\top A\ の固有値}\)。\(V\) の列 \(\mathbf{v}_i\) は \(A^\top A\) の固有ベクトル、\(\mathbf{u}_i=A\mathbf{v}_i/\sigma_i\)</li>
+<li><b class="term">特異値</b>:\(\sigma_i=\sqrt{A^\top A\ の固有値}\)。\(V\) の列 \(\mathbf{v}_i\) は \(A^\top A\) の固有ベクトル、\(\sigma_i\gt0\) なら \(\mathbf{u}_i=A\mathbf{v}_i/\sigma_i\)</li>
 <li><b class="term">低ランク近似</b>:\(A_k=\sum_{i=1}^{k}\sigma_i\mathbf{u}_i\mathbf{v}_i^\top\) がランク \(k\) 以下での最良近似(Eckart–Young)</li>
 <li><b class="term">擬似逆行列</b>:\(A^{+}=V\Sigma^{+}U^\top\)(\(\Sigma^{+}\):非零特異値を逆数に、転置)。\(A^{+}\mathbf{b}\) は最小ノルム最小二乗解</li>
-<li><b class="term">ノルムと条件数</b>:\(\|A\|_2=\sigma_1\)、\(\|A\|_F=\sqrt{\sum\sigma_i^2}\)、\(\kappa(A)=\sigma_{\max}/\sigma_{\min}\)</li>
+<li><b class="term">ノルムと条件数</b>:\(\|A\|_2=\sigma_1\)、\(\|A\|_F=\sqrt{\sum\sigma_i^2}\)。2-ノルム条件数はフルランクなら \(\kappa_2(A)=\sigma_{\max}/\sigma_{\min}\)、ランク落ちなら \(\kappa_2(A)=\infty\)</li>
 </ul>
 </div>
 
@@ -1247,17 +1247,17 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <div class="keybox">
 <h3>この章の要点</h3>
 <ul>
-<li><b class="term">最小多項式</b>:\(m(A)=O\) となるモニック多項式のうち次数最小のもの。<b>重根をもたない \(\iff\) 対角化可能</b></li>
-<li><b class="term">ジョルダン標準形</b>:対角化できない行列も \(P^{-1}AP=\begin{pmatrix}\lambda &amp; 1\\ 0 &amp; \lambda\end{pmatrix}\) 型のブロックまでは必ず簡約できる(\(P\) には一般化固有ベクトルを使う)</li>
+<li><b class="term">最小多項式</b>:\(m(A)=O\) となるモニック多項式のうち次数最小のもの。基礎体上で<b>相異なる1次因子の積に分解できる \(\iff\) その基礎体上で対角化可能</b></li>
+<li><b class="term">ジョルダン標準形</b>:複素数体上では、対角化できない行列も \(P^{-1}AP=\begin{pmatrix}\lambda &amp; 1\\ 0 &amp; \lambda\end{pmatrix}\) 型のブロックからなる形まで必ず簡約できる(実数体上でも特性多項式が実1次因子に分解する場合は同様。\(P\) には一般化固有ベクトルを使う)</li>
 <li><b class="term">行列指数関数</b>:\(e^{A}=\displaystyle\sum_{k=0}^{\infty}\frac{A^k}{k!}\)。微分方程式 \(\mathbf{x}'=A\mathbf{x}\) の解は \(\mathbf{x}(t)=e^{tA}\mathbf{x}(0)\)</li>
-<li><b class="term">冪乗法</b>:\(\mathbf{x}_{k+1}=A\mathbf{x}_k\) の反復は最大固有値の固有ベクトル方向へ収束。推定値はレイリー商 \(\frac{\mathbf{x}^\top A\mathbf{x}}{\mathbf{x}^\top\mathbf{x}}\)</li>
-<li><b class="term">グラフラプラシアン</b>:\(L=D-A\)(次数行列 − 隣接行列)。半正定値で、固有値 \(0\) の重複度 = 連結成分の個数</li>
+<li><b class="term">冪乗法</b>:絶対値最大の固有値が一意で、初期ベクトルが対応固有ベクトル方向の成分をもつとき、\(\mathbf{x}_{k+1}=A\mathbf{x}_k\) の正規化反復はその固有ベクトル方向へ収束（負の固有値なら符号は交互に反転）。対称行列での推定値はレイリー商 \(\frac{\mathbf{x}^\top A\mathbf{x}}{\mathbf{x}^\top\mathbf{x}}\)</li>
+<li><b class="term">グラフラプラシアン</b>:無向グラフでは \(L=D-A\)(次数行列 − 隣接行列)。半正定値で、固有値 \(0\) の重複度 = 連結成分の個数</li>
 </ul>
 </div>
 
 <section class="prob" id="q11-1">
 <div class="phead"><span class="pnum">問 11.1</span><span class="lv lv2">★★ 標準</span><span class="ptag">最小多項式</span></div>
-<p>\(B=\begin{pmatrix}2 &amp; 1\\ 0 &amp; 2\end{pmatrix}\)(問7.10の対角化できない行列)について、\(B-2I\) と \((B-2I)^2\) を計算し、\(B\) の最小多項式を求めよ。その結果は「最小多項式が重根をもたない \(\iff\) 対角化可能」という判定法とどう整合するか。</p>
+<p>\(B=\begin{pmatrix}2 &amp; 1\\ 0 &amp; 2\end{pmatrix}\)(問7.10の対角化できない行列)について、\(B-2I\) と \((B-2I)^2\) を計算し、\(B\) の最小多項式を求めよ。その結果は「最小多項式が基礎体上で相異なる1次因子の積に分解できる \(\iff\) その基礎体上で対角化可能」という判定法とどう整合するか。</p>
 </section>
 
 <section class="prob" id="q11-2">

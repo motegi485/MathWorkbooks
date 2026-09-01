@@ -1537,7 +1537,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <p>\[\operatorname{rank}A=\operatorname{rank}(U\Sigma V^\top)=\operatorname{rank}\Sigma\]</p>
 <p>\(\Sigma\) は対角行列なので、そのランクは非零対角成分の個数、すなわち非零特異値の個数に等しい。(証明終)</p>
 <h4 class="alt">ポイント</h4>
-<p>ここまでで、ランク(本問)・ノルム(問10.8)・条件数・行列式の絶対値(\(=\prod\sigma_i\))・4つの基本部分空間(\(\operatorname{Col}A=\operatorname{span}\{\mathbf{u}_i\}_{\sigma_i\gt0}\)、\(\operatorname{Null}A=\operatorname{span}\{\mathbf{v}_i\}_{\sigma_i=0}\))— 行列の主要な情報が<b>すべて特異値分解から読める</b>ことが見えてきます。SVDが「行列のレントゲン写真」と呼ばれるゆえんです。</p>
+<p>ここまでで、ランク(本問)・ノルム(問10.8)・条件数・正方行列の場合の行列式の絶対値(\(=\prod\sigma_i\))・4つの基本部分空間(\(\operatorname{Col}A=\operatorname{span}\{\mathbf{u}_i\}_{\sigma_i\gt0}\)、\(\operatorname{Null}A=\operatorname{span}\{\mathbf{v}_i\}_{\sigma_i=0}\))— 行列の主要な情報が<b>すべて特異値分解から読める</b>ことが見えてきます。SVDが「行列のレントゲン写真」と呼ばれるゆえんです。</p>
 </section>
 
 <section class="sol" id="a10-8">
@@ -1586,7 +1586,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <p>\[B-2I=\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}\ne O,\qquad (B-2I)^2=\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}\begin{pmatrix}0 &amp; 1\\ 0 &amp; 0\end{pmatrix}=O\]</p>
 <p>1次式 \(\lambda-2\) では零化されず、\((\lambda-2)^2\) で初めて零化される。よって最小多項式は</p>
 <p>\[m(\lambda)=(\lambda-2)^2\]</p>
-<p><b>整合性</b>:\(m(\lambda)\) は \(\lambda=2\) を重根にもつ。判定法「最小多項式が重根をもたない \(\iff\) 対角化可能」に照らすと、\(B\) は対角化不可能 — 問7.10 で固有空間の次元不足から得た結論と一致する。</p>
+<p><b>整合性</b>:\(m(\lambda)=(\lambda-2)^2\) は相異なる1次因子の積ではなく、\(\lambda=2\) を重根にもつ。判定法「最小多項式が基礎体上で相異なる1次因子の積に分解できる \(\iff\) その基礎体上で対角化可能」に照らすと、\(B\) は対角化不可能 — 問7.10 で固有空間の次元不足から得た結論と一致する。</p>
 <h4 class="alt">ポイント</h4>
 <p>対角化可能なら \(B=PDP^{-1}\) で、\(D\) の相異なる対角値 \(\lambda_i\) たちに対し \(\prod_i(B-\lambda_iI)=P\prod_i(D-\lambda_iI)P^{-1}=O\) となり、重根なしの多項式で零化できます。逆に重根が必要になるのは、\((B-\lambda I)\) を1回当てても消えない「ずれ」(冪零成分 \(N=B-2I\))が残っているから。最小多項式は「行列の真の複雑さ」を測る、特性多項式より精密なものさしです。</p>
 </section>
@@ -1606,7 +1606,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <p>\[BP=\begin{pmatrix}B\mathbf{v} &amp; B\mathbf{w}\end{pmatrix}=\begin{pmatrix}3 &amp; 1\\ 3 &amp; 4\end{pmatrix},\qquad P^{-1}BP=\begin{pmatrix}1 &amp; 0\\ -1 &amp; 1\end{pmatrix}\begin{pmatrix}3 &amp; 1\\ 3 &amp; 4\end{pmatrix}=\begin{pmatrix}3 &amp; 1\\ 0 &amp; 3\end{pmatrix}\]</p>
 <p>確かにジョルダン標準形 \(\begin{pmatrix}3 &amp; 1\\ 0 &amp; 3\end{pmatrix}\) になる。</p>
 <h4 class="alt">ポイント</h4>
-<p>検算の見方:\(B\mathbf{w}=(1,4)^\top=\mathbf{v}+3\mathbf{w}\) — 第2列の「\(\mathbf{v}\) 成分1、\(\mathbf{w}\) 成分3」がジョルダンブロックの \(\begin{pmatrix}1\\ 3\end{pmatrix}\) にそのまま写っています。一般の \(n\) 次でも「どんな行列もジョルダンブロックのブロック対角にできる」(ジョルダン標準形の存在定理。完全証明は本書のレベルを超えるので事実として述べます)。対角化の"完全版"として、\(A^n\) や \(e^{tA}\)(問11.4)の計算、微分方程式の重解の場合(\(te^{\lambda t}\) 型の解の出所)を統一的に説明します。</p>
+<p>検算の見方:\(B\mathbf{w}=(1,4)^\top=\mathbf{v}+3\mathbf{w}\) — 第2列の「\(\mathbf{v}\) 成分1、\(\mathbf{w}\) 成分3」がジョルダンブロックの \(\begin{pmatrix}1\\ 3\end{pmatrix}\) にそのまま写っています。一般の \(n\) 次でも、複素数体上では「どんな行列もジョルダンブロックのブロック対角にできる」(ジョルダン標準形の存在定理。実数体上でも特性多項式が実1次因子に分解する場合は同様。完全証明は本書のレベルを超えるので事実として述べます)。対角化の"完全版"として、\(A^n\) や \(e^{tA}\)(問11.4)の計算、微分方程式の重解の場合(\(te^{\lambda t}\) 型の解の出所)を統一的に説明します。</p>
 </section>
 
 <section class="sol" id="a11-3">
@@ -1689,9 +1689,12 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <h4>方針</h4>
 <p>次数行列と隣接行列を定義どおり書き、固有値と第2固有ベクトルを調べます。成分が0の頂点の扱いにも注意します。</p>
 <h4>解答</h4>
-<p>(1) 次数は頂点1, 2, 3の順に1, 2, 1。したがって D=diag(1,2,1)、隣接行列の非零成分は (1,2), (2,1), (2,3), (3,2) にあり、L=D−A は対角成分が1,2,1、辺に対応する非対角成分が−1の対称行列となる。</p>
-<p>(2) L の各行の和は0なので (1,1,1) は固有値0の固有ベクトル。特性多項式を計算すると固有値は0, 1, 3である。</p>
-<p>(3) 固有値0の重複度は1で、連結成分が1個であることと一致する。2番目に小さい固有値1の固有ベクトルとして (1,0,−1) がとれる。頂点1は正、頂点3は負、頂点2は0で境界にある。0の成分はどちらかへ割り当てる必要があるため、符号に基づく2分割は {1}|{2,3} または {1,2}|{3}。いずれも道グラフを1本の辺で切る自然な2分割である。</p>
+<p>(1) 次数は頂点1, 2, 3の順に1, 2, 1。したがって</p>
+<p>\[D=\begin{pmatrix}1 &amp; 0 &amp; 0\\ 0 &amp; 2 &amp; 0\\ 0 &amp; 0 &amp; 1\end{pmatrix},\qquad A=\begin{pmatrix}0 &amp; 1 &amp; 0\\ 1 &amp; 0 &amp; 1\\ 0 &amp; 1 &amp; 0\end{pmatrix},\qquad L=D-A=\begin{pmatrix}1 &amp; -1 &amp; 0\\ -1 &amp; 2 &amp; -1\\ 0 &amp; -1 &amp; 1\end{pmatrix}.\]</p>
+<p>(2) \(L\) の各行の和は \(0\) なので \(L(1,1,1)^\top=\mathbf{0}\)。したがって \((1,1,1)^\top\) は固有値 \(0\) の固有ベクトルである。また</p>
+<p>\[\det(L-\lambda I)=(1-\lambda)\{(2-\lambda)(1-\lambda)-1\}-(1-\lambda)=-\lambda(1-\lambda)(3-\lambda)\]</p>
+<p>より、固有値は \(0,1,3\) である。</p>
+<p>(3) 固有値 \(0\) の重複度は \(1\) で、連結成分が1個であることと一致する。2番目に小さい固有値 \(1\) の固有ベクトルとして \((1,0,-1)^\top\) がとれる。頂点1は正、頂点3は負、頂点2は0で境界にある。0の成分はどちらかへ割り当てる必要があるため、符号に基づく2分割は \(\{1\}\mid\{2,3\}\) または \(\{1,2\}\mid\{3\}\)。いずれも道グラフを1本の辺で切る自然な2分割である。</p>
 <h4 class="alt">ポイント</h4>
 <p>グラフラプラシアンは半正定値で、その0固有空間は連結成分ごとに定数となるベクトルから成ります。第2固有値はグラフの切れやすさを測り、対応するフィードラー・ベクトルを使う分割がスペクトラルクラスタリングの原型です。成分が0の頂点には、しきい値や目的関数に基づく割当て規則が別途必要です。</p>
 </section>
