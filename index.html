@@ -63,17 +63,29 @@ ul.topics li{background:var(--accent-soft);color:var(--accent);border-radius:3px
 .stats{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin:0 0 1rem;font-size:.85rem}
 .stats .scale{font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--ink)}
 .stats .sep{color:var(--rule)}
-.lv{font-size:.72rem;font-weight:700;color:#fff;border-radius:3px;
-  padding:.12rem .5rem;letter-spacing:.05em;white-space:nowrap}
-.lv1{background:var(--lv1)}.lv2{background:var(--lv2)}.lv3{background:var(--lv3)}
+/* 難易度バッジは淡色チップ。塗りつぶしは「押せるもの」(下の .go)だけの表現にする */
+.lv{font-size:.72rem;font-weight:700;border-radius:3px;
+  padding:.12rem .5rem;letter-spacing:.05em;white-space:nowrap;
+  background:transparent;border:1px solid currentColor}
+.lv1{color:#276a43}.lv2{color:#1a4477}.lv3{color:#8f2b2b}
 /* 2つのリンクボタン */
 .links{display:flex;gap:.6rem;flex-wrap:wrap;margin:0}
-.go{display:inline-block;padding:.55rem 1.3rem;border-radius:5px;color:#fff;
-  font-weight:700;font-size:.95rem;letter-spacing:.05em;text-decoration:none}
-.go:hover{text-decoration:none;filter:brightness(1.15)}
+.go{display:inline-block;padding:.62rem 1.35rem;border-radius:4px;color:#fff;
+  font-weight:700;font-size:.95rem;letter-spacing:.05em;text-decoration:none;
+  box-shadow:0 2px 0 var(--edge),0 2px 5px rgba(34,38,46,.18);
+  transition:transform .12s ease,box-shadow .12s ease,filter .12s ease}
+.go .arw{margin-left:.5em;font-weight:400}
+.go:hover{text-decoration:none;filter:brightness(1.08);transform:translateY(-1px);
+  box-shadow:0 3px 0 var(--edge),0 5px 10px rgba(34,38,46,.2)}
+.go:active{transform:translateY(2px);
+  box-shadow:0 0 0 var(--edge),0 1px 2px rgba(34,38,46,.2)}
 .go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-.go.q{background:var(--q)}
-.go.a{background:var(--a)}
+.go.q{background:var(--q);--edge:#143560}
+.go.a{background:var(--a);--edge:#12483c}
+@media (prefers-reduced-motion:reduce){
+  .go{transition:none}
+  .go:hover,.go:active{transform:none}
+}
 /* --- noscript フォールバック --- */
 noscript ul.plain{margin:1.5rem 0;padding:1.1rem 1.35rem 1.1rem 2.6rem;
   background:var(--card);border:1px solid var(--rule);border-radius:6px}
@@ -196,8 +208,8 @@ document.getElementById("shelf").innerHTML = BOOKS.map(b => `
     ${b.appendix ? `<span class="sep">|</span><span>付録 ${esc(b.appendix)}</span>` : ""}
   </p>
   <p class="links">
-    <a class="go q" href="${b.id}/workbook.html" target="_blank" rel="noopener">問題集を開く</a>
-    <a class="go a" href="${b.id}/solutions.html" target="_blank" rel="noopener">解答解説集を開く</a>
+    <a class="go q" href="${b.id}/workbook.html" target="_blank" rel="noopener">問題集を開く<span class="arw">→</span></a>
+    <a class="go a" href="${b.id}/solutions.html" target="_blank" rel="noopener">解答解説集を開く<span class="arw">→</span></a>
   </p>
 </article>`).join("");
 </script>
