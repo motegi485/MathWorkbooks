@@ -72,6 +72,7 @@ ul.topics li{background:var(--accent-soft);color:var(--accent);border-radius:3px
 .links{display:flex;gap:.6rem;flex-wrap:wrap;margin:0}
 .go{display:inline-block;padding:.62rem 1.35rem;border-radius:4px;color:#fff;
   font-weight:700;font-size:.95rem;letter-spacing:.05em;text-decoration:none;
+  border:0;font-family:inherit;line-height:inherit;cursor:pointer;
   box-shadow:0 2px 0 var(--edge),0 2px 5px rgba(34,38,46,.18);
   transition:transform .12s ease,box-shadow .12s ease,filter .12s ease}
 .go .arw{margin-left:.5em;font-weight:400}
@@ -82,9 +83,22 @@ ul.topics li{background:var(--accent-soft);color:var(--accent);border-radius:3px
 .go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .go.q{background:var(--q);--edge:#143560}
 .go.a{background:var(--a);--edge:#12483c}
+/* PDFの保存。開く操作と区別できるよう、色は落として同じ「押せる」形にする */
+.go.pdf{background:#5c6270;--edge:#3f444e}
+.go.pdf .car{display:inline-block;margin-left:.5em;font-size:.7em;font-weight:400;
+  transition:transform .15s ease}
+.go.pdf[aria-expanded="true"] .car{transform:rotate(180deg)}
+.pdf-panel{margin:.7rem 0 0;padding:.8rem 1rem;background:var(--accent-soft);
+  border:1px solid var(--rule);border-radius:5px;
+  display:flex;flex-direction:column;gap:.5rem}
+/* display を指定した以上、hidden 属性を明示的に効かせないと閉じられない */
+.pdf-panel[hidden]{display:none}
+.pdf-panel a{font-size:.92rem;font-weight:700}
+.pdf-panel .meta{font-weight:400;color:var(--sub);font-size:.82rem;margin-left:.45em}
 @media (prefers-reduced-motion:reduce){
   .go{transition:none}
   .go:hover,.go:active{transform:none}
+  .go.pdf .car{transition:none}
 }
 /* --- noscript フォールバック --- */
 noscript ul.plain{margin:1.5rem 0;padding:1.1rem 1.35rem 1.1rem 2.6rem;
@@ -138,9 +152,9 @@ footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accen
 
 <noscript>
 <ul class="plain">
-<li>情報系のための線形代数 — <a href="linear-algebra/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="linear-algebra/solutions.html" target="_blank" rel="noopener">解答解説集</a></li>
-<li>情報系のための微分積分・最適化 — <a href="calculus-optimization/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="calculus-optimization/solutions.html" target="_blank" rel="noopener">解答解説集</a></li>
-<li>情報系のための確率・統計 — <a href="probability-statistics/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="probability-statistics/solutions.html" target="_blank" rel="noopener">解答解説集</a></li>
+<li>情報系のための線形代数 — <a href="linear-algebra/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="linear-algebra/solutions.html" target="_blank" rel="noopener">解答解説集</a>(PDF: <a href="linear-algebra/workbook.pdf" download>問題集</a> / <a href="linear-algebra/solutions.pdf" download>解答解説集</a>)</li>
+<li>情報系のための微分積分・最適化 — <a href="calculus-optimization/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="calculus-optimization/solutions.html" target="_blank" rel="noopener">解答解説集</a>(PDF: <a href="calculus-optimization/workbook.pdf" download>問題集</a> / <a href="calculus-optimization/solutions.pdf" download>解答解説集</a>)</li>
+<li>情報系のための確率・統計 — <a href="probability-statistics/workbook.html" target="_blank" rel="noopener">問題集</a> / <a href="probability-statistics/solutions.html" target="_blank" rel="noopener">解答解説集</a>(PDF: <a href="probability-statistics/workbook.pdf" download>問題集</a> / <a href="probability-statistics/solutions.pdf" download>解答解説集</a>)</li>
 </ul>
 </noscript>
 
@@ -166,6 +180,7 @@ const BOOKS = [
     series: "情報系のための線形代数",
     chapters: 11, problems: 103,
     levels: [23, 48, 32],
+    pdf: { workbook: { pages: 54, size: "2.7MB" }, solutions: { pages: 131, size: "3.1MB" } },
     summary: "ベクトルと行列から出発し、固有値・直交性を経て、特異値分解(SVD)と数値線形代数まで。機械学習・画像処理・CG の共通言語をつくります。",
     topics: ["ベクトルと行列", "連立一次方程式", "行列式", "基底と次元", "固有値と対角化", "内積と直交性", "二次形式", "SVD"]
   },
@@ -175,6 +190,7 @@ const BOOKS = [
     series: "情報系のための微分積分・最適化",
     chapters: 19, problems: 159,
     levels: [48, 76, 35],
+    pdf: { workbook: { pages: 140, size: "4.8MB" }, solutions: { pages: 231, size: "4.8MB" } },
     appendix: "主要公式集",
     summary: "1変数の微積分から多変数・凸解析へ進み、勾配降下法・ニュートン法・KKT条件・双対性まで。学習アルゴリズムが「なぜ動くのか」に届きます。",
     topics: ["極限と微分", "テイラー展開", "積分と広義積分", "偏微分と勾配", "ヘッセ行列", "重積分", "凸集合と凸関数", "勾配降下法", "KKT条件", "双対性"]
@@ -185,6 +201,7 @@ const BOOKS = [
     series: "情報系のための確率・統計",
     chapters: 18, problems: 154,
     levels: [52, 62, 40],
+    pdf: { workbook: { pages: 106, size: "4.1MB" }, solutions: { pages: 170, size: "3.9MB" } },
     appendix: "数表",
     summary: "確率の基礎から、推定・検定・回帰、ベイズ統計、マルコフ連鎖とカルマンフィルタ、情報理論、そして測度論的確率論の入口まで。",
     topics: ["条件付き確率とベイズ", "確率変数と分布", "多次元確率変数", "大数の法則とCLT", "点推定・区間推定", "仮説検定", "回帰分析", "ベイズ統計", "確率過程", "情報理論"]
@@ -210,8 +227,23 @@ document.getElementById("shelf").innerHTML = BOOKS.map(b => `
   <p class="links">
     <a class="go q" href="${b.id}/workbook.html" target="_blank" rel="noopener">問題集を開く<span class="arw">→</span></a>
     <a class="go a" href="${b.id}/solutions.html" target="_blank" rel="noopener">解答解説集を開く<span class="arw">→</span></a>
+    <button class="go pdf" type="button" aria-expanded="false" aria-controls="pdf-${b.id}">PDFをダウンロード<span class="car">▼</span></button>
   </p>
+  <div class="pdf-panel" id="pdf-${b.id}" hidden>
+    <a href="${b.id}/workbook.pdf" download>⤓ 問題集PDF<span class="meta">${b.pdf.workbook.pages}ページ / ${b.pdf.workbook.size}</span></a>
+    <a href="${b.id}/solutions.pdf" download>⤓ 解答解説集PDF<span class="meta">${b.pdf.solutions.pages}ページ / ${b.pdf.solutions.size}</span></a>
+  </div>
 </article>`).join("");
+
+// PDFボタンの開閉。カードごとに独立して動く(委譲なのでカードが増えても対応不要)
+document.getElementById("shelf").addEventListener("click", e => {
+  const btn = e.target.closest("button.go.pdf");
+  if (!btn) return;
+  const panel = document.getElementById(btn.getAttribute("aria-controls"));
+  const open = btn.getAttribute("aria-expanded") === "true";
+  btn.setAttribute("aria-expanded", String(!open));
+  panel.hidden = open;
+});
 </script>
 </body>
 </html>
