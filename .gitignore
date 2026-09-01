@@ -1,8 +1,9 @@
-# Git/GitHubで管理する公開対象は、次の7項目だけ。
+# Git/GitHubで管理する公開対象は、次の8項目だけ。
 *
 !README.md
 !CLAUDE.md
 !AGENTS.md
+!.gitattributes
 !index.html
 !calculus-optimization/
 !calculus-optimization/**
