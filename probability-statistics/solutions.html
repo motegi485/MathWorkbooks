@@ -57,18 +57,18 @@ header.chap .chsub{color:var(--sub);margin:0;font-size:.98rem}
 /* --- 説明ボックス類 --- */
 .why,.learn,.keybox,.howto{margin:1.4rem 0;padding:1.1rem 1.35rem;border-radius:6px;
   background:var(--card);border:1px solid var(--rule)}
-.why{border-left:4px solid var(--accent)}
-.why h3,.learn h3,.keybox h3,.howto h3{margin:0 0 .55rem;font-size:1.02rem;color:var(--accent)}
+.why h3,.learn h3,.keybox h3,.howto h3{margin:0 0 .7rem;font-size:1.02rem;color:var(--accent);
+  border-bottom:1px solid var(--rule);padding-bottom:.35rem}
 .learn ul,.keybox ul{margin:.2rem 0;padding-left:1.35rem}
 .learn li,.keybox li{margin:.3rem 0}
 .keybox{background:var(--accent-soft);border-color:transparent}
 .keybox b.term{color:var(--accent)}
 /* --- 問題カード --- */
 section.prob,section.sol{margin:1.7rem 0;padding:1.15rem 1.35rem 1.05rem;
-  background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
+  background:var(--card);border:1px solid var(--rule);
   border-radius:6px}
-section.prob{border-left-color:var(--accent)}
-.phead{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.5rem}
+.phead{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.75rem;
+  border-bottom:1px solid var(--rule);padding-bottom:.45rem}
 .pnum{font-family:var(--serif);font-weight:700;font-size:1.08rem;color:var(--accent)}
 .lv{font-size:.72rem;font-weight:700;color:#fff;border-radius:3px;padding:.12rem .5rem;letter-spacing:.05em}
 .lv1{background:var(--lv1)}.lv2{background:var(--lv2)}.lv3{background:var(--lv3)}
@@ -77,7 +77,6 @@ section.prob p,section.sol p{margin:.55rem 0}
 ol.sublist{padding-left:1.6rem;margin:.4rem 0}
 ol.sublist li{margin:.35rem 0}
 /* --- 解説の段階 --- */
-section.sol{border-left-color:var(--accent)}
 section.sol h4{font-family:var(--sans);font-size:.85rem;letter-spacing:.15em;
   color:#fff;background:var(--accent);display:inline-block;
   padding:.14rem .8rem;border-radius:3px;margin:1.05rem 0 .35rem}
@@ -86,7 +85,7 @@ section.sol h4.alt{background:var(--sub)}
   border-radius:5px;font-size:.94rem}
 .note b:first-child{color:var(--accent)}
 .warn{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:#faf1ee;
-  border-left:3px solid var(--lv3);border-radius:0 5px 5px 0;font-size:.94rem}
+  border-radius:5px;font-size:.94rem}
 .warn b:first-child{color:var(--lv3)}
 /* --- 表 --- */
 table{border-collapse:collapse;margin:1rem 0;font-size:.93rem;width:100%}
