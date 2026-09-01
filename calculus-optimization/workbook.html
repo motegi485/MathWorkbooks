@@ -101,6 +101,7 @@ th{background:var(--accent-soft);font-weight:700}
 table.numtable{font-size:.84rem;font-variant-numeric:tabular-nums}
 table.numtable th,table.numtable td{padding:.28rem .4rem;text-align:right}
 table.numtable th:first-child{text-align:left}
+table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:var(--sub);padding:0 0 .3rem}
 /* --- 章末 --- */
 .check{margin:2.2rem 0 0;padding:1rem 1.3rem;border:1px dashed var(--accent);border-radius:6px}
 .check h3{margin:0 0 .5rem;font-size:.98rem;color:var(--accent)}
@@ -118,6 +119,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
   body{background:#fff}
   header.chap{break-before:page;border-top:none}
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
+  table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
 }
 </style>
@@ -208,7 +210,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <h3>記号表</h3>
 <table>
-<tr><th>記号</th><th>意味</th></tr>
+<thead><tr><th>記号</th><th>意味</th></tr></thead>
 <tr><td>\(\displaystyle\lim_{x\to a}f(x)\)</td><td>\(x\) を \(a\) に限りなく近づけたときの \(f(x)\) の極限</td></tr>
 <tr><td>\(f'(x),\ \dfrac{df}{dx}\)</td><td>\(f\) の導関数(微分)。\(f''\) は2階導関数</td></tr>
 <tr><td>\(\dfrac{\partial f}{\partial x},\ f_x\)</td><td>偏導関数(\(x\) 以外の変数を止めて \(x\) で微分)</td></tr>

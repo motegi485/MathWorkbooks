@@ -101,6 +101,7 @@ th{background:var(--accent-soft);font-weight:700}
 table.numtable{font-size:.84rem;font-variant-numeric:tabular-nums}
 table.numtable th,table.numtable td{padding:.28rem .4rem;text-align:right}
 table.numtable th:first-child{text-align:left}
+table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:var(--sub);padding:0 0 .3rem}
 /* --- 章末 --- */
 .check{margin:2.2rem 0 0;padding:1rem 1.3rem;border:1px dashed var(--accent);border-radius:6px}
 .check h3{margin:0 0 .5rem;font-size:.98rem;color:var(--accent)}
@@ -118,6 +119,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
   body{background:#fff}
   header.chap{break-before:page;border-top:none}
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
+  table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
 }
 </style>
@@ -206,7 +208,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <h3>記号表</h3>
 <table>
-<tr><th>記号</th><th>意味</th></tr>
+<thead><tr><th>記号</th><th>意味</th></tr></thead>
 <tr><td>\(P(A)\)、\(P(A\mid B)\)</td><td>事象 \(A\) の確率、\(B\) が起きたという条件の下での \(A\) の条件付き確率</td></tr>
 <tr><td>\(X,\ Y\) /\(x,\ y\)</td><td>確率変数(大文字)/その実現値(小文字)。この区別は第8章以降で特に効く</td></tr>
 <tr><td>\(E[X],\ V[X]\)</td><td>期待値、分散。標準偏差は \(\sigma=\sqrt{V[X]}\)</td></tr>
@@ -2308,7 +2310,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <h3>付表1 標準正規分布表 — 下側確率 \(\Phi(z)=P(Z\le z)\)</h3>
 <p>行が \(z\) の小数第1位まで、列が小数第2位。負の \(z\) は \(\Phi(-z)=1-\Phi(z)\) で求める。</p>
 <table class="numtable">
-<tr><th>\(z\)</th><th>.00</th><th>.01</th><th>.02</th><th>.03</th><th>.04</th><th>.05</th><th>.06</th><th>.07</th><th>.08</th><th>.09</th></tr>
+<caption>(1) \(z\) = 0.0 〜 1.5</caption>
+<thead><tr><th>\(z\)</th><th>.00</th><th>.01</th><th>.02</th><th>.03</th><th>.04</th><th>.05</th><th>.06</th><th>.07</th><th>.08</th><th>.09</th></tr></thead>
 <tr><th>0.0</th><td>0.5000</td><td>0.5040</td><td>0.5080</td><td>0.5120</td><td>0.5160</td><td>0.5199</td><td>0.5239</td><td>0.5279</td><td>0.5319</td><td>0.5359</td></tr>
 <tr><th>0.1</th><td>0.5398</td><td>0.5438</td><td>0.5478</td><td>0.5517</td><td>0.5557</td><td>0.5596</td><td>0.5636</td><td>0.5675</td><td>0.5714</td><td>0.5753</td></tr>
 <tr><th>0.2</th><td>0.5793</td><td>0.5832</td><td>0.5871</td><td>0.5910</td><td>0.5948</td><td>0.5987</td><td>0.6026</td><td>0.6064</td><td>0.6103</td><td>0.6141</td></tr>
@@ -2325,6 +2328,10 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <tr><th>1.3</th><td>0.9032</td><td>0.9049</td><td>0.9066</td><td>0.9082</td><td>0.9099</td><td>0.9115</td><td>0.9131</td><td>0.9147</td><td>0.9162</td><td>0.9177</td></tr>
 <tr><th>1.4</th><td>0.9192</td><td>0.9207</td><td>0.9222</td><td>0.9236</td><td>0.9251</td><td>0.9265</td><td>0.9279</td><td>0.9292</td><td>0.9306</td><td>0.9319</td></tr>
 <tr><th>1.5</th><td>0.9332</td><td>0.9345</td><td>0.9357</td><td>0.9370</td><td>0.9382</td><td>0.9394</td><td>0.9406</td><td>0.9418</td><td>0.9429</td><td>0.9441</td></tr>
+</table>
+<table class="numtable">
+<caption>(2) \(z\) = 1.6 〜 3.0</caption>
+<thead><tr><th>\(z\)</th><th>.00</th><th>.01</th><th>.02</th><th>.03</th><th>.04</th><th>.05</th><th>.06</th><th>.07</th><th>.08</th><th>.09</th></tr></thead>
 <tr><th>1.6</th><td>0.9452</td><td>0.9463</td><td>0.9474</td><td>0.9484</td><td>0.9495</td><td>0.9505</td><td>0.9515</td><td>0.9525</td><td>0.9535</td><td>0.9545</td></tr>
 <tr><th>1.7</th><td>0.9554</td><td>0.9564</td><td>0.9573</td><td>0.9582</td><td>0.9591</td><td>0.9599</td><td>0.9608</td><td>0.9616</td><td>0.9625</td><td>0.9633</td></tr>
 <tr><th>1.8</th><td>0.9641</td><td>0.9649</td><td>0.9656</td><td>0.9664</td><td>0.9671</td><td>0.9678</td><td>0.9686</td><td>0.9693</td><td>0.9699</td><td>0.9706</td></tr>
@@ -2345,7 +2352,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <h3>付表2 t分布の上側パーセント点 \(t_{\alpha}(m)\)</h3>
 <p>\(P(T>t_{\alpha}(m))=\alpha\)(\(m\):自由度)。両側 \(100(1-2\alpha)\%\) 区間には \(\pm t_{\alpha}(m)\) を使う。</p>
 <table class="numtable">
-<tr><th>\(m\) \ \(\alpha\)</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.01</th><th>0.005</th></tr>
+<caption>(1) \(m\) = 1 〜 17</caption>
+<thead><tr><th>\(m\) \ \(\alpha\)</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.01</th><th>0.005</th></tr></thead>
 <tr><th>1</th><td>3.078</td><td>6.314</td><td>12.706</td><td>31.821</td><td>63.657</td></tr>
 <tr><th>2</th><td>1.886</td><td>2.920</td><td>4.303</td><td>6.965</td><td>9.925</td></tr>
 <tr><th>3</th><td>1.638</td><td>2.353</td><td>3.182</td><td>4.541</td><td>5.841</td></tr>
@@ -2363,6 +2371,10 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <tr><th>15</th><td>1.341</td><td>1.753</td><td>2.131</td><td>2.602</td><td>2.947</td></tr>
 <tr><th>16</th><td>1.337</td><td>1.746</td><td>2.120</td><td>2.583</td><td>2.921</td></tr>
 <tr><th>17</th><td>1.333</td><td>1.740</td><td>2.110</td><td>2.567</td><td>2.898</td></tr>
+</table>
+<table class="numtable">
+<caption>(2) \(m\) = 18 〜 ∞(正規)</caption>
+<thead><tr><th>\(m\) \ \(\alpha\)</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.01</th><th>0.005</th></tr></thead>
 <tr><th>18</th><td>1.330</td><td>1.734</td><td>2.101</td><td>2.552</td><td>2.878</td></tr>
 <tr><th>19</th><td>1.328</td><td>1.729</td><td>2.093</td><td>2.539</td><td>2.861</td></tr>
 <tr><th>20</th><td>1.325</td><td>1.725</td><td>2.086</td><td>2.528</td><td>2.845</td></tr>
@@ -2384,7 +2396,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <h3>付表3 カイ二乗分布の上側パーセント点 \(\chi^2_{\alpha}(m)\)</h3>
 <p>\(P(\chi^2>\chi^2_{\alpha}(m))=\alpha\)。分散の区間推定では \(\alpha=0.975\)(下側2.5%)と \(0.025\) の両方を使う。</p>
 <table class="numtable">
-<tr><th>\(m\) \ \(\alpha\)</th><th>0.995</th><th>0.975</th><th>0.95</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.005</th></tr>
+<caption>(1) \(m\) = 1 〜 15</caption>
+<thead><tr><th>\(m\) \ \(\alpha\)</th><th>0.995</th><th>0.975</th><th>0.95</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.005</th></tr></thead>
 <tr><th>1</th><td>0.000</td><td>0.001</td><td>0.004</td><td>2.706</td><td>3.841</td><td>5.024</td><td>7.879</td></tr>
 <tr><th>2</th><td>0.010</td><td>0.051</td><td>0.103</td><td>4.605</td><td>5.991</td><td>7.378</td><td>10.60</td></tr>
 <tr><th>3</th><td>0.072</td><td>0.216</td><td>0.352</td><td>6.251</td><td>7.815</td><td>9.348</td><td>12.84</td></tr>
@@ -2400,6 +2413,10 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <tr><th>13</th><td>3.565</td><td>5.009</td><td>5.892</td><td>19.81</td><td>22.36</td><td>24.74</td><td>29.82</td></tr>
 <tr><th>14</th><td>4.075</td><td>5.629</td><td>6.571</td><td>21.06</td><td>23.68</td><td>26.12</td><td>31.32</td></tr>
 <tr><th>15</th><td>4.601</td><td>6.262</td><td>7.261</td><td>22.31</td><td>25.00</td><td>27.49</td><td>32.80</td></tr>
+</table>
+<table class="numtable">
+<caption>(2) \(m\) = 16 〜 30</caption>
+<thead><tr><th>\(m\) \ \(\alpha\)</th><th>0.995</th><th>0.975</th><th>0.95</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.005</th></tr></thead>
 <tr><th>16</th><td>5.142</td><td>6.908</td><td>7.962</td><td>23.54</td><td>26.30</td><td>28.85</td><td>34.27</td></tr>
 <tr><th>17</th><td>5.697</td><td>7.564</td><td>8.672</td><td>24.77</td><td>27.59</td><td>30.19</td><td>35.72</td></tr>
 <tr><th>18</th><td>6.265</td><td>8.231</td><td>9.390</td><td>25.99</td><td>28.87</td><td>31.53</td><td>37.16</td></tr>

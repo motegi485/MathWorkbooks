@@ -101,6 +101,7 @@ th{background:var(--accent-soft);font-weight:700}
 table.numtable{font-size:.84rem;font-variant-numeric:tabular-nums}
 table.numtable th,table.numtable td{padding:.28rem .4rem;text-align:right}
 table.numtable th:first-child{text-align:left}
+table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:var(--sub);padding:0 0 .3rem}
 /* --- 章末 --- */
 .check{margin:2.2rem 0 0;padding:1rem 1.3rem;border:1px dashed var(--accent);border-radius:6px}
 .check h3{margin:0 0 .5rem;font-size:.98rem;color:var(--accent)}
@@ -118,6 +119,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
   body{background:#fff}
   header.chap{break-before:page;border-top:none}
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
+  table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
 }
 </style>
@@ -196,7 +198,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <h3>記号表</h3>
 <table>
-<tr><th>記号</th><th>意味</th></tr>
+<thead><tr><th>記号</th><th>意味</th></tr></thead>
 <tr><td>\(\mathbb{R},\ \mathbb{R}^n\)</td><td>実数全体、実数を \(n\) 個並べたベクトルの全体(\(n\) 次元数ベクトル空間)</td></tr>
 <tr><td>\(\mathbf{a},\ \mathbf{x}\)</td><td>ベクトル(太字)。特に断らなければ縦ベクトル(列ベクトル)</td></tr>
 <tr><td>\(A^\top\)</td><td>行列 \(A\) の転置(行と列の入れ替え)</td></tr>
