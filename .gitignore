@@ -1,0 +1,12 @@
+# Git/GitHubで管理する公開対象は、次の7項目だけ。
+*
+!README.md
+!CLAUDE.md
+!AGENTS.md
+!index.html
+!calculus-optimization/
+!calculus-optimization/**
+!linear-algebra/
+!linear-algebra/**
+!probability-statistics/
+!probability-statistics/**
