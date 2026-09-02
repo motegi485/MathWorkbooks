@@ -19,10 +19,20 @@ window.MathJax = {
     displayOverflow: 'linebreak',
     linebreaks: { inline: true, width: '100%' }
   },
-  chtml: { matchFontHeight: true }
+  chtml: { matchFontHeight: true },
+  // 組版が終わった時点で「組版中」の通知を消す
+  startup: {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+        var s = document.getElementById("mjx-status");
+        if (s) s.hidden = true;
+      });
+    }
+  }
 };
 </script>
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.min.js"
+        onerror="window.mjxFail=1;if(window.mjxStatusUpdate)window.mjxStatusUpdate();"></script>
 <style>
 :root{
   --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
@@ -114,6 +124,13 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 .booknav{display:flex;flex-wrap:wrap;gap:.35rem 1.15rem;margin:1.2rem 0 0;font-size:.86rem}
 .booknav a{color:var(--accent);white-space:nowrap}
 footer.book .booknav{margin:0 0 .9rem}
+/* --- 数式の組版状態(MathJax は非同期なので、式が多いページでは待ち時間が長い) --- */
+#mjx-status{position:fixed;right:1rem;bottom:1rem;z-index:50;margin:0;
+  padding:.35rem 1.1rem;border-radius:5px;background:var(--accent);color:#fff;
+  font-size:.78rem;letter-spacing:.06em;line-height:1.7;max-width:calc(100vw - 2rem);
+  box-shadow:0 2px 10px rgba(34,38,46,.3)}
+#mjx-status.err{background:var(--lv3)}
+#mjx-status[hidden]{display:none}
 /* --- はみ出し対策: 本文幅に収まらない表・数式は、その要素の中だけを横スクロールさせる。
    ページ全体が横に伸びるとスマートフォンで本文まで読みにくくなるため --- */
 .tscroll{max-width:100%;overflow-x:auto}
@@ -130,14 +147,45 @@ section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
   table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
-  /* 画面用の導線は紙面に出さない */
-  .booknav{display:none !important}
+  /* 画面用の導線・通知は紙面に出さない */
+  .booknav,#mjx-status{display:none !important}
   /* 紙にはスクロール枠がないので、通常のフローに戻す */
   .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
 }
 </style>
 </head>
 <body>
+<p id="mjx-status" role="status" hidden>数式を組版しています…</p>
+<script>
+// MathJax の読み込み・組版は非同期で、式の多いページでは十数秒かかる。
+// その間は生の TeX が見えたままなので、状態を小さく知らせる。
+window.mjxStatusUpdate = function () {
+  var s = document.getElementById("mjx-status");
+  if (!s) return;
+  if (window.mjxFail) {
+    s.className = "err";
+    s.hidden = false;
+    s.textContent = "数式の読み込みに失敗しました(CDN に接続できません)。数式は TeX のソースのまま表示されます。";
+  }
+};
+document.getElementById("mjx-status").hidden = false;
+window.mjxStatusUpdate();
+// 保険。式の多いページでは MathJax の pageReady の Promise が解決しないことがあるため、
+// 出力の数が増えなくなった時点でも通知を消す。
+(function () {
+  var s = document.getElementById("mjx-status");
+  var last = -1, stable = 0, waited = 0;
+  var iv = setInterval(function () {
+    if (s.hidden) { clearInterval(iv); return; }
+    waited += 500;
+    var n = document.querySelectorAll("mjx-container").length;
+    if (n > 0 && n === last) { stable++; } else { stable = 0; }
+    last = n;
+    if (stable >= 3) { s.hidden = true; clearInterval(iv); }
+    else if (n === 0 && waited >= 60000) { window.mjxFail = 1; window.mjxStatusUpdate(); clearInterval(iv); }
+  }, 500);
+})();
+</script>
 <div class="wrap">
 <header class="book" id="top">
 <p class="series">情報系のための微分積分・最適化</p>
