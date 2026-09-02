@@ -39,6 +39,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
 .wrap{max-width:46rem;margin:0 auto;padding:0 1.15rem 5rem}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.5;letter-spacing:.02em}
 /* --- 表紙 --- */
 header.book{padding:4.2rem 0 2.2rem;border-bottom:3px double var(--accent)}
@@ -109,6 +110,10 @@ table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:v
 footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
   color:var(--sub);font-size:.82rem;line-height:1.9}
 mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+/* --- 冊をまたぐ導線 --- */
+.booknav{display:flex;flex-wrap:wrap;gap:.35rem 1.15rem;margin:1.2rem 0 0;font-size:.86rem}
+.booknav a{color:var(--accent);white-space:nowrap}
+footer.book .booknav{margin:0 0 .9rem}
 /* --- はみ出し対策: 本文幅に収まらない表・数式は、その要素の中だけを横スクロールさせる。
    ページ全体が横に伸びるとスマートフォンで本文まで読みにくくなるため --- */
 .tscroll{max-width:100%;overflow-x:auto}
@@ -125,6 +130,8 @@ section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
   table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
+  /* 画面用の導線は紙面に出さない */
+  .booknav{display:none !important}
   /* 紙にはスクロール枠がないので、通常のフローに戻す */
   .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
 }
@@ -132,15 +139,16 @@ section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-
 </head>
 <body>
 <div class="wrap">
-<header class="book">
+<header class="book" id="top">
 <p class="series">情報系のための微分積分・最適化</p>
 <h1>問題集</h1>
 <p class="subtitle">大学基礎から大学院入試への橋渡し — 独学のための全19章・159問</p>
 <p class="meta">対象:情報系の大学生・大学院進学をめざす人(微分積分・最適化を未学習の状態からの独学を想定)<br>
 構成:序章+全19章159問(★基礎 48問/★★標準 76問/★★★応用 35問)+付録 主要公式集<br>
 姉妹編『解答解説集』とセットで学習してください。</p>
+<p class="booknav"><a href="../index.html">収録タイトル一覧</a><a href="solutions.html" target="_blank" rel="noopener">解答解説集を別タブで開く</a></p>
 </header>
-<nav class="toc">
+<nav class="toc" id="toc">
 <h2>目次</h2>
 <ol>
 <li><a href="#ch0">序章 微分積分・最適化への招待</a><span class="cnt">なぜ学ぶのか・本書の使い方</span></li>
@@ -166,6 +174,8 @@ section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-
 <li><a href="#appendix">付録 主要公式集</a><span class="cnt">微分・積分・テイラー展開・凸性と最適化</span></li>
 </ol>
 </nav>
+
+<main>
 <header class="chap" id="ch0">
 <p class="chnum">序章</p>
 <h2>微分積分・最適化への招待</h2>
@@ -2702,7 +2712,10 @@ section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-
 </ul>
 </div>
 
+</main>
+
 <footer class="book">
+<p class="booknav"><a href="#top">ページ先頭へ</a><a href="#toc">目次へ</a><a href="../index.html">収録タイトル一覧</a><a href="solutions.html" target="_blank" rel="noopener">解答解説集を別タブで開く</a></p>
 <p>『情報系のための微分積分・最適化 問題集』 全19章・159問+付録。姉妹編『解答解説集』とセットで学習してください。</p>
 <p>Copyright © 2026 情報系のための数学 問題集シリーズ. All Rights Reserved.</p>
 </footer>
