@@ -477,7 +477,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li>\(E[aX+b]=aE[X]+b\)、\(V[aX+b]=a^2V[X]\)</li>
 <li><b class="term">ベルヌーイ</b> \(\mathrm{Ber}(p)\)（\(0\le p\le1\)）:\(E=p\)、\(V=p(1-p)\)</li>
 <li><b class="term">二項</b> \(B(n,p)\)（\(n\) は正の整数、\(0\le p\le1\);独立な \(n\) 回の成功数）:\(P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}\)、\(E=np\)、\(V=np(1-p)\)</li>
-<li><b class="term">幾何</b> \(\mathrm{Ge}(p)\)（\(0<p\le1\);初めて成功するまでの試行回数）:\(P(X=k)=(1-p)^{k-1}p\ (k=1,2,\dots)\)、\(E=\dfrac1p\)、\(V=\dfrac{1-p}{p^2}\)</li>
+<li><b class="term">幾何</b> \(\mathrm{Ge}(p)\)（\(0&lt;p\le1\);初めて成功するまでの試行回数）:\(P(X=k)=(1-p)^{k-1}p\ (k=1,2,\dots)\)、\(E=\dfrac1p\)、\(V=\dfrac{1-p}{p^2}\)</li>
 <li><b class="term">ポアソン</b> \(\mathrm{Po}(\lambda)\)（\(\lambda\ge0\)）:\(P(X=k)=e^{-\lambda}\dfrac{\lambda^k}{k!}\ (k=0,1,\dots)\)、\(E=V=\lambda\)。\(\lambda=0\) では \(P(X=0)=1\) の退化分布</li>
 <li><b class="term">ポアソン近似</b>:\(n\) 大・\(p\) 小・\(np=\lambda\) が適度なら \(B(n,p)\approx \mathrm{Po}(\lambda)\)</li>
 </ul>
@@ -554,7 +554,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <section class="prob" id="q3-9">
 <div class="phead"><span class="pnum">問 3.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">二項分布の最頻値</span></div>
-<p>\(X\sim B(n,p)\) とする。まず \(0<p<1\) の場合に、隣接する確率の比 \(\dfrac{P(X=k)}{P(X=k-1)}\) を計算して、確率関数が最大となる \(k\)(最頻値)が \((n+1)p\) の付近にあることを示せ。端点 \(p=0,1\) の最頻値も別に答えよ。また \(n=20\)、\(p=0.3\) のときの最頻値を求めよ。</p>
+<p>\(X\sim B(n,p)\) とする。まず \(0&lt;p&lt;1\) の場合に、隣接する確率の比 \(\dfrac{P(X=k)}{P(X=k-1)}\) を計算して、確率関数が最大となる \(k\)(最頻値)が \((n+1)p\) の付近にあることを示せ。端点 \(p=0,1\) の最頻値も別に答えよ。また \(n=20\)、\(p=0.3\) のときの最頻値を求めよ。</p>
 </section>
 
 <section class="prob" id="q3-10">
@@ -604,7 +604,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li><b class="term">密度関数(PDF)</b>:\(f(x)\ge0\)、\(\int_{-\infty}^{\infty}f(x)\,dx=1\)、\(P(a\le X\le b)=\int_a^b f(x)\,dx\)。1点の確率は \(P(X=c)=0\)</li>
 <li><b class="term">分布関数(CDF)</b>:\(F(x)=P(X\le x)=\int_{-\infty}^{x}f(t)\,dt\)。このとき \(F'(x)=f(x)\) はほとんど至る所で成り立つ</li>
 <li>\(E[X]=\int xf(x)\,dx\)、\(V[X]=E[X^2]-(E[X])^2\)</li>
-<li><b class="term">一様分布</b> \(U(a,b)\)（\(a<b\)）:\(E=\dfrac{a+b}{2}\)、\(V=\dfrac{(b-a)^2}{12}\)</li>
+<li><b class="term">一様分布</b> \(U(a,b)\)（\(a&lt;b\)）:\(E=\dfrac{a+b}{2}\)、\(V=\dfrac{(b-a)^2}{12}\)</li>
 <li><b class="term">指数分布</b> \(\mathrm{Exp}(\lambda)\)（\(\lambda>0\)）:\(f(x)=\lambda e^{-\lambda x}\ (x\ge0)\)、\(F(x)=1-e^{-\lambda x}\)、\(E=\dfrac1\lambda\)、\(V=\dfrac1{\lambda^2}\)、無記憶性</li>
 <li><b class="term">正規分布</b> \(N(\mu,\sigma^2)\)（\(\sigma>0\);第2引数は分散）:\(f(x)=\dfrac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right)\)。<b class="term">標準化</b> \(Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)\)</li>
 <li><b class="term">上側 \(\alpha\) 点</b> \(z_\alpha\):\(P(Z>z_\alpha)=\alpha\)。\(z_{0.05}=1.645\)、\(z_{0.025}=1.960\)、\(z_{0.005}=2.576\)</li>
@@ -748,9 +748,9 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li>期待値が存在するとき \(E[X+Y]=E[X]+E[Y]\)（独立性は不要）。\(E[XY]=E[X]E[Y]\) は独立で各期待値が存在するとき</li>
 <li><b class="term">共分散</b> \(\mathrm{Cov}[X,Y]=E[(X-\mu_X)(Y-\mu_Y)]=E[XY]-E[X]E[Y]\)</li>
 <li>\(V[X\pm Y]=V[X]+V[Y]\pm 2\,\mathrm{Cov}[X,Y]\)</li>
-<li><b class="term">相関係数</b>（\(0<\sigma_X,\sigma_Y<\infty\)） \(\rho=\dfrac{\mathrm{Cov}[X,Y]}{\sigma_X\sigma_Y}\)、\(-1\le\rho\le1\)。独立 ⇒ 無相関(\(\rho=0\))、逆は不成立</li>
+<li><b class="term">相関係数</b>（\(0&lt;\sigma_X,\sigma_Y&lt;\infty\)） \(\rho=\dfrac{\mathrm{Cov}[X,Y]}{\sigma_X\sigma_Y}\)、\(-1\le\rho\le1\)。独立 ⇒ 無相関(\(\rho=0\))、逆は不成立</li>
 <li><b class="term">畳み込み</b>:\(X\perp Y\) のとき \(f_{X+Y}(z)=\displaystyle\int f_X(x)f_Y(z-x)\,dx\)</li>
-<li><b class="term">2変量標準正規</b>（\(|\rho|<1\)）:\(f(x,y)=\dfrac{1}{2\pi\sqrt{1-\rho^2}}\exp\left(-\dfrac{x^2-2\rho xy+y^2}{2(1-\rho^2)}\right)\)。条件付きは \(Y\mid X=x\sim N(\rho x,\ 1-\rho^2)\)</li>
+<li><b class="term">2変量標準正規</b>（\(|\rho|&lt;1\)）:\(f(x,y)=\dfrac{1}{2\pi\sqrt{1-\rho^2}}\exp\left(-\dfrac{x^2-2\rho xy+y^2}{2(1-\rho^2)}\right)\)。条件付きは \(Y\mid X=x\sim N(\rho x,\ 1-\rho^2)\)</li>
 </ul>
 </div>
 
@@ -869,7 +869,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <li><b class="term">線形性</b>:各期待値が存在するとき \(E[X_1+\cdots+X_n]=E[X_1]+\cdots+E[X_n]\) — <b>独立性は不要</b></li>
 <li><b class="term">条件付き期待値</b> \(E[X\mid Y=y]\):\(Y=y\) の世界での \(X\) の平均。\(E[X\mid Y]\) は \(Y\) の関数(確率変数)</li>
 <li><b class="term">全期待値の法則</b>:\(X\) が可積分なら \(E[X]=E\bigl[E[X\mid Y]\bigr]\)</li>
-<li><b class="term">全分散の法則</b>:\(E[X^2]<\infty\) なら \(V[X]=E\bigl[V[X\mid Y]\bigr]+V\bigl[E[X\mid Y]\bigr]\)(内側のばらつきの平均+平均のばらつき)</li>
+<li><b class="term">全分散の法則</b>:\(E[X^2]&lt;\infty\) なら \(V[X]=E\bigl[V[X\mid Y]\bigr]+V\bigl[E[X\mid Y]\bigr]\)(内側のばらつきの平均+平均のばらつき)</li>
 <li><b class="term">モーメント母関数(MGF)</b>:\(M_X(t)=E[e^{tX}]\)。0を含む開区間で有限なら、その範囲で微分でき、\(M_X^{(k)}(0)=E[X^k]\)</li>
 <li>\(X\perp Y\) ⇒ \(M_{X+Y}(t)=M_X(t)M_Y(t)\)。MGFが(0の近傍で)一致すれば分布も一致</li>
 <li>主要なMGF:\(\mathrm{Ber}(p)\!:1-p+pe^t\)、\(B(n,p)\!:(1-p+pe^t)^n\)、\(\mathrm{Po}(\lambda)\!:e^{\lambda(e^t-1)}\)、\(\mathrm{Exp}(\lambda)\!:\dfrac{\lambda}{\lambda-t}\ (t&lt;\lambda)\)、\(N(\mu,\sigma^2)\!:e^{\mu t+\sigma^2t^2/2}\)</li>
@@ -979,11 +979,11 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <div class="keybox">
 <h3>この章の要点</h3>
 <ul>
-<li><b class="term">マルコフの不等式</b>:\(X\ge0\)、\(E[X]<\infty\)、\(a>0\) なら \(P(X\ge a)\le\dfrac{E[X]}{a}\)</li>
-<li><b class="term">チェビシェフの不等式</b>:\(V[X]<\infty\)、\(\varepsilon>0\) なら \(P(|X-\mu|\ge \varepsilon)\le\dfrac{V[X]}{\varepsilon^2}\)(特に \(\sigma>0\) なら \(P(|X-\mu|\ge k\sigma)\le\dfrac{1}{k^2}\)、\(k>0\))</li>
+<li><b class="term">マルコフの不等式</b>:\(X\ge0\)、\(E[X]&lt;\infty\)、\(a>0\) なら \(P(X\ge a)\le\dfrac{E[X]}{a}\)</li>
+<li><b class="term">チェビシェフの不等式</b>:\(V[X]&lt;\infty\)、\(\varepsilon>0\) なら \(P(|X-\mu|\ge \varepsilon)\le\dfrac{V[X]}{\varepsilon^2}\)(特に \(\sigma>0\) なら \(P(|X-\mu|\ge k\sigma)\le\dfrac{1}{k^2}\)、\(k>0\))</li>
 <li>i.i.d.(独立同分布)標本の<b class="term">標本平均</b> \(\bar{X}_n=\dfrac1n\sum X_i\):\(E[\bar{X}_n]=\mu\)、\(V[\bar{X}_n]=\dfrac{\sigma^2}{n}\)</li>
 <li><b class="term">大数の弱法則</b>:任意の \(\varepsilon>0\) で \(P(|\bar{X}_n-\mu|\ge\varepsilon)\to0\)(\(n\to\infty\))</li>
-<li><b class="term">中心極限定理(CLT)</b>:i.i.d. で \(0<\sigma^2<\infty\) なら \(\dfrac{\bar{X}_n-\mu}{\sigma/\sqrt{n}}\) の分布は \(N(0,1)\) に近づく</li>
+<li><b class="term">中心極限定理(CLT)</b>:i.i.d. で \(0&lt;\sigma^2&lt;\infty\) なら \(\dfrac{\bar{X}_n-\mu}{\sigma/\sqrt{n}}\) の分布は \(N(0,1)\) に近づく</li>
 <li><b class="term">二項の正規近似</b>:\(B(n,p)\approx N(np,\ np(1-p))\)。整数値なので<b class="term">連続修正</b>(\(\pm0.5\))を入れる</li>
 <li><b class="term">ヘフディングの不等式</b>:\(X_i\in[0,1]\) i.i.d. なら \(P(|\bar{X}_n-\mu|\ge\varepsilon)\le 2e^{-2n\varepsilon^2}\)</li>
 </ul>
@@ -1884,8 +1884,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <h3>この章の要点</h3>
 <ul>
 <li><b class="term">状態空間モデル</b>(スカラー):状態 \(x_t=a\,x_{t-1}+w_t\)、\(w_t\sim N(0,Q)\)(\(Q\ge0\);プロセスノイズ)。観測 \(y_t=x_t+v_t\)、\(v_t\sim N(0,R)\)(\(R>0\);観測ノイズ)。初期誤差、各時刻の \(w_t,v_t\) は互いに独立とする。推定値 \(\hat{x}\) とその誤差分散 \(P\) の組で信念を持つ</li>
-<li><b class="term">予測ステップ</b>:\(\hat{x}^-=a\,\hat{x}\)、\(P^-=a^2P+Q\)。分散はモデルに従って変化し、\(a=1,Q>0\) なら増えるが、\(|a|<1\) では減る場合もある</li>
-<li><b class="term">カルマンゲイン</b>:\(K=\dfrac{P^-}{P^-+R}\)（\(P^-\ge0,R>0\) なら \(0\le K<1\);予測と観測の精度比）</li>
+<li><b class="term">予測ステップ</b>:\(\hat{x}^-=a\,\hat{x}\)、\(P^-=a^2P+Q\)。分散はモデルに従って変化し、\(a=1,Q>0\) なら増えるが、\(|a|&lt;1\) では減る場合もある</li>
+<li><b class="term">カルマンゲイン</b>:\(K=\dfrac{P^-}{P^-+R}\)（\(P^-\ge0,R>0\) なら \(0\le K&lt;1\);予測と観測の精度比）</li>
 <li><b class="term">更新ステップ</b>:\(\hat{x}\leftarrow\hat{x}^-+K(y-\hat{x}^-)\)、\(P\leftarrow(1-K)P^-\)。\(R>0\) なら分散は増えず、\(P^->0\) なら厳密に減る。\(y-\hat{x}^-\) を<b class="term">イノベーション</b>と呼ぶ</li>
 <li><b class="term">精度加重融合</b>:同じ量の不偏推定で、誤差が独立かつ分散 \(R_1,R_2>0\) のとき、最小分散線形不偏結合は \(\hat{x}=\dfrac{y_1/R_1+y_2/R_2}{1/R_1+1/R_2}\)、分散 \(\left(\dfrac{1}{R_1}+\dfrac{1}{R_2}\right)^{-1}\)</li>
 <li><b class="term">ベクトル版</b>:\(\boldsymbol{x}_t=F\boldsymbol{x}_{t-1}+\boldsymbol{w}\)、\(y_t=H\boldsymbol{x}_t+v\)。\(P^-=FPF^{\mathsf T}+Q\)、\(S=HP^-H^{\mathsf T}+R\)、\(K=P^-H^{\mathsf T}S^{-1}\)、\(\hat{\boldsymbol{x}}\leftarrow\hat{\boldsymbol{x}}^-+K(y-H\hat{\boldsymbol{x}}^-)\)、\(P\leftarrow(I-KH)P^-\)</li>
