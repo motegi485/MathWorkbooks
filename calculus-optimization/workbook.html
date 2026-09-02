@@ -109,6 +109,10 @@ table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:v
 footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
   color:var(--sub);font-size:.82rem;line-height:1.9}
 mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+/* --- はみ出し対策: 本文幅に収まらない表・数式は、その要素の中だけを横スクロールさせる。
+   ページ全体が横に伸びるとスマートフォンで本文まで読みにくくなるため --- */
+.tscroll{max-width:100%;overflow-x:auto}
+section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-x:auto}
 @media (max-width:520px){
   body{font-size:15.5px}
   header.book h1{font-size:1.65rem}
@@ -121,6 +125,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
   table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
+  /* 紙にはスクロール枠がないので、通常のフローに戻す */
+  .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
 }
 </style>
 </head>
@@ -188,13 +194,13 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <h3>本書の構成 — 学習マップ</h3>
 <p>「一変数 → 多変数 → 最適化 → 大学院への接続」の4部構成で、高校数学の直後から大学院基礎までを一本道でつなぎます。</p>
-<table>
+<div class="tscroll"><table>
 <tr><th>部</th><th>章</th><th>テーマ</th><th>おおよその水準</th></tr>
 <tr><td>第I部 一変数の微分積分</td><td>1〜6章</td><td>極限・微分・テイラー展開・積分・広義積分</td><td>学部1年前期</td></tr>
 <tr><td>第II部 多変数の微分積分</td><td>7〜10章</td><td>偏微分・勾配・ヘッセ行列・極値・重積分</td><td>学部1年後期〜2年</td></tr>
 <tr><td>第III部 最適化</td><td>11〜17章</td><td>定式化・凸性・勾配降下法・ニュートン法・ラグランジュ乗数・KKT・双対性</td><td>学部2〜3年・院試の主戦場</td></tr>
 <tr><td>第IV部 大学院への接続</td><td>18〜19章</td><td>機械学習の最適化(SGD・正則化)・厳密な解析学(ε-δ・一様連続)</td><td>学部3年〜大学院基礎</td></tr>
-</table>
+</table></div>
 
 <div class="howto">
 <h3>本書の使い方</h3>
@@ -209,7 +215,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </div>
 
 <h3>記号表</h3>
-<table>
+<div class="tscroll"><table>
 <thead><tr><th>記号</th><th>意味</th></tr></thead>
 <tr><td>\(\displaystyle\lim_{x\to a}f(x)\)</td><td>\(x\) を \(a\) に限りなく近づけたときの \(f(x)\) の極限</td></tr>
 <tr><td>\(f'(x),\ \dfrac{df}{dx}\)</td><td>\(f\) の導関数(微分)。\(f''\) は2階導関数</td></tr>
@@ -224,7 +230,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <tr><td>\(\mathbf{x},\ \|\mathbf{x}\|\)</td><td>ベクトル(太字・列ベクトル)とそのユークリッドノルム \(\sqrt{x_1^2+\cdots+x_n^2}\)</td></tr>
 <tr><td>\(A^\top,\ \mathbf{x}^\top\mathbf{y}\)</td><td>転置。\(\mathbf{x}^\top\mathbf{y}=\sum_i x_iy_i\) は内積</td></tr>
 <tr><td>\(f\colon\mathbb{R}^n\to\mathbb{R}\)</td><td>\(n\) 変数の実数値関数</td></tr>
-</table>
+</table></div>
 
 <h3>前提知識</h3>
 <p>高校数学の「関数(2次関数・指数・対数・三角関数)」「数列」と、ごく基本的な式変形を仮定します。高校で微分積分を学んでいなくても問題ありません — 第1章の極限から定義し直します。第II部以降ではベクトル・行列の基本(内積・行列積・固有値・正定値性)を使いますが、必要な事実はその都度まとめ直します(詳しくは姉妹編『線形代数』第1・2・7・9章)。</p>
@@ -2608,14 +2614,14 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <div class="keybox">
 <h3>A.1 微分の公式</h3>
-<table>
+<div class="tscroll"><table>
 <tr><th>関数</th><th>導関数</th><th>関数</th><th>導関数</th></tr>
 <tr><td>\(x^n\)</td><td>\(nx^{n-1}\)(問2.2)</td><td>\(\sin x\)</td><td>\(\cos x\)(問2.3)</td></tr>
 <tr><td>\(e^x\)</td><td>\(e^x\)(問2.3)</td><td>\(\cos x\)</td><td>\(-\sin x\)(問2.3と同じ方法)</td></tr>
 <tr><td>\(a^x\ (a\gt0)\)</td><td>\(a^x\log a\)(\(a^x=e^{x\log a}\) と問2.6)</td><td>\(\tan x\)</td><td>\(\dfrac1{\cos^2x}\)(\(\cos x\ne0\)。問2.5)</td></tr>
 <tr><td>\(\log x\ (x\gt0)\)</td><td>\(\dfrac1x\)(問2.7)</td><td>\(\arctan x\)</td><td>\(\dfrac1{1+x^2}\)(問2.7)</td></tr>
 <tr><td>\(\log_ax\ (a\gt0,\ a\ne1,\ x\gt0)\)</td><td>\(\dfrac1{x\log a}\)(\(\log_ax=\dfrac{\log x}{\log a}\))</td><td>\(\arcsin x\)</td><td>\(\dfrac1{\sqrt{1-x^2}}\)(\(|x|\lt1\)。問2.7)</td></tr>
-</table>
+</table></div>
 <ul>
 <li><b class="term">微分の定義</b>:\(f'(x)=\displaystyle\lim_{h\to0}\frac{f(x+h)-f(x)}h\)(問2.1)</li>
 <li><b class="term">積の微分</b>:\((fg)'=f'g+fg'\)(問2.4)。<b class="term">商の微分</b>:\(g(x)\ne0\) の点で \(\Bigl(\dfrac fg\Bigr)'=\dfrac{f'g-fg'}{g^2}\)(問2.5)</li>
@@ -2625,13 +2631,13 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <div class="keybox">
 <h3>A.2 積分の公式</h3>
-<table>
+<div class="tscroll"><table>
 <tr><th>関数</th><th>原始関数(\(+C\) 省略)</th><th>関数</th><th>原始関数(\(+C\) 省略)</th></tr>
 <tr><td>\(x^n\ (n\ne-1)\)</td><td>\(\dfrac{x^{n+1}}{n+1}\)(問5.2)</td><td>\(\sin x\)</td><td>\(-\cos x\)(問5.3)</td></tr>
 <tr><td>\(\dfrac1x\)</td><td>\(\log|x|\)(問5.2)</td><td>\(\cos x\)</td><td>\(\sin x\)(問5.2)</td></tr>
 <tr><td>\(e^x\)</td><td>\(e^x\)(問5.2)</td><td>\(\dfrac1{\cos^2x}\)</td><td>\(\tan x\)(問2.5の逆読み)</td></tr>
 <tr><td>\(\dfrac1{1+x^2}\)</td><td>\(\arctan x\)(問5.2)</td><td>\(\dfrac1{x^2+a^2}\ (a\ne0)\)</td><td>\(\dfrac1a\arctan\dfrac xa\)(置換 \(x=at\))</td></tr>
-</table>
+</table></div>
 <ul>
 <li><b class="term">置換積分</b>:\(\displaystyle\int f(g(x))\,g'(x)\,dx=\int f(u)\,du\)(\(u=g(x)\)。問5.6)</li>
 <li><b class="term">部分積分</b>:\(\displaystyle\int f'g\,dx=fg-\int fg'\,dx\)(積の微分の逆読み。問5.7)</li>
@@ -2642,7 +2648,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <div class="keybox">
 <h3>A.3 テイラー展開(\(x=0\) のまわり)</h3>
-<table>
+<div class="tscroll"><table>
 <tr><th>関数</th><th>展開(問4.2)</th><th>収束範囲</th></tr>
 <tr><td>\(e^x\)</td><td>\(1+x+\dfrac{x^2}{2!}+\dfrac{x^3}{3!}+\cdots\)</td><td>すべての \(x\)</td></tr>
 <tr><td>\(\sin x\)</td><td>\(x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\cdots\)</td><td>すべての \(x\)</td></tr>
@@ -2650,7 +2656,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <tr><td>\(\log(1+x)\)</td><td>\(x-\dfrac{x^2}2+\dfrac{x^3}3-\cdots\)</td><td>\(-1\lt x\le1\)</td></tr>
 <tr><td>\(\dfrac1{1-x}\)</td><td>\(1+x+x^2+x^3+\cdots\)</td><td>\(|x|\lt1\)</td></tr>
 <tr><td>\((1+x)^\alpha\)</td><td>\(1+\alpha x+\dfrac{\alpha(\alpha-1)}2x^2+\cdots\)</td><td>\(|x|\lt1\)</td></tr>
-</table>
+</table></div>
 <ul>
 <li><b class="term">1次近似(接線)</b>:\(f(a+h)\approx f(a)+f'(a)\,h\)(問2.8)。上表を1次で打ち切れば \(e^x\approx1+x\)、\(\log(1+x)\approx x\)、\((1+x)^\alpha\approx1+\alpha x\)(問2.8・4.2)</li>
 <li><b class="term">ラグランジュの剰余項</b>(問4.5):テイラーの定理の微分可能性の仮定のもと、\(n\) 次で打ち切った誤差は、\(0\) と \(x\) の間の<b>ある</b> \(c\) を用いて \(R_{n+1}=\dfrac{f^{(n+1)}(c)}{(n+1)!}x^{n+1}\) と書ける — 区間上で \(|f^{(n+1)}|\le M\) なら \(|R_{n+1}|\le\dfrac{M}{(n+1)!}|x|^{n+1}\)</li>

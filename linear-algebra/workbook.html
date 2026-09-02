@@ -109,6 +109,10 @@ table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:v
 footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
   color:var(--sub);font-size:.82rem;line-height:1.9}
 mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+/* --- はみ出し対策: 本文幅に収まらない表・数式は、その要素の中だけを横スクロールさせる。
+   ページ全体が横に伸びるとスマートフォンで本文まで読みにくくなるため --- */
+.tscroll{max-width:100%;overflow-x:auto}
+section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-x:auto}
 @media (max-width:520px){
   body{font-size:15.5px}
   header.book h1{font-size:1.65rem}
@@ -121,6 +125,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
   table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
+  /* 紙にはスクロール枠がないので、通常のフローに戻す */
+  .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
 }
 </style>
 </head>
@@ -177,13 +183,13 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 
 <h3>本書の構成 — 学習マップ</h3>
 <p>「具体 → 構造 → スペクトル → 分解と応用」の4段階で、計算練習から大学院レベルの道具までを一本道でつなぎます。</p>
-<table>
+<div class="tscroll"><table>
 <tr><th>部</th><th>章</th><th>テーマ</th><th>おおよその水準</th></tr>
 <tr><td>第I部 具体で掴む</td><td>1〜4章</td><td>数ベクトル・行列・連立一次方程式・行列式</td><td>学部1年前期</td></tr>
 <tr><td>第II部 構造を知る</td><td>5〜6章</td><td>ベクトル空間・基底・次元・線形写像</td><td>学部1年後期〜2年</td></tr>
 <tr><td>第III部 スペクトルを読む</td><td>7〜9章</td><td>固有値・直交性・対称行列・二次形式</td><td>学部2〜3年・院試の主戦場</td></tr>
 <tr><td>第IV部 分解して使う</td><td>10〜11章</td><td>SVD・擬似逆行列・ジョルダン標準形・行列関数・数値線形代数</td><td>学部3年〜大学院基礎</td></tr>
-</table>
+</table></div>
 
 <div class="howto">
 <h3>本書の使い方</h3>
@@ -197,7 +203,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 </div>
 
 <h3>記号表</h3>
-<table>
+<div class="tscroll"><table>
 <thead><tr><th>記号</th><th>意味</th></tr></thead>
 <tr><td>\(\mathbb{R},\ \mathbb{R}^n\)</td><td>実数全体、実数を \(n\) 個並べたベクトルの全体(\(n\) 次元数ベクトル空間)</td></tr>
 <tr><td>\(\mathbf{a},\ \mathbf{x}\)</td><td>ベクトル(太字)。特に断らなければ縦ベクトル(列ベクトル)</td></tr>
@@ -213,7 +219,7 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <tr><td>\(\dim V\)</td><td>ベクトル空間 \(V\) の次元</td></tr>
 <tr><td>\(\operatorname{Ker} T,\ \operatorname{Im} T\)</td><td>線形写像 \(T\) の核(零に写るものの集合)と像</td></tr>
 <tr><td>\(\lambda,\ \sigma_i\)</td><td>固有値、特異値</td></tr>
-</table>
+</table></div>
 
 <h3>前提知識</h3>
 <p>高校数学の「ベクトルの基本演算」「三角関数」「数列と帰納法」を仮定します。行列を高校で習っていなくても問題ありません — 第2章で定義から始めます。証明問題では「定義に戻って一歩ずつ書く」練習をしますが、必要な論法はすべて解説側で丁寧に展開します。</p>

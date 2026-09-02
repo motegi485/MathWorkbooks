@@ -109,6 +109,10 @@ table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:v
 footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
   color:var(--sub);font-size:.82rem;line-height:1.9}
 mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+/* --- はみ出し対策: 本文幅に収まらない表・数式は、その要素の中だけを横スクロールさせる。
+   ページ全体が横に伸びるとスマートフォンで本文まで読みにくくなるため --- */
+.tscroll{max-width:100%;overflow-x:auto}
+section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-x:auto}
 @media (max-width:520px){
   body{font-size:15.5px}
   header.book h1{font-size:1.65rem}
@@ -121,6 +125,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
   table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
+  /* 紙にはスクロール枠がないので、通常のフローに戻す */
+  .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
 }
 </style>
 </head>
@@ -485,11 +491,11 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <p>\(f'=0\) の点で数直線を区切り、各区間での \(f'\) の符号を調べる。符号が \(+\to-\) と変わる点が極大、\(-\to+\) が極小。</p>
 <h4>解答</h4>
 <p>\(f'(x)=3x^2-3=3(x+1)(x-1)\)。\(f'(x)=0\) となるのは \(x=\pm1\)。増減表は</p>
-<table>
+<div class="tscroll"><table>
 <tr><th>\(x\)</th><td>\(\cdots\)</td><td>\(-1\)</td><td>\(\cdots\)</td><td>\(1\)</td><td>\(\cdots\)</td></tr>
 <tr><th>\(f'(x)\)</th><td>\(+\)</td><td>\(0\)</td><td>\(-\)</td><td>\(0\)</td><td>\(+\)</td></tr>
 <tr><th>\(f(x)\)</th><td>増加</td><td>極大 \(2\)</td><td>減少</td><td>極小 \(-2\)</td><td>増加</td></tr>
-</table>
+</table></div>
 <p>よって \(x=-1\) で<b>極大値 \(f(-1)=-1+3=2\)</b>、\(x=1\) で<b>極小値 \(f(1)=1-3=-2\)</b>。</p>
 <p>2階条件による確認:\(f''(x)=6x\) より \(f''(-1)=-6\lt0\)(極大)、\(f''(1)=6\gt0\)(極小)。増減表と一致する。</p>
 <h4 class="alt">ポイント</h4>
@@ -588,12 +594,12 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <p>\[f''(x)=(-1)e^{-x}+(1-x)(-e^{-x})=(x-2)\,e^{-x}\]</p>
 <p>符号は \(x-2\) と同じ:\(x\lt2\) で \(f''\lt0\)(上に凸)、\(x\gt2\) で \(f''\gt0\)(下に凸)。\(x=2\) で凹凸が切り替わるので<b>変曲点 \(\bigl(2,\ 2e^{-2}\bigr)\)</b>(\(2e^{-2}\approx0.271\))。</p>
 <p>(3) \(x\to\infty\) では、問3.8(2)(\(k=1\))より \(\dfrac{x}{e^x}\to0\)、すなわち \(f(x)\to0+\)(\(x\) 軸が漸近線)。\(x\to-\infty\) では \(x\to-\infty\)、\(e^{-x}\to+\infty\) なので \(f(x)\to-\infty\)。まとめると</p>
-<table>
+<div class="tscroll"><table>
 <tr><th>\(x\)</th><td>\(-\infty\)</td><td>\(\cdots\)</td><td>\(1\)</td><td>\(\cdots\)</td><td>\(2\)</td><td>\(\cdots\)</td><td>\(\infty\)</td></tr>
 <tr><th>\(f'\)</th><td></td><td>\(+\)</td><td>\(0\)</td><td>\(-\)</td><td>\(-\)</td><td>\(-\)</td><td></td></tr>
 <tr><th>\(f''\)</th><td></td><td>\(-\)</td><td>\(-\)</td><td>\(-\)</td><td>\(0\)</td><td>\(+\)</td><td></td></tr>
 <tr><th>\(f\)</th><td>\(-\infty\)</td><td>増加・上に凸</td><td>極大 \(\frac1e\)</td><td>減少・上に凸</td><td>変曲点</td><td>減少・下に凸</td><td>\(\to0+\)</td></tr>
-</table>
+</table></div>
 <p>グラフは、左下から立ち上がって原点を通り、\(x=1\) で山の頂上 \(\frac1e\) に達し、その後 \(x=2\) で反り方を変えながら \(x\) 軸へ滑り込んでいく形になる。</p>
 <h4 class="alt">ポイント</h4>
 <p>\(xe^{-x}\) の形(急に立ち上がり、緩やかに減衰する山)は、待ち行列・信頼性工学のガンマ分布(形状2)の密度や、システムのインパルス応答など、情報系のモデルに頻繁に現れます。「多項式 \(\times\) 指数減衰」は必ず遠方で指数が勝つ(問3.8)— この感覚はアルゴリズムの解析でも応答の解析でも共通です。</p>
@@ -623,13 +629,13 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
 <p>\[f'(\theta)=\sum_{i=1}^n2(\theta-x_i)=2\Bigl(n\theta-\sum_{i=1}^nx_i\Bigr)\]</p>
 <p>\(f'(\theta)=0\) を解くと \(\theta=\dfrac1n\sum_i x_i=\bar x\)。さらに \(f''(\theta)=2n\gt0\) が常に成り立つので \(f\) は下に凸であり、唯一の停留点 \(\bar x\) が大域的な最小点である。(証明終)</p>
 <p>(2) 絶対値の折れ目 \(\theta=1,2,4\) で区切り、各区間で \(g\) を一次式に直す:</p>
-<table>
+<div class="tscroll"><table>
 <tr><th>区間</th><th>\(g(\theta)\)</th><th>傾き</th></tr>
 <tr><td>\(\theta\le1\)</td><td>\((1-\theta)+(2-\theta)+(4-\theta)=7-3\theta\)</td><td>\(-3\)</td></tr>
 <tr><td>\(1\le\theta\le2\)</td><td>\((\theta-1)+(2-\theta)+(4-\theta)=5-\theta\)</td><td>\(-1\)</td></tr>
 <tr><td>\(2\le\theta\le4\)</td><td>\((\theta-1)+(\theta-2)+(4-\theta)=\theta+1\)</td><td>\(+1\)</td></tr>
 <tr><td>\(\theta\ge4\)</td><td>\(3\theta-7\)</td><td>\(+3\)</td></tr>
-</table>
+</table></div>
 <p>傾きが負から正へ切り替わるのは \(\theta=2\)。よって \(g\) は \(\theta=2\)(データの中央値)で最小になり、<b>最小値 \(g(2)=1+0+2=3\)</b>。</p>
 <p>(3) \(n\) を奇数、データを相異なるとして小さい順に \(x_{(1)}\lt\cdots\lt x_{(n)}\) と並べ、中央値を \(m=x_{((n+1)/2)}\) とする。データ点以外の \(\theta\) では \(g\) は微分可能で、\(|\theta-x_i|\) の微分が \(\theta\gt x_i\) なら \(+1\)、\(\theta\lt x_i\) なら \(-1\) であることから</p>
 <p>\[g'(\theta)=\#\{i:x_i\lt\theta\}-\#\{i:x_i\gt\theta\}\]</p>

@@ -109,6 +109,10 @@ table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:v
 footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
   color:var(--sub);font-size:.82rem;line-height:1.9}
 mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+/* --- はみ出し対策: 本文幅に収まらない表・数式は、その要素の中だけを横スクロールさせる。
+   ページ全体が横に伸びるとスマートフォンで本文まで読みにくくなるため --- */
+.tscroll{max-width:100%;overflow-x:auto}
+section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-x:auto}
 @media (max-width:520px){
   body{font-size:15.5px}
   header.book h1{font-size:1.65rem}
@@ -121,6 +125,8 @@ mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:a
   section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
   table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
+  /* 紙にはスクロール枠がないので、通常のフローに戻す */
+  .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
 }
 </style>
 </head>
