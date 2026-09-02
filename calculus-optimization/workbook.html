@@ -98,7 +98,7 @@ ol.sublist{padding-left:1.6rem;margin:.4rem 0}
 ol.sublist li{margin:.35rem 0}
 /* --- 解説の段階 --- */
 section.sol h4{font-family:var(--sans);font-size:.85rem;letter-spacing:.15em;
-  color:#fff;background:var(--accent);display:inline-block;
+  color:#fff;background:var(--accent);display:block;width:fit-content;
   padding:.14rem .8rem;border-radius:3px;margin:1.05rem 0 .35rem}
 section.sol h4.alt{background:var(--sub)}
 .note{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:var(--accent-soft);
@@ -147,9 +147,30 @@ section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-
 @media print{
   body{background:#fff}
   header.chap{break-before:page;border-top:none}
-  section.prob,section.sol{break-inside:avoid;border:1px solid #bbb}
+  section.prob,section.sol{border:1px solid #bbb}
+  /* 問題カードは短いので1ページに収める。解説カードは1ページを超えるものが多く、
+     ここで avoid にすると白紙が大量に出るため分割を許す */
+  section.prob{break-inside:avoid}
   table{break-inside:avoid}
   nav.toc a{color:var(--ink)}
+  /* 見出し・ラベルだけがページ末尾に取り残されないようにする */
+  h1,h2,h3{break-after:avoid}
+  .phead,section.sol h4{break-after:avoid}
+  .why,.learn,.check{break-inside:avoid}
+  p{orphans:2;widows:2}
+  /* ブラウザは既定で背景色を印刷しない。白抜き文字が消えてしまうので、
+     印刷時だけ「枠線＋濃色文字」に切り替える */
+  .lv{color:var(--ink);background:transparent;border:1px solid currentColor;padding:.05rem .4rem}
+  .lv1{color:var(--lv1)}.lv2{color:var(--lv2)}.lv3{color:var(--lv3)}
+  section.sol h4{color:var(--accent);background:transparent;border:1px solid currentColor;
+    padding:.08rem .55rem}
+  /* .alt は基底側の background 指定の方が詳細度が高いので、ここでも打ち消す */
+  section.sol h4.alt{color:var(--sub);background:transparent}
+  /* 地色だけで本文と区別している囲みは、罫線で補う */
+  .keybox{border:1px solid var(--rule)}
+  .note{border-left:3px solid var(--accent)}
+  .warn{border-left:3px solid var(--lv3)}
+  th{border-bottom:2px solid var(--ink)}
   /* 画面用の導線・通知は紙面に出さない */
   .booknav,#mjx-status{display:none !important}
   /* 紙にはスクロール枠がないので、通常のフローに戻す */
