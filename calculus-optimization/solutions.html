@@ -176,9 +176,44 @@ section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-
   /* 紙にはスクロール枠がないので、通常のフローに戻す */
   .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
 }
+/* --- しおり(前回の続き)。下部のスクリプトが実行時に挿し込む、画面専用のUI --- */
+.bmk{margin-left:auto;align-self:center;flex:0 0 auto;display:inline-flex;
+  align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;
+  border:0;border-radius:4px;background:transparent;color:#b9bcc4;cursor:pointer;line-height:0}
+.bmk svg{width:.95rem;height:1.15rem;fill:none;stroke:currentColor;stroke-width:1.9}
+.bmk:hover{color:var(--accent);background:var(--accent-soft)}
+.bmk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bmk[aria-pressed="true"]{color:var(--accent)}
+.bmk[aria-pressed="true"] svg{fill:currentColor}
+/* しおりを挟んだ問題は、スクロール中でも見つけられるよう地色を変える */
+section.is-marked{border-color:var(--accent);background:var(--accent-soft)}
+/* --- 表紙のしおりバー --- */
+.bmkbar{display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .7rem;
+  margin:1.2rem 0 0;padding:.55rem .9rem;border:1px solid var(--accent);
+  border-radius:6px;background:var(--accent-soft);font-size:.86rem}
+.bmkbar[hidden]{display:none}
+.bmkbar svg{width:.85rem;height:1.05rem;fill:var(--accent);flex:0 0 auto}
+.bmkbar .ttl{color:var(--accent);font-weight:700;letter-spacing:.08em;font-size:.78rem}
+.bmkbar .lab{font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--ink)}
+.bmkbar .tag{color:var(--sub);font-size:.8rem}
+.bmkbar button{margin:0;padding:.22rem .85rem;border:1px solid var(--accent);
+  border-radius:4px;background:var(--card);color:var(--accent);
+  font-family:inherit;font-size:.82rem;line-height:1.8;cursor:pointer;white-space:nowrap}
+.bmkbar button:hover{background:var(--accent);color:#fff}
+.bmkbar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bmkbar button.off{border-color:var(--rule);color:var(--sub)}
+.bmkbar button.off:hover{background:var(--sub);border-color:var(--sub);color:#fff}
+.bmkhint{margin:1.2rem 0 0;font-size:.78rem;color:var(--sub);line-height:1.8}
+.bmkhint[hidden]{display:none}
+.bmkhint svg{width:.7rem;height:.85rem;fill:currentColor;vertical-align:-.1em;margin:0 .1em}
+@media print{
+  /* 画面専用の操作なので紙面には出さない */
+  .bmk,.bmkbar,.bmkhint{display:none !important}
+  section.is-marked{background:transparent;border-color:#bbb}
+}
 </style>
 </head>
-<body>
+<body data-book="calculus-optimization/solutions">
 <p id="mjx-status" role="status" hidden>数式を組版しています…</p>
 <script>
 // MathJax の読み込み・組版は非同期で、式の多いページでは十数秒かかる。
@@ -2664,5 +2699,173 @@ window.mjxStatusUpdate();
 <p>Copyright © 2026 情報系のための数学 問題集シリーズ. All Rights Reserved.</p>
 </footer>
 </div>
+<script>
+// --- しおり(前回の続き) -----------------------------------------------------
+// 各問題の見出しに「しおり」ボタンを実行時に足し、挟んだ位置を localStorage に残す。
+// しおりは1冊につき1つだけ(別の問題に挟むと前のしおりは外れる)。
+// 保存先は6冊分をまとめた1つのキーで、index.html も同じものを読んで「続きから」を出す。
+// この6ファイルと index.html に同じ実装が複製されている(共有JSファイルを持たない方針のため)。
+(function () {
+  var KEY = "mathworkbooks.bookmark.v1";
+  var book = document.body.getAttribute("data-book");   // 例 "linear-algebra/workbook"
+  if (!book) return;
+
+  // localStorage が使えない環境(プライベートモード等)では、UIを出さず何もしない
+  try {
+    localStorage.setItem(KEY + ":probe", "1");
+    localStorage.removeItem(KEY + ":probe");
+  } catch (e) { return; }
+
+  function loadAll() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+  }
+  function getMark() {
+    var v = loadAll()[book];
+    return v && v.id ? v : null;
+  }
+  function setMark(mark) {
+    var all = loadAll();
+    if (mark) { all[book] = mark; } else { delete all[book]; }
+    try { localStorage.setItem(KEY, JSON.stringify(all)); } catch (e) {}
+  }
+
+  var RIBBON = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M5.5 2.5h13v19l-6.5-5.6-6.5 5.6z" stroke-linejoin="round"/></svg>';
+
+  var secs = document.querySelectorAll("main section.prob[id], main section.sol[id]");
+  var head = document.querySelector("header.book");
+  if (!secs.length || !head) return;
+
+  function labelOf(sec) {
+    var n = sec.querySelector(".pnum");
+    return n ? n.textContent.trim() : sec.id;
+  }
+  function tagOf(sec) {
+    var t = sec.querySelector(".ptag");
+    return t ? t.textContent.trim() : "";
+  }
+
+  // --- 表紙に置く、しおりバーと(しおりが無いときの)案内 ---
+  var bar = document.createElement("div");
+  bar.className = "bmkbar";
+  bar.hidden = true;
+  bar.innerHTML = RIBBON + '<span class="ttl">しおり</span>' +
+    '<span class="lab"></span><span class="tag"></span>' +
+    '<button type="button" class="go">続きから開く</button>' +
+    '<button type="button" class="off">はずす</button>';
+  var hint = document.createElement("p");
+  hint.className = "bmkhint";
+  hint.innerHTML = '各問題の見出しにある ' + RIBBON +
+    ' を押すと、ここに「前回の続き」が残ります(この端末のブラウザにだけ保存されます)。';
+  head.appendChild(bar);
+  head.appendChild(hint);
+
+  // --- 各問題の見出しに、しおりボタンを足す ---
+  var buttons = {};
+  Array.prototype.forEach.call(secs, function (sec) {
+    var phead = sec.querySelector(".phead");
+    if (!phead) return;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "bmk";
+    b.innerHTML = RIBBON;
+    b.addEventListener("click", function () {
+      var cur = getMark();
+      if (cur && cur.id === sec.id) {
+        setMark(null);
+      } else {
+        setMark({ id: sec.id, label: labelOf(sec), tag: tagOf(sec), t: Date.now() });
+      }
+      render();
+    });
+    phead.appendChild(b);
+    buttons[sec.id] = b;
+  });
+
+  function render() {
+    var cur = getMark();
+    Array.prototype.forEach.call(secs, function (sec) {
+      var on = !!cur && cur.id === sec.id;
+      sec.classList.toggle("is-marked", on);
+      var b = buttons[sec.id];
+      if (!b) return;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.setAttribute("aria-label", labelOf(sec) + (on ? " のしおりをはずす" : " にしおりを挟む"));
+      b.title = on ? "しおりをはずす" : "ここにしおりを挟む";
+    });
+    if (cur) {
+      bar.querySelector(".lab").textContent = cur.label || cur.id;
+      bar.querySelector(".tag").textContent = cur.tag || "";
+    }
+    bar.hidden = !cur;
+    hint.hidden = !!cur;
+  }
+
+  // --- 組版によるずれの補正 ---
+  // MathJax の組版が終わるまで本文は縦に伸び続けるため、その間に合わせた位置は必ずずれる
+  // (なめらかスクロールに至っては目的地が動くので途中で止まってしまう)。
+  // そこで移動は即時に行い、組版の完了時点でもう一度だけ合わせ直す。
+  // 完了は #mjx-status(組版中の通知)が消えることで分かる。
+  var MOVES = ["wheel", "touchmove", "keydown"];
+  var observer = null, timer = null, userMoved = false;
+  function onUserMove() { userMoved = true; }
+
+  function scheduleFix(sec) {
+    var status = document.getElementById("mjx-status");
+    if (!status || status.hidden) return;      // 組版済み。もうずれない
+    if (observer) { observer.disconnect(); observer = null; }
+    clearTimeout(timer);
+    userMoved = false;
+    // きっかけになったクリックやキー操作自体を「利用者の操作」と数えないよう、次の周回から見張る
+    setTimeout(function () {
+      MOVES.forEach(function (ev) { window.addEventListener(ev, onUserMove, { passive: true }); });
+    }, 0);
+
+    var done = function () {
+      if (observer) { observer.disconnect(); observer = null; }
+      clearTimeout(timer);
+      MOVES.forEach(function (ev) { window.removeEventListener(ev, onUserMove); });
+      // 利用者が自分で読み進めていたら、勝手に動かさない
+      if (!userMoved) { sec.scrollIntoView({ block: "start" }); }
+    };
+    if (window.MutationObserver) {
+      observer = new MutationObserver(function () { if (status.hidden) { done(); } });
+      observer.observe(status, { attributes: true, attributeFilter: ["hidden"] });
+    }
+    timer = setTimeout(done, 90000);           // 通知が消えなかった場合の保険
+  }
+
+  function goTo(sec) {
+    sec.scrollIntoView({ block: "start" });
+    // 履歴を増やさずにハッシュだけ合わせる(リロードしても同じ位置に戻れるように)
+    if (history.replaceState) { history.replaceState(null, "", "#" + sec.id); }
+    scheduleFix(sec);
+  }
+
+  bar.querySelector(".go").addEventListener("click", function () {
+    var cur = getMark();
+    var sec = cur && document.getElementById(cur.id);
+    if (sec) { goTo(sec); }
+  });
+  bar.querySelector(".off").addEventListener("click", function () {
+    setMark(null);
+    render();
+  });
+
+  render();
+
+  // 問題集と解答解説集は別タブで開く導線がある。他のタブでの変更を取り込む
+  window.addEventListener("storage", function (e) {
+    if (!e.key || e.key === KEY) render();
+  });
+
+  // index.html から "workbook.html#q3-4" のように開かれた場合。
+  // ブラウザ自身のジャンプは組版前に済んでいるので、こちらも合わせ直しの対象にする。
+  if (location.hash.length > 1) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) { scheduleFix(target); }
+  }
+})();
+</script>
 </body>
 </html>
