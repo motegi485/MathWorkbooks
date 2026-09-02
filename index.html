@@ -96,6 +96,16 @@ ul.topics li{background:var(--accent-soft);color:var(--accent);border-radius:3px
 .pdf-panel[hidden]{display:none}
 .pdf-panel a{font-size:.92rem;font-weight:700}
 .pdf-panel .meta{font-weight:400;color:var(--sub);font-size:.82rem;margin-left:.45em}
+/* --- しおり(前回の続き)。各冊が残したしおりを読んで、再開の入口を出す --- */
+.resume{display:flex;flex-direction:column;gap:.35rem;margin:.85rem 0 0;
+  padding:.55rem .85rem;border:1px dashed var(--accent);border-radius:5px;
+  background:var(--accent-soft);font-size:.88rem}
+/* display を指定した以上、hidden 属性を明示的に効かせないと隠れない */
+.resume[hidden]{display:none}
+.resume a{display:inline-flex;align-items:baseline;gap:.4em;font-weight:700}
+.resume svg{width:.72rem;height:.9rem;fill:currentColor;flex:0 0 auto;
+  align-self:center;margin-right:-.1em}
+.resume .kind{color:var(--sub);font-weight:400;font-size:.78rem;letter-spacing:.06em}
 @media (prefers-reduced-motion:reduce){
   .go{transition:none}
   .go:hover,.go:active{transform:none}
@@ -230,6 +240,7 @@ document.getElementById("shelf").innerHTML = BOOKS.map(b => `
     <a class="go a" href="${b.id}/solutions.html" target="_blank" rel="noopener">解答解説集を開く<span class="arw">→</span></a>
     <button class="go pdf" type="button" aria-expanded="false" aria-controls="pdf-${b.id}">PDFをダウンロード<span class="car">▼</span></button>
   </p>
+  <p class="resume" id="resume-${b.id}" hidden></p>
   <div class="pdf-panel" id="pdf-${b.id}" hidden>
     <a href="${b.id}/workbook.pdf" download target="_blank" rel="noopener">⤓ 問題集PDF<span class="meta">${b.pdf.workbook.pages}ページ / ${b.pdf.workbook.size}</span></a>
     <a href="${b.id}/solutions.pdf" download target="_blank" rel="noopener">⤓ 解答解説集PDF<span class="meta">${b.pdf.solutions.pages}ページ / ${b.pdf.solutions.size}</span></a>
@@ -245,6 +256,37 @@ document.getElementById("shelf").addEventListener("click", e => {
   btn.setAttribute("aria-expanded", String(!open));
   panel.hidden = open;
 });
+
+// --- しおり(前回の続き) ---
+// 各冊の workbook.html / solutions.html が localStorage に残したしおりを読み、
+// 「続きから」の入口をカードに出す。キーとデータ形式は各冊のスクリプトと共通。
+// {"linear-algebra/workbook": {id:"q3-4", label:"問 3.4", tag:"...", t:...}, ...}
+const BMK_KEY = "mathworkbooks.bookmark.v1";
+const KIND_LABEL = { workbook: "問題集", solutions: "解答解説集" };
+const RIBBON = '<svg viewBox="0 0 24 24" aria-hidden="true">'
+  + '<path d="M5.5 2.5h13v19l-6.5-5.6-6.5 5.6z"/></svg>';
+
+function renderResume() {
+  let all;
+  // localStorage が使えない環境(プライベートモード等)では、単に何も出さない
+  try { all = JSON.parse(localStorage.getItem(BMK_KEY)) || {}; } catch (e) { all = {}; }
+  BOOKS.forEach(b => {
+    const box = document.getElementById(`resume-${b.id}`);
+    if (!box) return;
+    const links = Object.keys(KIND_LABEL).map(kind => {
+      const m = all[`${b.id}/${kind}`];
+      if (!m || !m.id) return "";
+      return `<a href="${b.id}/${kind}.html#${encodeURIComponent(m.id)}" target="_blank" rel="noopener">`
+        + `${RIBBON}<span class="kind">続きから</span>${KIND_LABEL[kind]} ${esc(m.label || m.id)}`
+        + `<span class="arw">→</span></a>`;
+    }).join("");
+    box.innerHTML = links;
+    box.hidden = !links;
+  });
+}
+renderResume();
+// 別タブで学習中にしおりを挟んだら、開いたままのこのページにも反映する
+window.addEventListener("storage", e => { if (!e.key || e.key === BMK_KEY) renderResume(); });
 </script>
 </body>
 </html>
