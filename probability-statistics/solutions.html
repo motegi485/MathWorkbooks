@@ -1147,7 +1147,7 @@ window.mjxStatusUpdate();
 <h4>解答</h4>
 <p>(1) \(E[S]=100\times3.5=350\)、\(V[S]=100\times\dfrac{35}{12}=\dfrac{875}{3}\approx291.7\)、\(\sigma_S\approx17.08\)。</p>
 <p>(2) \[P(S\ge380)=P(S\ge379.5)\approx P\!\left(Z\ge\frac{379.5-350}{17.08}\right)=P(Z\ge1.727)\approx0.0421\]</p>
-<p>厳密値 0.0420 とほぼ一致(4桁目まで合う)。</p>
+<p>厳密値 0.0420 とほぼ一致(小数第3位まで合う)。</p>
 <h4 class="alt">ポイント</h4>
 <p>一様なサイコロの出目(平らな分布)でも、100個足せば釣鐘型に化ける — 元の分布の形を「忘れて」正規分布に向かうのがCLTの凄みです(問5.6の三角分布はその第一歩でした)。連続修正 \(\pm0.5\) は「整数 \(k\) の確率を区間 \([k-0.5,k+0.5]\) の面積で受ける」補正で、\(n\) が中程度のとき精度を目に見えて改善します。</p>
 </section>
@@ -2312,7 +2312,7 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 <p>信頼度を時間について解き、対数信頼度を微分する。</p>
 <h4>解答</h4>
 <p>(1)</p>
-<p>\[t_{B10}=10^4\sqrt{-\ln0.9}\approx3.25\times10^3\\ \text{時間}\]</p>
+<p>\[t_{B10}=10^4\sqrt{-\ln0.9}\approx3.24\times10^3\\ \text{時間}\]</p>
 <p>(2)</p>
 <p>\[\lambda(t)=-\frac d{dt}\ln R(t)=\frac m\eta\left(\frac t\eta\right)^{m-1}\]</p>
 <p>(3) \(m&lt;1\) なら減少故障率、\(m=1\) なら一定故障率、\(m&gt;1\) なら増加故障率である。これらは順に初期故障期・偶発故障期・摩耗故障期の局所モデルとして使える。</p>
@@ -2374,7 +2374,8 @@ X^{\mathsf T}\boldsymbol{y}=\begin{pmatrix}21\\61\\35\end{pmatrix}\]</p>
 <h4>方針</h4>
 <p>全体集合、補集合、可算和について閉じているかを確認する。</p>
 <h4>解答</h4>
-<p>(1) \(\{\emptyset,\Omega\}\) と \(2^\Omega\) は、それぞれ最小・最大のσ-加法族である。</p>
+<p>(1) \(\{\emptyset,\Omega\}\):(i) \(\Omega\in\{\emptyset,\Omega\}\)。(ii) \(\Omega^c=\emptyset\)、\(\emptyset^c=\Omega\) がともに含まれるので補集合で閉じる。(iii) 族の要素は \(\emptyset\) と \(\Omega\) しかないから、可算個をどう選んで和をとっても、全て \(\emptyset\) なら \(\emptyset\)、一つでも \(\Omega\) を含めば \(\Omega\) となり、結果は常にこの族に含まれる。よって(i)〜(iii)を満たしσ-加法族であり、任意のσ-加法族は \(\Omega\) と(その補集合としての)\(\emptyset\) を必ず含むから、\(\{\emptyset,\Omega\}\) は最小のσ-加法族である。</p>
+<p>\(2^\Omega\):(i) \(\Omega\subseteq\Omega\) より \(\Omega\in2^\Omega\)。(ii) \(\Omega\) の任意の部分集合 \(A\) について、補集合 \(A^c=\Omega\setminus A\) もまた \(\Omega\) の部分集合だから \(2^\Omega\) に含まれる。(iii) \(\Omega\) の部分集合を可算個集めた和もまた \(\Omega\) の部分集合だから \(2^\Omega\) に含まれる。よって \(2^\Omega\) はσ-加法族であり、\(\Omega\) 上のどのσ-加法族もその元は \(\Omega\) の部分集合(すなわち \(2^\Omega\) の元)なので、\(2^\Omega\) は最大のσ-加法族である。</p>
 <p>(2)</p>
 <p>\[\sigma(\{1,2\})=\{\emptyset,\{1,2\},\{3,4\},\Omega\}\]</p>
 <p>(3) σ-加法族ではない。例えば \(\{1,2\}\) の補集合 \(\{3,4\}\) が含まれていない。</p>
