@@ -350,6 +350,7 @@ window.mjxStatusUpdate();
 </table></div>
 
 <h3>前提知識</h3>
+<p>以下、特に断りのないサイコロは1〜6が等確率で出るものとし、複数個・複数回の出目は独立とします。コインを繰り返し投げる試行も、特に断りがなければ表の出る確率（選んだコイン）を固定した下で独立とします。トランプや袋の玉を無作為に取り出す場合は、その時点の各カード・各玉を等確率で選びます。</p>
 <p>高校数学の「場合の数・確率」と、1変数の微分積分(微分・積分の計算、部分積分)を仮定します。2重積分は第4・5章で少しだけ使いますが、計算は誘導つきです。行列は第12・14・15章で登場します — 不安があれば姉妹編『情報系のための線形代数』を参照してください。測度論の予備知識は不要です(第18章がその入口になります)。</p>
 
 
@@ -380,7 +381,7 @@ window.mjxStatusUpdate();
 <li><b class="term">標本空間</b> \(\Omega\):起こりうる結果全体の集合。<b class="term">事象</b>は部分集合 \(A\subseteq\Omega\)</li>
 <li><b class="term">確率の公理</b>:(i) \(P(A)\ge 0\) (ii) \(P(\Omega)=1\) (iii) 互いに排反な事象列に対し \(P(A_1\cup A_2\cup\cdots)=P(A_1)+P(A_2)+\cdots\)</li>
 <li><b class="term">余事象</b>:\(P(A^c)=1-P(A)\)、<b class="term">加法定理</b>:\(P(A\cup B)=P(A)+P(B)-P(A\cap B)\)</li>
-<li>同様に確からしいとき \(P(A)=\dfrac{|A|}{|\Omega|}\)(場合の数の比)</li>
+<li>有限の標本空間で各結果が同様に確からしいとき \(P(A)=\dfrac{|A|}{|\Omega|}\)(場合の数の比)</li>
 <li><b class="term">順列</b> \({}_n\mathrm{P}_k=\dfrac{n!}{(n-k)!}\)、<b class="term">組合せ</b> \({}_n\mathrm{C}_k=\dbinom{n}{k}=\dfrac{n!}{k!\,(n-k)!}\)(本書では以後 \(\binom{n}{k}\) と書く)</li>
 </ul>
 </div>
@@ -538,7 +539,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q2-8">
 <div class="phead"><span class="pnum">問 2.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">モンティ・ホール問題</span></div>
-<p>3つのドアの1つに賞品がある。挑戦者がドア1を選ぶと、答えを知っている司会者が、残り2つのうちハズレのドア(両方ハズレなら等確率で一方)を開けて見せる。司会者がドア3を開けたとき、挑戦者はドア2に変更すべきか。ベイズの定理を用いて、変更した場合・しない場合の勝率を求めよ。</p>
+<p>3つのドアの1つに賞品があり、その位置は各ドアに等確率で割り当てられる。挑戦者がドア1を選ぶと、答えを知っている司会者が、残り2つのうちハズレのドア(両方ハズレなら等確率で一方)を開けて見せる。司会者がドア3を開けたとき、挑戦者はドア2に変更すべきか。ベイズの定理を用いて、変更した場合・しない場合の勝率を求めよ。</p>
 </section>
 
 <section class="prob" id="q2-9">
@@ -547,7 +548,7 @@ window.mjxStatusUpdate();
 <p>画像間の対応点からホモグラフィ（射影変換）を推定したい。各点がインライアである確率を0.5とし、4点の選択ではインライアかどうかを独立とみなす標準的な近似モデルを用いる。RANSACでは、最小構成の \(s=4\) 点を無作為に選んでモデルを仮組みする試行を、各回独立に繰り返す。</p>
 <ol class="sublist">
 <li>1回の試行で、選んだ4点がすべて正しい対応（インライア）である確率を求めよ。</li>
-<li>\(N\) 回の試行で少なくとも1回は (1) が起こる確率を0.99以上にしたい。必要な最小の \(N\) を求めよ。必要なら \(\ln 0.01=-4.605\)、\(\ln 0.9375=-0.06454\) を用いてよい。</li>
+<li>\(N\) 回の試行で少なくとも1回は (1) が起こる確率を0.99以上にしたい。必要な最小の \(N\) を求めよ。必要なら \(\ln 0.01\approx-4.605\)、\(\ln 0.9375\approx-0.06454\) を用いてよい。</li>
 </ol>
 </section>
 
@@ -596,6 +597,7 @@ window.mjxStatusUpdate();
 <h3>この章の要点</h3>
 <ul>
 <li><b class="term">確率関数(PMF)</b>:\(p(k)=P(X=k)\)、\(\sum_k p(k)=1\)</li>
+<li>以下の有限な期待値の公式は \(E[|X|]&lt;\infty\)、有限な分散の公式は \(E[X^2]&lt;\infty\) の下で用いる。非負変数では期待値が \(+\infty\) になる場合もある（問3.10）。</li>
 <li><b class="term">期待値</b> \(E[X]=\sum_k k\,p(k)\)、<b class="term">分散</b> \(V[X]=E[(X-\mu)^2]=E[X^2]-(E[X])^2\)、<b class="term">標準偏差</b> \(\sigma=\sqrt{V[X]}\)</li>
 <li>\(E[aX+b]=aE[X]+b\)、\(V[aX+b]=a^2V[X]\)</li>
 <li><b class="term">ベルヌーイ</b> \(\mathrm{Ber}(p)\)（\(0\le p\le1\)）:\(E=p\)、\(V=p(1-p)\)</li>
@@ -730,7 +732,7 @@ window.mjxStatusUpdate();
 <li><b class="term">一様分布</b> \(U(a,b)\)（\(a&lt;b\)）:\(E=\dfrac{a+b}{2}\)、\(V=\dfrac{(b-a)^2}{12}\)</li>
 <li><b class="term">指数分布</b> \(\mathrm{Exp}(\lambda)\)（\(\lambda>0\)）:\(f(x)=\lambda e^{-\lambda x}\ (x\ge0)\)、\(F(x)=1-e^{-\lambda x}\)、\(E=\dfrac1\lambda\)、\(V=\dfrac1{\lambda^2}\)、無記憶性</li>
 <li><b class="term">正規分布</b> \(N(\mu,\sigma^2)\)（\(\sigma>0\);第2引数は分散）:\(f(x)=\dfrac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\dfrac{(x-\mu)^2}{2\sigma^2}\right)\)。<b class="term">標準化</b> \(Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)\)</li>
-<li><b class="term">上側 \(\alpha\) 点</b> \(z_\alpha\):\(P(Z>z_\alpha)=\alpha\)。\(z_{0.05}=1.645\)、\(z_{0.025}=1.960\)、\(z_{0.005}=2.576\)</li>
+<li><b class="term">上側 \(\alpha\) 点</b> \(z_\alpha\):\(P(Z>z_\alpha)=\alpha\)。\(z_{0.05}\approx1.645\)、\(z_{0.025}\approx1.960\)、\(z_{0.005}\approx2.576\)</li>
 <li><b class="term">単調変換</b> \(Y=g(X)\):台上で \(g\) が1対1かつ微分可能で逆関数の微分が使えるとき、\(f_Y(y)=f_X(g^{-1}(y))\left|\dfrac{d}{dy}g^{-1}(y)\right|\)（\(y\) は変換後の台）。非単調なら各逆像を足すか CDF 経由で求める</li>
 </ul>
 </div>
@@ -768,7 +770,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q4-4">
 <div class="phead"><span class="pnum">問 4.4</span><span class="lv lv1">★ 基礎</span><span class="ptag">標準正規分布</span></div>
-<p>\(Z\sim N(0,1)\) とする。\(\Phi(z)=P(Z\le z)\) について \(\Phi(1)=0.8413\)、\(\Phi(1.5)=0.9332\)、\(\Phi(1.96)=0.9750\)、\(\Phi(2)=0.9772\) を用いてよい。</p>
+<p>\(Z\sim N(0,1)\) とする。\(\Phi(z)=P(Z\le z)\) について \(\Phi(1)\approx0.8413\)、\(\Phi(1.5)\approx0.9332\)、\(\Phi(1.96)\approx0.9750\)、\(\Phi(2)\approx0.9772\) を用いてよい。</p>
 <ol class="sublist">
 <li>\(P(Z\le 1.5)\) を求めよ。</li>
 <li>\(P(|Z|\le 1.96)\) を求めよ。</li>
@@ -778,7 +780,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q4-5">
 <div class="phead"><span class="pnum">問 4.5</span><span class="lv lv1">★ 基礎</span><span class="ptag">標準化</span></div>
-<p>グレースケール画像のある領域の画素輝度 \(X\) は \(N(120,\,15^2)\) に従うとする。\(\Phi(2)=0.9772\)、\(z_{0.01}=2.326\) を用いてよい。</p>
+<p>グレースケール画像のある領域の画素輝度 \(X\) は \(N(120,\,15^2)\) に従うとする。\(\Phi(2)\approx0.9772\)、\(z_{0.01}\approx2.326\) を用いてよい。</p>
 <ol class="sublist">
 <li>\(P(X>150)\) を求めよ。</li>
 <li>\(P(90&lt;X&lt;150)\) を求めよ。</li>
@@ -866,9 +868,10 @@ window.mjxStatusUpdate();
 <h3>この章の要点</h3>
 <ul>
 <li><b class="term">同時分布</b> \(p(x,y)=P(X=x,Y=y)\) / \(f(x,y)\)。<b class="term">周辺化</b>:\(p_X(x)=\sum_y p(x,y)\)、\(f_X(x)=\int f(x,y)\,dy\)</li>
-<li><b class="term">条件付き分布</b>:\(p_X(x)>0\) のとき \(p(y\mid x)=\dfrac{p(x,y)}{p_X(x)}\)、\(f_X(x)>0\) のとき \(f(y\mid x)=\dfrac{f(x,y)}{f_X(x)}\)</li>
+<li><b class="term">条件付き分布</b>:\(p_X(x)>0\) のとき \(p(y\mid x)=\dfrac{p(x,y)}{p_X(x)}\)、\(0&lt;f_X(x)&lt;\infty\) のとき \(f(y\mid x)=\dfrac{f(x,y)}{f_X(x)}\)。連続型では \(P(X=x)=0\) なので、この密度比を条件付き分布の一つの版として用いる（事象確率の比ではない）</li>
 <li><b class="term">独立</b> ⟺ 離散型ではすべての \(x,y\) で \(p(x,y)=p_X(x)p_Y(y)\)、連続型ではほとんど至る所で \(f(x,y)=f_X(x)f_Y(y)\)</li>
 <li>期待値が存在するとき \(E[X+Y]=E[X]+E[Y]\)（独立性は不要）。\(E[XY]=E[X]E[Y]\) は独立で各期待値が存在するとき</li>
+<li>以下の共分散・分散の公式では \(E[X^2],E[Y^2]&lt;\infty\) を仮定する。</li>
 <li><b class="term">共分散</b> \(\mathrm{Cov}[X,Y]=E[(X-\mu_X)(Y-\mu_Y)]=E[XY]-E[X]E[Y]\)</li>
 <li>\(V[X\pm Y]=V[X]+V[Y]\pm 2\,\mathrm{Cov}[X,Y]\)</li>
 <li><b class="term">相関係数</b>（\(0&lt;\sigma_X,\sigma_Y&lt;\infty\)） \(\rho=\dfrac{\mathrm{Cov}[X,Y]}{\sigma_X\sigma_Y}\)、\(-1\le\rho\le1\)。独立 ⇒ 無相関(\(\rho=0\))、逆は不成立</li>
@@ -1053,7 +1056,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q6-8">
 <div class="phead"><span class="pnum">問 6.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">クーポンコレクター問題</span></div>
-<p>6種類のカードが等確率で1枚ずつ出る。全種類をそろえるまでの購入枚数 \(T\) を考える。</p>
+<p>6種類のカードが各購入で独立かつ等確率で1枚ずつ出る。全種類をそろえるまでの購入枚数 \(T\) を考える。</p>
 <ol class="sublist">
 <li>\(i-1\) 種持っている状態から新種を引くまでの枚数 \(T_i\) が幾何分布に従うことを使い、\(E[T]=6\left(1+\dfrac12+\cdots+\dfrac16\right)\) を導け。値も求めよ。</li>
 <li>一般に \(n\) 種では \(E[T]=nH_n\approx n\ln n\)(\(H_n\) は調和数)となる。ランダムな入力でプログラムの全 \(n\) 分岐を踏むまでの試行回数、という文脈でこの結果の意味を述べよ。</li>
@@ -1105,7 +1108,7 @@ window.mjxStatusUpdate();
 <li><b class="term">マルコフの不等式</b>:\(X\ge0\)、\(E[X]&lt;\infty\)、\(a>0\) なら \(P(X\ge a)\le\dfrac{E[X]}{a}\)</li>
 <li><b class="term">チェビシェフの不等式</b>:\(V[X]&lt;\infty\)、\(\varepsilon>0\) なら \(P(|X-\mu|\ge \varepsilon)\le\dfrac{V[X]}{\varepsilon^2}\)(特に \(\sigma>0\) なら \(P(|X-\mu|\ge k\sigma)\le\dfrac{1}{k^2}\)、\(k>0\))</li>
 <li>i.i.d.(独立同分布)標本の<b class="term">標本平均</b> \(\bar{X}_n=\dfrac1n\sum X_i\):\(E[\bar{X}_n]=\mu\)、\(V[\bar{X}_n]=\dfrac{\sigma^2}{n}\)</li>
-<li><b class="term">大数の弱法則</b>:任意の \(\varepsilon>0\) で \(P(|\bar{X}_n-\mu|\ge\varepsilon)\to0\)(\(n\to\infty\))</li>
+<li><b class="term">大数の弱法則</b>:上のi.i.d.標本で有限な平均・分散を仮定すると、任意の \(\varepsilon>0\) で \(P(|\bar{X}_n-\mu|\ge\varepsilon)\to0\)(\(n\to\infty\))</li>
 <li><b class="term">中心極限定理(CLT)</b>:i.i.d. で \(0&lt;\sigma^2&lt;\infty\) なら \(\dfrac{\bar{X}_n-\mu}{\sigma/\sqrt{n}}\) の分布は \(N(0,1)\) に近づく</li>
 <li><b class="term">二項の正規近似</b>:\(B(n,p)\approx N(np,\ np(1-p))\)。整数値なので<b class="term">連続修正</b>(\(\pm0.5\))を入れる</li>
 <li><b class="term">ヘフディングの不等式</b>:\(X_i\in[0,1]\) i.i.d. なら \(P(|\bar{X}_n-\mu|\ge\varepsilon)\le 2e^{-2n\varepsilon^2}\)</li>
@@ -1142,7 +1145,7 @@ window.mjxStatusUpdate();
 <section class="prob" id="q7-4">
 <div class="phead"><span class="pnum">問 7.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">大数の弱法則</span></div>
 <ol class="sublist">
-<li>チェビシェフの不等式から \(P(|\bar{X}_n-\mu|\ge\varepsilon)\le\dfrac{\sigma^2}{n\varepsilon^2}\) を導き、大数の弱法則を証明せよ。</li>
+<li>問7.3のi.i.d.標本で \(\sigma^2&lt;\infty\) とする。チェビシェフの不等式から \(P(|\bar{X}_n-\mu|\ge\varepsilon)\le\dfrac{\sigma^2}{n\varepsilon^2}\) を導き、大数の弱法則を証明せよ。</li>
 <li>\(\sigma=10\) のとき、\(P(|\bar{X}_n-\mu|&lt;1)\ge0.95\) を保証する標本サイズ \(n\) を(1)の上界を使って求めよ。</li>
 </ol>
 </section>
@@ -1158,10 +1161,10 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q7-6">
 <div class="phead"><span class="pnum">問 7.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">二項分布の正規近似</span></div>
-<p>ビット誤り率 0.02 の通信路で 2500 ビットを送る。誤りビット数を \(X\) とする。</p>
+<p>ビット誤り率 0.02 の通信路で 2500 ビットを送り、各ビットの誤りは独立とする。誤りビット数を \(X\) とする。</p>
 <ol class="sublist">
 <li>\(E[X]\) と標準偏差を求めよ。</li>
-<li>連続修正付きの正規近似で \(P(X\le40)\) を求めよ。(厳密値は 0.0839。)</li>
+<li>連続修正付きの正規近似で \(P(X\le40)\) を求めよ。(厳密な二項確率を小数第4位に丸めると 0.0839。)</li>
 </ol>
 </section>
 
@@ -1177,7 +1180,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q7-8">
 <div class="phead"><span class="pnum">問 7.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">モンテカルロ法の精度設計</span></div>
-<p>単位正方形 \([0,1]^2\) に一様乱数の点を \(n\) 個打ち、四分円 \(x^2+y^2\le1\) に入った割合 \(\hat{p}\) から \(\hat{\pi}=4\hat{p}\) で \(\pi\) を推定する。命中確率は \(p=\pi/4\approx0.7854\) である。</p>
+<p>単位正方形 \([0,1]^2\) に独立な一様乱数の点を \(n\) 個打ち、四分円 \(x^2+y^2\le1\) に入った割合 \(\hat{p}\) から \(\hat{\pi}=4\hat{p}\) で \(\pi\) を推定する。命中確率は \(p=\pi/4\approx0.7854\) である。</p>
 <ol class="sublist">
 <li>\(\hat{p}\) の標準偏差を式で表せ。</li>
 <li>\(\hat{\pi}\) の標準偏差を 0.01 以下にするのに必要な \(n\) を求めよ。</li>
@@ -1187,7 +1190,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q7-9">
 <div class="phead"><span class="pnum">問 7.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ヘフディングの不等式と精度評価</span></div>
-<p>分類器の真の誤り率を \(\mu\) とし、同じ分布から独立に抽出した \(n\) 個のテストデータに対する誤り指示変数を \(X_i\in\{0,1\}\)、観測誤り率を \(\bar{X}_n\) とする。ヘフディングの不等式 \(P(|\bar{X}_n-\mu|\ge\varepsilon)\le2e^{-2n\varepsilon^2}\) を用いてよい。</p>
+<p>テストデータとは独立に学習・選択を済ませて固定した分類器の真の誤り率を \(\mu\) とし、同じ分布から独立に抽出した \(n\) 個のテストデータに対する誤り指示変数を \(X_i\in\{0,1\}\)、観測誤り率を \(\bar{X}_n\) とする。ヘフディングの不等式 \(P(|\bar{X}_n-\mu|\ge\varepsilon)\le2e^{-2n\varepsilon^2}\) を用いてよい。</p>
 <ol class="sublist">
 <li>\(n=1000\)、\(\varepsilon=0.05\) のときの上界を求めよ。</li>
 <li>誤差 \(\varepsilon=0.02\) 以内であることを信頼度95%(上界 \(\le0.05\))で保証するのに必要な \(n\) を求めよ。</li>
@@ -1284,7 +1287,7 @@ window.mjxStatusUpdate();
 <ol class="sublist">
 <li>\(T=\dfrac{\bar{X}-\mu}{U/\sqrt{n}}\) が \(t(n-1)\) に従うことを、\(t\) 分布の定義(要点欄)と正規母集団の基本定理から確認せよ。</li>
 <li>分母の \(\sigma\) を推定量 \(U\) に置き換えると、なぜ分布の裾が正規分布より重くなるのか、直感的に説明せよ。</li>
-<li>\(t_{0.025}(9)=2.262\) と \(z_{0.025}=1.960\) を比較し、小標本で正規分布表を代用する危険を述べよ。</li>
+<li>\(t_{0.025}(9)\approx2.262\) と \(z_{0.025}\approx1.960\) を比較し、小標本で正規分布表を代用する危険を述べよ。</li>
 </ol>
 </section>
 
@@ -1300,7 +1303,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q8-8">
 <div class="phead"><span class="pnum">問 8.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">標本分布の定理の運用</span></div>
-<p>\(N(\mu,\ 36)\) から \(n=9\) の i.i.d. 標本をとる。\(P(\chi^2(8)>16)=0.042\) を用いてよい。</p>
+<p>\(N(\mu,\ 36)\) から \(n=9\) の i.i.d. 標本をとる。\(P(\chi^2(8)>16)\approx0.042\) を用いてよい。</p>
 <ol class="sublist">
 <li>\(\bar{X}\) の分布を述べよ。</li>
 <li>不偏分散が母分散の2倍を超える確率 \(P(U^2>2\sigma^2)\) を求めよ。</li>
@@ -1326,7 +1329,7 @@ window.mjxStatusUpdate();
 
 <div class="why">
 <h3>なぜ学ぶのか</h3>
-<p>データから母数(分布のパラメータ)を一点で言い当てるのが点推定です。しかし推定量は無数に作れます — では「良い推定量」とは何か。不偏性・一致性・有効性という品質基準を立て、ほぼ万能のレシピである<b>最尤法</b>を身につけます。さらにフィッシャー情報量とクラメール・ラオの不等式は、「どんな推定でも超えられない精度の理論限界」を教えてくれます。カメラキャリブレーションもニューラルネットの学習(クロスエントロピー最小化=最尤法、第16章)も、突き詰めればこの章の問題です。</p>
+<p>データから母数(分布のパラメータ)を一点で言い当てるのが点推定です。しかし推定量は無数に作れます — では「良い推定量」とは何か。不偏性・一致性・有効性という品質基準を立て、ほぼ万能のレシピである<b>最尤法</b>を身につけます。さらにフィッシャー情報量とクラメール・ラオの不等式は、「正則条件下で、不偏推定量の分散が下回れない理論限界」を教えてくれます。カメラキャリブレーションもニューラルネットの学習(クロスエントロピー最小化=最尤法、第16章)も、突き詰めればこの章の問題です。</p>
 </div>
 
 <div class="learn">
@@ -1345,7 +1348,7 @@ window.mjxStatusUpdate();
 <ul>
 <li><b class="term">推定量</b> \(\hat{\theta}=\hat{\theta}(X_1,\dots,X_n)\) は確率変数。データを代入した値が<b class="term">推定値</b></li>
 <li><b class="term">不偏性</b>:\(E[\hat{\theta}]=\theta\)。<b class="term">一致性</b>:\(\hat{\theta}\to\theta\)(確率収束)。平均二乗誤差 \(\mathrm{MSE}=V[\hat{\theta}]+(\text{偏り})^2\)</li>
-<li><b class="term">尤度関数</b> \(L(\theta)=\prod_i f(x_i;\theta)\)、<b class="term">対数尤度</b> \(\ell(\theta)=\ln L(\theta)\)。<b class="term">最尤推定量(MLE)</b>は \(\ell\) を最大にする \(\hat{\theta}\)</li>
+<li>i.i.d.標本の<b class="term">尤度関数</b> \(L(\theta)=\prod_i f(x_i;\theta)\)、<b class="term">対数尤度</b> \(\ell(\theta)=\ln L(\theta)\)。<b class="term">最尤推定量(MLE)</b>は \(\ell\) を最大にする \(\hat{\theta}\)</li>
 <li><b class="term">フィッシャー情報量</b>(1観測あたり):\(I(\theta)=E\!\left[\left(\dfrac{\partial}{\partial\theta}\ln f(X;\theta)\right)^2\right]\)。台が母数に依存しないことや微分と積分の交換などの正則条件下では \(I(\theta)=-E\!\left[\dfrac{\partial^2}{\partial\theta^2}\ln f(X;\theta)\right]\)</li>
 <li><b class="term">クラメール・ラオの不等式</b>:正則条件下で不偏推定量なら \(V[\hat{\theta}]\ge\dfrac{1}{nI(\theta)}\)。下限を達成する不偏推定量を<b class="term">有効推定量</b>と呼ぶ</li>
 <li><b class="term">MLEの漸近正規性</b>(一致性を含む正則条件下):\(\sqrt n(\hat{\theta}_{\mathrm{ML}}-\theta)\) は \(N(0,I(\theta)^{-1})\) に分布収束する。したがって大標本では \(\hat\theta_{\mathrm{ML}}\) を近似的に \(N\!\left(\theta,\dfrac{1}{nI(\theta)}\right)\) と扱える</li>
@@ -1438,7 +1441,7 @@ window.mjxStatusUpdate();
 <ul>
 <li>「不偏性」「一致性」「有効性」がそれぞれ何を保証するかを区別して説明できる</li>
 <li>最尤法の手順(尤度→対数→微分または直接最大化)を、微分が使えない例も含めて運用できる</li>
-<li>クラメール・ラオ下限が「推定精度の理論限界」であることを、達成例とともに説明できる</li>
+<li>クラメール・ラオ下限を、正則条件下の不偏推定量の分散の下限として、達成例とともに説明できる</li>
 </ul>
 </div>
 
@@ -1495,7 +1498,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q10-3">
 <div class="phead"><span class="pnum">問 10.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">t区間(σ未知)</span></div>
-<p>新しい画像処理アルゴリズムの1フレーム処理時間(ms)を、正規母集団から独立に9回測定したところ、\(\bar{x}=50.2\)、不偏分散の平方根 \(u=3.6\) であった。母平均の95%信頼区間を求めよ。\(t_{0.025}(8)=2.306\) を用いてよい。</p>
+<p>新しい画像処理アルゴリズムの1フレーム処理時間(ms)を、正規母集団から独立に9回測定したところ、\(\bar{x}=50.2\)、不偏分散の平方根 \(u=3.6\) であった。母平均の95%信頼区間を求めよ。\(t_{0.025}(8)\approx2.306\) を用いてよい。</p>
 </section>
 
 <section class="prob" id="q10-4">
@@ -1510,7 +1513,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q10-6">
 <div class="phead"><span class="pnum">問 10.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">母分散の信頼区間</span></div>
-<p>正規母集団からの \(n=10\) の標本で不偏分散 \(u^2=8.4\) を得た。\(\chi^2_{0.025}(9)=19.02\)、\(\chi^2_{0.975}(9)=2.700\) を用いて:</p>
+<p>正規母集団から独立にとった \(n=10\) の標本で不偏分散 \(u^2=8.4\) を得た。\(\chi^2_{0.025}(9)\approx19.02\)、\(\chi^2_{0.975}(9)\approx2.700\) を用いて:</p>
 <ol class="sublist">
 <li>ピボット \(\dfrac{(n-1)U^2}{\sigma^2}\sim\chi^2(n-1)\) から、要点欄の区間の公式を導け。</li>
 <li>母分散 \(\sigma^2\) の95%信頼区間を求めよ。</li>
@@ -1520,7 +1523,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q10-7">
 <div class="phead"><span class="pnum">問 10.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">片側信頼限界(無故障データからの故障率保証)</span></div>
-<p>独立なユニットの故障が共通の一定故障率 \(\lambda\) を持ち、総稼働時間に対する故障件数が強度 \(\lambda\) の斉次ポアソンモデル（各寿命は \(\mathrm{Exp}(\lambda)\)）に従うとする。総稼働時間 \(T\) 時間の試験で<b>故障が1件も起きなかった</b>。</p>
+<p>独立なユニットの故障が共通の一定故障率 \(\lambda\) を持ち、総稼働時間に対する故障件数が強度 \(\lambda\) の斉次ポアソンモデル（各寿命は \(\mathrm{Exp}(\lambda)\)）に従うとする。あらかじめ定めた総稼働時間 \(T>0\) 時間の試験で<b>故障が1件も起きなかった</b>。</p>
 <ol class="sublist">
 <li>「観測結果(無故障)またはそれ以上に良い結果」が起こる確率が \(0.05\) 以上となる \(\lambda\) の範囲、すなわち \(e^{-\lambda T}\ge0.05\) を満たす \(\lambda\) の上限として、95%上側信頼限界 \(\lambda_U=\dfrac{\ln 20}{T}\approx\dfrac{3.0}{T}\) を導け。</li>
 <li>\(T=10^4\) 時間のとき \(\lambda_U\) を求めよ。</li>
@@ -1565,7 +1568,8 @@ window.mjxStatusUpdate();
 <ul>
 <li>手順:仮説 \(H_0\)(帰無)と \(H_1\)(対立)→ 検定統計量 → 有意水準 \(\alpha\) で棄却域 → 計算 → 判定</li>
 <li><b class="term">第1種の過誤</b>:\(H_0\) が真なのに棄却(誤報)。水準 \(\alpha\) の検定では、その確率は帰無仮説全体で高々 \(\alpha\)（連続な単純帰無仮説などでは境界でちょうど \(\alpha\)）。<b class="term">第2種の過誤</b>:\(H_1\) が真なのに棄却しない(見逃し)。確率 \(\beta\)。<b class="term">検出力</b> \(=1-\beta\)</li>
-<li><b class="term">p値</b>:\(H_0\) の下で「観測値と同等以上に極端」な結果が出る確率。<b>「\(H_0\) が正しい確率」ではない</b></li>
+<li><b class="term">p値</b>:帰無仮説の下で統計量の分布が一意に定まるとき、「観測値と同等以上に極端」な結果が出る確率。複合帰無仮説では、帰無仮説内の母数に関する上限を取るなど、水準を保つ定義を用いる。<b>「\(H_0\) が正しい確率」ではない</b></li>
+<li>以下の検定統計量の帰無分布は、各標本内の観測がi.i.d.で、帰無仮説（母平均が \(\mu_0\)、2標本では母平均が等しい）が成り立つ下での主張である。</li>
 <li><b class="term">1標本z検定</b>:正規母集団で \(\sigma\) 既知なら \(Z=\dfrac{\bar{X}-\mu_0}{\sigma/\sqrt{n}}\sim N(0,1)\)（大標本ではCLT近似も可）。<b class="term">1標本t検定</b>:正規母集団で \(T=\dfrac{\bar{X}-\mu_0}{U/\sqrt{n}}\sim t(n-1)\)</li>
 <li><b class="term">2標本t検定(等分散)</b>:互いに独立な2つの正規標本で母分散が共通なら、\(s_p^2=\dfrac{(n_1-1)u_1^2+(n_2-1)u_2^2}{n_1+n_2-2}\)、\(T=\dfrac{\bar{X}_1-\bar{X}_2}{\sqrt{s_p^2\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\sim t(n_1+n_2-2)\)</li>
 <li><b class="term">比率の検定</b>:独立なベルヌーイ標本の大標本近似で \(Z=\dfrac{\hat{p}-p_0}{\sqrt{p_0(1-p_0)/n}}\)</li>
@@ -1576,7 +1580,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q11-1">
 <div class="phead"><span class="pnum">問 11.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">z検定</span></div>
-<p>新ロットの重量を i.i.d. \(N(\mu,6^2)\) とモデル化し、標準偏差 \(\sigma=6\) は既知とする。\(n=36\) 個を抜き取ると \(\bar{x}=52.1\) だった。「平均は従来の50から変わっていない」\(H_0:\mu=50\) を、両側・有意水準5%で検定せよ。また p値も求めよ(\(\Phi(2.1)=0.9821\) を用いてよい)。</p>
+<p>新ロットの重量を i.i.d. \(N(\mu,6^2)\) とモデル化し、標準偏差 \(\sigma=6\) は既知とする。\(n=36\) 個を抜き取ると \(\bar{x}=52.1\) だった。「平均は従来の50から変わっていない」\(H_0:\mu=50\) を、両側・有意水準5%で検定せよ。また p値も求めよ(\(\Phi(2.1)\approx0.9821\) を用いてよい)。</p>
 </section>
 
 <section class="prob" id="q11-2">
@@ -1591,12 +1595,12 @@ window.mjxStatusUpdate();
 <section class="prob" id="q11-3">
 
 <div class="phead"><span class="pnum">問 11.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">1標本t検定（片側）</span></div>
-<p>バッテリー容量の規格は「母平均250以上」である。正規母集団を仮定し、\(n=16\) 個の測定で \(\bar x=248\)、不偏標準偏差 \(u=8\) を得た。複合帰無仮説 \(H_0:\mu\ge250\) 対 \(H_1:\mu&lt;250\) を有意水準5%で検定せよ。棄却確率が最大になる帰無仮説の境界 \(\mu=250\) で統計量を較正し、\(t_{0.05}(15)=1.753\) を用いてよい。結論の述べ方にも注意すること。</p>
+<p>バッテリー容量の規格は「母平均250以上」である。正規母集団から独立に抽出した \(n=16\) 個の測定で \(\bar x=248\)、不偏標準偏差 \(u=8\) を得た。複合帰無仮説 \(H_0:\mu\ge250\) 対 \(H_1:\mu&lt;250\) を有意水準5%で検定せよ。棄却確率が最大になる帰無仮説の境界 \(\mu=250\) で統計量を較正し、\(t_{0.05}(15)\approx1.753\) を用いてよい。結論の述べ方にも注意すること。</p>
 </section>
 
 <section class="prob" id="q11-4">
 <div class="phead"><span class="pnum">問 11.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">p値の解釈</span></div>
-<p>ある検定で \(p=0.03\) が得られた。次の各文は正しいか、それぞれ判定し理由を述べよ。</p>
+<p>帰無仮説の下で統計量の分布が一意に定まる検定で、その分布の裾確率として \(p=0.03\) が得られた。次の各文は正しいか、それぞれ判定し理由を述べよ。</p>
 <ol class="sublist">
 <li>「帰無仮説が正しい確率は3%である」</li>
 <li>「帰無仮説が正しいとしたら、今回と同等以上に極端なデータが出る確率は3%である」</li>
@@ -1611,23 +1615,23 @@ window.mjxStatusUpdate();
 <ol class="sublist">
 <li>\(n=36\) のときの検出力を求めよ。</li>
 <li>\(n=100\) のときの検出力を求めよ。</li>
-<li>結果から、標本サイズ設計における検出力の役割を述べよ。(\(\Phi(0.355)=0.639\)、\(\Phi(1.688)=0.954\) を用いてよい。)</li>
+<li>結果から、標本サイズ設計における検出力の役割を述べよ。(\(\Phi(0.355)\approx0.639\)、\(\Phi(1.688)\approx0.954\) を用いてよい。)</li>
 </ol>
 </section>
 
 <section class="prob" id="q11-6">
 <div class="phead"><span class="pnum">問 11.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">2標本t検定</span></div>
-<p>アルゴリズムAとBの処理時間(ms)を各 \(n_A=n_B=8\) 回測定し、\(\bar{x}_A=120.5\)、\(\bar{x}_B=115.3\)、\(u_A^2=30\)、\(u_B^2=26\) を得た(等分散・正規を仮定)。「平均処理時間に差はない」を両側5%で検定せよ。\(t_{0.025}(14)=2.145\)、\(\sqrt7=2.646\) を用いてよい。(参考:p値は約0.070。)</p>
+<p>アルゴリズムAとBの処理時間(ms)を各 \(n_A=n_B=8\) 回測定し、\(\bar{x}_A=120.5\)、\(\bar{x}_B=115.3\)、\(u_A^2=30\)、\(u_B^2=26\) を得た(等分散・正規を仮定し、群内・群間の全測定は独立とする)。「平均処理時間に差はない」を両側5%で検定せよ。\(t_{0.025}(14)\approx2.145\)、\(\sqrt7\approx2.646\) を用いてよい。(参考:p値は約0.070。)</p>
 </section>
 
 <section class="prob" id="q11-7">
 <div class="phead"><span class="pnum">問 11.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">比率の検定</span></div>
-<p>従来の検出率は \(85\%\) だった。同じ分布から独立に抽出した \(n=200\) 枚に対する改良版の検出結果を、共通成功確率 \(p\) のベルヌーイ標本とみなす。180枚を検出した(\(\hat{p}=0.9\))とき、「検出率は向上した」と言えるか、\(H_0:p=0.85\) 対 \(H_1:p>0.85\) を片側5%で近似検定し、p値も求めよ(\(\Phi(1.98)=0.9762\) を用いてよい)。</p>
+<p>従来の検出率は \(85\%\) だった。同じ分布から独立に抽出した \(n=200\) 枚に対する改良版の検出結果を、共通成功確率 \(p\) のベルヌーイ標本とみなす。180枚を検出した(\(\hat{p}=0.9\))とき、「検出率は向上した」と言えるか、\(H_0:p=0.85\) 対 \(H_1:p>0.85\) を片側5%で近似検定し、p値も求めよ(\(\Phi(1.98)\approx0.9761\) を用いてよい)。</p>
 </section>
 
 <section class="prob" id="q11-8">
 <div class="phead"><span class="pnum">問 11.8</span><span class="lv lv2">★★ 標準</span><span class="ptag">適合度検定</span></div>
-<p>同じサイコロを独立に120回投げて、1〜6の目がそれぞれ \(15,\ 25,\ 20,\ 15,\ 22,\ 23\) 回出た。「どの目も等確率 \(1/6\)」をPearsonの適合度検定により有意水準5%で検定せよ。\(\chi^2_{0.05}(5)=11.07\) を用いてよい。</p>
+<p>同じサイコロを独立に120回投げて、1〜6の目がそれぞれ \(15,\ 25,\ 20,\ 15,\ 22,\ 23\) 回出た。「どの目も等確率 \(1/6\)」をPearsonの適合度検定により有意水準5%で検定せよ。\(\chi^2_{0.05}(5)\approx11.07\) を用いてよい。</p>
 </section>
 
 <section class="prob" id="q11-9">
@@ -1635,7 +1639,7 @@ window.mjxStatusUpdate();
 <p>同じ母集団から独立に抽出されたとみなせる300回の運行について、天候とセンサ異常の組を記録した:晴れ200回のうち異常8回、雨100回のうち異常18回。</p>
 <ol class="sublist">
 <li>2×2分割表を作り、「天候と異常は独立」の下での期待度数を求めよ。</li>
-<li>\(\chi^2\) 統計量を計算し、有意水準5%で独立性を検定せよ(\(\chi^2_{0.05}(1)=3.841\);参考:p値は約 \(4.8\times10^{-5}\))。</li>
+<li>\(\chi^2\) 統計量を計算し、有意水準5%で独立性を検定せよ(\(\chi^2_{0.05}(1)\approx3.841\);参考:p値は約 \(4.8\times10^{-5}\))。</li>
 </ol>
 </section>
 
@@ -1645,7 +1649,7 @@ window.mjxStatusUpdate();
 <ol class="sublist">
 <li>尤度比 \(\dfrac{L_1}{L_0}\) が \(\bar{x}\) の増加関数であることを示し、最強力検定が「\(\bar{x}>c\) で棄却」の形になることを説明せよ。</li>
 <li>有意水準5%となる \(c\) を求めよ。</li>
-<li>この検定の検出力を求めよ(\(\Phi(3.355)=0.9996\) を用いてよい)。</li>
+<li>この検定の検出力を求めよ(\(\Phi(3.355)\approx0.9996\) を用いてよい)。</li>
 </ol>
 </section>
 
@@ -1688,6 +1692,7 @@ window.mjxStatusUpdate();
 <li><b class="term">単回帰モデル</b>:\(Y_i=\beta_0+\beta_1x_i+\varepsilon_i\)、\(\varepsilon_i\) は i.i.d. \(N(0,\sigma^2)\)(\(x_i\) は定数扱い)</li>
 <li><b class="term">最小二乗推定量</b>（\(S_{xx}>0\)）:\(\hat{\beta}_1=\dfrac{S_{xy}}{S_{xx}}\)、\(\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}\)(\(S_{xx}=\sum(x_i-\bar{x})^2\)、\(S_{xy}=\sum(x_i-\bar{x})(y_i-\bar{y})\))</li>
 <li><b class="term">平方和の分解</b>:\(S_{yy}=\mathrm{SSR}+\mathrm{SSE}\)。\(S_{yy}>0\) のとき <b class="term">決定係数</b> \(R^2=1-\dfrac{\mathrm{SSE}}{S_{yy}}\)。単回帰では標本相関係数が定義されるとき \(R^2=r^2\)</li>
+<li>以下の誤差分散推定・t推測は \(n\ge3\)、\(S_{xx}>0\)、\(\sigma^2>0\) とする。観測後のt値や区間の計算では \(\mathrm{SSE}>0\) が必要（正規モデルでは確率1で成り立つ）。</li>
 <li>\(\mathrm{SSE}=S_{yy}-\hat{\beta}_1S_{xy}\)、誤差分散の推定 \(\hat{\sigma}^2=\dfrac{\mathrm{SSE}}{n-2}\)</li>
 <li>\(\hat{\beta}_1\) の標準誤差 \(\mathrm{se}(\hat{\beta}_1)=\sqrt{\dfrac{\hat{\sigma}^2}{S_{xx}}}\)、\(\dfrac{\hat{\beta}_1-\beta_1}{\mathrm{se}(\hat{\beta}_1)}\sim t(n-2)\)</li>
 <li>\(x_0\) での<b class="term">平均応答</b>の標準誤差:\(\hat{\sigma}\sqrt{\dfrac1n+\dfrac{(x_0-\bar{x})^2}{S_{xx}}}\)(中心から離れるほど拡大)</li>
@@ -1719,7 +1724,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q12-4">
 <div class="phead"><span class="pnum">問 12.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">傾きの検定と信頼区間</span></div>
-<p>共通データが要点欄の正規誤差を持つ単回帰モデルから得られたと仮定する。\(\hat{\sigma}^2=\mathrm{SSE}/(n-2)\)、\(\mathrm{se}(\hat{\beta}_1)\) を計算し、\(H_0:\beta_1=0\)(「\(x\) と \(y\) の線形関係がない」)を両側5%で検定せよ。また \(\beta_1\) の95%信頼区間を求めよ。\(t_{0.025}(3)=3.182\) を用いてよい。</p>
+<p>共通データが要点欄の正規誤差を持つ単回帰モデルから得られたと仮定する。\(\hat{\sigma}^2=\mathrm{SSE}/(n-2)\)、\(\mathrm{se}(\hat{\beta}_1)\) を計算し、\(H_0:\beta_1=0\)(「\(x\) と \(y\) の線形関係がない」)を両側5%で検定せよ。また \(\beta_1\) の95%信頼区間を求めよ。\(t_{0.025}(3)\approx3.182\) を用いてよい。</p>
 </section>
 
 <section class="prob" id="q12-5">
@@ -1791,11 +1796,13 @@ window.mjxStatusUpdate();
 <li><b class="term">ベータ分布</b> \(\mathrm{Beta}(a,b)\)（\(a,b>0\)）:密度 \(\propto\theta^{a-1}(1-\theta)^{b-1}\)、平均 \(\dfrac{a}{a+b}\)、最頻値 \(\dfrac{a-1}{a+b-2}\)(\(a,b>1\))</li>
 <li><b class="term">共役性</b>:\(\mathrm{Beta}(a,b)\) 事前 + ベルヌーイ観測(成功 \(k\)・失敗 \(m\))→ 事後 \(\mathrm{Beta}(a+k,\ b+m)\)</li>
 <li><b class="term">正規–正規</b>（\(\tau_0^2>0,\sigma^2>0\)）:事前 \(\mu\sim N(\mu_0,\tau_0^2)\)、観測 \(x\mid\mu\sim N(\mu,\sigma^2)\) → 事後は正規で
-\(\dfrac{1}{\tau_1^2}=\dfrac{1}{\tau_0^2}+\dfrac{1}{\sigma^2}\)、\(\mu_1=\tau_1^2\left(\dfrac{\mu_0}{\tau_0^2}+\dfrac{x}{\sigma^2}\right)\)(精度=分散の逆数の加算、精度重み付き平均)。\(n\) 個の観測なら \(\sigma^2/n\) と \(\bar{x}\) で置き換え</li>
+\(\dfrac{1}{\tau_1^2}=\dfrac{1}{\tau_0^2}+\dfrac{1}{\sigma^2}\)、\(\mu_1=\tau_1^2\left(\dfrac{\mu_0}{\tau_0^2}+\dfrac{x}{\sigma^2}\right)\)(精度=分散の逆数の加算、精度重み付き平均)。母数を条件に独立な \(n\) 個の観測なら \(\sigma^2/n\) と \(\bar{x}\) で置き換え</li>
 <li><b class="term">MAP推定</b>:事後密度最大の \(\theta\)。<b class="term">事後予測分布</b>:\(f(\tilde{x}\mid x)=\int f(\tilde{x}\mid\theta)\,\pi(\theta\mid x)\,d\theta\)</li>
 <li><b class="term">ベイズ識別</b>:0–1損失（誤分類コストが全クラスで同じ）の下では、事後確率 \(P(C_k\mid x)\propto \pi_k f(x\mid C_k)\) が最大のクラスを選ぶと誤り率最小</li>
 </ul>
 </div>
+
+<p>本章の反復観測は、未知母数（コインの種類なども含む）を条件に独立とします。母数を共通の確率変数として平均した周辺分布では、観測同士が独立とは限りません。正規観測のノイズは母数・他の観測ノイズと独立、将来の観測は母数を条件に既存データと独立とし、各正規分散は正とします。</p>
 
 <section class="prob" id="q13-1">
 <div class="phead"><span class="pnum">問 13.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">離散パラメータのベイズ更新</span></div>
@@ -1824,7 +1831,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q13-5">
 <div class="phead"><span class="pnum">問 13.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">正規–正規の更新(n観測)</span></div>
-<p>問13.4と同じ事前分布の下で、独立な測定を9回行い \(\bar{x}=58\) を得た(各測定のノイズ分散は9)。事後分布を求め、問13.4と比べて何が変わったか(事後平均の位置、事後分散)を考察せよ。</p>
+<p>問13.4と同じ事前分布の下で、\(\mu\) を条件に独立な測定を9回行い \(\bar{x}=58\) を得た(各測定のノイズ分散は9)。事後分布を求め、問13.4と比べて何が変わったか(事後平均の位置、事後分散)を考察せよ。</p>
 </section>
 
 <section class="prob" id="q13-6">
@@ -1850,7 +1857,7 @@ window.mjxStatusUpdate();
 <p>画像パッチの特徴量 \(x\) は、背景クラス \(C_0\) では \(N(100,\ 20^2)\)、歩行者クラス \(C_1\) では \(N(140,\ 20^2)\) に従う。事前確率は \(\pi_0=0.9\)、\(\pi_1=0.1\) である。</p>
 <ol class="sublist">
 <li>事後確率最大(MAP)の判定則が「\(x>x^*\) なら \(C_1\)」というしきい値型になることを示し、\(x^*=120+10\ln9\approx142.0\) を導け。</li>
-<li>この判定則の誤り率(全体)を求めよ。\(\Phi(2.099)=0.9821\)、\(\Phi(0.0986)=0.5393\) を用いてよい。</li>
+<li>この判定則の誤り率(全体)を求めよ。\(\Phi(2.099)\approx0.9821\)、\(\Phi(0.0986)\approx0.5393\) を用いてよい。</li>
 <li>事前確率が等しい場合(\(x^*=120\))と比べ、しきい値が \(C_1\) 側に寄る理由を述べよ。</li>
 </ol>
 </section>
@@ -1873,7 +1880,7 @@ window.mjxStatusUpdate();
 
 <div class="why">
 <h3>なぜ学ぶのか</h3>
-<p>ここまでの確率変数は「1回きりのスナップショット」でした。現実のシステムは時間の中で状態を変えます — 機器は正常から劣化へ、通信路は良好から混雑へ、イベントは時間軸上にばらばらと到着する。時間発展する確率モデル=<b>確率過程</b>の入門として、最も使われる2つを学びます:「次の状態は今の状態だけで決まる」<b>マルコフ連鎖</b>(PageRank・信頼性モデル・HMMの土台)と、「まれな事象のランダムな到着」<b>ポアソン過程</b>(センサイベント・故障・トラフィックのモデル)。どちらも姉妹編の線形代数(遷移行列と固有ベクトル)と本書前半(指数分布・ポアソン分布)の合流点です。</p>
+<p>ここまでの確率変数は「1回きりのスナップショット」でした。現実のシステムは時間の中で状態を変えます — 機器は正常から劣化へ、通信路は良好から混雑へ、イベントは時間軸上にばらばらと到着する。時間発展する確率モデル=<b>確率過程</b>の入門として、最も使われる2つを学びます:「次の状態の条件付き分布は今の状態だけで決まる」<b>マルコフ連鎖</b>(PageRank・信頼性モデル・HMMの土台)と、「まれな事象のランダムな到着」<b>ポアソン過程</b>(センサイベント・故障・トラフィックのモデル)。どちらも姉妹編の線形代数(遷移行列と固有ベクトル)と本書前半(指数分布・ポアソン分布)の合流点です。</p>
 </div>
 
 <div class="learn">
@@ -1891,11 +1898,12 @@ window.mjxStatusUpdate();
 <div class="keybox">
 <h3>この章の要点</h3>
 <ul>
-<li><b class="term">マルコフ性</b>:\(P(X_{t+1}\mid X_t,X_{t-1},\dots)=P(X_{t+1}\mid X_t)\)(未来は現在だけで決まる)</li>
+<li><b class="term">マルコフ性</b>:\(P(X_{t+1}\mid X_t,X_{t-1},\dots)=P(X_{t+1}\mid X_t)\)（未来の条件付き分布は現在の状態だけに依存する）</li>
+<li>本章では遷移確率が時刻によらない時間一様な連鎖を扱う。</li>
 <li><b class="term">遷移確率行列</b> \(P\)(\(P_{ij}=P(X_{t+1}=j\mid X_t=i)\)、各行の和1)。行ベクトル \(\boldsymbol{\pi}_t\) の発展:\(\boldsymbol{\pi}_{t+1}=\boldsymbol{\pi}_tP\)、\(n\) 段遷移は \(P^n\)</li>
-<li><b class="term">定常分布</b>:\(\boldsymbol{\pi}=\boldsymbol{\pi}P\)(かつ成分和1)。有限状態の連鎖が既約なら定常分布は一意で、さらに非周期なら初期分布によらず \(\boldsymbol{\pi}_t\to\boldsymbol{\pi}\)。列ベクトル表示では \(P^{\mathsf T}\) の固有値1の固有ベクトル</li>
-<li><b class="term">吸収状態</b>(出られない状態)への<b class="term">平均到達時間</b> \(h_i\):1段階解析 \(h_i=1+\sum_j P_{ij}h_j\)(吸収状態では0)</li>
-<li><b class="term">ポアソン過程</b>(強度 \(\lambda\)):時間 \(t\) の計数 \(N(t)\sim\mathrm{Po}(\lambda t)\)、到着間隔は i.i.d. \(\mathrm{Exp}(\lambda)\)、重ならない区間で独立</li>
+<li><b class="term">定常分布</b>:\(\boldsymbol{\pi}=\boldsymbol{\pi}P\)（各成分は非負、成分和1）。有限状態の連鎖が既約なら定常分布は一意で、さらに非周期なら初期分布によらず \(\boldsymbol{\pi}_t\to\boldsymbol{\pi}\)。列ベクトル表示では \(P^{\mathsf T}\) の固有値1の固有ベクトル</li>
+<li><b class="term">吸収状態</b>(出られない状態)への<b class="term">平均到達時間</b> \(h_i\) が有限なら、非吸収状態での1段階解析 \(h_i=1+\sum_j P_{ij}h_j\)(吸収状態では0)</li>
+<li><b class="term">ポアソン過程</b>（強度 \(\lambda>0\)、\(N(0)=0\)、定常独立増分）:時間 \(t\) の計数 \(N(t)\sim\mathrm{Po}(\lambda t)\)、到着間隔は i.i.d. \(\mathrm{Exp}(\lambda)\)、重ならない区間で独立</li>
 <li><b class="term">間引き(thinning)</b>:各点を独立に確率 \(p\) で残す → 強度 \(p\lambda\) のポアソン過程。<b class="term">重ね合わせ</b>:独立な \(\lambda_1,\lambda_2\) の合流 → 強度 \(\lambda_1+\lambda_2\)</li>
 <li>独立な指数の最小:\(\min(T_1,T_2)\sim\mathrm{Exp}(\lambda_1+\lambda_2)\)、先に起こるのが1番目である確率 \(\dfrac{\lambda_1}{\lambda_1+\lambda_2}\)</li>
 </ul>
@@ -1962,7 +1970,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q14-9">
 <div class="phead"><span class="pnum">問 14.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">隠れマルコフモデルの1ステップ</span></div>
-<p>路面状態(乾/湿)はマルコフ連鎖に従い、\(P(\text{乾}\to\text{乾})=0.9\)、\(P(\text{湿}\to\text{湿})=0.7\)。センサは路面を直接見られず、「スリップ検知」を、湿なら確率0.8、乾なら確率0.1で出す。現時刻の事前分布を \(P(\text{乾})=0.8\)、\(P(\text{湿})=0.2\) とする。</p>
+<p>路面状態(乾/湿)はマルコフ連鎖に従い、\(P(\text{乾}\to\text{乾})=0.9\)、\(P(\text{湿}\to\text{湿})=0.7\)。センサの検知は現時刻の路面状態を条件に過去の履歴や次時刻の路面状態と独立とする。センサは路面を直接見られず、「スリップ検知」を、湿なら確率0.8、乾なら確率0.1で出す。現時刻の事前分布を \(P(\text{乾})=0.8\)、\(P(\text{湿})=0.2\) とする。</p>
 <ol class="sublist">
 <li>いまスリップ検知が出た。現時刻の路面が湿である事後確率を求めよ。</li>
 <li>(1) の事後分布を遷移で1歩進め、次時刻に湿である(観測前の)予測確率を求めよ。</li>
@@ -2006,7 +2014,7 @@ window.mjxStatusUpdate();
 <div class="keybox">
 <h3>この章の要点</h3>
 <ul>
-<li><b class="term">状態空間モデル</b>(スカラー):状態 \(x_t=a\,x_{t-1}+w_t\)、\(w_t\sim N(0,Q)\)(\(Q\ge0\);プロセスノイズ)。観測 \(y_t=x_t+v_t\)、\(v_t\sim N(0,R)\)(\(R>0\);観測ノイズ)。初期誤差、各時刻の \(w_t,v_t\) は互いに独立とする。推定値 \(\hat{x}\) とその誤差分散 \(P\) の組で信念を持つ</li>
+<li><b class="term">状態空間モデル</b>(スカラー):状態 \(x_t=a\,x_{t-1}+w_t\)、\(w_t\sim N(0,Q)\)(\(Q\ge0\);プロセスノイズ)。観測 \(y_t=x_t+v_t\)、\(v_t\sim N(0,R)\)(\(R>0\);観測ノイズ)。初期状態は \(x_0\sim N(\hat x_0,P_0)\)（\(P_0\ge0\)）、初期誤差、各時刻の \(w_t,v_t\) は互いに独立とする。分散0の正規分布は定数への退化分布を表す。推定値 \(\hat{x}\) とその誤差分散 \(P\) の組で信念を持つ</li>
 <li><b class="term">予測ステップ</b>:\(\hat{x}^-=a\,\hat{x}\)、\(P^-=a^2P+Q\)。分散はモデルに従って変化し、\(a=1,Q>0\) なら増えるが、\(|a|&lt;1\) では減る場合もある</li>
 <li><b class="term">カルマンゲイン</b>:\(K=\dfrac{P^-}{P^-+R}\)（\(P^-\ge0,R>0\) なら \(0\le K&lt;1\);予測と観測の精度比）</li>
 <li><b class="term">更新ステップ</b>:\(\hat{x}\leftarrow\hat{x}^-+K(y-\hat{x}^-)\)、\(P\leftarrow(1-K)P^-\)。\(R>0\) なら分散は増えず、\(P^->0\) なら厳密に減る。\(y-\hat{x}^-\) を<b class="term">イノベーション</b>と呼ぶ</li>
@@ -2018,7 +2026,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q15-1">
 <div class="phead"><span class="pnum">問 15.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">逐次平均はフィルタである</span></div>
-<p>静止した量 \(x\)(変化しない:\(a=1,\ Q=0\))を、\(y_i=x+v_i\)、\(v_i\) は独立・平均0・共通分散 \(R>0\)、として測る。情報を持つ別の事前分布は使わず、最初の観測から平均を開始する。\(n\) 個の平均 \(\bar{y}_n\) が逐次形 \(\bar{y}_n=\bar{y}_{n-1}+\dfrac1n(y_n-\bar{y}_{n-1})\) で書けることを示し、これが「ゲイン \(K_n=1/n\) の更新式」と読めることを確かめよ。ゲインが \(n\) とともに減る意味も述べよ。</p>
+<p>静止した量 \(x\)(変化しない:\(a=1,\ Q=0\))を、\(y_i=x+v_i\)、\(v_i\) は独立・平均0・共通分散 \(R>0\)、として測る。情報を持つ別の事前分布は使わず、最初の観測から平均を開始する。\(\bar y_1=y_1\) と初期化し、\(n\ge2\) 個の平均 \(\bar{y}_n\) が逐次形 \(\bar{y}_n=\bar{y}_{n-1}+\dfrac1n(y_n-\bar{y}_{n-1})\) で書けることを示し、これが「ゲイン \(K_n=1/n\) の更新式」と読めることを確かめよ。ゲインが \(n\) とともに減る意味も述べよ。</p>
 </section>
 
 <section class="prob" id="q15-2">
@@ -2059,7 +2067,7 @@ window.mjxStatusUpdate();
 <section class="prob" id="q15-7">
 <div class="phead"><span class="pnum">問 15.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">2次元KF — 見ていない速度が直る</span></div>
 <p>状態を位置と速度 \(\boldsymbol{x}=(p,\ v)^{\mathsf T}\) とし、等速モデル(時間刻み1)</p>
-<p>\[F=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix},\qquad Q=\begin{pmatrix}0&amp;0\\0&amp;0.5\end{pmatrix},\qquad y=H\boldsymbol{x}+v,\quad H=(1\ \ 0),\quad R=1\]</p>
+<p>\[F=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix},\qquad Q=\begin{pmatrix}0&amp;0\\0&amp;0.5\end{pmatrix},\qquad y=H\boldsymbol{x}+\varepsilon,\quad H=(1\ \ 0),\quad \varepsilon\sim N(0,R),\quad R=1\]</p>
 <p>(観測できるのは位置だけ。)初期信念 \(\hat{\boldsymbol{x}}_0=(0,\ 1)^{\mathsf T}\)、\(P_0=\mathrm{diag}(2,\ 1)\)、観測 \(y_1=1.4\) について:</p>
 <ol class="sublist">
 <li>予測 \(\hat{\boldsymbol{x}}^-\)、\(P^-=FP_0F^{\mathsf T}+Q\) を計算せよ。</li>
@@ -2074,7 +2082,7 @@ window.mjxStatusUpdate();
 <p>スカラー状態の1回の更新を考える。\(P^-&gt;0\)、\(R&gt;0\) とし、事前分布は \(x\sim N(\widehat x^-,P^-)\)、観測は \(y=x+v\)、\(v\sim N(0,R)\) で、\(v\) は事前誤差 \(x-\widehat x^-\) と独立とする。次の3つが同じ更新値 \(\widehat x=\widehat x^-+K(y-\widehat x^-)\)、\(K=P^-/(P^-+R)\) を与えることを示せ。</p>
 <ol class="sublist">
 <li><b>ベイズ</b>：正規–正規モデルの事後平均。</li>
-<li><b>最小分散</b>：\(\widetilde x=(1-k)\widehat x^-+ky\) という不偏な線形推定量のうち、誤差分散を最小にする \(k\)。</li>
+<li><b>最小分散</b>：\(\widetilde x=(1-k)\widehat x^-+ky\) のうち、事前分布と観測雑音の両方について平均した誤差分散を最小にする \(k\)。この平均の下では \(E[\widetilde x-x]=0\) なので、誤差分散は平均二乗誤差に等しい。固定した各 \(x\) に対する頻度論的不偏性は要求していない。</li>
 <li><b>正則化つき最小二乗</b>：\(\min_x\{(x-\widehat x^-)^2/P^-+(y-x)^2/R\}\) の解。</li>
 </ol>
 </section>
@@ -2116,7 +2124,7 @@ window.mjxStatusUpdate();
 <ul>
 <li><b class="term">自己情報量</b> \(-\log_2 p\)(\(p>0\);まれな事象ほど大きい)。離散型の<b class="term">エントロピー</b> \(H(X)=-\displaystyle\sum_x p(x)\log_2 p(x)\) [ビット]:平均的な不確かさ。\(0\log 0=0\) と約束する。\(m\) 点上では一様分布で最大 \(\log_2 m\)</li>
 <li>2値エントロピー \(h(p)=-p\log_2p-(1-p)\log_2(1-p)\)、\(h(1/2)=1\) で最大</li>
-<li><b class="term">情報源符号化定理</b>(有限離散情報源・2進符号の主張):一意復号可能な符号の平均長は \(H(X)\) 以上。ハフマン符号は \(H\le\bar{L}&lt;H+1\) を達成</li>
+<li><b class="term">情報源符号化定理</b>（有限離散情報源・2進符号の主張。正の確率をもつ記号が2つ以上）:1記号ずつ符号化する一意復号可能な符号の平均長は \(H(X)\) 以上。ハフマン符号は \(H\le\bar{L}&lt;H+1\) を達成</li>
 <li><b class="term">KLダイバージェンス</b> \(D(p\,\|\,q)=\displaystyle\sum_x p(x)\log_2\dfrac{p(x)}{q(x)}\ \ge0\)。\(p(x)>0,q(x)=0\) の項があれば \(+\infty\)、それ以外では0確率の項を0と約束する。等号は \(p=q\)。非対称で距離の公理は満たさない</li>
 <li><b class="term">クロスエントロピー</b> \(H(p,q)=-\displaystyle\sum_x p(x)\log_2 q(x)=H(p)+D(p\,\|\,q)\)</li>
 <li><b class="term">相互情報量</b> \(I(X;Y)=\displaystyle\sum_{x,y}p(x,y)\log_2\dfrac{p(x,y)}{p(x)p(y)}=D\bigl(p(x,y)\,\|\,p(x)p(y)\bigr)\ \ge0\)。独立 ⟺ \(I=0\)</li>
@@ -2127,7 +2135,7 @@ window.mjxStatusUpdate();
 <section class="prob" id="q16-1">
 <div class="phead"><span class="pnum">問 16.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">エントロピーの計算</span></div>
 <ol class="sublist">
-<li>表確率0.9の偏ったコインのエントロピー \(h(0.9)\) を求めよ(\(\log_2 0.9=-0.152\)、\(\log_2 0.1=-3.322\) を用いてよい)。</li>
+<li>表確率0.9の偏ったコインのエントロピー \(h(0.9)\) を求めよ(\(\log_2 0.9\approx-0.152\)、\(\log_2 0.1\approx-3.322\) を用いてよい)。</li>
 <li>公正なコイン、および4値の一様分布のエントロピーを求めよ。</li>
 <li>3つの値を比較し、「予想しやすい情報源ほどエントロピーが小さい」ことを確認せよ。</li>
 </ol>
@@ -2135,7 +2143,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q16-2">
 <div class="phead"><span class="pnum">問 16.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">エントロピーと符号長</span></div>
-<p>4記号の情報源 \(P(A)=\dfrac12,\ P(B)=\dfrac14,\ P(C)=P(D)=\dfrac18\) を考える。</p>
+<p>記号が独立に生成される4記号の情報源 \(P(A)=\dfrac12,\ P(B)=\dfrac14,\ P(C)=P(D)=\dfrac18\) を考える。</p>
 <ol class="sublist">
 <li>エントロピー \(H\) を求めよ。</li>
 <li>符号 \(A\to0,\ B\to10,\ C\to110,\ D\to111\) の平均符号長を求め、\(H\) と比較せよ。</li>
@@ -2164,11 +2172,11 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q16-6">
 <div class="phead"><span class="pnum">問 16.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">二元対称通信路の容量</span></div>
-<p>ビット反転確率 \(p=0.1\) の二元対称通信路(BSC)の容量は \(C=1-h(p)\) である。</p>
+<p>各使用で独立にビットが反転する、反転確率 \(p=0.1\) の二元対称通信路(BSC)の容量は \(C=1-h(p)\) である。</p>
 <ol class="sublist">
 <li>\(C\) の値を求めよ(問16.1の \(h(0.9)=h(0.1)\) を利用)。</li>
 <li>\(C=1-h(p)\) を、\(I(X;Y)=H(Y)-H(Y\mid X)\) の形から導け(入力が等確率のとき \(H(Y)=1\)、\(H(Y\mid X)=h(p)\) となることを示せばよい)。</li>
-<li>「誤り率0.1の通信路でも、符号化により1使用あたり約0.53ビットを任意に小さい誤りで送れる(それ以上は不可能)」というシャノンの通信路符号化定理の主張と、問2.10の繰り返し符号(レート1/3で誤り率0.028)を対比せよ。</li>
+<li>独立に反転が起こるこの通信路では、正確な容量 \(C=1-h(0.1)\) より小さい任意の固定レート \(r&lt;C\) で、符号長を十分に長くすれば復号誤り確率を任意に小さくできる。一方、\(r>C\) では復号誤り確率を0へ近づけられない。この通信路符号化定理の主張と、問2.10の繰り返し符号（レート1/3で誤り率0.028）を対比せよ。</li>
 </ol>
 </section>
 
@@ -2177,7 +2185,7 @@ window.mjxStatusUpdate();
 <p>2枚の画像の対応画素の輝度(2値化済み)を \((X,Y)\) とする。位置合わせが合っているとき、同時分布は</p>
 <p>\[P(X=0,Y=0)=P(X=1,Y=1)=0.4,\qquad P(X=0,Y=1)=P(X=1,Y=0)=0.1\]</p>
 <ol class="sublist">
-<li>周辺分布を求め、相互情報量 \(I(X;Y)\) を計算せよ(\(\log_2 1.6=0.678\)、\(\log_2 0.4=-1.322\) を用いてよい)。</li>
+<li>周辺分布を求め、相互情報量 \(I(X;Y)\) を計算せよ(近似値 \(\log_2 1.6\approx0.678\)、\(\log_2 0.4\approx-1.322\) を用いてよい)。</li>
 <li>位置がずれて \(X,Y\) が無関係(独立)になったときの \(I\) を述べよ。</li>
 <li>「\(I(X;Y)\) を最大にする位置を探す」ことがマルチモーダル画像(例:可視光とサーモグラフィ)の位置合わせに使える理由を、相関係数との違い(問5.4)に触れつつ述べよ。</li>
 </ol>
@@ -2201,7 +2209,7 @@ window.mjxStatusUpdate();
 
 <div class="why">
 <h3>なぜ学ぶのか</h3>
-<p>車載システムの機能安全規格(ISO 26262)では、ハードウェアのランダム故障率を FIT という単位で見積もり、目標値との適合を示すことが求められます。その計算の中身は、本書で学んだ指数分布・ポアソン過程・ワイブル分布・信頼区間の直接の応用です。直列・並列・多数決という冗長構成の信頼度、待機系の効果、可用性(稼働率)、そして「無故障データから何が主張できるか」— 確率統計が安全性の言葉になる現場を、この章でひととおり歩きます。</p>
+<p>車載機器などの信頼性を数理モデルで評価する場面では、一定故障率を FIT という単位で表し、目標値と比較することがあります。その計算の中身は、本書で学んだ指数分布・ポアソン過程・ワイブル分布・信頼区間の直接の応用です。直列・並列・多数決という冗長構成の信頼度、待機系の効果、可用性(稼働率)、そして「無故障データから何が主張できるか」— 確率統計が安全性の言葉になる現場を、この章でひととおり歩きます。</p>
 </div>
 
 <div class="learn">
@@ -2225,8 +2233,8 @@ window.mjxStatusUpdate();
 <li><b class="term">並列系</b>(1つ生きれば動く、独立):\(R=1-\prod(1-R_i)\)</li>
 <li><b class="term">2oo3(多数決/TMR)</b>:同一信頼度 \(R\) の3系統が独立で投票器が完全なら \(R_{\mathrm{TMR}}=3R^2-2R^3\)</li>
 <li><b class="term">ワイブル分布</b>（\(m,\eta>0\)）:\(R(t)=\exp\left(-\left(\dfrac{t}{\eta}\right)^m\right)\)。\(m&lt;1\):初期故障、\(m=1\):偶発(指数)、\(m>1\):摩耗 — バスタブ曲線の各領域を別々に近似する</li>
-<li><b class="term">コールドスタンバイ</b>(同一部品2個・切替完全):\(R(t)=e^{-\lambda t}(1+\lambda t)\)、MTTF \(=2/\lambda\)</li>
-<li><b class="term">定常可用性</b>:稼働時間と修復時間が交互に続く再生モデルで平均が有限なら \(A=\dfrac{\mathrm{MTTF}}{\mathrm{MTTF}+\mathrm{MTTR}}\)(MTTR:平均修復時間)</li>
+<li><b class="term">コールドスタンバイ</b>(稼働寿命が独立な \(\mathrm{Exp}(\lambda)\) の部品2個・待機中は故障も劣化もせず・切替完全):\(R(t)=e^{-\lambda t}(1+\lambda t)\)、MTTF \(=2/\lambda\)</li>
+<li><b class="term">定常可用性</b>:稼働時間と修復時間が交互に続く再生モデルで両平均が有限かつ和が正なら \(A=\dfrac{\mathrm{MTTF}}{\mathrm{MTTF}+\mathrm{MTTR}}\)(MTTR:平均修復時間)</li>
 <li>斉次ポアソン故障モデルで無故障 \(T\) 時間の95%上側限界:\(\lambda_U=\dfrac{\ln20}{T}\approx\dfrac{3}{T}\)(問10.7)</li>
 </ul>
 </div>
@@ -2267,7 +2275,7 @@ window.mjxStatusUpdate();
 <div class="phead"><span class="pnum">問 17.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">ワイブル分布とB10寿命</span></div>
 <p>ある機械部品の寿命がワイブル分布（形状 \(m=2\)、尺度 \(\eta=10^4\) 時間）に従う。</p>
 <ol class="sublist">
-<li>B10寿命、すなわち \(R(t)=0.9\) となる時間を求めよ。\(\ln0.9=-0.105\) を用いてよい。</li>
+<li>B10寿命、すなわち \(R(t)=0.9\) となる時間を求めよ。\(\ln0.9\approx-0.105\) を用いてよい。</li>
 <li>故障率 \(\lambda(t)=-d\ln R(t)/dt\) を計算せよ。</li>
 <li>\(m&lt;1,m=1,m&gt;1\) が、それぞれ減少・一定・増加する故障率を表すことを述べよ。これらはバスタブ曲線の各局面を<b>別々に近似</b>できるが、1つの固定した \(m\) のワイブル分布だけでは通常、全期間のバスタブ形状を表せないことも説明せよ。</li>
 </ol>
@@ -2285,7 +2293,7 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q17-6">
 <div class="phead"><span class="pnum">問 17.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">安全目標の実証に必要な走行時間</span></div>
-<p>ある危険故障の故障率を「\(\lambda&lt;10^{-8}\)/時間」と、無故障の実地試験のみで信頼度95%で実証したい。</p>
+<p>ある危険故障が一定率 \(\lambda\) の斉次ポアソンモデルに従うとする。総試験時間 \(T>0\) を事前に固定し、無故障を観測した場合に「\(\lambda&lt;10^{-8}\)/時間」と主張できる片側95%上側信頼限界を得たい。</p>
 <ol class="sublist">
 <li>問10.7の3のルールを用いて、必要な総試験時間 \(T\) を求めよ。</li>
 <li>1台あたり年500時間走行するとして、何台×何年に相当するか概算せよ。</li>
@@ -2295,10 +2303,10 @@ window.mjxStatusUpdate();
 
 <section class="prob" id="q17-7">
 <div class="phead"><span class="pnum">問 17.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">可用性と年間停止時間</span></div>
-<p>あるサーバのMTTFは1000時間、MTTR(平均修復時間)は2時間である。</p>
+<p>稼働と修復が交互に続く再生モデルに従い、定常状態で運用されているサーバを考える。MTTFは1000時間、MTTR(平均修復時間)は2時間である。</p>
 <ol class="sublist">
 <li>可用性 \(A\) を求め、年間(8760時間)の期待停止時間を求めよ。</li>
-<li>同じものを2台の独立な冗長構成(どちらかが動いていればサービス継続、修復も独立)にすると、不稼働率はおよそ \((1-A)^2\) になる。年間の期待停止時間を概算せよ。</li>
+<li>同じものを2台の独立な冗長構成(どちらかが動いていればサービス継続、修復も独立)にすると、定常不稼働率は \((1-A)^2\) になる。年間の期待停止時間を概算せよ。</li>
 <li>「MTTFを2倍にする」改善と「MTTRを半分にする」改善が可用性に同程度に効くことを、\(1-A\approx\mathrm{MTTR}/\mathrm{MTTF}\) の近似から説明せよ。</li>
 </ol>
 </section>
@@ -2409,7 +2417,7 @@ window.mjxStatusUpdate();
 
 <div class="phead"><span class="pnum">問 18.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">特性関数とCLTの証明スケッチ</span></div>
 <ol class="sublist">
-<li>コーシー分布は期待値も0の近傍で有限なMGFも持たないが、特性関数 \(\varphi(t)=e^{-|t|}\) は存在する（結果は認めてよい）。特性関数を使う利点を述べよ。また、レヴィの連続性定理は「特性関数が各点収束し、その極限が0で連続である（同値に、ある確率分布の特性関数である）なら分布収束する」という条件を持つことを確認せよ。</li>
+<li>標準コーシー分布（密度 \(f(x)=1/(\pi(1+x^2))\)）は期待値も0の近傍で有限なMGFも持たないが、特性関数 \(\varphi(t)=e^{-|t|}\) は存在する（結果は認めてよい）。特性関数を使う利点を述べよ。また、レヴィの連続性定理は「特性関数が各点収束し、その極限が0で連続である（同値に、ある確率分布の特性関数である）なら分布収束する」という条件を持つことを確認せよ。</li>
 <li>\(Z\sim N(0,1)\) の特性関数が \(e^{-t^2/2}\) であることを認める。平均0・分散1のi.i.d.変数について \(S_n=(X_1+\cdots+X_n)/\sqrt n\) とし、有限な2次モーメントから得られる展開を使って、\(\varphi_{S_n}(t)\to e^{-t^2/2}\) を示せ。この極限は0で連続な標準正規分布の特性関数なので、レヴィの連続性定理から中心極限定理を結論せよ。</li>
 </ol>
 </section>
@@ -2429,7 +2437,7 @@ window.mjxStatusUpdate();
 <h2>数表</h2>
 <p class="chsub">— 標準正規分布・t分布・カイ二乗分布(SciPy により生成)</p>
 </header>
-<p>本文の問題は必要な分位点を問題文中で与えているが、自習・復習では以下の数表を使ってよい。値はすべて SciPy(scipy.stats)で計算した。</p>
+<p>本文の問題は必要な分位点を問題文中で与えているが、自習・復習では以下の数表を使ってよい。値はすべて SciPy(scipy.stats)で計算した近似値である。分位点を分母に使う際の誤差を抑えるため、非常に小さい正の分位点は桁数を増やして表示している。</p>
 <h3>付表1 標準正規分布表 — 下側確率 \(\Phi(z)=P(Z\le z)\)</h3>
 <p>行が \(z\) の小数第1位まで、列が小数第2位。負の \(z\) は \(\Phi(-z)=1-\Phi(z)\) で求める。</p>
 <div class="tscroll"><table class="numtable">
@@ -2471,12 +2479,12 @@ window.mjxStatusUpdate();
 <tr><th>2.9</th><td>0.9981</td><td>0.9982</td><td>0.9982</td><td>0.9983</td><td>0.9984</td><td>0.9984</td><td>0.9985</td><td>0.9985</td><td>0.9986</td><td>0.9986</td></tr>
 <tr><th>3.0</th><td>0.9987</td><td>0.9987</td><td>0.9987</td><td>0.9988</td><td>0.9988</td><td>0.9989</td><td>0.9989</td><td>0.9989</td><td>0.9990</td><td>0.9990</td></tr>
 </table></div>
-<p>よく使う上側 \(\alpha\) 点:\(z_{0.10}=1.282\)、\(z_{0.05}=1.645\)、\(z_{0.025}=1.960\)、\(z_{0.01}=2.326\)、\(z_{0.005}=2.576\)。</p>
+<p>よく使う上側 \(\alpha\) 点:\(z_{0.10}\approx1.282\)、\(z_{0.05}\approx1.645\)、\(z_{0.025}\approx1.960\)、\(z_{0.01}\approx2.326\)、\(z_{0.005}\approx2.576\)。</p>
 <h3>付表2 t分布の上側パーセント点 \(t_{\alpha}(m)\)</h3>
 <p>\(P(T>t_{\alpha}(m))=\alpha\)(\(m\):自由度)。両側 \(100(1-2\alpha)\%\) 区間には \(\pm t_{\alpha}(m)\) を使う。</p>
 <div class="tscroll"><table class="numtable">
 <caption>(1) \(m\) = 1 〜 17</caption>
-<thead><tr><th>\(m\) \ \(\alpha\)</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.01</th><th>0.005</th></tr></thead>
+<thead><tr><th>\(m\) ／ \(\alpha\)</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.01</th><th>0.005</th></tr></thead>
 <tr><th>1</th><td>3.078</td><td>6.314</td><td>12.706</td><td>31.821</td><td>63.657</td></tr>
 <tr><th>2</th><td>1.886</td><td>2.920</td><td>4.303</td><td>6.965</td><td>9.925</td></tr>
 <tr><th>3</th><td>1.638</td><td>2.353</td><td>3.182</td><td>4.541</td><td>5.841</td></tr>
@@ -2497,7 +2505,7 @@ window.mjxStatusUpdate();
 </table></div>
 <div class="tscroll"><table class="numtable">
 <caption>(2) \(m\) = 18 〜 ∞(正規)</caption>
-<thead><tr><th>\(m\) \ \(\alpha\)</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.01</th><th>0.005</th></tr></thead>
+<thead><tr><th>\(m\) ／ \(\alpha\)</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.01</th><th>0.005</th></tr></thead>
 <tr><th>18</th><td>1.330</td><td>1.734</td><td>2.101</td><td>2.552</td><td>2.878</td></tr>
 <tr><th>19</th><td>1.328</td><td>1.729</td><td>2.093</td><td>2.539</td><td>2.861</td></tr>
 <tr><th>20</th><td>1.325</td><td>1.725</td><td>2.086</td><td>2.528</td><td>2.845</td></tr>
@@ -2520,8 +2528,8 @@ window.mjxStatusUpdate();
 <p>\(P(\chi^2>\chi^2_{\alpha}(m))=\alpha\)。分散の区間推定では \(\alpha=0.975\)(下側2.5%)と \(0.025\) の両方を使う。</p>
 <div class="tscroll"><table class="numtable">
 <caption>(1) \(m\) = 1 〜 15</caption>
-<thead><tr><th>\(m\) \ \(\alpha\)</th><th>0.995</th><th>0.975</th><th>0.95</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.005</th></tr></thead>
-<tr><th>1</th><td>0.000</td><td>0.001</td><td>0.004</td><td>2.706</td><td>3.841</td><td>5.024</td><td>7.879</td></tr>
+<thead><tr><th>\(m\) ／ \(\alpha\)</th><th>0.995</th><th>0.975</th><th>0.95</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.005</th></tr></thead>
+<tr><th>1</th><td>0.00003927</td><td>0.0009821</td><td>0.003932</td><td>2.706</td><td>3.841</td><td>5.024</td><td>7.879</td></tr>
 <tr><th>2</th><td>0.010</td><td>0.051</td><td>0.103</td><td>4.605</td><td>5.991</td><td>7.378</td><td>10.60</td></tr>
 <tr><th>3</th><td>0.072</td><td>0.216</td><td>0.352</td><td>6.251</td><td>7.815</td><td>9.348</td><td>12.84</td></tr>
 <tr><th>4</th><td>0.207</td><td>0.484</td><td>0.711</td><td>7.779</td><td>9.488</td><td>11.14</td><td>14.86</td></tr>
@@ -2539,7 +2547,7 @@ window.mjxStatusUpdate();
 </table></div>
 <div class="tscroll"><table class="numtable">
 <caption>(2) \(m\) = 16 〜 30</caption>
-<thead><tr><th>\(m\) \ \(\alpha\)</th><th>0.995</th><th>0.975</th><th>0.95</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.005</th></tr></thead>
+<thead><tr><th>\(m\) ／ \(\alpha\)</th><th>0.995</th><th>0.975</th><th>0.95</th><th>0.1</th><th>0.05</th><th>0.025</th><th>0.005</th></tr></thead>
 <tr><th>16</th><td>5.142</td><td>6.908</td><td>7.962</td><td>23.54</td><td>26.30</td><td>28.85</td><td>34.27</td></tr>
 <tr><th>17</th><td>5.697</td><td>7.564</td><td>8.672</td><td>24.77</td><td>27.59</td><td>30.19</td><td>35.72</td></tr>
 <tr><th>18</th><td>6.265</td><td>8.231</td><td>9.390</td><td>25.99</td><td>28.87</td><td>31.53</td><td>37.16</td></tr>

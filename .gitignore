@@ -1,4 +1,4 @@
-# Git/GitHubで管理する公開対象は、次の8項目だけ。
+# Git/GitHubで管理する公開対象だけを個別に許可する。
 *
 !README.md
 !CLAUDE.md

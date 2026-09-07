@@ -679,7 +679,7 @@ window.mjxStatusUpdate();
 <p>\[\mathbf{x}=(1,\,2)^\top\]</p>
 <p>検算:\(2\cdot1+1\cdot2=4\)、\(4\cdot1+5\cdot2=14\)。</p>
 <h4 class="alt">ポイント</h4>
-<p>LU分解の価値は「<b>同じ \(A\) で右辺 \(\mathbf{b}\) だけ何度も変わる</b>」場面にあります。分解(\(O(n^3)\))は1回だけ行い、以後は代入2回(\(O(n^2)\))で済む。シミュレーションの時間発展や回路解析はまさにこの状況で、NumPy/SciPyの <code>solve</code> の内部でも(部分ピボット選択付きの)LU分解が動いています。</p>
+<p>LU分解の価値は「<b>同じ \(A\) で右辺 \(\mathbf{b}\) だけ何度も変わる</b>」場面にあります。分解(\(O(n^3)\))は1回だけ行い、以後は代入2回(\(O(n^2)\))で済む。シミュレーションの時間発展や回路解析はまさにこの状況です。一般の正方行列を解くNumPyの <code>numpy.linalg.solve</code> やSciPyの一般行列用ソルバでは、部分ピボット選択付きLU分解が使われます。行列の構造によっては専用の解法を選びます。</p>
 </section>
 
 <section class="sol" id="a3-10">
@@ -693,7 +693,7 @@ window.mjxStatusUpdate();
 <p>\[y=x^2-2x+3\]</p>
 <p>検算:\(x=3\) で \(9-6+3=6\)。</p>
 <h4 class="alt">ポイント</h4>
-<p>係数行列 \(\begin{pmatrix}1 &amp; 1 &amp; 1\\ 4 &amp; 2 &amp; 1\\ 9 &amp; 3 &amp; 1\end{pmatrix}\) は<b>ヴァンデルモンド型</b>で、通る点の \(x\) 座標が相異なれば必ず正則になります(問4.8で証明)。つまり「相異なる \(n+1\) 点を通る \(n\) 次多項式はただ1つ」— データへの曲線当てはめ・スプライン・数値積分公式の理論的土台です。点の数が式の数より多く厳密に通れないときが、最小二乗法(問8.5)の出番です。</p>
+<p>係数行列 \(\begin{pmatrix}1 &amp; 1 &amp; 1\\ 4 &amp; 2 &amp; 1\\ 9 &amp; 3 &amp; 1\end{pmatrix}\) は<b>ヴァンデルモンド型</b>で、通る点の \(x\) 座標が相異なれば必ず正則になります(問4.8では3節点の場合を扱います)。一般に「\(x\) 座標が相異なる \(n+1\) 点を通る、次数が \(n\) 以下の多項式はただ1つ」です。次数がちょうど \(n\) になるとは限りません。また一意性は、2つの候補の差が \(n+1\) 個の異なる零点をもつ次数 \(n\) 以下の多項式なので、零多項式になることからも分かります。これはデータへの曲線当てはめ・スプライン・数値積分公式の理論的土台です。点の数が係数の数より多く、指定した次数以下の多項式では厳密に通れないときが、最小二乗法(問8.5)の出番です。</p>
 </section>
 
 <header class="chap" id="ch4">
@@ -724,7 +724,7 @@ window.mjxStatusUpdate();
 <p>だけが残る。残った行列もまた上三角なので、同じ議論を繰り返すと、最終的に対角成分の積 \(a_{11}a_{22}\cdots a_{nn}\) になる。与えられた行列では</p>
 <p>\[\det=2\cdot3\cdot4=24\]</p>
 <h4 class="alt">ポイント</h4>
-<p>これが実用上の行列式計算の核心です:<b>掃き出しで三角化してから対角積をとる</b>(交換した回数だけ符号を反転)。計算機の行列式計算もこの方式(LU分解経由)で、\(O(n^3)\) で済みます。</p>
+<p>これが実用上の行列式計算の核心です:<b>行の加算と交換で三角化してから対角積をとる</b>(交換した回数だけ符号を反転)。行を定数倍して正規化した場合は、その倍率も補正する必要があります。計算機の行列式計算もこの方式(LU分解経由)で、\(O(n^3)\) で済みます。</p>
 </section>
 
 <section class="sol" id="a4-3">
@@ -737,7 +737,7 @@ window.mjxStatusUpdate();
 <p>(2) 行の交換1回で符号が反転し、\(-5\)。</p>
 <p>(3) ある行に他の行の定数倍を加えても行列式は変わらないので、\(5\) のまま。</p>
 <h4 class="alt">ポイント</h4>
-<p>(1)は最頻出の引っかけ:\(\det(cA)=c^n\det A\) であって \(c\det A\) ではありません(体積は各辺が \(c\) 倍されると \(c^n\) 倍)。(3)の「加算で不変」のおかげで、掃き出し法(主に加算を使う)で三角化しながら行列式を追跡できます。</p>
+<p>(1)は最頻出の引っかけ:\(\det(cA)=c^n\det A\) であって \(c\det A\) ではありません(符号つき体積は \(c^n\) 倍、通常の体積は \(|c|^n\) 倍)。(3)の「加算で不変」のおかげで、掃き出し法(主に加算を使う)で三角化しながら行列式を追跡できます。</p>
 <div class="warn"><b>よくある誤り</b>:\(\det(A+B)=\det A+\det B\) は一般に<b>成り立ちません</b>。行列式が線形なのは「1つの行(列)ごと」に見たときだけです。</div>
 </section>
 
@@ -804,7 +804,7 @@ window.mjxStatusUpdate();
 <p>\[\det V=\det\begin{pmatrix}1 &amp; 1 &amp; 1\\ 0 &amp; 1 &amp; x-1\\ 0 &amp; 3 &amp; x^2-1\end{pmatrix}=1\cdot\det\begin{pmatrix}1 &amp; x-1\\ 3 &amp; x^2-1\end{pmatrix}\]</p>
 <p>(第1列で展開)。よって</p>
 <p>\[\det V=(x^2-1)-3(x-1)=(x-1)(x+1)-3(x-1)=(x-1)(x-2)\]</p>
-<p><b>意味</b>:\(\det V=0\iff x=1\) または \(x=2\)。この行列は「節点 \(1,2,x\) での多項式補間」の係数行列(を転置したもの)であり、特異になるのは<b>節点が重複するとき</b>にほかならない。つまり問3.10の「3点を通る放物線がただ1つに決まる」ことは、3点の \(x\) 座標が相異なる限り保証される。</p>
+<p><b>意味</b>:\(\det V=0\iff x=1\) または \(x=2\)。この行列は「節点 \(1,2,x\) での多項式補間」の係数行列(係数を定数項・1次項・2次項の順に並べたものの転置)であり、特異になるのは<b>節点が重複するとき</b>にほかならない。3点の \(x\) 座標が相異なれば、それらを通る次数2以下の多項式がただ1つに決まる。問3.10では2次の係数が \(1\) なので放物線になるが、一般には直線や定数関数になる場合もある。</p>
 <h4 class="alt">ポイント</h4>
 <p>一般のヴァンデルモンド行列式は \(\det V=\prod_{i\lt j}(x_j-x_i)\)(すべてのペアの差の積)という美しい形になり、「節点が全て異なる \(\iff\) 正則」が一目で分かります。多項式補間・誤り訂正符号(リード・ソロモン符号)・数値積分公式の一意性は、すべてこの1本の式が支えています。</p>
 </section>
@@ -817,7 +817,7 @@ window.mjxStatusUpdate();
 <p>(1) \(\det A=3\cdot2-1\cdot4=2\)。第1列・第2列をそれぞれ \(\mathbf{b}=(5,8)^\top\) で置き換えて</p>
 <p>\[x=\frac{\det\begin{pmatrix}5 &amp; 1\\ 8 &amp; 2\end{pmatrix}}{2}=\frac{10-8}{2}=1,\qquad y=\frac{\det\begin{pmatrix}3 &amp; 5\\ 4 &amp; 8\end{pmatrix}}{2}=\frac{24-20}{2}=2\]</p>
 <p>よって \((x,y)=(1,\,2)\)。検算:\(3+2=5\)、\(4+4=8\)。</p>
-<p>(2) \(n=20\) では \(20!\approx2.4\times10^{18}\)。毎秒 \(10^9\) 項処理できたとしても<b>約77年</b>かかる規模である。一方、掃き出し法は \(20^3/3\approx2{,}700\) 回程度の演算 — 一瞬で終わる。クラメルの公式は \(n+1\) 個の行列式を要求するため、素朴に使うと階乗的コストになり実用に耐えない。解の存在や感度を<b>論じる</b>ための理論的道具と割り切り、実際に<b>解く</b>ときは掃き出し法(LU分解)を使うべきである。</p>
+<p>(2) \(n=20\) では \(20!\approx2.4\times10^{18}\)。毎秒 \(10^9\) 項処理できたとしても<b>約77年</b>かかる規模である。一方、掃き出し法は \(20^3=8{,}000\) に比例する規模の演算で済む。通常の密行列のLU分解では、乗算と減算をそれぞれ1演算と数えると主要項は \(\frac{2}{3}n^3\) である。クラメルの公式で必要な \(n+1\) 個の行列式をそれぞれ余因子展開で計算すると、階乗的コストになり実用に耐えない。各行列式をLU分解で計算すれば階乗的にはならないが、独立に \(n+1\) 回分解する方法は \(O(n^4)\) で、連立方程式を1回のLU分解で解く \(O(n^3)\) より非効率である。解の存在や感度を<b>論じる</b>ためには有用だが、大きな連立方程式を実際に<b>解く</b>ときはLU分解などを用いる。</p>
 <h4 class="alt">ポイント</h4>
 <p>「数学的に正しい公式」と「計算機で使うべきアルゴリズム」は別物 — 情報系の人が必ず持つべき視点です。同じ区別は逆行列の余因子公式(理論用)とガウス・ジョルダン法(実用)にも当てはまります。なお行列式自体も掃き出しで \(O(n^3)\) で計算できる(問4.2ポイント)ので、\(n!\) は「定義通りの展開」のコストです。</p>
 </section>
@@ -905,7 +905,7 @@ window.mjxStatusUpdate();
 <p>\[(a,\,b,\,c)=(2,\,1,\,0)\]</p>
 <p>検算:\(2(1+x)+1(x+x^2)+0=2+3x+x^2\)。</p>
 <h4 class="alt">ポイント</h4>
-<p>多項式のような「数ベクトルでないベクトル」も、基底を1つ固定すれば座標ベクトルとして \(\mathbb{R}^n\) の話に完全翻訳できる — これが抽象化のご利益です。同じ翻訳で、信号は標本値ベクトルに、画像は画素ベクトルになります。「\(n\) 次元ベクトル空間はどれも \(\mathbb{R}^n\) と同じ構造(同型)」という事実の体験版です。</p>
+<p>次数を制限した多項式のような「数ベクトルでないベクトル」も、有限個の基底を1つ固定すれば座標ベクトルとして \(\mathbb{R}^n\) の話に完全翻訳できます。有限個の実数標本値からなる信号や、実数値の画素を有限個並べた画像データも同様です。ただし、一般の連続時間信号を有限個の標本値から完全に復元できるという意味ではありません。「\(n\) 次元の実ベクトル空間はどれも \(\mathbb{R}^n\) と同じ構造(同型)」という事実の体験版です。</p>
 </section>
 
 <section class="sol" id="a5-7">
@@ -962,7 +962,7 @@ window.mjxStatusUpdate();
 <p>\[\mathbf{x}=\begin{pmatrix}t\\ -s-t\\ s\\ t\end{pmatrix}=s\begin{pmatrix}0\\ -1\\ 1\\ 0\end{pmatrix}+t\begin{pmatrix}1\\ -1\\ 0\\ 1\end{pmatrix}\]</p>
 <p>基底は \(\{(0,-1,1,0),\ (1,-1,0,1)\}\)、次元は \(\dim(\operatorname{Null}H)=4-\operatorname{rank}H=4-2=2\)。</p>
 <h4 class="alt">ポイント</h4>
-<p>通信符号の世界では「検査条件 \(H\mathbf{x}=\mathbf{0}\) を満たすベクトル=正しい符号語」であり、符号語全体はまさに零空間(部分空間)です。長さ4のうち自由に選べるのは2ビット分(情報)、残り2つは条件で決まる(冗長=誤り検出用) — rank-nullity がそのまま「情報ビット数 \(=n-\operatorname{rank}H\)」を与えます。実際のハミング符号などは \(\mathrm{GF}(2)\)(\(1+1=0\) の世界)上で同じ計算をしますが、部分空間・基底・次元という構造は完全に共通です。</p>
+<p>線形符号では「検査条件 \(H\mathbf{x}=\mathbf{0}\) を満たすベクトル=符号語」であり、符号語全体は零空間(部分空間)です。本問の実数上では、自由に選べるのは2個の実数です。同じ \(H\) を \(\mathrm{GF}(2)\)(\(1+1=0\) の世界)上で考えると、この体でもランクは2なので、長さ4のうち自由に選べるのは2ビット分、残り2ビットは検査条件で決まります。2元線形符号では、rank-nullity が「情報ビット数 \(=n-\operatorname{rank}H\)」を与えます。符号語であることは検査条件への適合を意味し、受信中に誤りがなかったことまで保証するわけではありません。</p>
 </section>
 
 <header class="chap" id="ch6">
@@ -1081,7 +1081,7 @@ window.mjxStatusUpdate();
 <p>(3) \[M^2=\begin{pmatrix}0 &amp; 0 &amp; 2\\ 0 &amp; 0 &amp; 0\\ 0 &amp; 0 &amp; 0\end{pmatrix},\qquad M^3=O\]</p>
 <p>これは「2次以下の多項式を3回微分すると必ず \(0\) になる」という事実の行列表現である。</p>
 <h4 class="alt">ポイント</h4>
-<p>微積分の操作が行列に化ける — 抽象化の威力が最も鮮やかに見える例です。何乗かすると \(O\) になる行列を<b>冪零(べきれい)</b>といい、冪零行列は固有値がすべて \(0\) なのに \(O\) でない、対角化できない行列の代表格(第11章のジョルダン標準形の主役)。また「微分を行列で表す」発想は、微分方程式の数値解法(差分法)で現実に使われています(問9.4の行列がその例)。</p>
+<p>何乗かすると \(O\) になる行列を<b>冪零(べきれい)</b>といいます。冪零行列の固有値はすべて \(0\) で、そのうち<b>非零の冪零行列</b>は対角化できません。対角化できるなら対角行列が \(O\) となり、元の行列も \(O\) になってしまうためです。零行列そのものは冪零かつ対角化可能です。また「微分を行列で表す」発想は、微分方程式の数値解法(差分法)にも現れます(問9.4の行列がその例)。</p>
 </section>
 
 <header class="chap" id="ch7">
@@ -1110,11 +1110,11 @@ window.mjxStatusUpdate();
 <h4>解答</h4>
 <p>\[\det(A-\lambda I)=\det\begin{pmatrix}4-\lambda &amp; 1\\ 2 &amp; 3-\lambda\end{pmatrix}=(4-\lambda)(3-\lambda)-2=\lambda^2-7\lambda+10=(\lambda-5)(\lambda-2)\]</p>
 <p>よって固有値は \(\lambda=5,\ 2\)。</p>
-<p>\(\lambda=5\):\((A-5I)=\begin{pmatrix}-1 &amp; 1\\ 2 &amp; -2\end{pmatrix}\)。2つの行は比例しており(1本の条件 \(-v_1+v_2=0\))、固有ベクトルは \(\mathbf{v}_1=(1,\,1)\)。</p>
-<p>\(\lambda=2\):\((A-2I)=\begin{pmatrix}2 &amp; 1\\ 2 &amp; 1\end{pmatrix}\)。条件 \(2v_1+v_2=0\) より \(\mathbf{v}_2=(1,\,-2)\)。</p>
+<p>\(\lambda=5\):\((A-5I)=\begin{pmatrix}-1 &amp; 1\\ 2 &amp; -2\end{pmatrix}\)。2つの行は比例しており(1本の条件 \(-v_1+v_2=0\))、固有ベクトルは \(t(1,\,1)\)（\(t\ne0\)）のすべて。</p>
+<p>\(\lambda=2\):\((A-2I)=\begin{pmatrix}2 &amp; 1\\ 2 &amp; 1\end{pmatrix}\)。条件 \(2v_1+v_2=0\) より、固有ベクトルは \(t(1,\,-2)\)（\(t\ne0\)）のすべて。以下ではそれぞれの代表を \(\mathbf{v}_1=(1,1),\ \mathbf{v}_2=(1,-2)\) とする。</p>
 <p>検算:\(A(1,1)^\top=(5,5)^\top\)、\(A(1,-2)^\top=(4-2,\ 2-6)^\top=(2,-4)^\top=2(1,-2)^\top\)。</p>
 <h4 class="alt">ポイント</h4>
-<p>\((A-\lambda I)\) の行が必ず従属になる(そうでなければ \(\mathbf{v}=\mathbf{0}\) しかなく \(\lambda\) が固有値でない)のは良い検算指標:行が比例していなければ、特性方程式の解を間違えています。</p>
+<p>\((A-\lambda I)\) の行が一次従属になる(そうでなければ \(\mathbf{v}=\mathbf{0}\) しかなく \(\lambda\) が固有値でない)のは検算指標です。この2次行列では2つの行が比例することで確認できます。3次以上では、行全体が一次従属でも各行が互いに比例するとは限りません。</p>
 </section>
 
 <section class="sol" id="a7-3">
@@ -1172,7 +1172,7 @@ window.mjxStatusUpdate();
 <p>\[\det(A-\lambda I)=(\lambda_1-\lambda)(\lambda_2-\lambda)=\lambda^2-(\lambda_1+\lambda_2)\lambda+\lambda_1\lambda_2\]</p>
 <p>両者の係数を比較して \(\operatorname{tr}A=\lambda_1+\lambda_2\)、\(\det A=\lambda_1\lambda_2\)。(証明終)</p>
 <h4 class="alt">ポイント</h4>
-<p>この関係は \(n\) 次でも成り立ちます(\(\operatorname{tr}=\sum\lambda_i,\ \det=\prod\lambda_i\)、重複度込み・複素数の範囲で)。実用上は最強の検算道具:固有値を求めたら和と積を \(\operatorname{tr},\det\) と照合する癖をつけると、計算ミスがほぼ確実に見つかります。2次なら「和が \(\operatorname{tr}\)、積が \(\det\) の2数」として固有値を暗算で当てることもできます。</p>
+<p>この関係は \(n\) 次でも成り立ちます(\(\operatorname{tr}=\sum\lambda_i,\ \det=\prod\lambda_i\)、重複度込み・複素数の範囲で)。固有値の和と積を \(\operatorname{tr},\det\) と照合することは有効な検算です。ただし3次以上では、和と積だけでは固有値の組は一意に決まらず、両方が一致しても誤りがない保証にはなりません。2次なら「和が \(\operatorname{tr}\)、積が \(\det\) の2数」として固有値を暗算で当てることもできます。</p>
 </section>
 
 <section class="sol" id="a7-7">
@@ -1191,7 +1191,7 @@ window.mjxStatusUpdate();
 <p>\[F_n=\frac{\varphi^n-\psi^n}{\sqrt5}\]</p>
 <p><b>確認</b>:\(n=10\) で \(F_{10}=\dfrac{\varphi^{10}-\psi^{10}}{\sqrt5}=55\)(数列を回しても \(0,1,1,2,3,5,8,13,21,34,55\) で一致)。</p>
 <h4 class="alt">ポイント</h4>
-<p>\(|\psi|\approx0.618\lt1\) なので \(\psi^n\to0\)。ゆえに \(F_n\approx\varphi^n/\sqrt5\) — フィボナッチ数列が黄金比の等比数列で近似できる理由が固有値から一目で分かります。線形漸化式一般(3項間でも \(k\) 項間でも)がこの「行列化 → 固有分解」で機械的に解ける、という汎用手法として身につけてください。</p>
+<p>\(|\psi|\approx0.618\lt1\) なので \(\psi^n\to0\)。ゆえに \(F_n\approx\varphi^n/\sqrt5\) — フィボナッチ数列が黄金比の等比数列で近似できる理由が固有値から分かります。定数係数の斉次線形漸化式は、項数が増えても同様に一定の行列の累乗に翻訳できます。ただし、その行列が対角化できない場合にはジョルダン標準形(第11章)などを用います。</p>
 </section>
 
 <section class="sol" id="a7-8">
@@ -1209,7 +1209,7 @@ window.mjxStatusUpdate();
 <p>\[\mathbf{p}_k=M^k\mathbf{p}_0=\boldsymbol{\pi}+c\,(0.3)^k\mathbf{v}_2\ \longrightarrow\ \boldsymbol{\pi}\quad(k\to\infty)\]</p>
 <p>第2固有値の絶対値 \(0.3\lt1\) により、ずれが毎ステップ \(0.3\) 倍に縮む(幾何級数的に高速収束)。</p>
 <h4 class="alt">ポイント</h4>
-<p>これがGoogleの<b>PageRank</b>の骨格です:Webページを状態、リンクを遷移とみなした巨大なマルコフ連鎖の定常分布 \(\boldsymbol{\pi}\) がページの重要度。実際にはリンク切れ対策に一様ジャンプを混ぜ(ダンピング係数 \(\approx0.85\))、固有値 \(1\) の固有ベクトルを冪乗法(問11.6)で計算します。収束の速さを第2固有値が決める、という(3)の構造もそのまま使われています。</p>
+<p>これが<b>PageRank</b>の基本モデルです:Webページを状態、リンクを遷移とみなすマルコフ連鎖の定常分布がページの重要度を表します。標準的なモデルでは、出リンクがないページからは全ページへの一様な遷移を設定し、それ以外でも確率 \(1-d\) で一様ジャンプを行います（リンクをたどる確率は \(0&lt;d&lt;1\)）。これにより一意の定常分布への収束を保証し、冪乗法(問11.6)で計算できます。本問では誤差が毎回ちょうど \(0.3\) 倍になりますが、一般の行列では減衰には他の固有値の絶対値に加えて、初期分布やジョルダンブロックも関わります。</p>
 </section>
 
 <section class="sol" id="a7-9">
@@ -1227,7 +1227,7 @@ window.mjxStatusUpdate();
 <p>\[c_1(\lambda_1-\lambda_m)\mathbf{v}_1+\cdots+c_{m-1}(\lambda_{m-1}-\lambda_m)\mathbf{v}_{m-1}=\mathbf{0}\]</p>
 <p>帰納法の仮定より係数はすべて \(0\):\(c_i(\lambda_i-\lambda_m)=0\)。固有値は相異なるので \(\lambda_i-\lambda_m\ne0\)、ゆえに \(c_i=0\)(\(i=1,\dots,m-1\))。これを \((\ast)\) に戻すと \(c_m\mathbf{v}_m=\mathbf{0}\)、\(\mathbf{v}_m\ne\mathbf{0}\) より \(c_m=0\)。よって \(m\) 本も一次独立。(証明終)</p>
 <h4 class="alt">ポイント</h4>
-<p>系として「\(n\) 次行列が \(n\) 個の相異なる固有値をもてば対角化可能」が直ちに従います(独立な固有ベクトルが \(n\) 本そろう)。対角化できない可能性があるのは固有値が重複するときだけ — その具体例が次の問7.10です。「\(A\) を作用させて引き算し、1本消す」操作は、多項式の証明などにも転用できる汎用テクニックです。</p>
+<p>系として「考えている数の範囲で \(n\) 次行列が \(n\) 個の相異なる固有値をもてば、その範囲で対角化可能」が従います(独立な固有ベクトルが \(n\) 本そろう)。複素数の範囲で対角化できない可能性があるのは、固有値が重複するときだけです。一方、実数の範囲で対角化するには固有値がすべて実数であることも必要です。たとえば平面の \(90^\circ\) 回転は固有値が \(i,-i\) で、複素数では対角化できますが、実数ではできません。「\(A\) を作用させて引き算し、1本消す」操作は、証明の有用な型です。</p>
 </section>
 
 <section class="sol" id="a7-10">
@@ -1240,7 +1240,7 @@ window.mjxStatusUpdate();
 <p>すなわち \(\operatorname{span}\{(1,0)\}\) で次元は \(1\)。一次独立な固有ベクトルが1本しかとれず、\(2\times2\) の正則な \(P\) を固有ベクトルだけで組めない。よって対角化不可能である。</p>
 <p class="note">別の見方:もし対角化できれば \(D\) は固有値 \(2\) だけの対角行列、つまり \(D=2I\)。すると \(A=P(2I)P^{-1}=2I\) となるが、\(A\ne2I\) なので矛盾。</p>
 <h4 class="alt">ポイント</h4>
-<p>この行列は、問2.8の剪断行列の対角成分を1ずつ増やしたもので、同じ固有ベクトル方向をもちます。剪断には「不動の軸」が1本(\(x\) 軸)しかなく、軸2本を要求する対角化が原理的に不可能なのです。「代数的重複度 \(\ge\) 幾何的重複度」で、全固有値について等号が成り立つことが対角化可能の条件。等号が破れる行列の標準形がジョルダン標準形(問11.2)です。</p>
+<p>この行列は、問2.8の剪断行列の対角成分を1ずつ増やしたもので、同じ固有ベクトル方向をもちます。剪断には「不動の軸」が1本(\(x\) 軸)しかなく、軸2本を要求する対角化が原理的に不可能なのです。「代数的重複度 \(\ge\) 幾何的重複度」で、複素数の範囲では全固有値について等号が成り立つことが対角化可能の必要十分条件です。実数の範囲では、さらに全固有値が実数であることが必要です。対角化できない場合も扱う標準形がジョルダン標準形(問11.2)です。</p>
 </section>
 
 <section class="sol" id="a7-11">
@@ -1284,7 +1284,7 @@ window.mjxStatusUpdate();
 <p>以後 \(\mathbf{u}_2=(1,-1,2)\) と取り直す(検算:\(\mathbf{u}_1\cdot\mathbf{u}_2=1-1+0=0\))。</p>
 <p><b>第3段</b>:\(\mathbf{u}_1\cdot\mathbf{a}_3=1,\ \mathbf{u}_2\cdot\mathbf{a}_3=-1+2=1,\ \mathbf{u}_2\cdot\mathbf{u}_2=6\) より</p>
 <p>\[\mathbf{u}_3=\mathbf{a}_3-\frac{1}{2}\mathbf{u}_1-\frac{1}{6}\mathbf{u}_2=\left(0-\frac12-\frac16,\ 1-\frac12+\frac16,\ 1-\frac26\right)=\left(-\frac23,\ \frac23,\ \frac23\right)\ \parallel\ (-1,1,1)\]</p>
-<p>(検算:\((-1,1,1)\cdot(1,1,0)=0,\ (-1,1,1)\cdot(1,-1,2)=-1-1+2=0\)。)</p>
+<p>以後 \(\mathbf{u}_3=(-1,1,1)\) と取り直す。(検算:\((-1,1,1)\cdot(1,1,0)=0,\ (-1,1,1)\cdot(1,-1,2)=-1-1+2=0\)。)</p>
 <p><b>正規化</b>:ノルムは \(\sqrt2,\ \sqrt6,\ \sqrt3\) だから</p>
 <p>\[\mathbf{q}_1=\frac{1}{\sqrt2}(1,1,0),\qquad \mathbf{q}_2=\frac{1}{\sqrt6}(1,-1,2),\qquad \mathbf{q}_3=\frac{1}{\sqrt3}(-1,1,1)\]</p>
 <h4 class="alt">ポイント</h4>
@@ -1303,7 +1303,7 @@ window.mjxStatusUpdate();
 <p>(3) \(\det(Q^\top Q)=\det I=1\)。左辺は \(\det Q^\top\det Q=(\det Q)^2\)(\(\det Q^\top=\det Q\))。よって \((\det Q)^2=1\)、\(\det Q=\pm1\)。(証明終)</p>
 <h4 class="alt">ポイント</h4>
 
-<p>直交行列は長さ・内積・角度を保つ「形を変えない変換」です。行列式が +1 なら向きを保ち、-1 なら向きを反転します。2次元では前者が回転、後者が鏡映に当たります。条件数は1で、3DCG・ロボティクスでは姿勢の回転部分を直交行列で表します。</p>
+<p>直交行列は長さ・内積・角度を保つ「形を変えない変換」です。行列式が +1 なら向きを保ち、-1 なら向きを反転します。2次元では前者が回転、後者が鏡映に当たります。2ノルムに関する条件数は1で、3DCG・ロボティクスでは姿勢の回転部分を直交行列で表します。</p>
 </section>
 
 <section class="sol" id="a8-4">
@@ -1345,9 +1345,13 @@ window.mjxStatusUpdate();
 <h4>方針</h4>
 <p>\(A\mathbf{x}\) は列空間 \(\operatorname{Col}A\) 内を動く。\(\mathbf{b}\) に最も近い点は「残差が \(\operatorname{Col}A\) に垂直」な点 — この幾何条件を式にする。</p>
 <h4>解答</h4>
-<p>\(\|A\mathbf{x}-\mathbf{b}\|\) の最小化は、「\(\operatorname{Col}A\) 内で \(\mathbf{b}\) に最も近い点 \(A\hat{\mathbf{x}}\) を探す」ことと同じ。最短であるためには残差 \(\mathbf{r}=\mathbf{b}-A\hat{\mathbf{x}}\) が \(\operatorname{Col}A\) のすべてのベクトルと直交することが必要十分である。(もし直交しない成分があれば、その方向に \(A\hat{\mathbf{x}}\) を少し動かして距離をさらに縮められるから。厳密には:任意の \(\mathbf{x}\) に対し \(A\mathbf{x}-A\hat{\mathbf{x}}\in\operatorname{Col}A\) なので、直交分解とピタゴラスの定理(問8.8)より</p>
+<p>\(\|A\mathbf{x}-\mathbf{b}\|\) の最小化は、「\(\operatorname{Col}A\) 内で \(\mathbf{b}\) に最も近い点 \(A\hat{\mathbf{x}}\) を探す」ことと同じ。残差を \(\mathbf{r}=\mathbf{b}-A\hat{\mathbf{x}}\) とする。</p>
+<p><b>必要性</b>:もし \(\mathbf{r}\cdot\mathbf{w}\ne0\) となる \(\mathbf{w}\in\operatorname{Col}A\) があれば、\(\mathbf{w}\ne\mathbf{0}\) である。\(t=(\mathbf{r}\cdot\mathbf{w})/\|\mathbf{w}\|^2\) として候補点を \(A\hat{\mathbf{x}}+t\mathbf{w}\) に変えると、これも列空間に属し、距離の2乗は</p>
+<p>\[\|\mathbf{r}-t\mathbf{w}\|^2=\|\mathbf{r}\|^2-\frac{(\mathbf{r}\cdot\mathbf{w})^2}{\|\mathbf{w}\|^2}&lt;\|\mathbf{r}\|^2\]</p>
+<p>となるので、最短性に反する。したがって最小点の残差は列空間に直交する。</p>
+<p><b>十分性</b>:逆に \(\mathbf{r}\perp\operatorname{Col}A\) なら、任意の \(\mathbf{x}\) に対し \(A\mathbf{x}-A\hat{\mathbf{x}}\in\operatorname{Col}A\) なので、ピタゴラスの定理(問8.8)より</p>
 <p>\[\|A\mathbf{x}-\mathbf{b}\|^2=\|\underbrace{A\mathbf{x}-A\hat{\mathbf{x}}}_{\in\operatorname{Col}A}\|^2+\|\underbrace{A\hat{\mathbf{x}}-\mathbf{b}}_{\perp\operatorname{Col}A}\|^2\ \ge\ \|A\hat{\mathbf{x}}-\mathbf{b}\|^2\]</p>
-<p>となり、\(\hat{\mathbf{x}}\) が最小を与える。)</p>
+<p>となり、\(\hat{\mathbf{x}}\) が最小を与える。このような点は列空間の正規直交基底 \(\mathbf{q}_1,\dots,\mathbf{q}_r\) を用いて \(\sum_{i=1}^r(\mathbf{q}_i\cdot\mathbf{b})\mathbf{q}_i\) と作れるので、ランクが不足する場合にも最小解は存在する(列空間が \(\{\mathbf{0}\}\) の場合は空和を \(\mathbf{0}\) とする)。</p>
 <p>「\(\mathbf{r}\) が \(\operatorname{Col}A\) と直交」\(\iff\)「\(A\) の各列 \(\mathbf{a}_j\) と直交:\(\mathbf{a}_j^\top\mathbf{r}=0\ (\forall j)\)」\(\iff\)</p>
 <p>\[A^\top(\mathbf{b}-A\hat{\mathbf{x}})=\mathbf{0}\iff A^\top A\,\hat{\mathbf{x}}=A^\top\mathbf{b}\]</p>
 <p><b>一意性</b>:\(\operatorname{rank}A=n\)(列が一次独立)なら、\(\mathbf{x}\ne\mathbf{0}\Rightarrow A\mathbf{x}\ne\mathbf{0}\Rightarrow \mathbf{x}^\top A^\top A\mathbf{x}=\|A\mathbf{x}\|^2\gt0\)。よって \(A^\top A\mathbf{x}=\mathbf{0}\) は \(\mathbf{x}=\mathbf{0}\) しか持たず、\(n\) 次正方行列 \(A^\top A\) は正則。したがって \(\hat{\mathbf{x}}=(A^\top A)^{-1}A^\top\mathbf{b}\) がただ1つ定まる。(証明終)</p>
@@ -1404,9 +1408,9 @@ window.mjxStatusUpdate();
 <h4>解答</h4>
 <p>\[\langle 1,\ x-\tfrac12\rangle=\int_0^1 1\cdot\left(x-\frac12\right)dx=\left[\frac{x^2}{2}-\frac{x}{2}\right]_0^1=\frac12-\frac12=0\]</p>
 <p>よって直交する。</p>
-<p><b>入口として</b>:これは「関数の空間に内積・直交という幾何を持ち込める」ことの最小の実例であり、三角関数系 \(\{1,\cos 2\pi x,\sin 2\pi x,\dots\}\) が互いに直交することを使って関数を直交基底で展開する<b>フーリエ級数</b>(信号処理・画像圧縮の心臓部)の出発点である。</p>
+<p><b>入口として</b>:これは「関数の空間に内積・直交という幾何を持ち込める」ことの実例であり、三角関数系 \(\{1,\cos 2\pi x,\sin 2\pi x,\dots\}\) の直交性を使う<b>フーリエ級数</b>の出発点である。この系は \(L^2[0,1]\) で完備で、二乗可積分関数を平均二乗の意味で近似できる。無限級数による展開なので、有限次元の基底での有限和と違い、どの意味で収束するかを区別する必要がある。連続性だけで、元の関数への各点収束や一様収束まで保証されるわけではない。</p>
 <h4 class="alt">ポイント</h4>
-<p>フーリエ係数の公式 \(c_k=\langle f,\ \text{基底関数}\rangle/\|\text{基底関数}\|^2\) は、正規直交基底の座標公式(問8.1ポイント)そのもの。第1章で学んだ「内積で座標を取る」技術が、無限次元の関数空間でもそのまま通用する — 線形代数を抽象的に整備した最大の配当です。多項式の直交化(ルジャンドル多項式)は、まさに \(\{1,x,x^2,\dots\}\) へのグラム・シュミットです。</p>
+<p>フーリエ係数の公式 \(c_k=\langle f,\ \text{基底関数}\rangle/\|\text{基底関数}\|^2\) は、直交射影の係数公式と同じです。基底関数を正規化すれば分母は1になります。\(\{1,x,x^2,\dots\}\) にグラム・シュミットを施すと、区間 \([-1,1]\)・重み1では定数倍を除いてルジャンドル多項式、本問の区間 \([0,1]\) ではシフトしたルジャンドル多項式が得られます。</p>
 </section>
 
 <header class="chap" id="ch9">
@@ -1427,7 +1431,7 @@ window.mjxStatusUpdate();
 <p><b>直交性</b>:\(\mathbf{v}_1\cdot\mathbf{v}_2=1-1=0\)。確かに直交している。</p>
 <p>検算:\(\operatorname{tr}A=4=3+1\)、\(\det A=3=3\cdot1\)。</p>
 <h4 class="alt">ポイント</h4>
-<p>直交性は偶然ではなく対称行列の必然です(証明は問9.6)。図形的には、\(A\) は \((1,1)\) 方向に3倍・\((1,-1)\) 方向に1倍する変換で、単位円を軸が \(45^\circ\) 傾いた楕円に写します。固有ベクトル=楕円の主軸、固有値=軸の長さ。この「楕円の絵」が二次形式(問9.3)・PCA(問9.7)・SVD(第10章)まで一貫して効きます。</p>
+<p>異なる固有値に属する固有ベクトルの直交性は、実対称行列の性質です(証明は問9.6)。\(A\) は \((1,1)\) 方向に3倍・\((1,-1)\) 方向に1倍する変換で、単位円を軸が \(45^\circ\) 傾いた楕円に写します。この楕円の主軸方向は固有ベクトル方向、半軸の長さは3と1です。一般の実対称行列による単位球の像では、半軸の長さは固有値の絶対値となり、零固有値があれば像は潰れます。二次形式の等高線とは半軸長の関係が異なることにも注意してください(問9.3)。</p>
 </section>
 
 <section class="sol" id="a9-2">
@@ -1443,7 +1447,7 @@ window.mjxStatusUpdate();
 <p>\[3\,\mathbf{q}_1\mathbf{q}_1^\top+1\cdot\mathbf{q}_2\mathbf{q}_2^\top=\begin{pmatrix}\frac32 &amp; \frac32\\ \frac32 &amp; \frac32\end{pmatrix}+\begin{pmatrix}\frac12 &amp; -\frac12\\ -\frac12 &amp; \frac12\end{pmatrix}=\begin{pmatrix}2 &amp; 1\\ 1 &amp; 2\end{pmatrix}=A\]</p>
 <p>確かに再構成できた。</p>
 <h4 class="alt">ポイント</h4>
-<p>スペクトル分解は「\(A\) =(方向 \(\mathbf{q}_i\) への射影 \(\mathbf{q}_i\mathbf{q}_i^\top\))×(倍率 \(\lambda_i\))の和」という読み方ができます。行列を<b>ランク1の部品に分解して、大事な部品(大きい \(\lambda\))だけ残す</b> — この発想がPCAの次元削減、そして第10章の低ランク近似・画像圧縮に直結します。対称行列では逆行列いらず(\(Q^{-1}=Q^\top\))という計算上の恩恵も大きい。</p>
+<p>スペクトル分解は「\(A\) =(方向 \(\mathbf{q}_i\) への射影 \(\mathbf{q}_i\mathbf{q}_i^\top\))×(倍率 \(\lambda_i\))の和」と読めます。一般の実対称行列の低ランク近似では、<b>固有値の絶対値が大きい成分を残す</b>のが基本です。共分散行列は半正定値なので固有値が非負で、PCAでは大きい固有値の方向を残します。対称行列の直交対角化では \(Q^{-1}=Q^\top\) なので、逆行列を別に求める必要もありません。</p>
 </section>
 
 <section class="sol" id="a9-3">
@@ -1460,7 +1464,7 @@ window.mjxStatusUpdate();
 <p>\[\max q=3\ \left(方向\ \pm\tfrac{1}{\sqrt2}(1,1)\right),\qquad \min q=1\ \left(方向\ \pm\tfrac{1}{\sqrt2}(1,-1)\right)\]</p>
 <p>(直接代入でも \(q\!\left(\tfrac{1}{\sqrt2},\tfrac{1}{\sqrt2}\right)=1+1+1=3\)、\(q\!\left(\tfrac{1}{\sqrt2},-\tfrac{1}{\sqrt2}\right)=1-1+1=1\) で確認できる。)</p>
 <h4 class="alt">ポイント</h4>
-<p>「単位球面上の \(\mathbf{x}^\top A\mathbf{x}\) の最大・最小=最大・最小固有値、達成方向=固有ベクトル」— これはレイリー商 \(R(\mathbf{x})=\frac{\mathbf{x}^\top A\mathbf{x}}{\mathbf{x}^\top\mathbf{x}}\) の言葉で一般に成り立つ、応用上きわめて重要な事実です。PCAの「分散最大の方向」(問9.7)、行列ノルム(問10.8)、振動の固有振動数など、"最適な方向を探す問題"の多くがこの形に帰着します。等高線 \(q=const\) が楕円(主軸=固有ベクトル)になる絵も添えて記憶しましょう。</p>
+<p>実対称行列では「単位球面上の \(\mathbf{x}^\top A\mathbf{x}\) の最大・最小=最大・最小固有値、達成方向=それぞれの固有空間内の単位ベクトル」が成り立ちます。これは非零ベクトルに対するレイリー商 \(R(\mathbf{x})=\frac{\mathbf{x}^\top A\mathbf{x}}{\mathbf{x}^\top\mathbf{x}}\) の性質です。PCAの「分散最大の方向」(問9.7)や行列ノルム(問10.8)にも使われます。本問の等高線 \(q=c\) は \(c&gt;0\) なら半軸長 \(\sqrt{c/3},\sqrt{c}\) の楕円、\(c=0\) なら原点1点、\(c&lt;0\) なら空集合です。</p>
 </section>
 
 <section class="sol" id="a9-4">
@@ -1545,7 +1549,7 @@ window.mjxStatusUpdate();
 <p>\[B^\top B=Q\sqrt{D}\,\sqrt{D}\,Q^\top=QDQ^\top=A\]</p>
 <p>(証明終)</p>
 <h4 class="alt">ポイント</h4>
-<p>まとめると「\(A\) が対称正定値 \(\iff\) ある正則 \(B\) で \(A=B^\top B\)」— 正定値行列は"何かの二乗"だ、という特徴づけです。実用では \(B\) を下三角にとる<b>コレスキー分解</b>が標準で、正規方程式の求解や多変量正規乱数の生成(\(\mathbf{z}\sim N(0,I)\) に \(B^\top\) を掛けて共分散 \(A\) を実現)に日常的に使われます。ガウス過程・カルマンフィルタの実装でも必ず出会う分解です。</p>
+<p>まとめると「\(A\) が実対称正定値 \(\iff\) ある正則 \(B\) で \(A=B^\top B\)」です。標準的な<b>コレスキー分解</b>は、対角成分が正の下三角行列 \(L\) による \(A=LL^\top\)、または上三角行列 \(R\) による \(A=R^\top R\) です。本問の \(B^\top B\) の形に合わせるなら、\(B=R=L^\top\) を上三角にとります。\(\mathbf{z}\sim N(0,I)\) に対して \(L\mathbf{z}=B^\top\mathbf{z}\) の共分散が \(A\) となることは、多変量正規乱数の生成にも使われます。</p>
 </section>
 
 <header class="chap" id="ch10">
@@ -1570,7 +1574,7 @@ window.mjxStatusUpdate();
 <p>\[U\Sigma V^\top=\frac{1}{\sqrt{20}}\begin{pmatrix}1 &amp; 3\\ 3 &amp; -1\end{pmatrix}\begin{pmatrix}3\sqrt5 &amp; 3\sqrt5\\ \sqrt5 &amp; -\sqrt5\end{pmatrix}=\frac{1}{2\sqrt5}\begin{pmatrix}6\sqrt5 &amp; 0\\ 8\sqrt5 &amp; 10\sqrt5\end{pmatrix}=\begin{pmatrix}3 &amp; 0\\ 4 &amp; 5\end{pmatrix}=A\]</p>
 <p>(補助検算:\(\sigma_1\sigma_2=3\sqrt5\cdot\sqrt5=15=|\det A|\)。)</p>
 <h4 class="alt">ポイント</h4>
-<p>幾何学的には「\(V^\top\) で回転 → \(\Sigma\) で軸ごとに \(3\sqrt5\) 倍・\(\sqrt5\) 倍 → \(U\) で回転」:単位円は必ず楕円に写り、その半軸長が特異値、軸の向きが \(\mathbf{u}_i\) です。\(A\) 自身は対称でなく固有ベクトルも直交しませんが、SVDなら<b>入力側・出力側それぞれに直交基底</b>を用意することで、どんな行列も"対角"にできる — これが対角化との決定的な違いです。</p>
+<p>幾何学的には「\(V^\top\) で直交変換 → \(\Sigma\) で軸ごとに \(3\sqrt5\) 倍・\(\sqrt5\) 倍 → \(U\) で直交変換」です。この選び方では \(\det V=\det U=-1\) なので、前後の変換はどちらも鏡映です。本問の単位円の像は、半軸長が特異値、軸方向が \(\mathbf{u}_i\) の楕円になります(一般に零特異値があれば像は潰れます)。SVDは入力側・出力側に別々の直交基底を用意する点が、同じ基底を両側に使う対角化と異なります。</p>
 </section>
 
 <section class="sol" id="a10-2">
@@ -1597,7 +1601,7 @@ window.mjxStatusUpdate();
 <p>\[\|E\|_2=\sigma_{\max}(E)=\sqrt5,\qquad \|E\|_F=\sqrt{1.5^2+1.5^2+0.5^2+0.5^2}=\sqrt{5}\]</p>
 <p>どちらも \(\sigma_2=\sqrt5\) に一致する(ランク1の誤差行列では \(\|E\|_2=\|E\|_F\))。</p>
 <h4 class="alt">ポイント</h4>
-<p><b>Eckart–Young の定理</b>:「ランク \(k\) 以下のあらゆる行列 \(B\) の中で、\(\|A-B\|\) を最小にするのは \(A_k=\sum_{i\le k}\sigma_i\mathbf{u}_i\mathbf{v}_i^\top\) であり、最小誤差は \(\|A-A_k\|_2=\sigma_{k+1}\)、\(\|A-A_k\|_F=\sqrt{\sigma_{k+1}^2+\cdots}\)」。つまり<b>切り捨てた特異値がそのまま誤差</b>です(この一般証明は本書のレベルを超えるため、事実として認めて使います)。特異値の減衰が速いデータほど少ない成分でよく近似できる — 画像圧縮(問10.4)・ノイズ除去・推薦システムの理論的支柱です。</p>
+<p><b>Eckart–Young の定理</b>:\(p=\min(m,n)\)、\(0\le k\le p\) とする。作用素2ノルムとフロベニウスノルムのそれぞれについて、ランク \(k\) 以下の行列による最良近似の1つは \(A_k=\sum_{i=1}^{k}\sigma_i\mathbf{u}_i\mathbf{v}_i^\top\)。最小誤差は \(\|A-A_k\|_2=\sigma_{k+1}\)、\(\|A-A_k\|_F=\sqrt{\sum_{i=k+1}^{p}\sigma_i^2}\) です（\(k=p\) では誤差0とし、\(\sigma_{p+1}=0\)、空和は0）。最良近似は一般に一意とは限らず、任意のノルムについて同じ主張が成り立つわけでもありません。この一般定理の証明は本書では省略し、事実として用います。特異値の減衰が速いデータほど少ない成分でよく近似できます。</p>
 </section>
 
 <section class="sol" id="a10-4">
@@ -1609,9 +1613,9 @@ window.mjxStatusUpdate();
 <p>\[20\times1025=20{,}500\ 個\]</p>
 <p>元の画像は \(512\times512=262{,}144\) 画素。割合は</p>
 <p>\[\frac{20500}{262144}\approx0.078=約7.8\%\]</p>
-<p>すなわち元の約 \(\dfrac{1}{13}\) のデータ量で、画像の主要な構造(\(\sigma_1,\dots,\sigma_{20}\) が担う部分)を保持できる。</p>
+<p>すなわち保存する<b>数値の個数</b>は元の約 \(\dfrac{1}{13}\) です。各数値を同じビット数で保存する場合に、この割合が保存容量の比にもなります。たとえば元画像が1画素8ビット、SVDの各数値が32ビットなら、ヘッダ等を除く容量の比は約 \(4\times7.8\%=31.3\%\) です。近似画像の誤差は、切り捨てる特異値に依存します。</p>
 <h4 class="alt">ポイント</h4>
-<p>一般式は \(\dfrac{k(m+n+1)}{mn}\)。自然画像は特異値が急速に減衰するため小さな \(k\) でも見た目が保たれ、逆に細かいテクスチャやノイズは小さい特異値に押し込められているので、打ち切りが<b>ノイズ除去</b>としても働きます。実務のJPEGはSVDでなくブロックDCTを使いますが、「良い基底に展開して小さい係数を捨てる」という思想は同一。NumPyの <code>np.linalg.svd</code> で数行で実験できるので、手元の画像でぜひ試してください。</p>
+<p>数値の個数の比の一般式は \(\dfrac{k(m+n+1)}{mn}\)。特異値が速く減衰する画像なら、小さな \(k\) でもよく近似できます。ただし画像一般でその減衰は保証されず、細かな構造が失われる場合もあります。ノイズが主に小さい特異値の成分に現れる状況では打ち切りがノイズ除去に役立ちますが、ノイズが必ずそこだけに入るわけではありません。</p>
 </section>
 
 <section class="sol" id="a10-5">
@@ -1627,9 +1631,9 @@ window.mjxStatusUpdate();
 <p>(2) \[\hat{\mathbf{x}}=A^{+}\begin{pmatrix}1\\ 0\end{pmatrix}=\frac{1}{4}\begin{pmatrix}1\\ 1\end{pmatrix}=\left(\frac14,\ \frac14\right)^\top\]</p>
 <p><b>直接確認</b>:\(A\mathbf{x}=(x_1+x_2)\begin{pmatrix}1\\ 1\end{pmatrix}\) なので、\(s=x_1+x_2\) とおくと残差の2乗は</p>
 <p>\[\|A\mathbf{x}-(1,0)^\top\|^2=(s-1)^2+s^2\]</p>
-<p>これは \(s=\frac12\) で最小(値 \(\frac12\))。すなわち残差最小の解は「\(x_1+x_2=\frac12\) を満たす全ベクトル」(直線状に無数にある)。その中でノルム \(x_1^2+x_2^2\) が最小になるのは対称性より \(x_1=x_2=\frac14\) のとき — まさに \(\hat{\mathbf{x}}\) である。</p>
+<p>これは \(s=\frac12\) で最小(値 \(\frac12\))。すなわち最小二乗解は「\(x_1+x_2=\frac12\) を満たす全ベクトル」。この条件のもとでノルムの2乗は \(x_1^2+x_2^2=2(x_1-\frac14)^2+\frac18\) だから、ただ1つの最小点は \(x_1=x_2=\frac14\) — まさに \(\hat{\mathbf{x}}\) である。</p>
 <h4 class="alt">ポイント</h4>
-<p>擬似逆行列は「逆行列が存在しない行列にも、常に定義できる最良の代役」:\(A^{+}\mathbf{b}\) は<b>①残差 \(\|A\mathbf{x}-\mathbf{b}\|\) を最小にし、②その中でノルム最小</b>の解を返します。列がすべて独立なら \(A^{+}=(A^\top A)^{-1}A^\top\) となって第8章の最小二乗解に一致 — つまり擬似逆行列は正規方程式の完全な一般化です。NumPyの <code>np.linalg.pinv</code> の中身はまさにこのSVD構成で、ランク落ちにも安定に対応します。</p>
+<p>\(A^{+}\mathbf{b}\) は<b>①残差 \(\|A\mathbf{x}-\mathbf{b}\|\) を最小にし、②その中でノルム最小</b>の解です。列がすべて独立なら \(A^{+}=(A^\top A)^{-1}A^\top\) となります。数値実装の <code>np.linalg.pinv</code> もSVDを用いますが、最大特異値に対する閾値以下の特異値を0とみなすため、数学的に非零の特異値をすべて逆数にする操作とは異なる場合があります。非常に小さい特異値を逆数にすれば誤差を増幅するので、数値的なランクの判定にも注意が必要です。</p>
 </section>
 
 <section class="sol" id="a10-6">
@@ -1642,12 +1646,12 @@ window.mjxStatusUpdate();
 <p>固有値は \(10\pm8=18,\ 2\)。よって \(X\) の特異値は</p>
 <p>\[\sigma_1=\sqrt{18}=3\sqrt2,\qquad \sigma_2=\sqrt2\]</p>
 <p>(2) \(X^\top X\) の最大固有値 \(18\) の固有ベクトルは \((10-\lambda)v_1+8v_2=0\) より \((1,1)\) 方向、正規化して \(\mathbf{v}_1=\frac{1}{\sqrt2}(1,1)^\top\)。これは問9.7 で求めた第1主成分と<b>一致</b>する。</p>
-<p>(3) \(S=\frac14X^\top X\) より、固有ベクトルは共通で、固有値は \(\lambda_i=\frac{\sigma_i^2}{4}\)。一般にデータ数 \(N\) なら</p>
+<p>(3) \(S=\frac14X^\top X\) より、固有ベクトルは共通で、固有値は \(\lambda_i=\frac{\sigma_i^2}{4}\)。一般に中心化したデータ数を \(N\) とし、本書と同じ \(S=\frac1N X^\top X\) の規約を使えば</p>
 <p>\[\sigma_i^2=N\lambda_i\]</p>
 <p>(確認:\(\sigma_1^2=18=4\cdot\frac92\)、\(\sigma_2^2=2=4\cdot\frac12\)。)</p>
 <h4 class="alt">ポイント</h4>
 
-<p>PCAは、中心化したデータ行列から共分散行列の固有値問題を解く方法と、データ行列へ直接SVDを適用する方法のどちらでも求められます。右特異ベクトルが主成分の方向、特異値の2乗がデータ数倍の分散、左特異ベクトルを特異値倍したものが主成分スコアです。共分散行列を明示せずSVDを使えば、条件数の2乗化を避けやすく、低ランク近似にも自然につながります。</p>
+<p>PCAは、中心化したデータ行列の共分散行列を固有分解する方法と、データ行列へ直接SVDを適用する方法のどちらでも求められます。右特異ベクトルが主成分の方向、左特異ベクトルを特異値倍したものが主成分スコアです。分散の規約が \(1/N\) なら \(\sigma_i^2=N\lambda_i\)、不偏共分散の \(1/(N-1)\) を使えば \(\sigma_i^2=(N-1)\lambda_i\) です。直接SVDを使えば、共分散行列を明示的に作る際の精度の問題を避けやすくなります。</p>
 </section>
 
 <section class="sol" id="a10-7">
@@ -1660,7 +1664,7 @@ window.mjxStatusUpdate();
 <p>\[\operatorname{rank}A=\operatorname{rank}(U\Sigma V^\top)=\operatorname{rank}\Sigma\]</p>
 <p>\(\Sigma\) は対角行列なので、そのランクは非零対角成分の個数、すなわち非零特異値の個数に等しい。(証明終)</p>
 <h4 class="alt">ポイント</h4>
-<p>ここまでで、ランク(本問)・ノルム(問10.8)・条件数・正方行列の場合の行列式の絶対値(\(=\prod\sigma_i\))・4つの基本部分空間(\(\operatorname{Col}A=\operatorname{span}\{\mathbf{u}_i\}_{\sigma_i\gt0}\)、\(\operatorname{Null}A=\operatorname{span}\{\mathbf{v}_i\}_{\sigma_i=0}\))— 行列の主要な情報が<b>すべて特異値分解から読める</b>ことが見えてきます。SVDが「行列のレントゲン写真」と呼ばれるゆえんです。</p>
+<p>\(r=\operatorname{rank}A\) とすると、完全なSVDから \(\operatorname{Col}A=\operatorname{span}\{\mathbf{u}_1,\dots,\mathbf{u}_r\}\)、\(\operatorname{Null}A=\operatorname{span}\{\mathbf{v}_{r+1},\dots,\mathbf{v}_n\}\) が読めます。さらに行空間は \(\mathbf{v}_1,\dots,\mathbf{v}_r\)、左零空間 \(\operatorname{Null}A^\top\) は \(\mathbf{u}_{r+1},\dots,\mathbf{u}_m\) が張ります(空の組が張る空間は \(\{\mathbf{0}\}\))。ランク・ノルム・条件数や、正方行列の \(|\det A|=\prod_i\sigma_i\) もSVDで表せます。</p>
 </section>
 
 <section class="sol" id="a10-8">
@@ -1671,9 +1675,9 @@ window.mjxStatusUpdate();
 
 <p>(1) 成分から、フロベニウスノルムは \(\|A\|_F=\sqrt{3^2+0^2+4^2+5^2}=\sqrt{50}=5\sqrt2\)。特異値から計算しても \(\sqrt{(3\sqrt5)^2+(\sqrt5)^2}=\sqrt{45+5}=5\sqrt2\) となり、一致する。一般に、フロベニウスノルムの2乗は特異値の2乗和に等しい。</p>
 <p>(2) 条件数は \(\kappa(A)=\dfrac{3\sqrt5}{\sqrt5}=3\)。</p>
-<p><b>悪条件の意味</b>:行列 \(A\) を固定して \(A\mathbf{x}=\mathbf{b}\) を解くとき、右辺 \(\mathbf{b}\) の相対誤差は、最悪の場合に解 \(\mathbf{x}\) でおよそ \(\kappa(A)\) 倍まで増幅されうる。\(A\) 自身の摂動についても、可逆性を失わない範囲では条件数が感度の尺度になる。\(\kappa\) が大きいと、僅かなノイズや丸め誤差だけで解の有効桁が大きく失われうる。</p>
+<p><b>悪条件の意味</b>:正則な \(A\) を固定して \(A\mathbf{x}=\mathbf{b}\ne\mathbf{0}\) を解くとき、2ノルムの相対誤差は \(\|\delta\mathbf{x}\|/\|\mathbf{x}\|\le\kappa_2(A)\|\delta\mathbf{b}\|/\|\mathbf{b}\|\) と評価でき、右辺の誤差が最悪で \(\kappa_2(A)\) 倍まで増幅されます。零の右辺ではこの相対誤差式は使えず、絶対誤差を評価します。\(A\) 自身の十分小さい摂動への感度も条件数で評価できます。</p>
 <h4 class="alt">ポイント</h4>
-<p>幾何では、\(\kappa\) は単位円の像である楕円の「長軸÷短軸」です。\(\kappa=3\) は比較的良条件で、直交行列は \(\kappa=1\)。正規方程式で転置行列との積を作ると条件数は2乗されます。倍精度で \(\kappa\) が \(10^{16}\) 程度なら、最悪の場合にはほぼ全桁を失いうるため、条件数は数値計算で重要な診断量です。</p>
+<p>幾何では、\(\kappa_2\) は単位円の像である楕円の「長軸÷短軸」です。\(\kappa_2=3\) は比較的良条件で、直交行列は \(\kappa_2=1\)。列が一次独立な実行列では \(\kappa_2(A^\top A)=\kappa_2(A)^2\) です。倍精度で \(\kappa_2\) が \(10^{16}\) 程度なら、最悪の場合にはほぼ全桁を失いうるため、条件数は数値計算の診断量として使われます。</p>
 </section>
 
 <section class="sol" id="a10-9">
@@ -1682,11 +1686,11 @@ window.mjxStatusUpdate();
 <p>第9章の道具(スペクトル定理・半正定値)を \(A^\top A\) に適用し、\(\mathbf{u}_i=A\mathbf{v}_i/\sigma_i\) の正規直交性を内積計算で確かめるのが山場。</p>
 <h4>解答</h4>
 <p><b>手順1(\(A^\top A\) の性質)</b>:\((A^\top A)^\top=A^\top A\) で対称。また任意の \(\mathbf{x}\) に対し \(\mathbf{x}^\top A^\top A\mathbf{x}=\|A\mathbf{x}\|^2\ge0\) なので半正定値。よって固有値はすべて実数かつ非負である(負の固有値 \(\lambda\) があれば、その固有ベクトルで \(\mathbf{x}^\top A^\top A\mathbf{x}=\lambda\|\mathbf{x}\|^2\lt0\) となり矛盾)。</p>
-<p><b>手順2(\(V\) の構成)</b>:スペクトル定理により \(A^\top A\) の正規直交固有基底 \(\mathbf{v}_1,\dots,\mathbf{v}_n\) がとれる。固有値を降順に \(\sigma_1^2\ge\cdots\ge\sigma_r^2\gt0=\sigma_{r+1}^2=\cdots=\sigma_n^2\) と書く(\(\sigma_i\ge0\)。\(r\) は正の固有値の個数)。</p>
+<p><b>手順2(\(V\) の構成)</b>:スペクトル定理により \(A^\top A\) の正規直交固有基底 \(\mathbf{v}_1,\dots,\mathbf{v}_n\) がとれ、固有値を \(\mu_1\ge\cdots\ge\mu_n\ge0\) と並べる。\(\|A\mathbf{x}\|^2=\mathbf{x}^\top A^\top A\mathbf{x}\) より \(\operatorname{Null}(A^\top A)=\operatorname{Null}A\) なので、rank-nullityから \(\operatorname{rank}(A^\top A)=r\)。したがって \(\mu_i&gt;0\) は \(1\le i\le r\)、\(\mu_i=0\) は \(r&lt;i\le n\) に対応する（該当しない範囲は空）。\(p=\min(m,n)\) とし、\(\sigma_i=\sqrt{\mu_i}\ (1\le i\le p)\) とおく。</p>
 <p><b>手順3(\(U\) の構成)</b>:\(i\le r\) に対し \(\mathbf{u}_i=\dfrac{1}{\sigma_i}A\mathbf{v}_i\) と定める。このとき \(i,j\le r\) で</p>
 <p>\[\mathbf{u}_i^\top\mathbf{u}_j=\frac{1}{\sigma_i\sigma_j}(A\mathbf{v}_i)^\top(A\mathbf{v}_j)=\frac{1}{\sigma_i\sigma_j}\mathbf{v}_i^\top(A^\top A\mathbf{v}_j)=\frac{\sigma_j^2}{\sigma_i\sigma_j}\mathbf{v}_i^\top\mathbf{v}_j=\begin{cases}1 &amp; (i=j)\\ 0 &amp; (i\ne j)\end{cases}\]</p>
 <p>すなわち \(\{\mathbf{u}_1,\dots,\mathbf{u}_r\}\) は \(\mathbb{R}^m\) の正規直交系。これを \(\mathbb{R}^m\) の正規直交基底 \(\{\mathbf{u}_1,\dots,\mathbf{u}_m\}\) に拡張する(グラム・シュミット)。</p>
-<p><b>手順4(組み立て)</b>:\(i\le r\) では定義より \(A\mathbf{v}_i=\sigma_i\mathbf{u}_i\)。\(i\gt r\) では \(\|A\mathbf{v}_i\|^2=\mathbf{v}_i^\top A^\top A\mathbf{v}_i=\sigma_i^2\|\mathbf{v}_i\|^2=0\) より \(A\mathbf{v}_i=\mathbf{0}\)。まとめると、\(V=(\mathbf{v}_1\ \cdots\ \mathbf{v}_n)\)、\(U=(\mathbf{u}_1\ \cdots\ \mathbf{u}_m)\)、\(\Sigma\) を対角に \(\sigma_1,\dots\) を並べた \(m\times n\) 行列として、すべての基底ベクトルで</p>
+<p><b>手順4(組み立て)</b>:\(i\le r\) では定義より \(A\mathbf{v}_i=\sigma_i\mathbf{u}_i\)。\(r&lt;i\le n\) では \(\|A\mathbf{v}_i\|^2=\mathbf{v}_i^\top A^\top A\mathbf{v}_i=\mu_i\|\mathbf{v}_i\|^2=0\) より \(A\mathbf{v}_i=\mathbf{0}\)。\(V=(\mathbf{v}_1\ \cdots\ \mathbf{v}_n)\)、\(U=(\mathbf{u}_1\ \cdots\ \mathbf{u}_m)\)、\(\Sigma\) を \(p\) 個の対角成分が \(\sigma_1,\dots,\sigma_p\)、他は0の \(m\times n\) 行列とすると、すべての列で</p>
 <p>\[AV=U\Sigma\]</p>
 <p>が成り立つ(第 \(i\) 列どうしが上の2つの場合そのもの)。\(V\) は直交行列なので右から \(V^\top\) を掛けて</p>
 <p>\[A=U\Sigma V^\top\]</p>
@@ -1717,12 +1721,12 @@ window.mjxStatusUpdate();
 <section class="sol" id="a11-2">
 <div class="phead"><span class="pnum">解 11.2</span><span class="lv lv3">★★★</span><span class="ptag">ジョルダン標準形への変換</span></div>
 <h4>方針</h4>
-<p>固有ベクトル \(\mathbf{v}\) が1本しか無いとき、不足分は「\((B-\lambda I)\) で \(\mathbf{v}\) に写るベクトル」\(\mathbf{w}\) で補う。\(P=(\mathbf{v}\ \mathbf{w})\) と並べれば、\(B\mathbf{v}=\lambda\mathbf{v}\)、\(B\mathbf{w}=\mathbf{v}+\lambda\mathbf{w}\) がそのままジョルダン形を作る。</p>
+<p>一次独立な固有ベクトルが1本しかとれない本問では、不足分を「\((B-\lambda I)\) で \(\mathbf{v}\) に写るベクトル」\(\mathbf{w}\) で補う。\(P=(\mathbf{v}\ \mathbf{w})\) と並べれば、\(B\mathbf{v}=\lambda\mathbf{v}\)、\(B\mathbf{w}=\mathbf{v}+\lambda\mathbf{w}\) がそのままジョルダン形を作る。</p>
 <h4>解答</h4>
 <p>(1) \[\det(B-\lambda I)=(2-\lambda)(4-\lambda)+1=\lambda^2-6\lambda+9=(\lambda-3)^2\]</p>
 <p>固有値は \(\lambda=3\)(代数的重複度2)。</p>
 <p>\[(B-3I)=\begin{pmatrix}-1 &amp; 1\\ -1 &amp; 1\end{pmatrix}\]</p>
-<p>はランク1なので固有空間は1次元:\(-v_1+v_2=0\) より \(\mathbf{v}=(1,\,1)^\top\) のみ。独立な固有ベクトルが1本足りず、対角化できない。</p>
+<p>はランク1なので固有空間は1次元:\(-v_1+v_2=0\) より \(\operatorname{span}\{(1,1)^\top\}\)。固有ベクトルは \((1,1)^\top\) の非零スカラー倍全体であり、以下では \(\mathbf{v}=(1,1)^\top\) を選ぶ。独立な固有ベクトルが1本足りず、対角化できない。</p>
 <p>(2) 一般化固有ベクトル:\((B-3I)\mathbf{w}=\mathbf{v}\) すなわち \(-w_1+w_2=1\)(2つの行は同じ式)。解の1つとして</p>
 <p>\[\mathbf{w}=(0,\,1)^\top\]</p>
 <p>(3) \(P=\begin{pmatrix}1 &amp; 0\\ 1 &amp; 1\end{pmatrix}\)、\(\det P=1\) より \(P^{-1}=\begin{pmatrix}1 &amp; 0\\ -1 &amp; 1\end{pmatrix}\)。</p>
@@ -1740,7 +1744,7 @@ window.mjxStatusUpdate();
 <p>まず \(A^2=\begin{pmatrix}0 &amp; 1\\ -1 &amp; 0\end{pmatrix}\begin{pmatrix}0 &amp; 1\\ -1 &amp; 0\end{pmatrix}=\begin{pmatrix}-1 &amp; 0\\ 0 &amp; -1\end{pmatrix}=-I\)。よって \(A^3=-A,\ A^4=I,\dots\) と周期4で循環し、一般に \(A^{2m}=(-1)^mI\)、\(A^{2m+1}=(-1)^mA\)。級数を偶奇に分けると</p>
 <p>\[e^{tA}=\sum_{m=0}^{\infty}\frac{t^{2m}}{(2m)!}A^{2m}+\sum_{m=0}^{\infty}\frac{t^{2m+1}}{(2m+1)!}A^{2m+1}=\underbrace{\left(\sum_{m}\frac{(-1)^mt^{2m}}{(2m)!}\right)}_{\cos t}I+\underbrace{\left(\sum_{m}\frac{(-1)^mt^{2m+1}}{(2m+1)!}\right)}_{\sin t}A\]</p>
 <p>\[\therefore\quad e^{tA}=(\cos t)I+(\sin t)A=\begin{pmatrix}\cos t &amp; \sin t\\ -\sin t &amp; \cos t\end{pmatrix}\]</p>
-<p><b>意味</b>:これは角度 \(t\) の回転行列(第2章の \(R(\theta)\) と比べると回転の向きが逆、すなわち \(R(-t)\)。\(A\) を転置すれば反時計回り \(R(t)\) が得られる)。長さを変えない直交行列である。</p>
+<p><b>意味</b>:これは第2章の記法では \(R(-t)\)、すなわち符号つき角度 \(-t\) の回転行列である(\(t&gt;0\) なら時計回りに \(t\) だけ回転する)。\(A\) を転置して指数関数を作れば \(R(t)\) が得られる。長さを変えない直交行列である。</p>
 <h4 class="alt">ポイント</h4>
 <p>\(A^2=-I\) は「\(A\) が虚数単位 \(i\) の行列版」であることを意味し、計算全体がオイラーの公式 \(e^{it}=\cos t+i\sin t\) の完全な写しになっています。微分方程式の言葉では、\(\mathbf{x}'=A\mathbf{x}\) の解 \(\mathbf{x}(t)=e^{tA}\mathbf{x}(0)\) は原点まわりの等速円運動 — \(A\) は「回転を生み出す生成子」です。ロボティクスやCGで回転を滑らかに補間する技術(回転群とその生成子)の最初の一歩がここにあります。</p>
 </section>
@@ -1757,7 +1761,7 @@ window.mjxStatusUpdate();
 <p>\[e^{tB}=e^{2t}\begin{pmatrix}1 &amp; t\\ 0 &amp; 1\end{pmatrix}=\begin{pmatrix}e^{2t} &amp; te^{2t}\\ 0 &amp; e^{2t}\end{pmatrix}\]</p>
 <p>(検算:\(t=0\) で \(I\)。また \(\frac{d}{dt}e^{tB}\big|_{t=0}=\begin{pmatrix}2 &amp; 1\\ 0 &amp; 2\end{pmatrix}=B\)。)</p>
 <h4 class="alt">ポイント</h4>
-<p>非対角に現れた \(te^{2t}\) に注目 — 微分方程式で特性方程式が重解をもつとき解に \(te^{\lambda t}\) が混ざる、あの現象の正体がこれです(ジョルダンブロックの冪零部分が \(t\) の多項式を生む)。なお \(e^{X+Y}=e^Xe^Y\) は<b>可換なときだけ</b>成り立つ点に注意(非可換だと一般に不成立)。「対角化 \(\to\) \(e^{tA}=Pe^{tD}P^{-1}\)、対角化不能 \(\to\) ジョルダン+冪零の打ち切り級数」という2本立てで、任意の線形微分方程式系 \(\mathbf{x}'=A\mathbf{x}\) が解けるようになりました。</p>
+<p>非対角に現れた \(te^{2t}\) は、ジョルダンブロックの冪零部分が \(t\) の多項式を生むことに由来します。なお <b>\(X,Y\) が可換なら \(e^{X+Y}=e^Xe^Y\) が成り立ちます</b>が、非可換では一般には成り立ちません(可換性はこの等式の十分条件で、必要条件ではありません)。対角化可能なら \(e^{tA}=Pe^{tD}P^{-1}\)、それ以外も複素数体上のジョルダン標準形を使って計算できます。これにより、定数係数の斉次線形微分方程式系 \(\mathbf{x}'=A\mathbf{x}\) の解が求められます。</p>
 </section>
 
 <section class="sol" id="a11-5">
@@ -1787,7 +1791,7 @@ window.mjxStatusUpdate();
 <p>\[\mathbf{x}_k=A^k\mathbf{x}_0=\frac12\,3^k\mathbf{v}_1+\frac12\,1^k\mathbf{v}_2=3^k\left(\frac12\mathbf{v}_1+\frac12\left(\frac{1}{3}\right)^k\mathbf{v}_2\right)\]</p>
 <p>括弧内の第2項が \((\lambda_2/\lambda_1)^k=(1/3)^k\) の速さで消えるため、\(\mathbf{x}_k\) の方向は \(\mathbf{v}_1\) に幾何級数的に収束する(実際 \(\mathbf{x}_2=\frac92\mathbf{v}_1+\frac12\mathbf{v}_2=(5,4)^\top\) で、\(\mathbf{v}_1\) 成分が9倍優勢)。収束の速さは<b>固有値の比 \(|\lambda_2/\lambda_1|\)</b> で決まる。</p>
 <h4 class="alt">ポイント</h4>
-<p>冪乗法の1反復は行列ベクトル積1回だけ:疎な巨大行列(非零成分だけ計算)でも動くのが最大の強みで、Webグラフ規模のPageRank(問7.8)はまさにこの方法で計算されます。実装では毎回ノルムで正規化してオーバーフローを防ぎ、レイリー商(対称行列では誤差が2乗のオーダーで縮む高精度な推定)で固有値を読み取ります。「固有値がすべてを支配する」という第7章以来のテーマの、計算アルゴリズム側の結論です。</p>
+<p>冪乗法の1反復は行列ベクトル積1回であり、疎な巨大行列でも実行しやすい方法です。一般には代数的に最大の固有値ではなく、<b>絶対値が最大の固有値</b>を狙います。実装では各段階で非零の反復ベクトルを正規化し、値の増大を抑えます。実対称行列のレイリー商の誤差は、固有ベクトルとの角度の誤差に対して二次の大きさです。本問では正確に \(R_k=(3\cdot9^k+1)/(9^k+1)\)、\(3-R_k=2/(9^k+1)\) となるので、方向誤差が \((1/3)^k\)、固有値推定誤差が \((1/9)^k\) の規模で減ります。これは反復自体が二次収束するという意味ではありません。</p>
 </section>
 
 <section class="sol" id="a11-7">
@@ -1797,7 +1801,7 @@ window.mjxStatusUpdate();
 <h4>解答</h4>
 <p><b>作用素ノルム</b>:\(U\) は直交なので \(\|A\mathbf{x}\|=\|U\Sigma V^\top\mathbf{x}\|=\|\Sigma V^\top\mathbf{x}\|\)。\(\mathbf{y}=V^\top\mathbf{x}\) とおくと、\(V^\top\) も直交だから \(\|\mathbf{y}\|=\|\mathbf{x}\|\) で、\(\mathbf{x}\ne\mathbf{0}\) と \(\mathbf{y}\ne\mathbf{0}\) は1対1に対応する。よって</p>
 <p>\[\|A\|_2=\max_{\mathbf{y}\ne\mathbf{0}}\frac{\|\Sigma\mathbf{y}\|}{\|\mathbf{y}\|}\]</p>
-<p>ここで \(\|\Sigma\mathbf{y}\|^2=\sum_i\sigma_i^2y_i^2\le\sigma_{\max}^2\sum_iy_i^2=\sigma_{\max}^2\|\mathbf{y}\|^2\)。等号は \(\mathbf{y}=\mathbf{e}_1\)(最大特異値の座標だけのベクトル)で達成される。ゆえに \(\|A\|_2=\sigma_{\max}\)。(証明終)</p>
+<p>\(p=\min(m,n)\) とすると、\(\|\Sigma\mathbf{y}\|^2=\sum_{i=1}^{p}\sigma_i^2y_i^2\le\sigma_{\max}^2\sum_{i=1}^{n}y_i^2=\sigma_{\max}^2\|\mathbf{y}\|^2\)。等号は \(\mathbf{y}=\mathbf{e}_1\)(最大特異値の座標だけのベクトル)で達成される。零行列の場合も両辺0で成立する。ゆえに \(\|A\|_2=\sigma_{\max}\)。(証明終)</p>
 <p><b>フロベニウスノルム</b>:\(\|A\|_F^2=\sum_{i,j}a_{ij}^2=\operatorname{tr}(A^\top A)\)(\(A^\top A\) の第 \(j\) 対角成分が第 \(j\) 列の2乗和)。SVDを代入し、\(\operatorname{tr}(AB)=\operatorname{tr}(BA)\) を使うと</p>
 <p>\[\operatorname{tr}(A^\top A)=\operatorname{tr}(V\Sigma^\top\Sigma V^\top)=\operatorname{tr}(\Sigma^\top\Sigma V^\top V)=\operatorname{tr}(\Sigma^\top\Sigma)=\sum_i\sigma_i^2\]</p>
 <p>(証明終)</p>
