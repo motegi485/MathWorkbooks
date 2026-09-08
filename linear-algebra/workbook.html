@@ -179,12 +179,13 @@ section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-
   .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
 }
 /* --- しおり(前回の続き)。下部のスクリプトが実行時に挿し込む、画面専用のUI --- */
-.bmk{margin-left:auto;align-self:center;flex:0 0 auto;display:inline-flex;
+.bmk,.chk{align-self:center;flex:0 0 auto;display:inline-flex;
   align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;
   border:0;border-radius:4px;background:transparent;color:#b9bcc4;cursor:pointer;line-height:0}
 .bmk svg{width:.95rem;height:1.15rem;fill:none;stroke:currentColor;stroke-width:1.9}
-.bmk:hover{color:var(--accent);background:var(--accent-soft)}
-.bmk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chk svg{width:1.15rem;height:1.15rem;fill:none;stroke:currentColor;stroke-width:1.9}
+.bmk:hover,.chk:hover{color:var(--accent);background:var(--accent-soft)}
+.bmk:focus-visible,.chk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .bmk[aria-pressed="true"]{color:var(--accent)}
 .bmk[aria-pressed="true"] svg{fill:currentColor}
 /* しおりを挟んだ問題は、スクロール中でも見つけられるよう地色を変える */
@@ -208,14 +209,58 @@ section.is-marked{border-color:var(--accent);background:var(--accent-soft)}
 .bmkhint{margin:1.2rem 0 0;font-size:.78rem;color:var(--sub);line-height:1.8}
 .bmkhint[hidden]{display:none}
 .bmkhint svg{width:.7rem;height:.85rem;fill:currentColor;vertical-align:-.1em;margin:0 .1em}
+/* --- 見出し右端の操作欄。相互リンク・チェック・しおりをここにまとめる。
+   .phead は flex-wrap:wrap なので、狭い画面ではこの箱ごと次の行に落ちる --- */
+.pctl{margin-left:auto;align-self:center;flex:0 0 auto;
+  display:inline-flex;align-items:center;gap:.1rem}
+/* --- もう一方の冊の、同じ番号へ飛ぶリンク --- */
+.xref{font-size:.78rem;color:var(--accent);white-space:nowrap;
+  padding:.22rem .4rem;border-radius:4px;text-decoration:none}
+.xref:hover{background:var(--accent-soft);text-decoration:none}
+.xref:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.xref .arw{margin-left:.25em;font-weight:400}
+/* --- 解いた問題。枠線と角丸には触れないので、印を付けても行送りが動かない --- */
+section.is-done{box-shadow:inset 3px 0 0 var(--lv1)}
+.chk[aria-pressed="true"]{color:var(--lv1)}
+.chk[aria-pressed="true"] svg circle{fill:currentColor}
+.chk[aria-pressed="true"] svg path{stroke:var(--card)}
+/* --- 表紙の進捗 --- */
+.progbar{display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .7rem;
+  margin:1.2rem 0 0;padding:.55rem .9rem;border:1px solid var(--rule);
+  border-radius:6px;background:var(--card);font-size:.86rem}
+.progbar .ttl{color:var(--sub);font-weight:700;letter-spacing:.08em;font-size:.78rem}
+.progbar .num{font-family:var(--serif);font-weight:700;color:var(--ink);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.progbar .num b{color:var(--lv1);font-size:1.15rem}
+.progbar .pbar{flex:1 1 6rem;min-width:5rem;height:.4rem;border-radius:3px;
+  background:var(--rule);overflow:hidden}
+.progbar .pbar span{display:block;height:100%;width:0;background:var(--lv1)}
+.progbar button{margin:0;padding:.22rem .85rem;border:1px solid var(--rule);
+  border-radius:4px;background:var(--card);color:var(--sub);
+  font-family:inherit;font-size:.82rem;line-height:1.8;cursor:pointer;white-space:nowrap}
+.progbar button:hover{background:var(--sub);border-color:var(--sub);color:#fff}
+.progbar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* 2度押しで消す。1度目のあとは、取り返しがつかないことが分かる色にする */
+.progbar button.armed{border-color:var(--lv3);color:var(--lv3);font-weight:700}
+.progbar button.armed:hover{background:var(--lv3);border-color:var(--lv3);color:#fff}
+/* --- 目次の、章ごとの進捗 --- */
+nav.toc .prog{color:var(--lv1);font-weight:700;font-size:.78rem;margin-left:.5em;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+nav.toc .prog.none{color:#b9bcc4;font-weight:400}
+/* --- 目次へのスキップ。キーボードでたどったときだけ現れる --- */
+.skip{position:absolute;left:-9999px;top:0;z-index:60;padding:.5rem 1.1rem;
+  background:var(--accent);color:#fff;border-radius:0 0 5px 0;font-size:.86rem}
+.skip:focus{left:0;text-decoration:none}
 @media print{
   /* 画面専用の操作なので紙面には出さない */
-  .bmk,.bmkbar,.bmkhint{display:none !important}
+  .bmk,.bmkbar,.bmkhint,.skip,.pctl,.xref,.chk,.progbar,nav.toc .prog{display:none !important}
   section.is-marked{background:transparent;border-color:#bbb}
+  section.is-done{box-shadow:none}
 }
 </style>
 </head>
 <body data-book="linear-algebra/workbook">
+<a class="skip" href="#toc">目次へスキップ</a>
 <p id="mjx-status" role="status" hidden>数式を組版しています…</p>
 <script>
 // MathJax の読み込み・組版は非同期で、式の多いページでは十数秒かかる。
@@ -1449,37 +1494,25 @@ window.mjxStatusUpdate();
 </footer>
 </div>
 <script>
-// --- しおり(前回の続き) -----------------------------------------------------
-// 各問題の見出しに「しおり」ボタンを実行時に足し、挟んだ位置を localStorage に残す。
-// しおりは1冊につき1つだけ(別の問題に挟むと前のしおりは外れる)。
-// 保存先は6冊分をまとめた1つのキーで、index.html も同じものを読んで「続きから」を出す。
+// --- 学習用のUI(相互リンク・進捗・しおり) -----------------------------------
+// 各問題の見出しに「もう一方の冊への行き先」「解いた印」「しおり」を実行時に足す。
+// 問題側のHTMLには手を入れていないので、問題を増減しても追随する。
+//
+//   mathworkbooks.bookmark.v1 … 1冊に1つ。「前回の続き」の位置
+//   mathworkbooks.progress.v1 … 1分野に問題番号の集合。「解いた問題」
+//
+// 進捗を分野単位にしてあるのは、問 3.4 と 解 3.4 が同じ1問だから。
+// どちらの冊でチェックしても同じ状態を指す。
+// どちらのキーも6冊分をまとめて持ち、index.html も同じものを読む。
 // この6ファイルと index.html に同じ実装が複製されている(共有JSファイルを持たない方針のため)。
 (function () {
-  var KEY = "mathworkbooks.bookmark.v1";
+  var BKEY = "mathworkbooks.bookmark.v1";
+  var PKEY = "mathworkbooks.progress.v1";
   var book = document.body.getAttribute("data-book");   // 例 "linear-algebra/workbook"
   if (!book) return;
-
-  // localStorage が使えない環境(プライベートモード等)では、UIを出さず何もしない
-  try {
-    localStorage.setItem(KEY + ":probe", "1");
-    localStorage.removeItem(KEY + ":probe");
-  } catch (e) { return; }
-
-  function loadAll() {
-    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
-  }
-  function getMark() {
-    var v = loadAll()[book];
-    return v && v.id ? v : null;
-  }
-  function setMark(mark) {
-    var all = loadAll();
-    if (mark) { all[book] = mark; } else { delete all[book]; }
-    try { localStorage.setItem(KEY, JSON.stringify(all)); } catch (e) {}
-  }
-
-  var RIBBON = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
-    '<path d="M5.5 2.5h13v19l-6.5-5.6-6.5 5.6z" stroke-linejoin="round"/></svg>';
+  var subject = book.split("/")[0];                     // "linear-algebra"
+  var kind = book.split("/")[1];                        // "workbook" | "solutions"
+  var other = kind === "workbook" ? "solutions" : "workbook";
 
   var secs = document.querySelectorAll("main section.prob[id], main section.sol[id]");
   var head = document.querySelector("header.book");
@@ -1492,6 +1525,190 @@ window.mjxStatusUpdate();
   function tagOf(sec) {
     var t = sec.querySelector(".ptag");
     return t ? t.textContent.trim() : "";
+  }
+  // 問題番号だけを取り出す。"q3-4" も "a3-4" も "3-4" になる。
+  // 2冊で共通の鍵であり、相手の冊の id を組み立てる材料でもある。
+  function numOf(sec) { return sec.id.slice(1); }
+
+  // === 1. 見出しの操作欄と、もう一方の冊への相互リンク ===
+  // localStorage を使わないので、保存が使えない環境でもここまでは動く。
+  var XREF = other === "workbook" ? "問題" : "解説";
+  var OTHER_ID = other === "workbook" ? "q" : "a";
+  // 名前付きのタブにして、押すたびにタブが増えていかないようにする
+  var WIN = "mathworkbooks-" + subject + "-" + other;
+
+  var ctl = {};   // sec.id -> 見出し右端の操作欄(span.pctl)
+  Array.prototype.forEach.call(secs, function (sec) {
+    var phead = sec.querySelector(".phead");
+    if (!phead) return;
+
+    // 問題番号は span なので、見出し要素としては読み上げられない。
+    // section 自身に名前を与えて「問 1.1 ベクトルの演算」と読ませる。
+    var pn = phead.querySelector(".pnum"), pt = phead.querySelector(".ptag"), ids = [];
+    if (pn) { pn.id = sec.id + "-t"; ids.push(pn.id); }
+    if (pt) { pt.id = sec.id + "-g"; ids.push(pt.id); }
+    if (ids.length) { sec.setAttribute("aria-labelledby", ids.join(" ")); }
+
+    var box = document.createElement("span");
+    box.className = "pctl";
+    var a = document.createElement("a");
+    a.className = "xref";
+    a.href = other + ".html#" + OTHER_ID + numOf(sec);
+    a.target = WIN;
+    // rel="noopener" は付けない。noopener を指定すると、ブラウザはタブの名前を
+    // 無視して毎回新しいタブを開くため、使い回しが成立しなくなる。
+    // 行き先は同一オリジンの姉妹編なので、window.opener が渡っても困らない。
+    a.innerHTML = XREF + '<span class="arw">→</span>';
+    a.setAttribute("aria-label", labelOf(sec) + " の" + XREF + "を開く");
+    box.appendChild(a);
+    phead.appendChild(box);
+    ctl[sec.id] = box;
+  });
+
+  // localStorage が使えない環境(プライベートモード等)では、
+  // 進捗としおりのUIは出さない。相互リンクはここまでで完成している。
+  try {
+    localStorage.setItem(BKEY + ":probe", "1");
+    localStorage.removeItem(BKEY + ":probe");
+  } catch (e) { return; }
+
+  function loadAll(key) {
+    var v;
+    try { v = JSON.parse(localStorage.getItem(key)); } catch (e) { v = null; }
+    return (v && typeof v === "object") ? v : {};
+  }
+  function saveAll(key, all) {
+    try { localStorage.setItem(key, JSON.stringify(all)); } catch (e) {}
+  }
+
+  var RIBBON = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M5.5 2.5h13v19l-6.5-5.6-6.5 5.6z" stroke-linejoin="round"/></svg>';
+  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+    '<circle cx="12" cy="12" r="8.6"/>' +
+    '<path d="M8.2 12.4l2.6 2.5 5-5.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  // === 2. 解いた問題(進捗) ===
+  function getDone() {
+    var d = loadAll(PKEY)[subject];
+    return (d && typeof d === "object") ? d : {};
+  }
+  function setDone(done) {
+    var all = loadAll(PKEY);
+    if (Object.keys(done).length) { all[subject] = done; } else { delete all[subject]; }
+    saveAll(PKEY, all);
+  }
+
+  // 章ごとの問題数は目次の文字列ではなく実際の id から数える
+  // (解答解説集の目次は「解 1.1〜1.10」形式で、問題数が書かれていないため)。
+  var chapTotal = {}, total = 0;
+  Array.prototype.forEach.call(secs, function (sec) {
+    var ch = numOf(sec).split("-")[0];
+    chapTotal[ch] = (chapTotal[ch] || 0) + 1;
+    total++;
+  });
+
+  // 目次の各章に「7/10」を出す。問題のない序章・付録には出さない
+  var chapCell = {};
+  Array.prototype.forEach.call(
+    document.querySelectorAll('nav.toc a[href^="#ch"]'), function (a) {
+      var ch = a.getAttribute("href").slice(3);
+      var li = a.parentNode;
+      if (!chapTotal[ch] || !li) return;
+      var s = document.createElement("span");
+      s.className = "prog";
+      li.appendChild(s);
+      chapCell[ch] = s;
+    });
+
+  // 表紙に置く、分野全体の進捗
+  var pbox = document.createElement("div");
+  pbox.className = "progbar";
+  pbox.innerHTML = '<span class="ttl">解いた</span>' +
+    '<span class="num"><b>0</b> / ' + total + ' 問</span>' +
+    '<span class="pbar"><span></span></span>' +
+    '<button type="button" class="reset">リセット</button>';
+  head.appendChild(pbox);
+  var pnum = pbox.querySelector(".num b");
+  var pfill = pbox.querySelector(".pbar span");
+  var preset = pbox.querySelector(".reset");
+
+  // 各問題の見出しに、チェックボタンを足す
+  var chks = {};
+  Array.prototype.forEach.call(secs, function (sec) {
+    var box = ctl[sec.id];
+    if (!box) return;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chk";
+    b.innerHTML = CHECK;
+    b.addEventListener("click", function () {
+      var done = getDone(), n = numOf(sec);
+      if (done[n]) { delete done[n]; } else { done[n] = Date.now(); }
+      setDone(done);
+      renderProg();
+    });
+    box.appendChild(b);
+    chks[sec.id] = b;
+  });
+
+  function renderProg() {
+    var done = getDone(), n = 0, per = {};
+    Array.prototype.forEach.call(secs, function (sec) {
+      var on = !!done[numOf(sec)];
+      sec.classList.toggle("is-done", on);
+      var b = chks[sec.id];
+      if (b) {
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+        b.setAttribute("aria-label",
+          labelOf(sec) + (on ? " の「解いた」を取り消す" : " を解いた問題にする"));
+        b.title = on ? "「解いた」を取り消す" : "解いた問題にする";
+      }
+      if (!on) return;
+      n++;
+      var ch = numOf(sec).split("-")[0];
+      per[ch] = (per[ch] || 0) + 1;
+    });
+    pnum.textContent = n;
+    pfill.style.width = total ? (n / total * 100) + "%" : "0";
+    Object.keys(chapCell).forEach(function (ch) {
+      var d = per[ch] || 0;
+      chapCell[ch].textContent = d + "/" + chapTotal[ch];
+      chapCell[ch].className = d ? "prog" : "prog none";
+    });
+  }
+
+  // 取り消しのきかない操作なので確認を挟む。ただし確認ダイアログは
+  // ページの組版を止めてしまうため、ボタンの2度押しで代える
+  var armed = null;
+  function disarm() {
+    clearTimeout(armed);
+    armed = null;
+    preset.textContent = "リセット";
+    preset.classList.remove("armed");
+  }
+  preset.addEventListener("click", function () {
+    if (!armed) {
+      preset.textContent = "本当に消す";
+      preset.classList.add("armed");
+      armed = setTimeout(disarm, 5000);
+      return;
+    }
+    disarm();
+    setDone({});
+    renderProg();
+  });
+  preset.addEventListener("blur", disarm);
+
+  // === 3. しおり(前回の続き) ===
+  // 1冊につき1つだけ(別の問題に挟むと前のしおりは外れる)。
+  function getMark() {
+    var v = loadAll(BKEY)[book];
+    return v && v.id ? v : null;
+  }
+  function setMark(mark) {
+    var all = loadAll(BKEY);
+    if (mark) { all[book] = mark; } else { delete all[book]; }
+    saveAll(BKEY, all);
   }
 
   // --- 表紙に置く、しおりバーと(しおりが無いときの)案内 ---
@@ -1512,8 +1729,8 @@ window.mjxStatusUpdate();
   // --- 各問題の見出しに、しおりボタンを足す ---
   var buttons = {};
   Array.prototype.forEach.call(secs, function (sec) {
-    var phead = sec.querySelector(".phead");
-    if (!phead) return;
+    var box = ctl[sec.id];
+    if (!box) return;
     var b = document.createElement("button");
     b.type = "button";
     b.className = "bmk";
@@ -1527,7 +1744,7 @@ window.mjxStatusUpdate();
       }
       render();
     });
-    phead.appendChild(b);
+    box.appendChild(b);
     buttons[sec.id] = b;
   });
 
@@ -1602,13 +1819,15 @@ window.mjxStatusUpdate();
   });
 
   render();
+  renderProg();
 
   // 問題集と解答解説集は別タブで開く導線がある。他のタブでの変更を取り込む
   window.addEventListener("storage", function (e) {
-    if (!e.key || e.key === KEY) render();
+    if (!e.key || e.key === BKEY) { render(); }
+    if (!e.key || e.key === PKEY) { renderProg(); }
   });
 
-  // index.html から "workbook.html#q3-4" のように開かれた場合。
+  // index.html や、もう一方の冊から "workbook.html#q3-4" のように開かれた場合。
   // ブラウザ自身のジャンプは組版前に済んでいるので、こちらも合わせ直しの対象にする。
   if (location.hash.length > 1) {
     var target = document.getElementById(location.hash.slice(1));

@@ -98,6 +98,15 @@ ul.topics li{background:var(--accent-soft);color:var(--accent);border-radius:3px
 .pdf-panel[hidden]{display:none}
 .pdf-panel a{font-size:.92rem;font-weight:700}
 .pdf-panel .meta{font-weight:400;color:var(--sub);font-size:.82rem;margin-left:.45em}
+/* --- 学習の進捗。各冊が残した「解いた問題」の記録を読んで、数と割合を出す --- */
+.prog-card{display:flex;align-items:center;gap:.6rem;margin:.9rem 0 0;font-size:.84rem}
+/* display を指定した以上、hidden 属性を明示的に効かせないと隠れない */
+.prog-card[hidden]{display:none}
+.prog-card .pbar{flex:1 1 6rem;min-width:5rem;height:.4rem;border-radius:3px;
+  background:var(--rule);overflow:hidden}
+.prog-card .pbar span{display:block;height:100%;background:var(--lv1)}
+.prog-card .num{color:var(--sub);white-space:nowrap;font-variant-numeric:tabular-nums}
+.prog-card .num b{color:var(--lv1);font-size:1rem}
 /* --- しおり(前回の続き)。各冊が残したしおりを読んで、再開の入口を出す --- */
 .resume{display:flex;flex-direction:column;gap:.35rem;margin:.85rem 0 0;
   padding:.55rem .85rem;border:1px dashed var(--accent);border-radius:5px;
@@ -242,6 +251,7 @@ document.getElementById("shelf").innerHTML = BOOKS.map(b => `
     <a class="go a" href="${b.id}/solutions.html" target="_blank" rel="noopener">解答解説集を開く<span class="arw">→</span></a>
     <button class="go pdf" type="button" aria-expanded="false" aria-controls="pdf-${b.id}">PDFをダウンロード<span class="car">▼</span></button>
   </p>
+  <p class="prog-card" id="prog-${b.id}" hidden></p>
   <p class="resume" id="resume-${b.id}" hidden></p>
   <div class="pdf-panel" id="pdf-${b.id}" hidden>
     <a href="${b.id}/workbook.pdf" download target="_blank" rel="noopener">⤓ 問題集PDF<span class="meta">${b.pdf.workbook.pages}ページ / ${b.pdf.workbook.size}</span></a>
@@ -264,6 +274,7 @@ document.getElementById("shelf").addEventListener("click", e => {
 // 「続きから」の入口をカードに出す。キーとデータ形式は各冊のスクリプトと共通。
 // {"linear-algebra/workbook": {id:"q3-4", label:"問 3.4", tag:"...", t:...}, ...}
 const BMK_KEY = "mathworkbooks.bookmark.v1";
+const PRG_KEY = "mathworkbooks.progress.v1";
 const KIND_LABEL = { workbook: "問題集", solutions: "解答解説集" };
 const RIBBON = '<svg viewBox="0 0 24 24" aria-hidden="true">'
   + '<path d="M5.5 2.5h13v19l-6.5-5.6-6.5 5.6z"/></svg>';
@@ -286,9 +297,36 @@ function renderResume() {
     box.hidden = !links;
   });
 }
+
+// --- 学習の進捗(解いた問題の数) ---
+// 各冊が同じキーに残した「解いた問題」を数えてカードに出す。
+// 問 3.4 と 解 3.4 は同じ1問なので、記録は分野ごとに1つ。
+function renderProgress() {
+  let all;
+  // しおりと同じく、localStorage が使えない環境では単に何も出さない
+  try { all = JSON.parse(localStorage.getItem(PRG_KEY)) || {}; } catch (e) { all = {}; }
+  BOOKS.forEach(b => {
+    const box = document.getElementById(`prog-${b.id}`);
+    if (!box) return;
+    const rec = all[b.id];
+    const done = rec && typeof rec === "object" ? Object.keys(rec).length : 0;
+    // 問題を入れ替えたあとの古い記録が残っていても、総数は超えさせない
+    const n = Math.min(done, b.problems);
+    box.hidden = !n;
+    if (!n) return;
+    const pct = Math.round(n / b.problems * 100);
+    box.innerHTML = `<span class="pbar"><span style="width:${pct}%"></span></span>`
+      + `<span class="num">解いた <b>${n}</b> / ${b.problems} 問</span>`;
+  });
+}
+
 renderResume();
-// 別タブで学習中にしおりを挟んだら、開いたままのこのページにも反映する
-window.addEventListener("storage", e => { if (!e.key || e.key === BMK_KEY) renderResume(); });
+renderProgress();
+// 別タブで学習中にしおりを挟んだり問題を解いたりしたら、開いたままのこのページにも反映する
+window.addEventListener("storage", e => {
+  if (!e.key || e.key === BMK_KEY) renderResume();
+  if (!e.key || e.key === PRG_KEY) renderProgress();
+});
 </script>
 </body>
 </html>
