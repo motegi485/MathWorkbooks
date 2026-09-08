@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1f4e8c">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Crect%20width%3D'32'%20height%3D'32'%20rx%3D'6'%20fill%3D'%231f4e8c'%2F%3E%3Cpath%20d%3D'M11%207.5H8.5v17H11'%20stroke%3D'%23fff'%20stroke-width%3D'2'%20fill%3D'none'%20stroke-linecap%3D'round'%2F%3E%3Cpath%20d%3D'M21%207.5h2.5v17H21'%20stroke%3D'%23fff'%20stroke-width%3D'2'%20fill%3D'none'%20stroke-linecap%3D'round'%2F%3E%3Ccircle%20cx%3D'13.4'%20cy%3D'13'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'18.6'%20cy%3D'13'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'13.4'%20cy%3D'19'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'18.6'%20cy%3D'19'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E">
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -38,6 +39,7 @@ window.MathJax = {
         onerror="window.mjxFail=1;if(window.mjxStatusUpdate)window.mjxStatusUpdate();"></script>
 <style>
 :root{
+  color-scheme:light;
   --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
   --accent:#1f4e8c; --accent-soft:#eef2f8;
   --lv1:#2f7d4f; --lv2:#1f4e8c; --lv3:#a83232;
@@ -256,7 +258,7 @@ window.mjxStatusUpdate();
 <p class="booknav"><a href="../index.html">収録タイトル一覧</a><a href="solutions.html" target="_blank" rel="noopener">解答解説集を別タブで開く</a></p>
 </header>
 
-<nav class="toc" id="toc">
+<nav class="toc" id="toc" aria-label="目次">
 <h2>目次</h2>
 <ol>
 <li><a href="#ch0">序章 線形代数への招待</a><span class="cnt">なぜ学ぶのか・本書の使い方</span></li>
