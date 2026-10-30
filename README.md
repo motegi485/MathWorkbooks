@@ -6,16 +6,16 @@
 各分野は『問題集』と『解答解説集』の2冊組で、問題番号が完全に対応しています（問 3.4 の解説は 解 3.4）。
 問題には難易度（★／★★／★★★）が付いており、基礎の確認から大学院入試レベルまで段階的に進められます。
 
-**サイトで読む: <https://mathworkbooks.pages.dev/>**（インストール不要。ブラウザで開くだけで読めます）
+**サイトで読む: <https://mathworkbooks.pages.dev/>**
 
 ## 収録タイトル
 
 | 分野 | 規模 | 難易度内訳（★/★★/★★★） | 付録 |
 |---|---|---|---|
-| [線形代数](linear-algebra/workbook.html) | 全11章・103問 | 23 / 48 / 32 | — |
-| [微分積分・最適化](calculus-optimization/workbook.html) | 全19章・159問 | 48 / 76 / 35 | 主要公式集 |
-| [確率・統計](probability-statistics/workbook.html) | 全18章・154問 | 52 / 62 / 40 | 数表 |
-| [フーリエ解析](fourier-analysis/workbook.html) | 全18章・143問 | 46 / 56 / 41 | 公式集 |
+| [線形代数](https://mathworkbooks.pages.dev/linear-algebra/workbook) | 全11章・103問 | 23 / 48 / 32 | — |
+| [微分積分・最適化](https://mathworkbooks.pages.dev/calculus-optimization/workbook) | 全19章・159問 | 48 / 76 / 35 | 主要公式集 |
+| [確率・統計](https://mathworkbooks.pages.dev/probability-statistics/workbook) | 全18章・154問 | 52 / 62 / 40 | 数表 |
+| [フーリエ解析](https://mathworkbooks.pages.dev/fourier-analysis/workbook) | 全18章・143問 | 46 / 56 / 41 | 公式集 |
 
 合計 4分野・全66章・559問。
 
