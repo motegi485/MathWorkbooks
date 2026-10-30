@@ -1,0 +1,3142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1f4e8c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Crect%20width%3D'32'%20height%3D'32'%20rx%3D'6'%20fill%3D'%231f4e8c'%2F%3E%3Cpath%20d%3D'M11%207.5H8.5v17H11'%20stroke%3D'%23fff'%20stroke-width%3D'2'%20fill%3D'none'%20stroke-linecap%3D'round'%2F%3E%3Cpath%20d%3D'M21%207.5h2.5v17H21'%20stroke%3D'%23fff'%20stroke-width%3D'2'%20fill%3D'none'%20stroke-linecap%3D'round'%2F%3E%3Ccircle%20cx%3D'13.4'%20cy%3D'13'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'18.6'%20cy%3D'13'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'13.4'%20cy%3D'19'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'18.6'%20cy%3D'19'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<title>情報系のためのフーリエ解析 問題集 — 大学基礎から大学院入試への橋渡し</title>
+<meta name="description" content="情報系の大学生・大学院進学をめざす人のための、独学用のフーリエ解析問題集。複素数とオイラーの公式・フーリエ級数・パーセバルの等式・フーリエ変換・畳み込みと線形システム・デルタ関数・時間周波数解析・標本化定理・離散時間フーリエ変換・DFT・FFTから、画像処理・通信・不規則信号への応用まで全18章143問+付録の公式集。姉妹編『解答解説集』とセットで公開しています。">
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  // 長い数式は横スクロールさせず自動で折り返す(印刷・PDF で右端が切れるのを防ぐ)
+  output: {
+    font: 'mathjax-tex',
+    displayOverflow: 'linebreak',
+    linebreaks: { inline: true, width: '100%' }
+  },
+  chtml: { matchFontHeight: true },
+  // 組版が終わった時点で「組版中」の通知を消す
+  startup: {
+    pageReady() {
+      return MathJax.startup.defaultPageReady().then(function () {
+        var s = document.getElementById("mjx-status");
+        if (s) s.hidden = true;
+      });
+    }
+  }
+};
+</script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.1.3/tex-mml-chtml.min.js"
+        onerror="window.mjxFail=1;if(window.mjxStatusUpdate)window.mjxStatusUpdate();"></script>
+<style>
+:root{
+  color-scheme:light;
+  --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
+  --accent:#1f4e8c; --accent-soft:#eef2f8;
+  --lv1:#2f7d4f; --lv2:#1f4e8c; --lv3:#a83232;
+  --rule:#d8d8d2;
+  --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --sans:"Yu Gothic Medium","Yu Gothic","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.95;font-feature-settings:"palt";}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.15rem 5rem}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.5;letter-spacing:.02em}
+/* --- 表紙 --- */
+header.book{padding:4.2rem 0 2.2rem;border-bottom:3px double var(--accent)}
+header.book .series{color:var(--accent);font-family:var(--sans);font-weight:700;
+  letter-spacing:.35em;font-size:.8rem;margin:0 0 .9rem}
+header.book h1{font-size:2.05rem;margin:0 0 .5rem}
+header.book .subtitle{color:var(--sub);margin:0 0 1.4rem;font-size:1.02rem}
+header.book .meta{font-size:.82rem;color:var(--sub);line-height:2}
+/* --- 目次 --- */
+nav.toc{margin:2.2rem 0;padding:1.3rem 1.5rem;background:var(--card);
+  border:1px solid var(--rule);border-radius:6px}
+nav.toc h2{font-size:1.05rem;margin:0 0 .7rem;color:var(--accent)}
+nav.toc ol{margin:0;padding-left:0;list-style:none}
+nav.toc li{margin:.28rem 0;font-size:.95rem}
+nav.toc .cnt{color:var(--sub);font-size:.8rem;margin-left:.5em}
+/* --- 章トビラ --- */
+header.chap{margin:4.5rem 0 1.6rem;padding-top:2.2rem;border-top:1px solid var(--rule)}
+header.chap .chnum{font-family:var(--serif);color:var(--accent);font-size:1rem;
+  letter-spacing:.25em;margin:0}
+header.chap h2{font-size:1.75rem;margin:.15rem 0 .2rem}
+header.chap .chsub{color:var(--sub);margin:0;font-size:.98rem}
+/* --- 説明ボックス類 --- */
+.why,.learn,.keybox,.howto{margin:1.4rem 0;padding:1.1rem 1.35rem;border-radius:6px;
+  background:var(--card);border:1px solid var(--rule)}
+.why h3,.learn h3,.keybox h3,.howto h3{margin:0 0 .7rem;font-size:1.02rem;color:var(--accent);
+  border-bottom:1px solid var(--rule);padding-bottom:.35rem}
+.learn ul,.keybox ul{margin:.2rem 0;padding-left:1.35rem}
+.learn li,.keybox li{margin:.3rem 0}
+.keybox{background:var(--accent-soft);border-color:transparent}
+.keybox b.term{color:var(--accent)}
+/* --- 問題カード --- */
+section.prob,section.sol{margin:1.7rem 0;padding:1.15rem 1.35rem 1.05rem;
+  background:var(--card);border:1px solid var(--rule);
+  border-radius:6px}
+.phead{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.75rem;
+  border-bottom:1px solid var(--rule);padding-bottom:.45rem}
+.pnum{font-family:var(--serif);font-weight:700;font-size:1.08rem;color:var(--accent)}
+.lv{font-size:.72rem;font-weight:700;color:#fff;border-radius:3px;padding:.12rem .5rem;letter-spacing:.05em}
+.lv1{background:var(--lv1)}.lv2{background:var(--lv2)}.lv3{background:var(--lv3)}
+.ptag{font-size:.78rem;color:var(--sub)}
+section.prob p,section.sol p{margin:.55rem 0}
+ol.sublist{padding-left:1.6rem;margin:.4rem 0}
+ol.sublist li{margin:.35rem 0}
+/* --- 解説の段階 --- */
+section.sol h4{font-family:var(--sans);font-size:.85rem;letter-spacing:.15em;
+  color:#fff;background:var(--accent);display:block;width:fit-content;
+  padding:.14rem .8rem;border-radius:3px;margin:1.05rem 0 .35rem}
+section.sol h4.alt{background:var(--sub)}
+.note{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:var(--accent-soft);
+  border-radius:5px;font-size:.94rem}
+.note b:first-child{color:var(--accent)}
+.warn{margin:.8rem 0 .2rem;padding:.75rem 1rem;background:#faf1ee;
+  border-radius:5px;font-size:.94rem}
+.warn b:first-child{color:var(--lv3)}
+/* --- 表 --- */
+table{border-collapse:collapse;margin:1rem 0;font-size:.93rem;width:100%}
+th,td{border:1px solid var(--rule);padding:.42rem .7rem;text-align:left;vertical-align:top}
+th{background:var(--accent-soft);font-weight:700}
+/* 数表(列数が多く、セルが途中で折り返せない数値)は本文幅に収まるよう詰める */
+table.numtable{font-size:.84rem;font-variant-numeric:tabular-nums}
+table.numtable th,table.numtable td{padding:.28rem .4rem;text-align:right}
+table.numtable th:first-child{text-align:left}
+table.numtable caption{caption-side:top;text-align:left;font-size:.86rem;color:var(--sub);padding:0 0 .3rem}
+/* --- 章末 --- */
+.check{margin:2.2rem 0 0;padding:1rem 1.3rem;border:1px dashed var(--accent);border-radius:6px}
+.check h3{margin:0 0 .5rem;font-size:.98rem;color:var(--accent)}
+.check ul{margin:0;padding-left:1.35rem}
+footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
+  color:var(--sub);font-size:.82rem;line-height:1.9}
+mjx-container[jax="CHTML"][display="true"]{margin:.7em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+/* --- 冊をまたぐ導線 --- */
+.booknav{display:flex;flex-wrap:wrap;gap:.35rem 1.15rem;margin:1.2rem 0 0;font-size:.86rem}
+.booknav a{color:var(--accent);white-space:nowrap}
+footer.book .booknav{margin:0 0 .9rem}
+/* --- 数式の組版状態(MathJax は非同期なので、式が多いページでは待ち時間が長い) --- */
+#mjx-status{position:fixed;right:1rem;bottom:1rem;z-index:50;margin:0;
+  padding:.35rem 1.1rem;border-radius:5px;background:var(--accent);color:#fff;
+  font-size:.78rem;letter-spacing:.06em;line-height:1.7;max-width:calc(100vw - 2rem);
+  box-shadow:0 2px 10px rgba(34,38,46,.3)}
+#mjx-status.err{background:var(--lv3)}
+#mjx-status[hidden]{display:none}
+/* --- はみ出し対策: 本文幅に収まらない表・数式は、その要素の中だけを横スクロールさせる。
+   ページ全体が横に伸びるとスマートフォンで本文まで読みにくくなるため --- */
+.tscroll{max-width:100%;overflow-x:auto}
+section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow-x:auto}
+@media (max-width:520px){
+  body{font-size:15.5px}
+  header.book h1{font-size:1.65rem}
+  .wrap{padding:0 .9rem 4rem}
+  section.prob,section.sol{padding:1rem 1rem .9rem}
+}
+@media print{
+  body{background:#fff}
+  header.chap{break-before:page;border-top:none}
+  section.prob,section.sol{border:1px solid #bbb}
+  /* 問題カードは短いので1ページに収める。解説カードは1ページを超えるものが多く、
+     ここで avoid にすると白紙が大量に出るため分割を許す */
+  section.prob{break-inside:avoid}
+  table{break-inside:avoid}
+  nav.toc a{color:var(--ink)}
+  /* 見出し・ラベルだけがページ末尾に取り残されないようにする */
+  h1,h2,h3{break-after:avoid}
+  .phead,section.sol h4{break-after:avoid}
+  .why,.learn,.check{break-inside:avoid}
+  p{orphans:2;widows:2}
+  /* ブラウザは既定で背景色を印刷しない。白抜き文字が消えてしまうので、
+     印刷時だけ「枠線＋濃色文字」に切り替える */
+  .lv{color:var(--ink);background:transparent;border:1px solid currentColor;padding:.05rem .4rem}
+  .lv1{color:var(--lv1)}.lv2{color:var(--lv2)}.lv3{color:var(--lv3)}
+  section.sol h4{color:var(--accent);background:transparent;border:1px solid currentColor;
+    padding:.08rem .55rem}
+  /* .alt は基底側の background 指定の方が詳細度が高いので、ここでも打ち消す */
+  section.sol h4.alt{color:var(--sub);background:transparent}
+  /* 地色だけで本文と区別している囲みは、罫線で補う */
+  .keybox{border:1px solid var(--rule)}
+  .note{border-left:3px solid var(--accent)}
+  .warn{border-left:3px solid var(--lv3)}
+  th{border-bottom:2px solid var(--ink)}
+  /* 画面用の導線・通知は紙面に出さない */
+  .booknav,#mjx-status{display:none !important}
+  /* 紙にはスクロール枠がないので、通常のフローに戻す */
+  .tscroll,section.prob,section.sol,.why,.learn,.keybox,.howto,.check,.note,.warn{overflow:visible}
+}
+/* --- しおり(前回の続き)。下部のスクリプトが実行時に挿し込む、画面専用のUI --- */
+.bmk,.chk{align-self:center;flex:0 0 auto;display:inline-flex;
+  align-items:center;justify-content:center;width:2rem;height:2rem;padding:0;
+  border:0;border-radius:4px;background:transparent;color:#b9bcc4;cursor:pointer;line-height:0}
+.bmk svg{width:.95rem;height:1.15rem;fill:none;stroke:currentColor;stroke-width:1.9}
+.chk svg{width:1.15rem;height:1.15rem;fill:none;stroke:currentColor;stroke-width:1.9}
+.bmk:hover,.chk:hover{color:var(--accent);background:var(--accent-soft)}
+.bmk:focus-visible,.chk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bmk[aria-pressed="true"]{color:var(--accent)}
+.bmk[aria-pressed="true"] svg{fill:currentColor}
+/* しおりを挟んだ問題は、スクロール中でも見つけられるよう地色を変える */
+section.is-marked{border-color:var(--accent);background:var(--accent-soft)}
+/* --- 表紙のしおりバー --- */
+.bmkbar{display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .7rem;
+  margin:1.2rem 0 0;padding:.55rem .9rem;border:1px solid var(--accent);
+  border-radius:6px;background:var(--accent-soft);font-size:.86rem}
+.bmkbar[hidden]{display:none}
+.bmkbar svg{width:.85rem;height:1.05rem;fill:var(--accent);flex:0 0 auto}
+.bmkbar .ttl{color:var(--accent);font-weight:700;letter-spacing:.08em;font-size:.78rem}
+.bmkbar .lab{font-family:var(--serif);font-weight:700;font-size:1rem;color:var(--ink)}
+.bmkbar .tag{color:var(--sub);font-size:.8rem}
+.bmkbar button{margin:0;padding:.22rem .85rem;border:1px solid var(--accent);
+  border-radius:4px;background:var(--card);color:var(--accent);
+  font-family:inherit;font-size:.82rem;line-height:1.8;cursor:pointer;white-space:nowrap}
+.bmkbar button:hover{background:var(--accent);color:#fff}
+.bmkbar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bmkbar button.off{border-color:var(--rule);color:var(--sub)}
+.bmkbar button.off:hover{background:var(--sub);border-color:var(--sub);color:#fff}
+.bmkhint{margin:1.2rem 0 0;font-size:.78rem;color:var(--sub);line-height:1.8}
+.bmkhint[hidden]{display:none}
+.bmkhint svg{width:.7rem;height:.85rem;fill:currentColor;vertical-align:-.1em;margin:0 .1em}
+/* --- 見出し右端の操作欄。相互リンク・チェック・しおりをここにまとめる。
+   .phead は flex-wrap:wrap なので、狭い画面ではこの箱ごと次の行に落ちる --- */
+.pctl{margin-left:auto;align-self:center;flex:0 0 auto;
+  display:inline-flex;align-items:center;gap:.1rem}
+/* --- もう一方の冊の、同じ番号へ飛ぶリンク --- */
+.xref{font-size:.78rem;color:var(--accent);white-space:nowrap;
+  padding:.22rem .4rem;border-radius:4px;text-decoration:none}
+.xref:hover{background:var(--accent-soft);text-decoration:none}
+.xref:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.xref .arw{margin-left:.25em;font-weight:400}
+/* --- 解いた問題。枠線と角丸には触れないので、印を付けても行送りが動かない --- */
+section.is-done{box-shadow:inset 3px 0 0 var(--lv1)}
+.chk[aria-pressed="true"]{color:var(--lv1)}
+.chk[aria-pressed="true"] svg circle{fill:currentColor}
+.chk[aria-pressed="true"] svg path{stroke:var(--card)}
+/* --- 表紙の進捗 --- */
+.progbar{display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .7rem;
+  margin:1.2rem 0 0;padding:.55rem .9rem;border:1px solid var(--rule);
+  border-radius:6px;background:var(--card);font-size:.86rem}
+.progbar .ttl{color:var(--sub);font-weight:700;letter-spacing:.08em;font-size:.78rem}
+.progbar .num{font-family:var(--serif);font-weight:700;color:var(--ink);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.progbar .num b{color:var(--lv1);font-size:1.15rem}
+.progbar .pbar{flex:1 1 6rem;min-width:5rem;height:.4rem;border-radius:3px;
+  background:var(--rule);overflow:hidden}
+.progbar .pbar span{display:block;height:100%;width:0;background:var(--lv1)}
+.progbar button{margin:0;padding:.22rem .85rem;border:1px solid var(--rule);
+  border-radius:4px;background:var(--card);color:var(--sub);
+  font-family:inherit;font-size:.82rem;line-height:1.8;cursor:pointer;white-space:nowrap}
+.progbar button:hover{background:var(--sub);border-color:var(--sub);color:#fff}
+.progbar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* 2度押しで消す。1度目のあとは、取り返しがつかないことが分かる色にする */
+.progbar button.armed{border-color:var(--lv3);color:var(--lv3);font-weight:700}
+.progbar button.armed:hover{background:var(--lv3);border-color:var(--lv3);color:#fff}
+/* --- 目次の、章ごとの進捗 --- */
+nav.toc .prog{color:var(--lv1);font-weight:700;font-size:.78rem;margin-left:.5em;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+nav.toc .prog.none{color:#b9bcc4;font-weight:400}
+/* --- 目次へのスキップ。キーボードでたどったときだけ現れる --- */
+.skip{position:absolute;left:-9999px;top:0;z-index:60;padding:.5rem 1.1rem;
+  background:var(--accent);color:#fff;border-radius:0 0 5px 0;font-size:.86rem}
+.skip:focus{left:0;text-decoration:none}
+@media print{
+  /* 画面専用の操作なので紙面には出さない */
+  .bmk,.bmkbar,.bmkhint,.skip,.pctl,.xref,.chk,.progbar,nav.toc .prog{display:none !important}
+  section.is-marked{background:transparent;border-color:#bbb}
+  section.is-done{box-shadow:none}
+}
+</style>
+</head>
+<body data-book="fourier-analysis/workbook">
+<a class="skip" href="#toc">目次へスキップ</a>
+<p id="mjx-status" role="status" hidden>数式を組版しています…</p>
+<script>
+// MathJax の読み込み・組版は非同期で、式の多いページでは十数秒かかる。
+// その間は生の TeX が見えたままなので、状態を小さく知らせる。
+window.mjxStatusUpdate = function () {
+  var s = document.getElementById("mjx-status");
+  if (!s) return;
+  if (window.mjxFail) {
+    s.className = "err";
+    s.hidden = false;
+    s.textContent = "数式の読み込みに失敗しました(CDN に接続できません)。数式は TeX のソースのまま表示されます。";
+  }
+};
+document.getElementById("mjx-status").hidden = false;
+window.mjxStatusUpdate();
+// 保険。式の多いページでは MathJax の pageReady の Promise が解決しないことがあるため、
+// 出力の数が増えなくなった時点でも通知を消す。
+(function () {
+  var s = document.getElementById("mjx-status");
+  var last = -1, stable = 0, waited = 0;
+  var iv = setInterval(function () {
+    if (s.hidden) { clearInterval(iv); return; }
+    waited += 500;
+    var n = document.querySelectorAll("mjx-container").length;
+    if (n > 0 && n === last) { stable++; } else { stable = 0; }
+    last = n;
+    if (stable >= 3) { s.hidden = true; clearInterval(iv); }
+    else if (n === 0 && waited >= 60000) { window.mjxFail = 1; window.mjxStatusUpdate(); clearInterval(iv); }
+  }, 500);
+})();
+</script>
+<div class="wrap">
+<header class="book" id="top">
+<p class="series">情報系のためのフーリエ解析</p>
+<h1>問題集</h1>
+<p class="subtitle">大学基礎から大学院入試への橋渡し — 独学のための全18章・143問</p>
+<p class="meta">対象:情報系の大学生・大学院進学をめざす人(信号処理・画像処理・通信の専門科目に進む前の独学を想定)<br>
+構成:序章+全18章143問(★基礎 46問/★★標準 56問/★★★応用 41問)+付録 公式集<br>
+姉妹編『解答解説集』とセットで学習してください。</p>
+<p class="booknav"><a href="../index.html">収録タイトル一覧</a><a href="solutions.html" target="_blank" rel="noopener">解答解説集を別タブで開く</a></p>
+</header>
+
+<nav class="toc" id="toc" aria-label="目次">
+<h2>目次</h2>
+<ol>
+<li><a href="#ch0">序章 フーリエ解析への招待</a><span class="cnt">なぜ学ぶのか・本書の使い方</span></li>
+<li><a href="#ch1">第1章 複素数とオイラーの公式</a><span class="cnt">回転・位相・1のn乗根/8問</span></li>
+<li><a href="#ch2">第2章 関数の内積と直交性</a><span class="cnt">信号をベクトルとして見る/7問</span></li>
+<li><a href="#ch3">第3章 フーリエ級数</a><span class="cnt">周期関数を三角関数で分解する/9問</span></li>
+<li><a href="#ch4">第4章 複素フーリエ級数とスペクトル</a><span class="cnt">振幅と位相で読む/8問</span></li>
+<li><a href="#ch5">第5章 収束とパーセバルの等式</a><span class="cnt">級数はどこまで信用できるか/9問</span></li>
+<li><a href="#ch6">第6章 フーリエ級数で解く</a><span class="cnt">熱・弦の振動・定常応答/7問</span></li>
+<li><a href="#ch7">第7章 フーリエ変換</a><span class="cnt">連続スペクトルと基本の変換対/8問</span></li>
+<li><a href="#ch8">第8章 フーリエ変換の性質</a><span class="cnt">計算せずに変換を読む/8問</span></li>
+<li><a href="#ch9">第9章 畳み込みと線形時不変システム</a><span class="cnt">フィルタを周波数で設計する/9問</span></li>
+<li><a href="#ch10">第10章 デルタ関数と超関数の入口</a><span class="cnt">周期信号と標本化への橋/7問</span></li>
+<li><a href="#ch11">第11章 時間周波数解析</a><span class="cnt">不確定性原理とスペクトログラム/7問</span></li>
+<li><a href="#ch12">第12章 標本化定理とエイリアシング</a><span class="cnt">連続から離散へ/9問</span></li>
+<li><a href="#ch13">第13章 離散時間フーリエ変換とディジタルフィルタ</a><span class="cnt">数列のスペクトル/8問</span></li>
+<li><a href="#ch14">第14章 離散フーリエ変換(DFT)</a><span class="cnt">有限個のデータのスペクトル/10問</span></li>
+<li><a href="#ch15">第15章 高速フーリエ変換(FFT)</a><span class="cnt">分割統治で O(N log N)/7問</span></li>
+<li><a href="#ch16">第16章 2次元フーリエ変換と画像</a><span class="cnt">空間周波数・フィルタ・圧縮/8問</span></li>
+<li><a href="#ch17">第17章 変調と通信</a><span class="cnt">周波数で信号を運ぶ/7問</span></li>
+<li><a href="#ch18">第18章 不規則信号のスペクトル</a><span class="cnt">雑音を周波数で見る/7問</span></li>
+<li><a href="#appendix">付録 公式集</a><span class="cnt">規約の換算・変換対・性質の早見表</span></li>
+</ol>
+</nav>
+
+<main>
+
+<header class="chap" id="ch0">
+<p class="chnum">序章</p>
+<h2>フーリエ解析への招待</h2>
+<p class="chsub">— なぜ学ぶのか・本書の使い方</p>
+</header>
+
+<h3>フーリエ解析とは何か</h3>
+<p>フーリエ解析は、<b>複雑な信号を、単純な波(正弦波)の重ね合わせとして見る</b>数学です。マイクが拾う音は空気の圧力の時間変化、写真は明るさの位置による変化、電波は電界の時間変化 — どれも「関数」ですが、時刻や位置ごとの値を並べたままでは性質がなかなか見えません。これを「どの周波数の波が、どれだけの強さと位相で含まれているか」というレシピ(<b>スペクトル</b>)に書き直すと、音の高さや音色、画像のぼけや縞模様、通信に必要な帯域幅が読めるようになります。</p>
+<p>正弦波が特別扱いされるのには理由があります。フィルタ・部屋の残響・ケーブル・レンズのように、<b>線形で、時間(や位置)によって性質が変わらない仕組み</b>に正弦波を入れると、出てくるのは<b>同じ周波数の正弦波</b>で、変わるのは振幅と位相だけです。つまり複素指数関数 \(e^{i\omega t}\) は、こうした仕組みの<b>固有関数</b>です。信号を周波数ごとに分解すると、複雑な「畳み込み」は周波数ごとの掛け算に、微分は \(i\omega\) 倍に変わります。線形代数で、固有ベクトルを基底に選ぶと行列が対角になったのと同じ発想です(『線形代数』第7章)。</p>
+<p>計算機で扱うために信号を標本化して有限個の数にすると、変換は<b>離散フーリエ変換(DFT)</b>という行列とベクトルの積になり、<b>高速フーリエ変換(FFT)</b>を使えば \(N\) 点の変換を \(O(N\log N)\) の手間で計算できます。ただし、連続の理論がそのまま離散の計算に移るわけではありません。標本化定理・エイリアシング・スペクトル漏れといった「連続と離散のずれ」を理解することが、信号処理を正しく使うための鍵になります。</p>
+
+<div class="why">
+<h3>情報系のどこに現れるか</h3>
+<p>音声・画像・通信の専門科目は、ほとんどがこの本の内容を前提に書かれています。</p>
+<ul>
+<li><b>音声・音響</b> — 音の高さは基本周波数、音色は倍音の配分です(第3・11章)。音声の分析に使うスペクトログラム(第11章)、イコライザや雑音除去のフィルタ(第9・13章)、CD の標本化周波数 44.1 kHz の意味(第12章)、残響の高速な計算(第15章)はどれもフーリエ解析の言葉で書かれています。MP3 や AAC などの音声圧縮も、信号を周波数成分に分け、聞こえにくい成分を粗く表すことでデータを減らします。</li>
+<li><b>画像・映像</b> — 画像は2次元の信号です。ぼかし・鮮鋭化・エッジ検出は畳み込み、つまり周波数での掛け算です(第9・16章)。JPEG は 8×8 画素のブロックごとに離散コサイン変換(DCT)をかけて圧縮します(第16章)。デジタルカメラで細かい縞模様を撮ると現れるモアレは、空間のエイリアシングです(第12章)。CT や MRI の画像再構成もフーリエ変換の上に建っています(第16章)。</li>
+<li><b>通信・ネットワーク</b> — ラジオや無線通信は、信号を搬送波で高い周波数に移して送ります(変調、第17章)。Wi-Fi・LTE・地上デジタル放送が使う OFDM は、DFT で多数の搬送波をまとめて作る方式です(第14・17章)。帯域幅と雑音から伝送速度の上限が決まります(シャノン・ハートレーの定理、第17章)。</li>
+<li><b>アルゴリズム</b> — FFT は DFT を \(O(N\log N)\) で計算する分割統治アルゴリズムです。畳み込み・多項式の積・大きな整数の掛け算の高速化にも使われます(第15章)。</li>
+<li><b>機械学習・データ解析</b> — 畳み込みニューラルネットの畳み込み層、時系列データの周期の検出、雑音を含むデータの平滑化(第9・14・18章)。</li>
+<li><b>物理・シミュレーション</b> — フーリエ自身、熱の伝わり方を解くためにこの方法を考えました(第6章)。偏微分方程式の数値解法にも使われます。</li>
+</ul>
+</div>
+
+<h3>本書の構成 — 学習マップ</h3>
+<p>「波を数で表す → 周期信号 → 非周期信号 → 計算機の中の離散化 → 応用」の5段階で、複素数の計算から専門科目の入口までをつなぎます。</p>
+<div class="tscroll"><table>
+<tr><th>部</th><th>章</th><th>テーマ</th><th>おおよその水準</th></tr>
+<tr><td>第I部 波を数で表す</td><td>1〜2章</td><td>複素数とオイラーの公式・関数の内積と直交性</td><td>学部1〜2年</td></tr>
+<tr><td>第II部 周期信号を分解する</td><td>3〜6章</td><td>フーリエ級数・スペクトル・収束とパーセバルの等式・偏微分方程式への応用</td><td>学部2〜3年・院試の主戦場</td></tr>
+<tr><td>第III部 非周期信号へ</td><td>7〜11章</td><td>フーリエ変換・畳み込みと線形時不変システム・デルタ関数・時間周波数解析</td><td>学部2〜3年・院試の主戦場</td></tr>
+<tr><td>第IV部 計算機の中のフーリエ</td><td>12〜15章</td><td>標本化定理・離散時間フーリエ変換とディジタルフィルタ・DFT・FFT</td><td>学部3年・専門科目の入口</td></tr>
+<tr><td>第V部 音声・画像・通信へ</td><td>16〜18章</td><td>2次元フーリエ変換と画像・変調と通信・不規則信号のスペクトル</td><td>学部3年〜大学院基礎</td></tr>
+</table></div>
+<p>本書では4種類のフーリエ変換を扱います。時間の側が連続か離散か、周期的かどうかで使い分けますが、背後には「<b>一方の側を標本化(離散化)すると、もう一方の側が周期的になる</b>」というただ1つの原理があります(第10・12・14章で順に確かめます)。</p>
+<div class="tscroll"><table>
+<tr><th>時間の側</th><th>周波数の側</th><th>変換</th><th>主な章</th></tr>
+<tr><td>連続・周期的</td><td>離散(線スペクトル)</td><td>フーリエ級数</td><td>第3〜6章</td></tr>
+<tr><td>連続・非周期</td><td>連続</td><td>フーリエ変換</td><td>第7〜11章</td></tr>
+<tr><td>離散(標本列)</td><td>連続・周期的</td><td>離散時間フーリエ変換(DTFT)</td><td>第12・13章</td></tr>
+<tr><td>離散・周期的(有限個)</td><td>離散・周期的</td><td>離散フーリエ変換(DFT)</td><td>第14・15章</td></tr>
+</table></div>
+
+<div class="howto">
+<h3>本書の使い方</h3>
+<ul>
+<li><b>1問につきまず15分、自力で考える。</b>手が止まっても、その15分が解説の吸収率を数倍にします。</li>
+<li>解けなければ『解答解説集』の<b>「方針」だけを読んで</b>もう一度自力で。それでも詰まったら「解答」へ。</li>
+<li>解説を読んだ問題は、<b>翌日以降に何も見ずにノートへ再現</b>する(写経ではなく再構成)。</li>
+<li>難易度は ★基礎(定義の確認と計算練習)/★★標準(定期試験・院試の基礎)/★★★応用(院試・研究や専門科目への接続)。<b>1周目は★と★★だけでも構いません。</b>★★★は2周目で。</li>
+<li>各章末の「到達確認」に自分の言葉で答えられたら次章へ。</li>
+<li>記号と規約(下の表)は本書全体で統一しています。他の本と式の係数(\(2\pi\) の置き場所)や符号が違って見えるときは、まず規約の違いを疑ってください。換算表は巻末付録 A.1 にあります。</li>
+<li>問題はすべて手計算で解けます。計算機で確かめたい人のために、解説の「ポイント」に NumPy などの関数との規約の対応を添えています。</li>
+</ul>
+</div>
+
+<h3>記号表</h3>
+<div class="tscroll"><table>
+<thead><tr><th>記号</th><th>意味</th></tr></thead>
+<tr><td>\(i\)</td><td>虚数単位(\(i^2=-1\))。電気・通信の本では \(j\) と書くことが多い</td></tr>
+<tr><td>\(\bar z,\ |z|,\ \arg z\)</td><td>共役複素数、絶対値、偏角</td></tr>
+<tr><td>\(\operatorname{Re}z,\ \operatorname{Im}z\)</td><td>実部、虚部</td></tr>
+<tr><td>\(e^{i\theta}=\cos\theta+i\sin\theta\)</td><td>オイラーの公式(第1章)</td></tr>
+<tr><td>\(\omega,\ f\)</td><td>角周波数 [rad/s] と周波数 [Hz]。\(\omega=2\pi f\)</td></tr>
+<tr><td>\(T,\ \omega_0=2\pi/T\)</td><td>周期と基本角周波数</td></tr>
+<tr><td>\(\langle f,g\rangle\)</td><td>関数の内積 \(\displaystyle\int_a^b f(x)\overline{g(x)}\,dx\)(第2章)。2つ目の関数に共役を付ける</td></tr>
+<tr><td>\(a_n,\ b_n,\ c_n\)</td><td>フーリエ係数(実形式 \(a_n,b_n\)、複素形式 \(c_n\))</td></tr>
+<tr><td>\(\hat f(\omega)=\mathcal F[f](\omega)\)</td><td>フーリエ変換 \(\displaystyle\int_{-\infty}^{\infty}f(t)e^{-i\omega t}\,dt\)。逆変換は \(\displaystyle f(t)=\frac1{2\pi}\int_{-\infty}^{\infty}\hat f(\omega)e^{i\omega t}\,d\omega\)(第7章)</td></tr>
+<tr><td>\(f*g\)</td><td>畳み込み \(\displaystyle(f*g)(t)=\int_{-\infty}^{\infty}f(\tau)g(t-\tau)\,d\tau\)(第9章)</td></tr>
+<tr><td>\(\delta(t),\ u(t)\)</td><td>デルタ関数(第10章)、単位ステップ関数(\(t\gt0\) で \(1\)、\(t\lt0\) で \(0\))。第6章の \(u(x,t)\) は温度や変位を表す未知関数で、別物</td></tr>
+<tr><td>\(\operatorname{rect}_a(t)\)</td><td>幅 \(2a\) の矩形パルス(\(|t|\le a\) で \(1\)、\(|t|\gt a\) で \(0\))</td></tr>
+<tr><td>\(\operatorname{sinc}x\)</td><td>\(\dfrac{\sin x}{x}\)(\(\operatorname{sinc}0=1\))。NumPy の <code>np.sinc(x)</code> は \(\dfrac{\sin\pi x}{\pi x}\) で、定義が違う</td></tr>
+<tr><td>\(\operatorname{comb}_T(t)\)</td><td>くし形関数 \(\displaystyle\sum_{n=-\infty}^{\infty}\delta(t-nT)\)(第10章)</td></tr>
+<tr><td>\(x[n]\)</td><td>離散時間信号(数列)。連続信号の標本 \(x[n]=x(nT)\) として作ることが多い</td></tr>
+<tr><td>\(\Omega,\ X(\Omega)\)</td><td>離散時間の角周波数 [rad/sample](標本化周期 \(T\) なら \(\Omega=\omega T\))と、離散時間フーリエ変換 \(\displaystyle X(\Omega)=\sum_n x[n]e^{-i\Omega n}\)(第13章)</td></tr>
+<tr><td>\(X[k],\ W_N\)</td><td>離散フーリエ変換 \(\displaystyle X[k]=\sum_{n=0}^{N-1}x[n]W_N^{kn}\)、\(W_N=e^{-2\pi i/N}\)。逆変換は \(\displaystyle x[n]=\frac1N\sum_{k=0}^{N-1}X[k]W_N^{-kn}\)(第14章。NumPy の <code>np.fft</code> と同じ規約)</td></tr>
+<tr><td>\(\log,\ \log_{10},\ \mathrm{dB}\)</td><td>\(\log\) は自然対数。デシベルは振幅比 \(r\) なら \(20\log_{10}r\)、電力比 \(p\) なら \(10\log_{10}p\)</td></tr>
+</table></div>
+
+<h3>前提知識</h3>
+<p>高校数学の「三角関数(加法定理)」「指数関数」「数列の和」と、1変数の微分積分(部分積分・置換積分・広義積分)を仮定します。複素数は高校で学んでいなくても大丈夫です — 第1章で定義から始めます。線形代数は「内積・直交・行列の積」の考え方を第2章と第14章以降で使い、確率は第18章で使います。必要な事実はその都度まとめ直しますが、詰まったら次の表の姉妹編の章に戻ってください。</p>
+<div class="tscroll"><table>
+<thead><tr><th>本書の章</th><th>使う道具</th><th>姉妹編の参照先</th></tr></thead>
+<tr><td>第1章</td><td>三角関数・指数関数・等比数列の和</td><td>高校数学(『微分積分・最適化』第1・2章)</td></tr>
+<tr><td>第2章</td><td>定積分・部分積分、内積・直交射影・コーシー・シュワルツの不等式</td><td>『微分積分・最適化』第5章、『線形代数』第1・8章</td></tr>
+<tr><td>第3〜5章</td><td>部分積分、級数、ε-δ の考え方</td><td>『微分積分・最適化』第5・6・19章</td></tr>
+<tr><td>第6章</td><td>偏微分</td><td>『微分積分・最適化』第7章</td></tr>
+<tr><td>第7〜11章</td><td>広義積分・ガウス積分・積分と極限の交換</td><td>『微分積分・最適化』第6・10章</td></tr>
+<tr><td>第12〜15章</td><td>行列の積・逆行列・固有値と対角化、漸化式</td><td>『線形代数』第2・7章</td></tr>
+<tr><td>第14・16章</td><td>直交行列と直交変換(第14章ではその複素版のユニタリ行列)</td><td>『線形代数』第8・10章</td></tr>
+<tr><td>第17章</td><td>情報量・通信路容量</td><td>『確率・統計』第16章</td></tr>
+<tr><td>第18章</td><td>期待値・分散・共分散・正規分布・確率過程</td><td>『確率・統計』第4〜7・14章</td></tr>
+</table></div>
+<p><b>厳密さについて。</b>本書は計算と意味を優先し、収束や極限の交換などの技術的な条件は「どの条件の下で成り立つか」を明示して使います。いくつかの定理(ディリクレ核による収束、リーマン・ルベーグの補題、不確定性原理、ポアソンの和公式)は★★★で証明を扱います。一方、二乗可積分関数の空間 \(L^2\) の完備性や超関数の厳密な定義のように測度論が必要な部分は、結果を認めて使います(測度論の入口は『確率・統計』第18章)。</p>
+
+
+<header class="chap" id="ch1">
+<p class="chnum">第1章</p>
+<h2>複素数とオイラーの公式</h2>
+<p class="chsub">— 回転・位相・1のn乗根</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>正弦波 \(A\cos(\omega t+\varphi)\) は、振幅 \(A\)・角周波数 \(\omega\)・位相 \(\varphi\) の3つで決まります。三角関数のまま足したり微分したりすると、加法定理を何度も使う計算になります。ところが複素数の指数関数 \(e^{i\theta}=\cos\theta+i\sin\theta\) を使うと、正弦波は「複素平面の単位円の上を一定の速さで回る点」になり、位相のずれは回転、振幅の変化は伸縮、微分は \(i\omega\) 倍という<b>掛け算</b>に変わります。本書のすべての章は、この言葉で書かれます。特に、単位円を \(N\) 等分する点(1の \(N\) 乗根)は、計算機で使う離散フーリエ変換(第14章)の基底そのものです。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>複素数の四則演算・共役・絶対値・偏角を計算し、極形式 \(re^{i\theta}\) と行き来できる</li>
+<li>オイラーの公式から三角関数の加法定理やド・モアブルの定理を導ける</li>
+<li>同じ周波数の正弦波の和を、複素数(フェーザ)の和として計算できる</li>
+<li>1の \(N\) 乗根の和が「\(N\) か \(0\)」になる理由を説明できる</li>
+<li>線形な微分方程式の、正弦波入力に対する定常応答を複素指数関数で求められる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">複素数</b>:\(z=x+iy\)(\(x,y\) は実数)。共役 \(\bar z=x-iy\)、絶対値 \(|z|=\sqrt{x^2+y^2}\)、\(|z|^2=z\bar z\)</li>
+<li><b class="term">極形式</b>:\(z=r(\cos\theta+i\sin\theta)=re^{i\theta}\)(\(r=|z|\)、\(\theta=\arg z\))。積は「絶対値を掛けて偏角を足す」:\(r_1e^{i\theta_1}\cdot r_2e^{i\theta_2}=r_1r_2e^{i(\theta_1+\theta_2)}\)</li>
+<li><b class="term">オイラーの公式</b>:\(e^{i\theta}=\cos\theta+i\sin\theta\)。逆に \(\cos\theta=\dfrac{e^{i\theta}+e^{-i\theta}}2\)、\(\sin\theta=\dfrac{e^{i\theta}-e^{-i\theta}}{2i}\)</li>
+<li><b class="term">正弦波と複素数</b>:\(A\cos(\omega t+\varphi)=\operatorname{Re}\bigl[(Ae^{i\varphi})e^{i\omega t}\bigr]\)。複素数 \(Ae^{i\varphi}\) を<b>フェーザ</b>という。\(\dfrac{d}{dt}e^{i\omega t}=i\omega e^{i\omega t}\)</li>
+<li><b class="term">1の \(N\) 乗根</b>:\(z^N=1\) の解は \(z=e^{2\pi ik/N}\)(\(k=0,1,\dots,N-1\))。整数 \(m\) について \(\displaystyle\sum_{k=0}^{N-1}e^{2\pi ikm/N}=\begin{cases}N &amp; (m\text{ が }N\text{ の倍数})\\ 0 &amp; (\text{それ以外})\end{cases}\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q1-1">
+<div class="phead"><span class="pnum">問 1.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">複素数の計算と極形式</span></div>
+<ol class="sublist">
+<li>\(z_1=3+4i\)、\(z_2=1-2i\) について、\(z_1+z_2\)、\(z_1z_2\)、\(\dfrac{z_1}{z_2}\)、\(|z_1|\)、\(\bar z_1\) を求めよ。</li>
+<li>\(w=1+\sqrt3\,i\) を極形式 \(re^{i\theta}\)(\(r\gt0\)、\(-\pi\lt\theta\le\pi\))で表し、\(w^6\) を求めよ。</li>
+<li>複素数 \(z\) に \(i=e^{i\pi/2}\) を掛けると、複素平面上で \(z\) はどう動くか。\(z=3+4i\) で確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-2">
+<div class="phead"><span class="pnum">問 1.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">オイラーの公式と三角関数の公式</span></div>
+<p>オイラーの公式 \(e^{i\theta}=\cos\theta+i\sin\theta\) と指数法則 \(e^{i(\alpha+\beta)}=e^{i\alpha}e^{i\beta}\) を認める。</p>
+<ol class="sublist">
+<li>\(e^{i(\alpha+\beta)}=e^{i\alpha}e^{i\beta}\) の両辺の実部と虚部を比べて、\(\cos(\alpha+\beta)\) と \(\sin(\alpha+\beta)\) の加法定理を導け。</li>
+<li>ド・モアブルの定理 \((\cos\theta+i\sin\theta)^3=\cos3\theta+i\sin3\theta\) を使って、\(\cos3\theta\) を \(\cos\theta\) の多項式で表せ。</li>
+<li>\(\cos\theta=\dfrac{e^{i\theta}+e^{-i\theta}}2\) を使って、\(\cos^2\theta=\dfrac{1+\cos2\theta}2\) を示せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-3">
+<div class="phead"><span class="pnum">問 1.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">正弦波の合成とうなり</span></div>
+<ol class="sublist">
+<li>\(3\cos t+4\sin t=R\cos(t-\varphi)\)(\(R\gt0\))となる \(R\) と \(\tan\varphi\) を求めよ。また \(3\cos t+4\sin t=\operatorname{Re}\bigl[(3-4i)e^{it}\bigr]\) を確かめ、\(R\) が複素数 \(3-4i\) の絶対値に等しいことを確認せよ。</li>
+<li>同じ周波数の正弦波 \(\cos t\) と \(\cos\!\left(t+\dfrac\pi2\right)\) の和の振幅と位相を、フェーザ(複素数)の和として求めよ。</li>
+<li>\(440\) Hz と \(442\) Hz の音 \(x(t)=\cos(2\pi\cdot440\,t)+\cos(2\pi\cdot442\,t)\)(\(t\) の単位は秒)を同時に鳴らすと、音の大きさが周期的に強弱をくり返す「うなり」が聞こえる。和を積の形に直して、強弱が1秒あたり何回くり返されるかを求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-4">
+<div class="phead"><span class="pnum">問 1.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">1のN乗根と根の和</span></div>
+<p>\(N\) を2以上の整数とし、\(\zeta=e^{2\pi i/N}\) とおく。</p>
+<ol class="sublist">
+<li>\(N=6\) のとき、\(z^6=1\) の解をすべて \(a+bi\) の形で求め、複素平面上での位置関係を述べよ。</li>
+<li>整数 \(m\) について、\(\displaystyle S_m=\sum_{k=0}^{N-1}\zeta^{km}\) は \(m\) が \(N\) の倍数なら \(N\)、そうでなければ \(0\) であることを示せ。(ヒント:\(\zeta^m\ne1\) なら等比数列の和の公式が使える。)</li>
+<li>\(m=1\) のとき和が \(0\) になることを、図形の対称性から説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-5">
+<div class="phead"><span class="pnum">問 1.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">複素指数関数の積分</span></div>
+<p>実数値関数 \(u,v\) を用いて \(f(x)=u(x)+iv(x)\) と書ける複素数値関数の積分を \(\displaystyle\int_a^b f\,dx=\int_a^b u\,dx+i\int_a^b v\,dx\) と定める。微分も同様に実部と虚部それぞれについて行う。</p>
+<ol class="sublist">
+<li>実数 \(\lambda\) について \(\dfrac{d}{dx}e^{i\lambda x}=i\lambda e^{i\lambda x}\) を、実部と虚部に分けて確かめよ。</li>
+<li>整数 \(m\) について \(\displaystyle\int_{-\pi}^{\pi}e^{imx}\,dx=\begin{cases}2\pi &amp; (m=0)\\ 0 &amp; (m\ne0)\end{cases}\) を示せ。\(m\) が整数でないとき(たとえば \(m=\tfrac12\))はどうなるか。</li>
+<li>(2) を使って、正の整数 \(m,n\) に対する \(\displaystyle\int_{-\pi}^{\pi}\cos mx\cos nx\,dx\) を求めよ(\(m=n\) と \(m\ne n\) に分けよ)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-6">
+<div class="phead"><span class="pnum">問 1.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">等比数列の和とディリクレ核</span></div>
+<p>正の整数 \(n\) について \(\displaystyle D_n(x)=\sum_{k=-n}^{n}e^{ikx}\) とおく。</p>
+<ol class="sublist">
+<li>\(D_n(x)=1+2\displaystyle\sum_{k=1}^{n}\cos kx\) であり、\(D_n\) が実数値の偶関数であることを示せ。</li>
+<li>\(x\) が \(2\pi\) の整数倍でないとき、\(D_n(x)=\dfrac{\sin\bigl((n+\tfrac12)x\bigr)}{\sin\frac x2}\) を示せ。(ヒント:等比数列の和を求め、分母と分子に \(e^{-ix/2}\) を掛けて対称な形にする。)</li>
+<li>\(D_n(0)\) と \(\displaystyle\int_{-\pi}^{\pi}D_n(x)\,dx\) を求めよ。\(n\) を大きくすると \(D_n\) のグラフが \(x=0\) の付近でどうなるかを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-7">
+<div class="phead"><span class="pnum">問 1.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">正弦波に対する定常応答</span></div>
+<p>抵抗 \(R\) とコンデンサ \(C\) からなる RC 低域通過回路では、入力電圧 \(x(t)\) と出力電圧 \(y(t)\) が微分方程式 \(\tau y'(t)+y(t)=x(t)\)(\(\tau=RC\gt0\))で結ばれる。入力を \(x(t)=\cos\omega t\)(\(\omega\gt0\))とする。</p>
+<ol class="sublist">
+<li>複素数の入力 \(e^{i\omega t}\) に対して、\(y(t)=He^{i\omega t}\)(\(H\) は定数)の形の解を探し、\(H=\dfrac1{1+i\omega\tau}\) を導け。</li>
+<li>方程式の係数が実数であることを使って、\(x(t)=\cos\omega t\) に対する解 \(y(t)=|H|\cos(\omega t+\arg H)\) を導き、振幅 \(|H|\) と位相 \(\arg H\) を \(\omega\tau\) で表せ。</li>
+<li>\(\omega=1/\tau\) での振幅を求め、それが入力の何 dB にあたるかを答えよ(\(\log_{10}2\approx0.301\))。\(\omega\) が大きいほど出力が小さくなる理由を、「コンデンサの電圧は速い変化に追いつけない」という見方で説明せよ。</li>
+<li>この方程式の一般解は、(2) の解に \(Ke^{-t/\tau}\)(\(K\) は定数)を加えたものである。十分に時間がたつと、初期状態によらず (2) の解だけが残る理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q1-8">
+<div class="phead"><span class="pnum">問 1.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">非線形ひずみと高調波</span></div>
+<p>理想的な増幅器は入力 \(x\) を定数倍するだけだが、実際の増幅器では入力と出力の関係がわずかに曲がっている。ここでは \(y=x+\varepsilon x^3\)(\(\varepsilon\) は小さな正の定数)というモデルで考える。</p>
+<ol class="sublist">
+<li>\(\cos\theta=\dfrac{e^{i\theta}+e^{-i\theta}}2\) を使って、\(\cos^3\theta=\dfrac34\cos\theta+\dfrac14\cos3\theta\) を示せ。</li>
+<li>入力 \(x(t)=A\cos\omega t\)(\(A\gt0\))に対する出力 \(y(t)\) を、\(\cos\omega t\) と \(\cos3\omega t\) の和で表せ。入力に無かった角周波数 \(3\omega\) の成分(第3高調波)が現れることを確かめよ。</li>
+<li>第3高調波の振幅と基本波(角周波数 \(\omega\) の成分)の振幅の比を \(A,\varepsilon\) で表せ。\(A=1\)、\(\varepsilon=0.01\) のとき比はおよそ何%か。入力の振幅 \(A\) を大きくすると比はどうなるか。</li>
+<li>2つの正弦波の和 \(x(t)=\cos\omega_1t+\cos\omega_2t\)(\(0\lt\omega_1\lt\omega_2\))を入力すると、\(x^3\) にはどのような角周波数の成分が現れるか。\(e^{\pm i\omega_1t}\)、\(e^{\pm i\omega_2t}\) から重複を許して3つ選んだ積を考えよ。線形な系(\(\varepsilon=0\))ではこのような新しい周波数が生まれないことと対比せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>複素数の積が「絶対値の積・偏角の和」になることを、極形式で説明できる</li>
+<li>オイラーの公式から \(\cos\theta,\ \sin\theta\) を複素指数関数で表し、加法定理を導ける</li>
+<li>同じ周波数の正弦波の和が同じ周波数の正弦波になる理由を、フェーザの和として説明できる</li>
+<li>1の \(N\) 乗根の和が \(N\) か \(0\) になることを、等比数列の和と図形の対称性の両方で説明できる</li>
+<li>線形な系は新しい周波数を生まないが、非線形な系は高調波や和・差の周波数を生むことを例で示せる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch2">
+<p class="chnum">第2章</p>
+<h2>関数の内積と直交性</h2>
+<p class="chsub">— 信号をベクトルとして見る</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>『線形代数』では、ベクトルを直交基底で表すと座標が内積1回で求まり、長さはピタゴラスの定理で「成分の2乗の和」に分解できました(第8章)。関数も足し算と定数倍ができるのでベクトルの仲間で、積分で内積を定めれば、長さ・角度・直交・射影という幾何がそのまま使えます。<b>フーリエ級数とは、三角関数という直交基底による「関数の座標表示」</b>にほかなりません。この章では、そのための道具 — 関数の内積、三角関数系の直交性、最良近似、ベッセルの不等式 — をそろえ、信号のエネルギーや、相関による信号の検出の考え方につなげます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>周期関数・偶関数・奇関数を判定し、関数を偶部と奇部に分解できる</li>
+<li>関数の内積とノルムを計算し、三角関数系の直交性を確かめられる</li>
+<li>信号のエネルギーと平均電力を計算し、直交する成分の電力が足し算になることを説明できる</li>
+<li>直交射影が平均二乗誤差を最小にする近似であることを、ピタゴラスの定理から導ける</li>
+<li>コーシー・シュワルツの不等式を、相関による信号の検出の言葉で解釈できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">周期と偶奇</b>:すべての \(x\) で \(f(x+T)=f(x)\)(\(T\gt0\))なら周期 \(T\)。偶関数 \(f(-x)=f(x)\)、奇関数 \(f(-x)=-f(x)\)。任意の \(f\) は \(f(x)=\dfrac{f(x)+f(-x)}2+\dfrac{f(x)-f(-x)}2\)(偶部+奇部)と分解できる</li>
+<li><b class="term">内積とノルム</b>:\(\displaystyle\langle f,g\rangle=\int_a^b f(x)\overline{g(x)}\,dx\)、\(\|f\|=\sqrt{\langle f,f\rangle}\)。実数値関数なら共役は付けなくてよい。\(\langle g,f\rangle=\overline{\langle f,g\rangle}\)</li>
+<li><b class="term">三角関数系の直交性</b>(区間 \([-\pi,\pi]\)、\(m,n\ge1\)):\(\langle\cos mx,\cos nx\rangle=\langle\sin mx,\sin nx\rangle=\pi\delta_{mn}\)、\(\langle\cos mx,\sin nx\rangle=0\)、\(\langle1,\cos nx\rangle=\langle1,\sin nx\rangle=0\)、\(\langle1,1\rangle=2\pi\)。複素形では \(\langle e^{imx},e^{inx}\rangle=2\pi\delta_{mn}\)(\(\delta_{mn}\) は \(m=n\) で \(1\)、それ以外で \(0\))</li>
+<li><b class="term">直交射影と最良近似</b>:\(0\) でない関数の直交系 \(\varphi_1,\dots,\varphi_N\) について \(c_k=\dfrac{\langle f,\varphi_k\rangle}{\|\varphi_k\|^2}\) とおくと、\(\sum a_k\varphi_k\) の形の関数のうち \(\|f-\sum a_k\varphi_k\|\) を最小にするのは \(a_k=c_k\)。このとき \(\|f\|^2=\|f-\sum c_k\varphi_k\|^2+\sum|c_k|^2\|\varphi_k\|^2\)</li>
+<li><b class="term">エネルギーと平均電力</b>:\(\displaystyle E=\int_{-\infty}^{\infty}|x(t)|^2dt\)。周期 \(T\) の信号の平均電力は \(\displaystyle P=\frac1T\int_0^T|x(t)|^2dt\)</li>
+<li><b class="term">コーシー・シュワルツの不等式</b>:\(|\langle f,g\rangle|\le\|f\|\,\|g\|\)。等号は一方が他方の定数倍のとき</li>
+</ul>
+</div>
+
+<section class="prob" id="q2-1">
+<div class="phead"><span class="pnum">問 2.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">周期と偶奇</span></div>
+<ol class="sublist">
+<li>次の関数は周期関数か。周期関数なら最小の正の周期を求めよ。(a) \(\sin3x+\cos2x\)  (b) \(|\sin x|\)  (c) \(\cos x+\cos\sqrt2\,x\)(ヒント:(c) は値が \(2\) になる点を考えよ。)</li>
+<li>\(f(x)=e^x\) を偶関数と奇関数の和に分解せよ。</li>
+<li>偶関数と奇関数の積は奇関数であることを示せ。これと「奇関数 \(g\) について \(\int_{-a}^{a}g(x)\,dx=0\)」を使って、正の整数 \(n\) に対する \(\displaystyle\int_{-\pi}^{\pi}x^2\sin nx\,dx\) の値を、積分を計算せずに答えよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-2">
+<div class="phead"><span class="pnum">問 2.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">三角関数系の直交性</span></div>
+<ol class="sublist">
+<li>正の整数 \(m,n\) について、積和の公式を使って \(\displaystyle\int_{-\pi}^{\pi}\sin mx\sin nx\,dx\) と \(\displaystyle\int_{-\pi}^{\pi}\sin mx\cos nx\,dx\) を求めよ。</li>
+<li>定数 \(\alpha,\beta\) を選んで、\(\alpha\)、\(\beta\cos nx\)、\(\beta\sin nx\)(\(n=1,2,\dots\))が区間 \([-\pi,\pi]\) で<b>正規直交系</b>(互いに直交し、ノルムがすべて \(1\))になるようにせよ。</li>
+<li>周期 \(T\)、\(\omega_0=\dfrac{2\pi}T\) のとき、正の整数 \(m,n\) に対する \(\displaystyle\int_0^T\cos m\omega_0t\cos n\omega_0t\,dt\) を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-3">
+<div class="phead"><span class="pnum">問 2.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">エネルギーと平均電力</span></div>
+<ol class="sublist">
+<li>\(x(t)=e^{-t}u(t)\)(\(u\) は単位ステップ関数)のエネルギーを求めよ。</li>
+<li>\(x(t)=A\cos(\omega_0t+\varphi)\)(\(A\gt0\))の平均電力 \(P\) と実効値 \(\sqrt P\) を求めよ。家庭用電源の電圧「\(100\) V」は実効値である。電圧の振幅(最大値)はおよそ何 V か。</li>
+<li>\(x(t)=3\cos\omega_0t+4\sin2\omega_0t\) の平均電力を求め、各成分の平均電力の和に等しいことを確かめよ。一方、\(3\cos\omega_0t+4\cos\omega_0t\) では平均電力が成分ごとの和にならないことを示し、違いを内積の言葉で説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-4">
+<div class="phead"><span class="pnum">問 2.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">複素数値関数の内積</span></div>
+<p>区間 \([-\pi,\pi]\) 上の複素数値関数を考える。</p>
+<ol class="sublist">
+<li>\(f(x)=e^{ix}\) について、共役を付けない積分 \(\displaystyle\int_{-\pi}^{\pi}f(x)f(x)\,dx\) を計算し、内積の定義で \(g\) に共役を付ける理由を説明せよ。</li>
+<li>整数 \(m,n\) について \(\langle e^{imx},e^{inx}\rangle=2\pi\delta_{mn}\) を示せ。</li>
+<li>\(\|f+g\|^2=\|f\|^2+2\operatorname{Re}\langle f,g\rangle+\|g\|^2\) を示し、\(\langle f,g\rangle=0\) なら \(\|f+g\|^2=\|f\|^2+\|g\|^2\)(ピタゴラスの定理)となることを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-5">
+<div class="phead"><span class="pnum">問 2.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">最良近似としての射影</span></div>
+<p>区間 \([-\pi,\pi]\) で \(f(x)=x\) を正弦波で近似する。誤差は \(\displaystyle E=\int_{-\pi}^{\pi}\bigl(f(x)-g(x)\bigr)^2dx\)(近似 \(g\))で測る。</p>
+<ol class="sublist">
+<li>\(g(x)=c\sin x\) とするとき、\(E\) を \(c\) の2次関数として書き、\(E\) を最小にする \(c\) と最小値を求めよ。</li>
+<li>(1) の \(c\) が射影の係数 \(\dfrac{\langle f,\sin x\rangle}{\langle\sin x,\sin x\rangle}\) に一致し、残差 \(x-c\sin x\) が \(\sin x\) と直交することを確かめよ。</li>
+<li>\(g(x)=c_1\sin x+c_2\sin2x\) で近似するとき、\(E\) を最小にする \(c_1,c_2\) と最小値を求めよ。\(c_1\) が (1) の値から変わらないのはなぜか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-6">
+<div class="phead"><span class="pnum">問 2.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">部分和の最良性とベッセルの不等式</span></div>
+<p>\(\varphi_1,\dots,\varphi_N\) を \(0\) でない関数の直交系とし、\(c_k=\dfrac{\langle f,\varphi_k\rangle}{\|\varphi_k\|^2}\)、\(P=\sum_{k=1}^{N}c_k\varphi_k\) とおく。</p>
+<ol class="sublist">
+<li>任意の係数 \(a_1,\dots,a_N\) について、次を示せ。これから \(\|f-\sum a_k\varphi_k\|\) を最小にする係数は \(a_k=c_k\) に限ることを結論せよ。\[\Bigl\|f-\sum_{k=1}^{N}a_k\varphi_k\Bigr\|^2=\|f-P\|^2+\sum_{k=1}^{N}|a_k-c_k|^2\|\varphi_k\|^2\](ヒント:まず \(f-P\) が各 \(\varphi_j\) と直交することを示し、問2.4(3) を使う。)</li>
+<li><b>ベッセルの不等式</b> \(\displaystyle\sum_{k=1}^{N}|c_k|^2\|\varphi_k\|^2\le\|f\|^2\) を導け。</li>
+<li>\([-\pi,\pi]\) 上の実数値関数 \(f\)(\(\int_{-\pi}^{\pi}f^2dx\) は有限)について、第3章で学ぶフーリエ係数 \(\displaystyle a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx\)(\(n\ge0\))、\(\displaystyle b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx\)(\(n\ge1\))を用いると、すべての \(N\) について \[\pi\Bigl(\frac{a_0^2}2+\sum_{n=1}^{N}(a_n^2+b_n^2)\Bigr)\le\int_{-\pi}^{\pi}f(x)^2dx\] が成り立つことを示せ。さらに、\(n\to\infty\) で \(a_n\to0\)、\(b_n\to0\) となることを結論せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q2-7">
+<div class="phead"><span class="pnum">問 2.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">相関による検出とテンプレート照合</span></div>
+<p>受信した信号 \(r(t)\) に、既知の波形 \(s(t)\) のパルスが含まれているかを、ノルム \(1\) のテンプレート \(g\) との相関 \(\langle r,g\rangle\) で判定する(関数はすべて実数値とする)。</p>
+<ol class="sublist">
+<li>雑音がなく \(r=s\) のとき、\(\|g\|=1\) を満たす \(g\) のうち相関 \(\langle s,g\rangle\) を最大にするのは \(g=s/\|s\|\) であり、最大値は \(\|s\|\)(エネルギーの平方根)であることを、コーシー・シュワルツの不等式から示せ。</li>
+<li>画像のテンプレート照合では、明るさの違いに影響されない<b>正規化相互相関</b> \(\rho=\dfrac{\langle f,g\rangle}{\|f\|\,\|g\|}\) がよく使われる。明るさを \(\alpha\) 倍(\(\alpha\gt0\))にしても \(\rho\) が変わらないこと、\(-1\le\rho\le1\) であること、\(\rho=1\) となるのは \(f\) が \(g\) の正の定数倍のときに限ることを示せ。</li>
+<li>区間 \([0,1]\) 上の矩形パルス \(s(t)=1\) に対し、テンプレート \(g_1=s/\|s\|\) と \(g_2(t)=\sqrt2\sin\pi t\) の相関 \(\langle s,g_1\rangle\)、\(\langle s,g_2\rangle\) を求めよ(\(\|g_2\|=1\) も確かめよ)。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>関数の内積・ノルム・直交を定義でき、三角関数系の直交性を計算で確かめられる</li>
+<li>直交する成分の電力(エネルギー)が足し算になることを、例を挙げて説明できる</li>
+<li>射影の係数 \(\langle f,\varphi\rangle/\|\varphi\|^2\) が平均二乗誤差を最小にする理由を、ピタゴラスの定理で説明できる</li>
+<li>ベッセルの不等式の意味(係数が担うエネルギーは全体を超えない)を述べられる</li>
+<li>コーシー・シュワルツの不等式の等号条件を、相関による検出やテンプレート照合に結びつけられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch3">
+<p class="chnum">第3章</p>
+<h2>フーリエ級数</h2>
+<p class="chsub">— 周期関数を三角関数で分解する</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>第2章で、三角関数系 \(1,\cos x,\sin x,\cos2x,\sin2x,\dots\) が互いに直交することを確かめました。それなら、周期 \(2\pi\) の関数 \(f\) をこれらの一次結合で表すことができ、その係数は内積1回で求まるはずです。これが<b>フーリエ級数</b>です。フーリエは熱の伝わり方を解くために「どんな関数も三角関数の和で書ける」と主張し、当時の数学者を驚かせました。実際、矩形波のように跳びのある関数でさえ、滑らかな正弦波の和で(跳びの点を除いて)表せます。音で言えば、フーリエ級数は音色を「基本音と倍音の配合表」に分解する操作です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>周期 \(2\pi\) と一般の周期 \(T\) の関数について、フーリエ係数を計算できる</li>
+<li>偶関数・奇関数ではコサイン級数・サイン級数になることを使って、計算を省ける</li>
+<li>三角多項式のフーリエ係数を、積分せずに読み取れる</li>
+<li>フーリエ級数に特定の \(x\) を代入して、有名な級数の和を求められる</li>
+<li>係数の減り方と関数の滑らかさ(跳びがあるか、折れ目だけか)の関係を述べられる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">フーリエ級数</b>(周期 \(2\pi\)):\(\displaystyle f(x)\sim\frac{a_0}2+\sum_{n=1}^{\infty}(a_n\cos nx+b_n\sin nx)\)、\(\displaystyle a_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\cos nx\,dx\)(\(n\ge0\))、\(\displaystyle b_n=\frac1\pi\int_{-\pi}^{\pi}f(x)\sin nx\,dx\)(\(n\ge1\))。\(\frac{a_0}2\) は \(f\) の平均値。記号 \(\sim\) は「\(f\) のフーリエ級数」の意味で、収束は次の項目で扱う</li>
+<li><b class="term">一般の周期 \(T\)</b>:\(\omega_0=\dfrac{2\pi}T\) として \(\displaystyle f(t)\sim\frac{a_0}2+\sum_{n=1}^{\infty}(a_n\cos n\omega_0t+b_n\sin n\omega_0t)\)、\(\displaystyle a_n=\frac2T\int_{-T/2}^{T/2}f(t)\cos n\omega_0t\,dt\)、\(\displaystyle b_n=\frac2T\int_{-T/2}^{T/2}f(t)\sin n\omega_0t\,dt\)</li>
+<li><b class="term">偶奇</b>:偶関数なら \(b_n=0\) で \(\displaystyle a_n=\frac2\pi\int_0^{\pi}f(x)\cos nx\,dx\)(コサイン級数)。奇関数なら \(a_n=0\) で \(\displaystyle b_n=\frac2\pi\int_0^{\pi}f(x)\sin nx\,dx\)(サイン級数)</li>
+<li><b class="term">収束(ディリクレの定理)</b>:周期 \(2\pi\) の \(f\) が<b>区分的に滑らか</b>(1周期を有限個の小区間に分けると、各小区間の内部で \(C^1\) 級で、\(f\) と \(f'\) が各小区間の両端で有限な片側極限をもつ)なら、フーリエ級数は各点 \(x\) で \(\dfrac{f(x+0)+f(x-0)}2\) に収束する。特に連続な点では \(f(x)\) に収束する(証明の考え方は第5章)</li>
+<li><b class="term">半区間展開</b>:\((0,\pi)\) で与えた関数を、奇関数に延長すればサイン級数、偶関数に延長すればコサイン級数で表せる</li>
+</ul>
+</div>
+
+<section class="prob" id="q3-1">
+<div class="phead"><span class="pnum">問 3.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">矩形波</span></div>
+<p>周期 \(2\pi\) の矩形波 \(f(x)=\begin{cases}-1 &amp; (-\pi\lt x\lt0)\\ 1 &amp; (0\lt x\lt\pi)\end{cases}\) を考える(\(x=0,\pm\pi\) での値は係数に影響しない)。</p>
+<ol class="sublist">
+<li>\(f\) のフーリエ級数を求めよ。</li>
+<li>級数の \(x=0\) での値を求め、ディリクレの定理と照らし合わせよ。</li>
+<li>第1項だけの部分和 \(S_1(x)\) と、第2項(\(\sin3x\) の項)までの部分和 \(S_3(x)\) の \(x=\frac\pi4,\ \frac\pi2\) での値を求め、項を増やすと矩形波に近づく様子を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-2">
+<div class="phead"><span class="pnum">問 3.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">のこぎり波</span></div>
+<p>\(-\pi\lt x\lt\pi\) で \(f(x)=x\) とし、周期 \(2\pi\) で延長した「のこぎり波」を考える。</p>
+<ol class="sublist">
+<li>\(f\) のフーリエ級数を求めよ。</li>
+<li>級数の \(x=\pi\) での値を求めよ。延長した関数のグラフで \(x=\pi\) がどんな点かを述べ、ディリクレの定理と照らし合わせよ。</li>
+<li>係数の大きさが \(n\) とともにどの速さで小さくなるかを、問3.1と比べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-3">
+<div class="phead"><span class="pnum">問 3.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">三角波</span></div>
+<p>\(-\pi\le x\le\pi\) で \(f(x)=|x|\) とし、周期 \(2\pi\) で延長した「三角波」を考える。</p>
+<ol class="sublist">
+<li>\(f\) のフーリエ級数を求めよ。</li>
+<li>係数の減り方を問3.1・3.2と比べ、延長した関数のグラフの違い(跳びがあるか)と結びつけよ。</li>
+<li>(1) の級数を項別に微分すると、問3.1の矩形波の級数になることを確かめよ。\(|x|\) の導関数と比べて、この結果を解釈せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-4">
+<div class="phead"><span class="pnum">問 3.4</span><span class="lv lv1">★ 基礎</span><span class="ptag">三角多項式の係数</span></div>
+<ol class="sublist">
+<li>\(f(x)=\sin^3x\) のフーリエ係数をすべて求めよ。(ヒント:問1.2 の3倍角の公式。)</li>
+<li>\(g(x)=\cos^2x+2\sin x\cos x\) のフーリエ係数をすべて求めよ。</li>
+<li>有限個の三角関数の和で書けている関数について、係数を積分せずに「読み取って」よい理由を、直交性を使って説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-5">
+<div class="phead"><span class="pnum">問 3.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">パルス列とデューティ比</span></div>
+<p>周期 \(T\)、幅 \(\tau\)(\(0\lt\tau\lt T\))の矩形パルス列 \(f(t)=\begin{cases}1 &amp; (|t|\lt\tau/2)\\ 0 &amp; (\tau/2\lt|t|\le T/2)\end{cases}\)(周期 \(T\) で延長)を考える。\(d=\tau/T\) を<b>デューティ比</b>という。</p>
+<ol class="sublist">
+<li>フーリエ係数を求め、\(\dfrac{a_0}2=d\)、\(a_n=\dfrac{2}{n\pi}\sin(n\pi d)\)(\(n\ge1\))、\(b_n=0\) となることを示せ。</li>
+<li>\(d=\frac12\) のとき、\(n\) が偶数の係数がすべて \(0\) になることを確かめ、\(f\) のフーリエ級数を書け。</li>
+<li>\(d=\frac14\) のとき係数が \(0\) になる \(n\) を求めよ。また \(a_n=2d\operatorname{sinc}(n\pi d)\)(\(\operatorname{sinc}x=\frac{\sin x}x\))と書けることを確かめ、パルスの幅を狭くすると係数の並びがどう変わるかを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-6">
+<div class="phead"><span class="pnum">問 3.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">級数の値(ライプニッツ級数とバーゼル問題)</span></div>
+<ol class="sublist">
+<li>問3.1の級数に \(x=\frac\pi2\) を代入して、\(\displaystyle1-\frac13+\frac15-\frac17+\cdots=\frac\pi4\) を導け。代入してよい理由も述べよ。</li>
+<li>問3.3の級数に \(x=0\) を代入して、\(\displaystyle\sum_{k=1}^{\infty}\frac1{(2k-1)^2}=\frac{\pi^2}8\) を導け。</li>
+<li>(2) を使って \(\displaystyle\sum_{n=1}^{\infty}\frac1{n^2}=\frac{\pi^2}6\) を導け。(ヒント:\(n\) が奇数の項と偶数の項に分ける。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-7">
+<div class="phead"><span class="pnum">問 3.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">半区間展開</span></div>
+<p>区間 \((0,\pi)\) で \(f(x)=x\) を考える。</p>
+<ol class="sublist">
+<li>\(f\) を奇関数に延長して(周期 \(2\pi\))、サイン級数で表せ。</li>
+<li>\(f\) を偶関数に延長して(周期 \(2\pi\))、コサイン級数で表せ。</li>
+<li>(1) と (2) はどちらも \((0,\pi)\) で \(x\) に収束するが、係数の減り方が違う。どちらが速いか、その理由を延長した関数のグラフ(特に \(x=\pi\) の付近)から説明せよ。有限区間のデータを少ない係数で表したいとき、どちらの延長が有利か。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-8">
+<div class="phead"><span class="pnum">問 3.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">項別積分とバーゼル問題</span></div>
+<p>問3.2より、\(-\pi\lt x\lt\pi\) で \(\displaystyle x=2\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}n\sin nx\) が成り立つ。また、区分的に連続な関数のフーリエ級数は、項別に積分してよい(積分した級数は一様に収束する)ことが知られている。これを認めて使う。</p>
+<ol class="sublist">
+<li>両辺を \(0\) から \(x\) まで積分して、\(\displaystyle x^2=4C-4\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^2}\cos nx\)(\(|x|\le\pi\))の形になることを示せ。ここで \(\displaystyle C=\sum_{n=1}^{\infty}\frac{(-1)^{n+1}}{n^2}\)。</li>
+<li>両辺を \(-\pi\) から \(\pi\) まで積分して \(C=\dfrac{\pi^2}{12}\) を求め、\(x^2\) のフーリエ級数 \(\displaystyle x^2=\frac{\pi^2}3+4\sum_{n=1}^{\infty}\frac{(-1)^n}{n^2}\cos nx\) を導け。</li>
+<li>\(x=\pi\) を代入して \(\displaystyle\sum_{n=1}^{\infty}\frac1{n^2}=\frac{\pi^2}6\) を導け(問3.6(3) と比べよ)。</li>
+<li>逆に、のこぎり波の級数を項別に微分すると \(\displaystyle1=2\sum_{n=1}^{\infty}(-1)^{n+1}\cos nx\) となるが、右辺はどの \(x\) でも収束しない。その理由を述べ、項別微分が失敗した原因を、延長した関数のグラフから説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q3-9">
+<div class="phead"><span class="pnum">問 3.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">音色と倍音</span></div>
+<p>基本周波数 \(f_0=220\) Hz(周期 \(T=\frac1{220}\) s)の3種類の音 — 矩形波・のこぎり波・三角波 — を考える。波形は問3.1〜3.3と同じ形を周期 \(T\) に伸縮したものとし、各波形の基本波(\(220\) Hz の成分)の振幅を \(1\) にそろえる。</p>
+<ol class="sublist">
+<li>それぞれについて、\(2\) kHz 以下に含まれる倍音の周波数と、基本波に対する振幅の比を挙げよ。</li>
+<li>振幅の比 \(\frac12,\ \frac13,\ \frac19\) はそれぞれ何 dB か(\(\log_{10}2\approx0.301\)、\(\log_{10}3\approx0.477\))。</li>
+<li>高い周波数の成分を最も多く含む(「明るい」音色の)波形と、最も純音に近い波形はどれか。係数の減り方と波形の滑らかさの関係から説明せよ。</li>
+<li>のこぎり波の音を、\(300\)〜\(3400\) Hz の成分だけを通す電話回線に通すと、どの倍音が残るか。基本波が失われても、残った成分の和が周期 \(\frac1{220}\) s をもつことを示せ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>フーリエ係数の公式を、直交性から導き直せる</li>
+<li>偶関数・奇関数で計算が半分になる理由を説明できる</li>
+<li>跳びのある点で、級数が左右の極限の平均に収束することを具体例で確かめられる</li>
+<li>級数に特定の値を代入して、ライプニッツ級数やバーゼル問題の和を導ける</li>
+<li>係数の減り方(\(1/n\) か \(1/n^2\) か)と、関数の滑らかさ(跳びがあるか、折れ目だけか)を対応づけられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch4">
+<p class="chnum">第4章</p>
+<h2>複素フーリエ級数とスペクトル</h2>
+<p class="chsub">— 振幅と位相で読む</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>実形式の係数 \(a_n,b_n\) では、同じ周波数の成分が \(\cos\) と \(\sin\) の2つに分かれています。複素指数関数 \(e^{inx}\) を使うと、各周波数の成分が1つの複素数 \(c_n\) にまとまり、その絶対値が振幅、偏角が位相を表します。周波数ごとに \(|c_n|\) を並べたものを<b>振幅スペクトル</b>、\(\arg c_n\) を並べたものを<b>位相スペクトル</b>といい、信号を「周波数の言葉」で読むときの基本の図になります。さらに、時間をずらすと位相が回る、微分すると係数に \(in\) が掛かる、畳み込みは係数の積になる — こうした性質が、複素形式なら1行で書けます。この章の内容は、そのままフーリエ変換(第7〜9章)と離散フーリエ変換(第14章)に引き継がれます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>複素フーリエ係数 \(c_n\) を計算し、実形式の \(a_n,b_n\) と相互に変換できる</li>
+<li>振幅スペクトル・位相スペクトルを描き、実数値の信号では \(c_{-n}=\overline{c_n}\) となることを説明できる</li>
+<li>時間推移・時間反転・微分・畳み込みが係数にどう作用するかを導ける</li>
+<li>係数の減り方から関数の滑らかさを読み取り、その理由を証明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">複素フーリエ級数</b>(周期 \(2\pi\)):\(\displaystyle f(x)\sim\sum_{n=-\infty}^{\infty}c_ne^{inx}\)、\(\displaystyle c_n=\frac1{2\pi}\int_{-\pi}^{\pi}f(x)e^{-inx}\,dx\)。周期 \(T\)(\(\omega_0=2\pi/T\))では \(\displaystyle c_n=\frac1T\int_{-T/2}^{T/2}f(t)e^{-in\omega_0t}\,dt\)、\(f(t)\sim\sum c_ne^{in\omega_0t}\)。級数の値は対称な部分和 \(\sum_{|n|\le N}\) の極限で考える</li>
+<li><b class="term">実形式との関係</b>:\(c_0=\dfrac{a_0}2\)、\(c_n=\dfrac{a_n-ib_n}2\)、\(c_{-n}=\dfrac{a_n+ib_n}2\)(\(n\ge1\))。逆に \(a_n=c_n+c_{-n}\)、\(b_n=i(c_n-c_{-n})\)</li>
+<li><b class="term">実数値の信号</b>:\(c_{-n}=\overline{c_n}\)。このとき \(a_n\cos nx+b_n\sin nx=2|c_n|\cos(nx+\arg c_n)\)(\(n\ge1\))。\(|c_n|\) を<b>振幅スペクトル</b>、\(\arg c_n\) を<b>位相スペクトル</b>という</li>
+<li><b class="term">性質</b>(周期 \(2\pi\)):時間推移 \(f(x-x_0)\to c_ne^{-inx_0}\)。時間反転 \(f(-x)\to c_{-n}\)。微分 \(f'\to in\,c_n\)(\(f\) が連続で区分的に滑らかなとき)</li>
+<li><b class="term">周期的畳み込み</b>:\(\displaystyle(f*g)(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(y)g(x-y)\,dy\) の係数は \(c_n(f)\,c_n(g)\)。逆に、三角多項式どうしの積 \(fg\) の係数は係数列の畳み込み \(\sum_kc_k(f)\,c_{n-k}(g)\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q4-1">
+<div class="phead"><span class="pnum">問 4.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">矩形波の複素係数</span></div>
+<p>問3.1の矩形波 \(f\)(\(-\pi\lt x\lt0\) で \(-1\)、\(0\lt x\lt\pi\) で \(1\))を考える。</p>
+<ol class="sublist">
+<li>\(c_n\) を定義どおりに計算し、\(c_0=0\)、\(n\) が奇数なら \(c_n=-\dfrac{2i}{\pi n}\)、\(n\) が \(0\) でない偶数なら \(c_n=0\) となることを示せ。</li>
+<li>問3.1の \(a_n,b_n\) から \(c_n=\frac{a_n-ib_n}2\) で求めた値と一致することを確かめよ(\(n\) が負のときも確かめよ)。</li>
+<li>\(n=-7,\dots,7\) について振幅スペクトル \(|c_n|\) と位相スペクトル \(\arg c_n\) を求め、どのような対称性があるかを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-2">
+<div class="phead"><span class="pnum">問 4.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">振幅スペクトルと位相スペクトル</span></div>
+<p>周期 \(T\)(\(\omega_0=2\pi/T\))の信号 \(x(t)=1+2\cos\!\Bigl(\omega_0t-\dfrac\pi3\Bigr)-\sin2\omega_0t\) を考える。</p>
+<ol class="sublist">
+<li>オイラーの公式を使って、\(0\) でない複素係数 \(c_n\) をすべて求めよ。</li>
+<li>振幅スペクトル \(|c_n|\) と位相スペクトル \(\arg c_n\) を、\(n=-2,\dots,2\) について表にせよ。</li>
+<li>\(c_{-n}=\overline{c_n}\) を確かめ、\(n\ge0\) の係数だけから \(x(t)\) を復元できることを示せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-3">
+<div class="phead"><span class="pnum">問 4.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">実形式との変換と共役対称性</span></div>
+<ol class="sublist">
+<li>係数の定義とオイラーの公式から、\(c_0=\frac{a_0}2\)、\(c_n=\frac{a_n-ib_n}2\)、\(c_{-n}=\frac{a_n+ib_n}2\)(\(n\ge1\))を導け。</li>
+<li>\(f\) が実数値なら \(c_{-n}=\overline{c_n}\) であることを示し、これを使って \(c_ne^{inx}+c_{-n}e^{-inx}=2|c_n|\cos(nx+\arg c_n)\) を導け。</li>
+<li>実数値の関数 \(f\) の複素係数が \(c_0=2\)、\(c_1=1-i\)、\(|n|\ge2\) で \(c_n=0\) であるとき、\(c_{-1}\) を求め、\(f\) を実形式と「振幅・位相」の形 \(A_0+A_1\cos(x+\varphi_1)\) の両方で表せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-4">
+<div class="phead"><span class="pnum">問 4.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">時間推移・時間反転と位相</span></div>
+<p>周期 \(2\pi\) の関数 \(f\) の複素係数を \(c_n\) とする。</p>
+<ol class="sublist">
+<li>\(g(x)=f(x-x_0)\) の係数が \(c_ne^{-inx_0}\) であることを示せ。振幅スペクトルと位相スペクトルはそれぞれどう変わるか。</li>
+<li>\(f(-x)\) の係数が \(c_{-n}\) であることを示し、\(f\) が実数値の偶関数なら \(c_n\) はすべて実数であることを導け。</li>
+<li>(1) を使って、問4.1の矩形波を左へ \(\frac\pi2\) ずらした \(h(x)=f\bigl(x+\frac\pi2\bigr)\) の複素係数を求めよ。実形式に直して \(h\) がコサイン級数になることを確かめ、\(h\) のグラフと照らし合わせよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-5">
+<div class="phead"><span class="pnum">問 4.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">微分と係数</span></div>
+<ol class="sublist">
+<li>周期 \(2\pi\) の連続関数 \(f\) が区分的に滑らかなとき、部分積分を使って \(c_n(f')=in\,c_n(f)\) を示せ。周期性と連続性をどこで使うかを明示せよ。</li>
+<li>のこぎり波(問3.2、跳びがある)では \(f'=1\)(跳びの点を除く)なので \(c_n(f')=0\)(\(n\ne0\))だが、\(in\,c_n(f)\ne0\) である。(1) の計算のどこが成り立たなくなるかを、境界の項を実際に計算して説明せよ。</li>
+<li>三角波 \(|x|\)(問3.3)に (1) を使い、得られた係数が問4.1の矩形波の係数に一致することを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-6">
+<div class="phead"><span class="pnum">問 4.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">周期的畳み込み</span></div>
+<p>周期 \(2\pi\) の関数 \(f,g\) の周期的畳み込みを \(\displaystyle(f*g)(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(y)g(x-y)\,dy\) と定める。</p>
+<ol class="sublist">
+<li>\(c_n(f*g)=c_n(f)\,c_n(g)\) を示せ。(積分の順序を交換し、周期性を使う。)</li>
+<li>\(f\) を問4.1の矩形波とする。\(f*f\) の係数を求め、問3.3の三角波の係数と比べて、\(f*f=\dfrac2\pi|x|-1\)(\(|x|\le\pi\))であることを確かめよ。\(x=0\) と \(x=\pi\) での値を、畳み込みの定義から直接計算して照合せよ。</li>
+<li>矩形波と畳み込むと係数の減り方と関数の形がどう変わったかを述べ、畳み込みが「平滑化」として働く理由を説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-7">
+<div class="phead"><span class="pnum">問 4.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">指数関数の展開と級数の和</span></div>
+<p>実数 \(a\ne0\) について、\(-\pi\lt x\lt\pi\) で \(f(x)=e^{ax}\) とし、周期 \(2\pi\) で延長する。</p>
+<ol class="sublist">
+<li>\(c_n=\dfrac{(-1)^n\sinh a\pi}{\pi(a-in)}\) を示せ。</li>
+<li>\(x=\pi\) での級数の値をディリクレの定理から求め、\(\displaystyle\sum_{n=-\infty}^{\infty}\frac1{a^2+n^2}=\frac\pi a\coth a\pi\) を導け。(級数は対称な部分和 \(\sum_{|n|\le N}\) の極限として扱う。)</li>
+<li>(2) で \(n=0\) の項を分け、\(a\to0\) の極限をとって \(\displaystyle\sum_{n=1}^\infty\frac1{n^2}=\frac{\pi^2}6\) を再び導け。(\(u\coth u=1+\frac{u^2}3+O(u^4)\)(\(u\to0\))を用いてよい。極限と和の交換が許される理由も述べよ。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q4-8">
+<div class="phead"><span class="pnum">問 4.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">滑らかさと係数の減衰</span></div>
+<ol class="sublist">
+<li>周期 \(2\pi\) の関数 \(g\) が区分的に滑らか(跳びがあってもよい)なら、ある定数 \(M\) があって \(|c_n(g)|\le\dfrac M{|n|}\)(\(n\ne0\))となることを示せ。(ヒント:滑らかな小区間ごとに部分積分する。)</li>
+<li>\(k\ge0\) とする。周期 \(2\pi\) の \(f\) について \(f,f',\dots,f^{(k-1)}\) が連続で、\(f^{(k)}\) が区分的に滑らかなら、\(|c_n(f)|\le\dfrac{M}{|n|^{k+1}}\) となることを、問4.5と (1) を使って示せ(\(k=0\) は (1) そのもの)。矩形波・三角波・\(x^2\)(問3.8)の係数の減り方と照合せよ。</li>
+<li>\(\sum_{n}|c_n|\lt\infty\) なら、複素フーリエ級数は一様に収束し、和が連続関数になることを示せ。\(|c_n|\le\frac M{n^2}\) ならこの条件を満たすことを確かめよ。</li>
+<li>ディジタル回路の信号を、理想的な矩形パルスから、立ち上がりと立ち下がりに有限の時間をかけた台形パルス(連続で、折れ目がある)に変えると、高調波の係数の減り方はどう変わるか。第99高調波では、係数の大きさの目安(\(\frac1n\) と \(\frac1{n^2}\) の比)がおよそ何分の1になるかを答え、電磁的な干渉を減らすのに立ち上がりを遅くすることが効く理由を述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>複素係数 \(c_n\) と実係数 \(a_n,b_n\) を相互に変換できる</li>
+<li>実数値の信号では \(c_{-n}=\overline{c_n}\) となり、\(n\ge0\) の情報だけで足りる理由を説明できる</li>
+<li>時間推移で振幅スペクトルは変わらず、位相が \(n\) に比例して回ることを示せる</li>
+<li>微分は \(in\) 倍、周期的畳み込みは係数の積になることを導ける</li>
+<li>係数の減り方(\(1/n,\ 1/n^2,\dots\))と関数の滑らかさの対応を、部分積分を使って説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch5">
+<p class="chnum">第5章</p>
+<h2>収束とパーセバルの等式</h2>
+<p class="chsub">— 級数はどこまで信用できるか</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>第3章では、ディリクレの定理を認めて級数に値を代入しました。しかし、無限個の項の和が、いつ、どんな意味で元の関数に戻るのかは自明ではありません。矩形波の部分和は跳びの近くで約9%行き過ぎ、項をいくら増やしてもこの行き過ぎは小さくなりません(<b>ギブス現象</b>)。一方、誤差を二乗の積分(エネルギー)で測れば、二乗可積分な関数なら必ず誤差は \(0\) に近づき、信号のエネルギーは係数の2乗和に過不足なく配分されます(<b>パーセバルの等式</b>)。「各点で」「一様に」「平均二乗で」という3つの収束の違いを知ることは、画像の圧縮で生じるリンギング、フィルタ設計の誤差の評価、信号の電力の計算を正しく扱うための土台です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>ディリクレの定理を使って、跳びの点や端点での級数の値を正しく求められる</li>
+<li>パーセバルの等式を使って、信号の電力を周波数ごとに配分し、級数の和を計算できる</li>
+<li>部分和をディリクレ核との畳み込みとして書き、収束の議論の骨組みを説明できる</li>
+<li>リーマン・ルベーグの補題の意味(速い振動は積分で打ち消し合う)を説明できる</li>
+<li>ギブス現象とフェイェール平均を例に、各点収束・一様収束・平均二乗収束を区別できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">部分和とディリクレ核</b>:\(\displaystyle S_Nf(x)=\sum_{|n|\le N}c_ne^{inx}=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-y)D_N(y)\,dy\)、\(D_N(y)=\dfrac{\sin\bigl((N+\frac12)y\bigr)}{\sin\frac y2}\)(問1.6)</li>
+<li><b class="term">ディリクレの定理</b>:\(f\) が区分的に滑らかなら \(S_Nf(x)\to\dfrac{f(x+0)+f(x-0)}2\)(各点収束)。周期的に延長した \(f\) が連続で区分的に滑らかなら、収束は一様(問4.8(3))</li>
+<li><b class="term">パーセバルの等式</b>:\(\int_{-\pi}^{\pi}|f|^2dx\) が有限なら \(\displaystyle\frac1{2\pi}\int_{-\pi}^{\pi}|f(x)|^2dx=\sum_{n=-\infty}^{\infty}|c_n|^2\)。実数値なら \(\displaystyle\frac1\pi\int_{-\pi}^{\pi}f(x)^2dx=\frac{a_0^2}2+\sum_{n=1}^{\infty}(a_n^2+b_n^2)\)。同時に \(\int_{-\pi}^{\pi}|f-S_Nf|^2dx\to0\)(平均二乗収束)。三角関数系の完全性にもとづく定理で、本書では認めて使う</li>
+<li><b class="term">リーマン・ルベーグの補題</b>:\(f\) が \([a,b]\) で積分可能なら \(\displaystyle\int_a^bf(x)e^{-i\lambda x}dx\to0\)(\(\lambda\to\pm\infty\))</li>
+<li><b class="term">ギブス現象</b>:大きさ \(J\) の跳びの近くで、部分和は跳びの約 \(8.95\)%(約 \(0.0895J\))だけ行き過ぎる。\(N\) を増やしても行き過ぎの大きさは減らず、位置が跳びに近づくだけ</li>
+<li><b class="term">フェイェール平均</b>:\(\sigma_Nf=\frac1N(S_0f+\cdots+S_{N-1}f)\)。核 \(F_N(y)=\frac1N\Bigl(\dfrac{\sin(Ny/2)}{\sin(y/2)}\Bigr)^2\ge0\)。連続な周期関数なら \(\sigma_Nf\to f\)(一様、フェイェールの定理)</li>
+</ul>
+</div>
+
+<section class="prob" id="q5-1">
+<div class="phead"><span class="pnum">問 5.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">ディリクレの定理の適用</span></div>
+<p>いずれも周期 \(2\pi\) で延長した関数のフーリエ級数を考える。</p>
+<ol class="sublist">
+<li>\(-\pi\lt x\lt\pi\) で \(f(x)=e^x\) のとき、級数の \(x=0,\ \frac\pi2,\ \pi\) での値を求めよ。</li>
+<li>\(g(x)=\begin{cases}0 &amp; (-\pi\lt x\lt0)\\ x &amp; (0\le x\lt\pi)\end{cases}\) のとき、級数の \(x=0,\ \frac\pi2,\ \pi\) での値を求めよ。</li>
+<li>\((0,\pi)\) で \(x\) に等しい関数のコサイン級数とサイン級数(問3.7)は、\(x=\pi\) でそれぞれどんな値をとるか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-2">
+<div class="phead"><span class="pnum">問 5.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">パーセバルの等式とバーゼル問題</span></div>
+<ol class="sublist">
+<li>のこぎり波(問3.2)にパーセバルの等式を使って、\(\displaystyle\sum_{n=1}^{\infty}\frac1{n^2}=\frac{\pi^2}6\) を導け。</li>
+<li>矩形波(問3.1)にパーセバルの等式を使って、\(\displaystyle\sum_{k=1}^{\infty}\frac1{(2k-1)^2}=\frac{\pi^2}8\) を導け。</li>
+<li>パーセバルの等式を、「信号の平均電力」と「各周波数成分の電力」の言葉で言い換えよ(問2.3と比べよ)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-3">
+<div class="phead"><span class="pnum">問 5.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">4乗の逆数の和</span></div>
+<ol class="sublist">
+<li>\(x^2\) のフーリエ級数(問3.8)にパーセバルの等式を使って、\(\displaystyle\sum_{n=1}^{\infty}\frac1{n^4}=\frac{\pi^4}{90}\) を導け。</li>
+<li>三角波 \(|x|\)(問3.3)にパーセバルの等式を使って \(\displaystyle\sum_{k=1}^{\infty}\frac1{(2k-1)^4}\) を求め、(1) と矛盾しないことを確かめよ。</li>
+<li>はじめの4項の和 \(1+\frac1{16}+\frac1{81}+\frac1{256}\) を \(\frac{\pi^4}{90}\) と比べ、\(\sum\frac1{n^2}\) の場合より収束が速い理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-4">
+<div class="phead"><span class="pnum">問 5.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">矩形波の電力配分と帯域</span></div>
+<p>値が \(\pm1\) をとる矩形波(問3.1、平均電力 \(1\))を、ある周波数以下の成分しか通さない伝送路に通すことを考える。</p>
+<ol class="sublist">
+<li>基本波(第1高調波)が担う電力の割合を求めよ。</li>
+<li>第3・第5・第7高調波までを通すとき、通過する電力の割合をそれぞれ求めよ(小数第3位まで)。</li>
+<li>電力の90%以上を通すには、第何高調波まで通せばよいか。また、失う電力を1%未満にするのに必要なおよその次数を、近似 \(\displaystyle\sum_{n\gt N,\ n\text{ は奇数}}\frac1{n^2}\approx\frac1{2N}\) を使って見積もれ。</li>
+<li>この結果から、矩形波の「形」をよく保って送るのに必要な帯域と、電力の大部分を送るのに必要な帯域の違いについて述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-5">
+<div class="phead"><span class="pnum">問 5.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">ディリクレ核と部分和</span></div>
+<ol class="sublist">
+<li>係数の定義を代入して、\(\displaystyle S_Nf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-y)D_N(y)\,dy\) を示せ。</li>
+<li>\(\frac1{2\pi}\int_{-\pi}^{\pi}D_N(y)\,dy=1\)(問1.6)を使って、\(\displaystyle S_Nf(x)-f(x)=\frac1{2\pi}\int_{-\pi}^{\pi}\bigl(f(x-y)-f(x)\bigr)D_N(y)\,dy\) と書けることを示せ。この式は \(S_Nf(x)\) をどのような「平均」とみなしているか。</li>
+<li>\(D_N\Bigl(\dfrac{3\pi}{2N+1}\Bigr)\) を計算して \(D_N\) が負の値をとることを示し、その深さが \(N\) とともにどう変わるかを述べよ。重みが負になりうることは、部分和の振る舞いにどんな影響を与えると考えられるか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-6">
+<div class="phead"><span class="pnum">問 5.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">リーマン・ルベーグの補題</span></div>
+<ol class="sublist">
+<li>\(f\) が \([a,b]\) で \(C^1\) 級なら、\(\lambda\ne0\) について \(\displaystyle\Bigl|\int_a^bf(x)e^{-i\lambda x}dx\Bigr|\le\frac{|f(a)|+|f(b)|+\int_a^b|f'(x)|\,dx}{|\lambda|}\) を示し、\(\lambda\to\pm\infty\) で積分が \(0\) に近づくことを結論せよ。</li>
+<li>\(\displaystyle\int_0^\pi\sin\lambda x\,dx\) を計算し、\(\lambda\to\infty\) で \(0\) に近づくことを確かめよ。積分の値が小さくなる理由を、被積分関数のグラフから説明せよ。</li>
+<li>(1) から、区分的に滑らかな周期関数のフーリエ係数について何が言えるか。問2.6(3) の結論と比べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-7">
+<div class="phead"><span class="pnum">問 5.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ギブス現象</span></div>
+<p>矩形波(問3.1)の部分和 \(\displaystyle S(x)=\frac4\pi\sum_{k=1}^{N}\frac{\sin(2k-1)x}{2k-1}\) を考える。</p>
+<ol class="sublist">
+<li>\(\displaystyle\sum_{k=1}^{N}\cos(2k-1)x=\frac{\sin2Nx}{2\sin x}\)(\(\sin x\ne0\))を示し、\(S'(x)=\dfrac2\pi\cdot\dfrac{\sin2Nx}{\sin x}\) を導け。これから、\(x\gt0\) で最初の極大点が \(x_N=\dfrac\pi{2N}\) であることを示せ。</li>
+<li>\(S(x_N)\) がリーマン和 \(\displaystyle\frac2\pi\sum_{k=1}^{N}\frac{\sin t_k}{t_k}\cdot\frac\pi N\)(\(t_k=\frac{(2k-1)\pi}{2N}\))に等しいことを示し、\(N\to\infty\) で \(\displaystyle\frac2\pi\int_0^\pi\frac{\sin t}t\,dt\) に収束することを結論せよ。</li>
+<li>\(\displaystyle\int_0^\pi\frac{\sin t}t\,dt\approx1.8519\) を用いて (2) の極限を求め、行き過ぎの大きさが跳び(\(-1\) から \(1\) への大きさ \(2\))の約何%かを答えよ。\(N\) を増やすと行き過ぎの大きさと位置はどうなるか。</li>
+<li>画像を低域通過フィルタでぼかしたり強く圧縮したりすると、くっきりした輪郭の両側に明暗の縞(リンギング)が出ることがある。この現象をギブス現象と結びつけて説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-8">
+<div class="phead"><span class="pnum">問 5.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">フェイェール平均</span></div>
+<p>部分和の算術平均 \(\sigma_Nf=\frac1N(S_0f+S_1f+\cdots+S_{N-1}f)\) を考える。</p>
+<ol class="sublist">
+<li>\(\displaystyle\sigma_Nf(x)=\frac1{2\pi}\int_{-\pi}^{\pi}f(x-y)F_N(y)\,dy\)、\(F_N(y)=\dfrac1N\sum_{k=0}^{N-1}D_k(y)=\dfrac1N\Bigl(\dfrac{\sin(Ny/2)}{\sin(y/2)}\Bigr)^2\) を示せ。(ヒント:\(2\sin\frac y2\sin\bigl((k+\frac12)y\bigr)=\cos ky-\cos(k+1)y\)。)</li>
+<li>\(F_N\ge0\) と \(\frac1{2\pi}\int_{-\pi}^{\pi}F_N\,dy=1\) を示し、\(m\le f\le M\) なら \(m\le\sigma_Nf\le M\) となることを導け。矩形波に対してフェイェール平均ではギブス現象の行き過ぎが起きないことを結論せよ。</li>
+<li>\(\displaystyle\sigma_Nf(x)=\sum_{|n|\lt N}\Bigl(1-\frac{|n|}N\Bigr)c_ne^{inx}\) を示せ。部分和 \(S_{N-1}f\) と比べて、係数にどんな「重み」が掛かっているか。</li>
+<li>フェイェールの定理(連続な周期関数 \(f\) について \(\sigma_Nf\to f\) が一様に成り立つ)を認めて、連続な周期関数の複素係数がすべて \(0\) なら \(f=0\) であることを示せ。これから、係数がすべて等しい2つの連続な周期関数は一致することを結論せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q5-9">
+<div class="phead"><span class="pnum">問 5.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">収束の3つの意味</span></div>
+<p>\([-\pi,\pi]\) 上の関数列 \(g_N\) が \(g\) に、各点で(すべての \(x\) で \(g_N(x)\to g(x)\))、一様に(\(\sup_x|g_N(x)-g(x)|\to0\))、平均二乗で(\(\int_{-\pi}^{\pi}|g_N-g|^2dx\to0\))収束する、という3つの意味を区別する。</p>
+<ol class="sublist">
+<li>矩形波の部分和 \(S_Nf\) が \(f\) に一様には収束しないことを、連続関数の一様収束極限は連続であることから示せ。一方、平均二乗では収束することを、\(\int|f-S_Nf|^2dx=2\pi\sum_{|n|\gt N}|c_n|^2\)(問2.6(1) とパーセバルの等式)から示せ。</li>
+<li>三角波 \(|x|\) では、\(\sup_x\bigl||x|-S_Nf(x)\bigr|\le\dfrac4{\pi N}\) を示せ(ヒント:\(\sum_{n\gt N}\frac1{n^2}\le\int_N^\infty\frac{dt}{t^2}\))。誤差を \(0.01\) 以下にするにはどれだけの \(N\) で足りるか。</li>
+<li>一様収束なら各点収束と平均二乗収束が従うことを示せ。逆が成り立たない例を (1) から挙げよ。</li>
+<li>音声や画像の圧縮の品質評価では誤差の二乗平均(平均二乗誤差)がよく使われ、制御や安全の仕様では最大の誤差が問題になる。それぞれどの意味の収束に対応するかを述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>跳びの点・端点での級数の値を、周期的な延長をふまえてディリクレの定理で正しく求められる</li>
+<li>パーセバルの等式を「電力の周波数への配分」として説明し、級数の和の計算に使える</li>
+<li>部分和がディリクレ核による重みつき平均であり、その重みが負になりうることを説明できる</li>
+<li>ギブス現象の行き過ぎが跳びの約9%で、項を増やしても消えないことを計算で示せる</li>
+<li>各点収束・一様収束・平均二乗収束の違いを、矩形波と三角波の例で説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch6">
+<p class="chnum">第6章</p>
+<h2>フーリエ級数で解く</h2>
+<p class="chsub">— 熱・弦の振動・定常応答</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>フーリエが三角関数の和を考えたのは、金属の棒の中を熱がどう伝わるかを解くためでした。熱方程式や波動方程式のような線形の偏微分方程式では、\(\sin\frac{n\pi x}L\) の形の関数が「固有モード」になり、各モードは互いに干渉せず、決まった速さで減衰したり振動したりします。初期状態をフーリエ級数に分解すれば、あとはモードごとに時間の変化を掛けて足すだけです。この「<b>分解して、成分ごとに簡単に処理し、もとに戻す</b>」という手順は、線形代数の対角化(固有ベクトルによる分解)とまったく同じ考え方で、第9章のフィルタや第14章の DFT による計算にもそのまま受け継がれます。弦の振動は、楽器の倍音の起源でもあります。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>変数分離法で、熱方程式・波動方程式の固有関数(モード)と固有値を求められる</li>
+<li>初期条件をサイン級数に展開して、境界値問題の解を級数で書ける</li>
+<li>高いモードほど速く減衰することから、熱方程式が「平滑化」として働くことを説明できる</li>
+<li>弦をはじく位置と倍音の関係を、フーリエ係数から説明できる</li>
+<li>周期的な入力に対する線形微分方程式の定常応答を、係数ごとの計算で求められる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">変数分離</b>:\(u(x,t)=X(x)T(t)\) と置くと、\(x\) だけの式と \(t\) だけの式が等しくなり、両方が定数になる。両端で \(0\) という境界条件 \(X(0)=X(L)=0\) のもとで \(X''=-\lambda X\) が \(0\) でない解をもつのは \(\lambda_n=\bigl(\frac{n\pi}L\bigr)^2\)、\(X_n=\sin\frac{n\pi x}L\)(\(n=1,2,\dots\))のとき</li>
+<li><b class="term">熱方程式</b>:\(u_t=\kappa u_{xx}\)(\(0\lt x\lt L\))、\(u(0,t)=u(L,t)=0\)、\(u(x,0)=f(x)\) の解は \(\displaystyle u(x,t)=\sum_{n=1}^\infty b_ne^{-\kappa(n\pi/L)^2t}\sin\frac{n\pi x}L\)、\(\displaystyle b_n=\frac2L\int_0^Lf(x)\sin\frac{n\pi x}L\,dx\)</li>
+<li><b class="term">波動方程式</b>(両端固定の弦):\(u_{tt}=c^2u_{xx}\)、\(u(x,0)=f(x)\)、\(u_t(x,0)=0\) の解は \(\displaystyle u=\sum_{n=1}^\infty b_n\cos\frac{n\pi ct}L\sin\frac{n\pi x}L\)。第 \(n\) モードの振動数は \(f_n=\dfrac{nc}{2L}\)(基本振動数の整数倍)</li>
+<li><b class="term">直交性</b>:\(\displaystyle\int_0^L\sin\frac{m\pi x}L\sin\frac{n\pi x}L\,dx=\frac L2\delta_{mn}\)</li>
+<li><b class="term">周期入力の定常応答</b>:\(y'+ay=x(t)\)(\(a\gt0\))で \(x\sim\sum c_ne^{in\omega_0t}\) なら、周期解は \(\displaystyle y\sim\sum\frac{c_n}{a+in\omega_0}e^{in\omega_0t}\)。定数係数の線形微分方程式は、各周波数成分をそれぞれ定数倍するだけ</li>
+</ul>
+</div>
+
+<section class="prob" id="q6-1">
+<div class="phead"><span class="pnum">問 6.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">変数分離と固有値問題</span></div>
+<p>熱方程式 \(u_t=\kappa u_{xx}\)(\(\kappa\gt0\)、\(0\lt x\lt L\))と境界条件 \(u(0,t)=u(L,t)=0\) を考える。</p>
+<ol class="sublist">
+<li>\(u=X(x)T(t)\) を代入すると \(\dfrac{X''(x)}{X(x)}=\dfrac{T'(t)}{\kappa T(t)}\) となり、両辺が定数(\(-\lambda\) と書く)でなければならない理由を述べよ。</li>
+<li>\(X''=-\lambda X\)、\(X(0)=X(L)=0\) が \(0\) でない解をもつ \(\lambda\) をすべて求めよ(\(\lambda\lt0\)、\(\lambda=0\)、\(\lambda\gt0\) に分けて調べよ)。</li>
+<li>対応する \(T\) を求め、変数分離で得られる解をすべて書け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-2">
+<div class="phead"><span class="pnum">問 6.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">熱方程式の初期値問題</span></div>
+<p>\(L=1\)、\(\kappa=1\) とし、初期条件を \(u(x,0)=\sin\pi x+\frac12\sin3\pi x\) とする。</p>
+<ol class="sublist">
+<li>解 \(u(x,t)\) を求めよ。</li>
+<li>\(t=0.1\) での2つのモードの振幅をそれぞれ求めよ(\(e^{-0.987}\approx0.373\)、\(e^{-8.88}\approx1.39\times10^{-4}\))。温度分布の形はどう変わったか。</li>
+<li>第 \(n\) モードの振幅が \(\frac1e\) 倍になるまでの時間(時定数)を、一般の \(L,\kappa\) について求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-3">
+<div class="phead"><span class="pnum">問 6.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">一様な初期温度の冷却</span></div>
+<p>長さ \(1\) の棒全体が温度 \(1\) の状態から、\(t=0\) で両端を温度 \(0\) に保ち始める。\(\kappa=1\) とし、\(u(x,0)=1\)(\(0\lt x\lt1\))、\(u(0,t)=u(1,t)=0\) とする。</p>
+<ol class="sublist">
+<li>解をサイン級数で表せ。</li>
+<li>棒の中央 \(x=\frac12\) の温度を級数で書け。\(t=0.1\) でのおよその値を求めよ(\(e^{-\pi^2/10}\approx0.3727\))。第2項以降が無視できる理由も述べよ。</li>
+<li>第1項だけで近似して、中央の温度が \(0.1\) まで下がる時刻を求めよ(\(\log\frac{40}\pi\approx2.544\)、\(\pi^2\approx9.870\))。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-4">
+<div class="phead"><span class="pnum">問 6.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">弦の振動と欠ける倍音</span></div>
+<p>長さ \(L\)、両端固定の弦を、位置 \(x=a\)(\(0\lt a\lt L\))で高さ \(h\) まで引っぱり(初期形は2本の線分をつないだ三角形)、静かに放す。弦の変位は \(u_{tt}=c^2u_{xx}\) に従う。</p>
+<ol class="sublist">
+<li>初期形のサイン級数の係数が \(\displaystyle b_n=\frac{2hL^2}{n^2\pi^2a(L-a)}\sin\frac{n\pi a}L\) であることを示せ。(ヒント:部分積分を1回行うと、初期形の導関数(区分的に定数)の積分になる。)</li>
+<li>第 \(n\) モードの振動数を求め、基本振動数が \(110\) Hz のとき、どのような周波数の音が含まれるかを答えよ。</li>
+<li>弦の中央(\(a=\frac L2\))ではじくと、どの倍音が欠けるか。\(a=\frac L5\) ではどうか。モードの「節」の位置と結びつけて説明せよ。</li>
+<li>基本振動に対する第 \(n\) 倍音の振幅の比 \(\dfrac{b_n}{b_1}\) を書き、はじく位置を端(駒)に近づけると音色がどう変わるかを説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-5">
+<div class="phead"><span class="pnum">問 6.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">周期入力に対する定常応答</span></div>
+<p>RC 回路(問1.7)で \(\tau=1\) とし、入力 \(x(t)\) を問3.1の矩形波(周期 \(2\pi\)、変数を \(t\) とする)とする:\(y'(t)+y(t)=x(t)\)。</p>
+<ol class="sublist">
+<li>周期 \(2\pi\) の解 \(y\)(連続で区分的に滑らかとする)の複素係数が \(c_n(y)=\dfrac{c_n(x)}{1+in}\) となることを、問4.5を使って示せ。</li>
+<li>入力と出力それぞれについて、第3高調波と基本波の振幅の比を求めよ。出力の波形は入力と比べてどうなるか。</li>
+<li>\(y(t+\pi)=-y(t)\)(入力の対称性から従う)を認めて、\(0\le t\le\pi\) での周期解を \(y=1+Ce^{-t}\) の形で求め、\(y\) の最大値が \(\tanh\frac\pi2\approx0.917\) になることを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-6">
+<div class="phead"><span class="pnum">問 6.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">エネルギーの減衰と解の一意性</span></div>
+<p>\(u\) を \(u_t=\kappa u_{xx}\)(\(0\lt x\lt L\))、\(u(0,t)=u(L,t)=0\) の十分に滑らかな解とし、\(\displaystyle E(t)=\int_0^Lu(x,t)^2dx\) とおく。</p>
+<ol class="sublist">
+<li>\(\displaystyle\frac{dE}{dt}=-2\kappa\int_0^Lu_x(x,t)^2dx\le0\) を示せ。(微分と積分の順序は交換してよい。)</li>
+<li>(1) を使って、同じ初期条件と境界条件をもつ解は1つしかないこと(解の一意性)を示せ。</li>
+<li>級数解 \(u=\sum b_ne^{-\kappa(n\pi/L)^2t}\sin\frac{n\pi x}L\) について、\(\displaystyle E(t)=\frac L2\sum_{n=1}^\infty b_n^2e^{-2\kappa(n\pi/L)^2t}\) を示し(和と積分は交換してよい)、\(t\) が大きいときの \(E(t)\) の振る舞いを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q6-7">
+<div class="phead"><span class="pnum">問 6.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">地中温度の日変化と年変化</span></div>
+<p>地表を \(x=0\)、深さを \(x\gt0\) とし、地中の温度(平均からのずれ)\(u(x,t)\) が \(u_t=\kappa u_{xx}\) に従うとする。地表の温度が \(u(0,t)=A\cos\omega t\) と周期的に変化し、深いところでは \(u\) が有界であるとする。</p>
+<ol class="sublist">
+<li>\(u=\operatorname{Re}\bigl[Ae^{i\omega t}e^{-\lambda x}\bigr]\)(\(\operatorname{Re}\lambda\gt0\))の形の解を探し、\(\lambda=(1+i)k\)、\(k=\sqrt{\dfrac\omega{2\kappa}}\) を導いて、\(u=Ae^{-kx}\cos(\omega t-kx)\) を示せ。</li>
+<li>\(\kappa=5.0\times10^{-7}\) m²/s として、振幅が地表の \(\frac1e\) になる深さ \(d=\frac1k\) を、日変化(周期1日 \(=86400\) s)と年変化(周期365日)について求めよ(\(\sqrt{365}\approx19.1\))。</li>
+<li>年変化の位相が地表とちょうど逆になる(半年遅れる)深さと、そこでの振幅の割合を求めよ(\(e^{-\pi}\approx0.043\))。</li>
+<li>深さ \(1\) m では、日変化と年変化の振幅はそれぞれ地表の何倍か。地面が「低域通過フィルタ」として働くことを、\(k\) の \(\omega\) への依存から説明せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>変数分離から固有値問題を立て、境界条件から固有関数と固有値を決められる</li>
+<li>初期条件のサイン級数展開から、熱方程式・波動方程式の解を級数で書ける</li>
+<li>熱方程式で高いモードほど速く減衰し、解が滑らかになる理由を説明できる</li>
+<li>弦をはじく位置と、欠ける倍音・音色の関係を説明できる</li>
+<li>周期入力に対する定常応答を、周波数ごとの掛け算として求められる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch7">
+<p class="chnum">第7章</p>
+<h2>フーリエ変換</h2>
+<p class="chsub">— 連続スペクトルと基本の変換対</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>周期信号は、基本周波数の整数倍という飛び飛びの周波数の和で書けました。では、1回だけ鳴る音、1個のパルス、画像の一部のような、周期的でない信号はどうでしょう。周期 \(T\) を限りなく長くすると、線スペクトルの間隔 \(\frac{2\pi}T\) は限りなく細かくなり、和は積分に、係数の並びは連続な関数 \(\hat f(\omega)\) に変わります。これが<b>フーリエ変換</b>です。フーリエ変換は「信号に各周波数がどれだけの密度で含まれるか」を表し、周波数を Hz で測れば、音声や通信の帯域幅をそのまま読み取れます。この章では、矩形パルス・指数関数・ガウス関数・三角パルスという基本の変換対を自分の手で計算し、時間幅と帯域幅が反比例することを確かめます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>定義に従って、矩形・指数・ガウス・三角のフーリエ変換を計算できる</li>
+<li>角周波数 \(\omega\) と周波数 \(f\) [Hz] の換算を、変換の式でも帯域の読み取りでも正しく行える</li>
+<li>フーリエ変換を、フーリエ級数の周期を無限大にした極限として理解できる</li>
+<li>反転公式を使って、広義積分(ディリクレ積分)の値を求められる</li>
+<li>パルスの時間幅と帯域幅が反比例することを、変換対から説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">フーリエ変換</b>:\(\displaystyle\hat f(\omega)=\int_{-\infty}^{\infty}f(t)e^{-i\omega t}dt\)。\(\int|f|\,dt\lt\infty\) なら \(\hat f\) は有界で連続、\(|\omega|\to\infty\) で \(0\) に近づく(リーマン・ルベーグの補題)</li>
+<li><b class="term">反転公式</b>:\(f\) と \(\hat f\) がともに積分可能で \(f\) が連続なら \(\displaystyle f(t)=\frac1{2\pi}\int_{-\infty}^{\infty}\hat f(\omega)e^{i\omega t}d\omega\)。\(f\) が積分可能で区分的に滑らかなら、\(\displaystyle\lim_{W\to\infty}\frac1{2\pi}\int_{-W}^{W}\hat f(\omega)e^{i\omega t}d\omega=\frac{f(t+0)+f(t-0)}2\)</li>
+<li><b class="term">基本の変換対</b>(\(a\gt0\)):\(\operatorname{rect}_a(t)\leftrightarrow\dfrac{2\sin a\omega}\omega=2a\operatorname{sinc}(a\omega)\)、\(e^{-at}u(t)\leftrightarrow\dfrac1{a+i\omega}\)、\(e^{-a|t|}\leftrightarrow\dfrac{2a}{a^2+\omega^2}\)、\(e^{-at^2}\leftrightarrow\sqrt{\dfrac\pi a}\,e^{-\omega^2/(4a)}\)、\(\operatorname{tri}(t)\leftrightarrow\operatorname{sinc}^2\dfrac\omega2\)(\(\operatorname{tri}(t)=1-|t|\)(\(|t|\le1\))、それ以外 \(0\))</li>
+<li><b class="term">周波数 [Hz] で書く場合</b>:\(\omega=2\pi f\) として \(\displaystyle X(f)=\int x(t)e^{-i2\pi ft}dt=\hat x(2\pi f)\)、\(\displaystyle x(t)=\int X(f)e^{i2\pi ft}df\)(\(\frac1{2\pi}\) が消える)</li>
+<li><b class="term">級数との関係</b>:区間 \([-\frac T2,\frac T2]\) の外で \(0\) の関数 \(f\) を周期 \(T\) で延長すると、その複素フーリエ係数は \(c_n=\dfrac1T\hat f(n\omega_0)\)(\(\omega_0=\frac{2\pi}T\))</li>
+</ul>
+</div>
+
+<section class="prob" id="q7-1">
+<div class="phead"><span class="pnum">問 7.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">矩形パルスと sinc</span></div>
+<ol class="sublist">
+<li>幅 \(2a\) の矩形パルス \(\operatorname{rect}_a(t)\) のフーリエ変換が \(\dfrac{2\sin a\omega}\omega\)(\(\omega=0\) では \(2a\))であることを示せ。</li>
+<li>\(\hat f(\omega)=0\) となる \(\omega\) をすべて求め、原点をはさむ最初の2つの零点の間(主ローブ)の幅を答えよ。周波数 [Hz] では最初の零点はどこか(パルス幅 \(\tau=2a\) で表せ)。</li>
+<li>問3.5のパルス列(幅 \(\tau\)、周期 \(T\))のフーリエ係数が、パルス1個のフーリエ変換を \(\omega=n\omega_0\) で拾った値の \(\frac1T\) 倍になっていることを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-2">
+<div class="phead"><span class="pnum">問 7.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">片側指数関数</span></div>
+<p>\(a\gt0\) とし、\(f(t)=e^{-at}u(t)\) を考える。</p>
+<ol class="sublist">
+<li>\(\hat f(\omega)=\dfrac1{a+i\omega}\) を示せ。</li>
+<li>\(|\hat f(\omega)|^2\) と位相 \(\arg\hat f(\omega)\) を求めよ。\(|\hat f|\) が最大値の \(\frac1{\sqrt2}\) 倍になる \(\omega\) を求め、問1.7の RC 回路の周波数応答と比べよ。</li>
+<li>\(\hat f\) の実部と虚部を求め、それぞれが \(\omega\) の偶関数・奇関数であることを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-3">
+<div class="phead"><span class="pnum">問 7.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">両側指数関数と Hz の換算</span></div>
+<p>\(a\gt0\) とし、\(x(t)=e^{-a|t|}\) を考える。</p>
+<ol class="sublist">
+<li>\(t\ge0\) と \(t\lt0\) に分けて、\(\hat x(\omega)=\dfrac{2a}{a^2+\omega^2}\) を示せ。</li>
+<li>周波数 \(f\) [Hz] で表した変換 \(X(f)\) を書け。\(a=1000\) s\(^{-1}\) のとき、\(X(f)\) が \(X(0)\) の半分になる周波数を求めよ。</li>
+<li>反転公式 \(\displaystyle x(t)=\frac1{2\pi}\int\hat x(\omega)e^{i\omega t}d\omega\) を \(\omega=2\pi f\) で書き換えると、\(\displaystyle x(t)=\int X(f)e^{i2\pi ft}df\) になることを示せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-4">
+<div class="phead"><span class="pnum">問 7.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">ガウス関数のフーリエ変換</span></div>
+<p>\(a\gt0\) とし、\(f(t)=e^{-at^2}\)、\(F(\omega)=\hat f(\omega)\) とおく。\(\displaystyle\int_{-\infty}^{\infty}e^{-at^2}dt=\sqrt{\frac\pi a}\)(『微分積分・最適化』第10章のガウス積分)と、\(\omega\) についての微分を積分の中に入れてよいことを認める。</p>
+<ol class="sublist">
+<li>\(F(0)\) を求めよ。</li>
+<li>\(F'(\omega)=\displaystyle\int(-it)e^{-at^2}e^{-i\omega t}dt\) を部分積分して、\(F'(\omega)=-\dfrac\omega{2a}F(\omega)\) を示せ。この微分方程式を解いて \(F(\omega)=\sqrt{\dfrac\pi a}\,e^{-\omega^2/(4a)}\) を導け。</li>
+<li>\(a=\frac12\) のとき \(F\) を書き、ガウス関数がフーリエ変換で(定数倍を除いて)自分自身に移ることを確かめよ。\(a\) を大きくする(時間の幅を狭くする)と、\(F\) の幅はどうなるか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-5">
+<div class="phead"><span class="pnum">問 7.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">三角パルスと sinc²</span></div>
+<ol class="sublist">
+<li>三角パルス \(\operatorname{tri}(t)\) のフーリエ変換を定義から計算し、\(\dfrac{2(1-\cos\omega)}{\omega^2}=\operatorname{sinc}^2\dfrac\omega2\) となることを示せ。</li>
+<li>\(\operatorname{rect}_{1/2}\) のフーリエ変換と比べ、\(\widehat{\operatorname{tri}}=\bigl(\widehat{\operatorname{rect}_{1/2}}\bigr)^2\) であることを確かめよ。</li>
+<li>\(|\omega|\to\infty\) での \(|\widehat{\operatorname{rect}_a}|\) と \(|\widehat{\operatorname{tri}}|\) の減り方を比べ、問4.8と同じ「滑らかさと減衰」の関係が成り立っていることを説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-6">
+<div class="phead"><span class="pnum">問 7.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">フーリエ級数からフーリエ変換へ</span></div>
+<p>\(f\) を区間 \([-\frac{T_0}2,\frac{T_0}2]\) の外で \(0\) の関数とし、\(T\gt T_0\) について、\(f\) を周期 \(T\) で延長した関数を \(f_T\) とする。</p>
+<ol class="sublist">
+<li>\(f_T\) の複素フーリエ係数が \(c_n=\dfrac1T\hat f(n\omega_0)\)(\(\omega_0=\frac{2\pi}T\))であることを示せ。</li>
+<li>\(f_T(t)=\sum c_ne^{in\omega_0t}\) を \(\displaystyle\frac1{2\pi}\sum_n\hat f(n\omega_0)e^{in\omega_0t}\,\omega_0\) と書き直し、\(T\to\infty\) でこれが反転公式の積分に近づくことを、リーマン和の考え方で説明せよ(厳密な証明は求めない)。</li>
+<li>\(f=\operatorname{rect}_a\) のとき、\(Tc_n\) を \(\omega=n\omega_0\) の位置に並べた図を、\(T=4a\) と \(T=8a\) について比べよ(\(n=0,\pm1,\pm2\) の値を求めよ)。周期を長くすると何が変わり、何が変わらないか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-7">
+<div class="phead"><span class="pnum">問 7.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">反転公式とディリクレ積分</span></div>
+<ol class="sublist">
+<li>\(\operatorname{rect}_a\) に反転公式を \(t=0\) で使い、\(\displaystyle\int_{-\infty}^{\infty}\frac{\sin a\omega}\omega\,d\omega=\pi\)、したがって \(\displaystyle\int_0^\infty\frac{\sin x}x\,dx=\frac\pi2\) を導け。</li>
+<li>跳びの点 \(t=a\) で反転積分の値が \(\frac12\) になることを、(1) の結果を使って直接確かめよ。(ヒント:\(e^{ia\omega}=\cos a\omega+i\sin a\omega\) とし、対称な範囲 \([-W,W]\) で積分すると奇関数の部分は消える。)</li>
+<li>\(\displaystyle\int_0^\infty\Bigl|\frac{\sin x}x\Bigr|dx=\infty\) を示せ。(1) の積分がどのような意味で収束しているかを述べ、\(\widehat{\operatorname{rect}_a}\) が積分可能でないことが反転公式の使い方にどう影響するかを説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q7-8">
+<div class="phead"><span class="pnum">問 7.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">パルス幅と帯域幅</span></div>
+<p>幅 \(\tau\)、高さ \(1\) の矩形パルス \(x(t)\)(\(|t|\le\frac\tau2\) で \(1\))を考え、周波数は Hz で表す。</p>
+<ol class="sublist">
+<li>\(X(f)=\dfrac{\sin\pi f\tau}{\pi f}\) を示し、最初の零点の周波数を求めよ。\(\tau=1\) µs と \(\tau=1\) ms ではそれぞれ何 Hz か。</li>
+<li>1秒あたり \(R\) 個のパルスを、幅 \(\tau=\frac1R\) で送るとする。最初の零点で測った帯域幅は \(R\) とどんな関係にあるか。伝送速度を2倍にすると必要な帯域はどうなるか。</li>
+<li>\(|X(f)|\le\dfrac1{\pi|f|}\) を示し、\(X(f)\) が \(0\) になるのは \(f=\frac k\tau\)(\(k\ne0\))だけであることを確かめよ。この結果から、時間的に有限な信号には「ある周波数より上では完全に \(0\)」という帯域の上限がないことを説明し、実用上の帯域幅の定義を2つ挙げよ。また、振幅が最大値の \(\frac1{\sqrt2}\) になる(\(-3\) dB の)周波数は約 \(\frac{0.443}\tau\) であることを、\(\frac{\sin x}x=\frac1{\sqrt2}\) の解 \(x\approx1.392\) を確かめて示せ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>矩形・指数・ガウス・三角のフーリエ変換を定義から計算できる</li>
+<li>\(\omega\) と \(f\) [Hz] の換算を、式でも帯域の読み取りでも間違えずに行える</li>
+<li>フーリエ級数の係数が、1周期分の関数のフーリエ変換の標本であることを説明できる</li>
+<li>反転公式を連続な点と跳びの点で使い分け、ディリクレ積分の値を導ける</li>
+<li>パルスの時間幅と帯域幅が反比例すること、時間的に有限な信号の帯域は有限にならないことを説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch8">
+<p class="chnum">第8章</p>
+<h2>フーリエ変換の性質</h2>
+<p class="chsub">— 計算せずに変換を読む</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>フーリエ変換を毎回定義どおりに積分していては、実際の信号の解析は進みません。「時間をずらすと位相が回る」「時間を縮めると周波数が伸びる」「微分は \(i\omega\) を掛けること」「エネルギーは時間で測っても周波数で測っても同じ」— こうした性質を使えば、少数の基本の変換対から、多くの変換を計算せずに組み立てられます。さらに性質そのものが、信号処理の設計の言葉になっています。変調は周波数の平行移動、遅延は直線的な位相、帯域幅の見積もりはエネルギーの配分です。この章で、フーリエ変換を「読む」力をつけます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>推移・伸縮・変調・微分の性質を導き、既知の変換対から新しい変換を求められる</li>
+<li>実数値の信号のスペクトルの対称性を説明できる</li>
+<li>双対性を使って、変換と逆変換の役割を入れ替えられる</li>
+<li>パーセバルの等式で、エネルギーを周波数の側から計算し、広義積分の値を求められる</li>
+<li>位相の傾き(群遅延)が信号の遅れを表すことを、狭帯域信号で説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">推移</b>:\(f(t-t_0)\leftrightarrow e^{-i\omega t_0}\hat f(\omega)\)。<b class="term">変調</b>:\(e^{i\omega_0t}f(t)\leftrightarrow\hat f(\omega-\omega_0)\)、\(f(t)\cos\omega_0t\leftrightarrow\frac12\bigl(\hat f(\omega-\omega_0)+\hat f(\omega+\omega_0)\bigr)\)</li>
+<li><b class="term">伸縮</b>:\(f(ct)\leftrightarrow\dfrac1{|c|}\hat f\Bigl(\dfrac\omega c\Bigr)\)(\(c\ne0\))。時間を縮めると周波数が伸び、高さが下がる</li>
+<li><b class="term">微分とモーメント</b>:\(f'\leftrightarrow i\omega\hat f\)(\(f,f'\) が積分可能で \(|t|\to\infty\) で \(f\to0\))。\(tf(t)\leftrightarrow i\hat f'(\omega)\)(\(\int|tf|\,dt\lt\infty\))。\(\hat f(0)=\int f\,dt\)</li>
+<li><b class="term">双対性</b>:\(f\leftrightarrow\hat f\) なら \(\hat f(t)\leftrightarrow2\pi f(-\omega)\)</li>
+<li><b class="term">実数値の信号</b>:\(\hat f(-\omega)=\overline{\hat f(\omega)}\)。実の偶関数なら \(\hat f\) は実の偶関数、実の奇関数なら \(\hat f\) は純虚数の奇関数</li>
+<li><b class="term">パーセバルの等式(プランシュレルの定理)</b>:\(\displaystyle\int_{-\infty}^{\infty}|f(t)|^2dt=\frac1{2\pi}\int_{-\infty}^{\infty}|\hat f(\omega)|^2d\omega\)。一般に \(\displaystyle\int f\bar g\,dt=\frac1{2\pi}\int\hat f\,\overline{\hat g}\,d\omega\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q8-1">
+<div class="phead"><span class="pnum">問 8.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">推移と伸縮</span></div>
+<ol class="sublist">
+<li>区間 \([0,2a]\) で \(1\)、それ以外で \(0\) の関数 \(g\) は \(g(t)=\operatorname{rect}_a(t-a)\) と書ける。問7.1と推移の性質から \(\hat g\) を求め、\(|\hat g|=|\widehat{\operatorname{rect}_a}|\) であることを確かめよ。</li>
+<li>問7.3の \(e^{-|t|}\leftrightarrow\frac2{1+\omega^2}\) と伸縮の性質から、\(e^{-2|t|}\) のフーリエ変換を求め、問7.3の式(\(a=2\))と一致することを確かめよ。</li>
+<li>伸縮の性質 \(f(ct)\leftrightarrow\frac1{|c|}\hat f(\frac\omega c)\) を、\(c\gt0\) と \(c\lt0\) に分けて置換積分で示せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-2">
+<div class="phead"><span class="pnum">問 8.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">変調と周波数の平行移動</span></div>
+<ol class="sublist">
+<li>\(e^{i\omega_0t}f(t)\leftrightarrow\hat f(\omega-\omega_0)\) を示し、これから \(f(t)\cos\omega_0t\leftrightarrow\frac12\bigl(\hat f(\omega-\omega_0)+\hat f(\omega+\omega_0)\bigr)\) を導け。</li>
+<li>\(|t|\le a\) の間だけ鳴る正弦波 \(x(t)=\operatorname{rect}_a(t)\cos\omega_0t\)(トーンバースト)のフーリエ変換を求めよ。\(\omega=\pm\omega_0\) での値はいくらか。</li>
+<li>\(1\) kHz の音を \(10\) ms だけ鳴らしたとき(\(2a=10\) ms)、スペクトルの主ローブは何 Hz から何 Hz までか(正の周波数の側で答えよ)。鳴らす時間を短くすると、スペクトルはどう変わるか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-3">
+<div class="phead"><span class="pnum">問 8.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">実数値の信号の対称性</span></div>
+<ol class="sublist">
+<li>\(f\) が実数値なら \(\hat f(-\omega)=\overline{\hat f(\omega)}\) であることを示せ。</li>
+<li>\(f\) が実数値の偶関数なら \(\hat f\) は実数値の偶関数、実数値の奇関数なら \(\hat f\) は純虚数の奇関数であることを示せ。問7.1〜7.3の結果と照合せよ。</li>
+<li>実数値の信号では、振幅スペクトル \(|\hat f|\) が偶関数、位相スペクトル \(\arg\hat f\) が奇関数であることを示し、\(\omega\ge0\) の側だけを見れば十分である理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-4">
+<div class="phead"><span class="pnum">問 8.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">双対性</span></div>
+<ol class="sublist">
+<li>\(f\) と \(\hat f\) がともに積分可能で \(f\) が連続なとき、反転公式を使って、\(g(t)=\hat f(t)\) のフーリエ変換が \(\hat g(\omega)=2\pi f(-\omega)\) であることを示せ。</li>
+<li>\(e^{-|t|}\leftrightarrow\frac2{1+\omega^2}\) と (1) から、\(\dfrac1{1+t^2}\) のフーリエ変換を求めよ。</li>
+<li>\(\operatorname{rect}_W\leftrightarrow\frac{2\sin W\omega}\omega\) に双対性を(形式的に)使って、\(h(t)=\dfrac{\sin Wt}{\pi t}\) のフーリエ変換が \(\operatorname{rect}_W(\omega)\)(\(|\omega|\lt W\) で \(1\)、\(|\omega|\gt W\) で \(0\))であることを導け。\(h\) はどんなフィルタのインパルス応答と言えるか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-5">
+<div class="phead"><span class="pnum">問 8.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">微分則とモーメント・特性関数</span></div>
+<ol class="sublist">
+<li>\(f,f'\) が積分可能で \(|t|\to\infty\) で \(f(t)\to0\) なら、\(\widehat{f'}(\omega)=i\omega\hat f(\omega)\) であることを部分積分で示せ。</li>
+<li>\(\int|tf(t)|\,dt\lt\infty\) なら \(\widehat{tf(t)}(\omega)=i\hat f'(\omega)\) であることを示せ(\(\omega\) についての微分を積分の中に入れてよい)。これを使って \(te^{-t^2/2}\) のフーリエ変換を求め、\(te^{-t^2/2}=-\frac{d}{dt}e^{-t^2/2}\) と (1) から求めた結果と一致することを確かめよ。</li>
+<li>確率密度 \(p(x)\) をもつ確率変数 \(X\) の特性関数は \(\varphi(s)=E[e^{isX}]=\int p(x)e^{isx}dx=\hat p(-s)\) である(『確率・統計』第18章)。(2) を使って \(E[X]=-i\varphi'(0)\)、\(E[X^2]=-\varphi''(0)\) を導き、標準正規分布(\(\varphi(s)=e^{-s^2/2}\))で \(E[X]=0\)、\(E[X^2]=1\) を確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-6">
+<div class="phead"><span class="pnum">問 8.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">パーセバルの等式で積分を計算する</span></div>
+<ol class="sublist">
+<li>反転公式を代入して積分の順序を(形式的に)交換し、\(\displaystyle\int|f|^2dt=\frac1{2\pi}\int|\hat f|^2d\omega\) を導け。</li>
+<li>\(f=e^{-a|t|}\)(\(a\gt0\))にパーセバルの等式を使って、\(\displaystyle\int_{-\infty}^{\infty}\frac{d\omega}{(a^2+\omega^2)^2}=\frac\pi{2a^3}\) を導け。</li>
+<li>\(f=\operatorname{rect}_a\) にパーセバルの等式を使って、\(\displaystyle\int_{-\infty}^{\infty}\frac{\sin^2x}{x^2}\,dx=\pi\) を導け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-7">
+<div class="phead"><span class="pnum">問 8.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">直線的な位相と群遅延</span></div>
+<p>線形なシステムの周波数応答を \(H(\omega)=|H(\omega)|e^{i\theta(\omega)}\) とし、出力のフーリエ変換は \(\hat y=H\hat x\) で与えられるとする(第9章)。</p>
+<ol class="sublist">
+<li>\(H(\omega)=e^{-i\omega t_0}\) なら出力は \(y(t)=x(t-t_0)\) であることを示せ。このとき位相 \(\theta(\omega)\) は \(\omega\) の1次関数で、\(-\dfrac{d\theta}{d\omega}=t_0\) であることを確かめよ。</li>
+<li>\(m(t)\) を、\(|\omega|\ge B\) で \(\hat m(\omega)=0\) となる実数値の信号とし、\(\omega_c\gg B\) として \(x(t)=m(t)\cos\omega_ct\)(狭帯域信号)を考える。\(|H|=1\) で、\(|\omega-\omega_c|\lt B\) では \(\theta(\omega)=\theta_c-\tau_g(\omega-\omega_c)\)(\(\theta_c,\tau_g\) は定数。\(\omega\lt0\) の側は \(\theta(-\omega)=-\theta(\omega)\))とする。出力が \(y(t)=m(t-\tau_g)\cos(\omega_ct+\theta_c)\) となることを示せ。</li>
+<li>(2) で、包絡線 \(m\) の遅れ \(\tau_g=-\theta'(\omega_c)\)(群遅延)と、搬送波の位相の遅れが別物であることを説明せよ。群遅延が周波数によって違う(位相が直線的でない)と、パルスの波形がどうなるかを述べ、音響機器やケーブルでこれが問題になる理由を説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q8-8">
+<div class="phead"><span class="pnum">問 8.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">帯域内のエネルギーの割合</span></div>
+<ol class="sublist">
+<li>\(f=e^{-a|t|}\)(\(a\gt0\))のエネルギーのうち、\(|\omega|\le W\) の成分が担う割合が \(\displaystyle\frac2\pi\Bigl(\arctan r+\frac r{1+r^2}\Bigr)\)(\(r=\frac Wa\))であることを示せ。(\(\displaystyle\int_0^W\frac{d\omega}{(a^2+\omega^2)^2}=\frac1{2a^3}\Bigl(\arctan\frac Wa+\frac{aW}{a^2+W^2}\Bigr)\) を用いてよい。)</li>
+<li>\(W=a\) のときの割合を求めよ。エネルギーの99%を含む帯域は \(W\approx3.37a\) であることを、\(r=3.37\) を代入して確かめよ(\(\arctan3.37\approx1.2823\))。</li>
+<li>幅 \(2a\) の矩形パルスについて、主ローブ \(|\omega|\le\frac\pi a\) に含まれるエネルギーの割合が \(\displaystyle\frac2\pi\int_0^\pi\frac{\sin^2u}{u^2}du\) であることを示せ。さらに部分積分で \(\displaystyle\int_0^\pi\frac{\sin^2u}{u^2}du=\int_0^{2\pi}\frac{\sin v}v\,dv\) を確かめ、\(\displaystyle\int_0^{2\pi}\frac{\sin v}v\,dv\approx1.4182\) を用いて割合を求めよ。</li>
+<li>(2)(3) の結果を比べ、「最初の零点までの幅」と「エネルギーの何%を含む幅」という帯域幅の定義の違いについて述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>推移・伸縮・変調・微分の性質を、置換積分や部分積分で導ける</li>
+<li>実数値の信号のスペクトルの対称性から、\(\omega\ge0\) だけを見ればよい理由を説明できる</li>
+<li>双対性を使って、sinc 関数と矩形の役割を入れ替えられる</li>
+<li>パーセバルの等式を使って、エネルギーを周波数の側で計算し、広義積分の値を求められる</li>
+<li>群遅延が包絡線の遅れを表すこと、位相が直線的でないと波形がひずむことを説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch9">
+<p class="chnum">第9章</p>
+<h2>畳み込みと線形時不変システム</h2>
+<p class="chsub">— フィルタを周波数で設計する</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>イコライザ、部屋の残響、スピーカー、通信路、カメラのレンズのぼけ — これらはどれも、入力を線形に変換し、その性質が時間(や位置)によって変わらない<b>線形時不変(LTI)システム</b>として扱えます。LTI システムの出力は、入力と「インパルス応答」の<b>畳み込み</b>で書けます。そして複素指数関数 \(e^{i\omega t}\) はすべての LTI システムの固有関数なので、周波数の側では畳み込みが単なる掛け算になります(<b>畳み込み定理</b>)。フィルタの設計とは、周波数ごとの増幅率 \(H(\omega)\) を選ぶことにほかなりません。この章は、第1章の RC 回路から始まった「周波数で考える」方法の完成形です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>畳み込みを定義どおりに計算し、畳み込み定理で検算できる</li>
+<li>システムが線形か・時不変かを判定し、LTI システムをインパルス応答で表せる</li>
+<li>周波数応答 \(H(\omega)\) の意味を、固有関数の言葉で説明できる</li>
+<li>移動平均・ガウスぼかし・2次系の共振など、具体的なフィルタの特性を求めて解釈できる</li>
+<li>理想低域通過フィルタが実現できない理由を、因果性と安定性から説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">畳み込み</b>:\(\displaystyle(f*g)(t)=\int_{-\infty}^{\infty}f(\tau)g(t-\tau)\,d\tau\)。可換(\(f*g=g*f\))、結合的、線形。\(f(t-t_0)*g=(f*g)(t-t_0)\)</li>
+<li><b class="term">畳み込み定理</b>:\(\widehat{f*g}=\hat f\,\hat g\)。逆に、積の変換は \(\widehat{fg}=\dfrac1{2\pi}\hat f*\hat g\)</li>
+<li><b class="term">LTI システム</b>:線形で、入力を \(t_0\) 遅らせると出力も \(t_0\) 遅れるシステム。出力は \(y=h*x\)(\(h\) は<b>インパルス応答</b>:ごく短い単位面積のパルスを入れたときの出力。厳密にはデルタ関数への応答、第10章)</li>
+<li><b class="term">周波数応答</b>:\(H(\omega)=\hat h(\omega)\)。入力 \(e^{i\omega t}\) に対する出力は \(H(\omega)e^{i\omega t}\)。\(h\) が実数値なら、\(\cos\omega t\) に対する出力は \(|H(\omega)|\cos(\omega t+\arg H(\omega))\)。\(\hat y=H\hat x\)</li>
+<li><b class="term">因果性と安定性</b>:\(t\lt0\) で \(h(t)=0\) なら因果的(出力は過去と現在の入力だけで決まる)。\(\int|h|\,dt\lt\infty\) なら、有界な入力に対して出力も有界(BIBO 安定)</li>
+<li><b class="term">微分方程式から</b>:安定な \(a_ny^{(n)}+\cdots+a_1y'+a_0y=x\) の周波数応答は \(H(\omega)=\dfrac1{a_n(i\omega)^n+\cdots+a_1(i\omega)+a_0}\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q9-1">
+<div class="phead"><span class="pnum">問 9.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">矩形の畳み込み</span></div>
+<ol class="sublist">
+<li>\(\operatorname{rect}_{1/2}*\operatorname{rect}_{1/2}\) を定義どおりに計算し、三角パルス \(\operatorname{tri}(t)\) になることを示せ。(ヒント:\(t\) を固定すると、被積分関数は2つの区間が重なる部分でだけ \(1\) になる。)</li>
+<li>畳み込み定理と問7.5の結果を使って、(1) を周波数の側から確かめよ。</li>
+<li>「幅 \(1\) の移動平均(箱型のフィルタ)を2回かけると、三角形の重みの平均になる」ことを、(1) から説明せよ。独立な2つの一様乱数の和の密度が三角形になること(『確率・統計』第5章)との関係を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-2">
+<div class="phead"><span class="pnum">問 9.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">指数関数の畳み込み</span></div>
+<p>\(a,b\gt0\) とする。</p>
+<ol class="sublist">
+<li>\(a\ne b\) のとき、\(\bigl(e^{-at}u(t)\bigr)*\bigl(e^{-bt}u(t)\bigr)=\dfrac{e^{-at}-e^{-bt}}{b-a}u(t)\) を示せ。</li>
+<li>部分分数分解 \(\dfrac1{(a+i\omega)(b+i\omega)}=\dfrac1{b-a}\Bigl(\dfrac1{a+i\omega}-\dfrac1{b+i\omega}\Bigr)\) と畳み込み定理を使って、(1) を確かめよ。</li>
+<li>\(a=b\) のときの畳み込みを求めよ。これを使って、レート \(\lambda\) の独立な2つの指数分布の和の密度を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-3">
+<div class="phead"><span class="pnum">問 9.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">線形時不変性の判定</span></div>
+<p>入力 \(x(t)\) から出力 \(y(t)\) を作る次のシステムを考える。<br>(a) \(y(t)=x(t-1)\)  (b) \(y(t)=x(t)^2\)  (c) \(y(t)=t\,x(t)\)  (d) \(\displaystyle y(t)=\int_{t-1}^{t}x(s)\,ds\)  (e) \(y(t)=x(2t)\)</p>
+<ol class="sublist">
+<li>それぞれが線形か、時不変かを判定せよ(成り立たないものは反例を示せ)。</li>
+<li>(d) が \(y=h*x\) と書けることを示し、インパルス応答 \(h\) を求めよ。(d) は因果的か。</li>
+<li>(a) と (d) の周波数応答 \(H(\omega)\) を求めよ。(入力 \(e^{i\omega t}\) を代入するとよい。)</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-4">
+<div class="phead"><span class="pnum">問 9.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">固有関数と周波数応答</span></div>
+<p>\(h\) は積分可能とし、LTI システム \(y=h*x\) を考える。</p>
+<ol class="sublist">
+<li>入力 \(x(t)=e^{i\omega t}\) に対する出力が \(H(\omega)e^{i\omega t}\)(\(H=\hat h\))であることを示せ。この意味で、\(e^{i\omega t}\) が LTI システムの「固有関数」であることを説明せよ。</li>
+<li>\(h\) が実数値なら、入力 \(\cos\omega t\) に対する出力が \(|H(\omega)|\cos\bigl(\omega t+\arg H(\omega)\bigr)\) であることを示せ。</li>
+<li>2つの LTI システム \(h_1,h_2\) を直列につないだシステムの周波数応答が \(H_1H_2\) であることを示し、つなぐ順序を入れ替えても全体が変わらない理由を述べよ。問1.8の非線形な増幅器と対比して、LTI システムが入力に無い周波数を作り出さないことを説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-5">
+<div class="phead"><span class="pnum">問 9.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">移動平均と電源ハムの除去</span></div>
+<p>直前の \(T\) 秒間の平均をとるシステム \(\displaystyle y(t)=\frac1T\int_{t-T}^{t}x(s)\,ds\) を考える。</p>
+<ol class="sublist">
+<li>インパルス応答 \(h\) と周波数応答 \(H(\omega)=e^{-i\omega T/2}\dfrac{\sin(\omega T/2)}{\omega T/2}\) を求めよ。</li>
+<li>\(|H|\) が \(0\) になる周波数 [Hz] を求めよ。測定器の信号に混じる電源の雑音(ハム)を除くため、\(T=20\) ms とすると何が起きるか。東日本(50 Hz)と西日本(60 Hz)のどちらでも使えるようにするには、\(T\) をどう選べばよいか。</li>
+<li>\(T=100\) ms のとき、測りたい \(1\) Hz と \(5\) Hz の信号の振幅はそれぞれ何倍になるか(\(\frac{\sin0.1\pi}{0.1\pi}\approx0.984\)、\(\frac{\sin0.5\pi}{0.5\pi}\approx0.637\))。\(T\) を長くすることの利点と欠点を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-6">
+<div class="phead"><span class="pnum">問 9.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">ガウスぼかしの合成</span></div>
+<p>\(\sigma\gt0\) について \(g_\sigma(t)=\dfrac1{\sqrt{2\pi}\,\sigma}e^{-t^2/(2\sigma^2)}\)(面積 \(1\) のガウス関数)とする。</p>
+<ol class="sublist">
+<li>問7.4を使って \(\hat g_\sigma(\omega)=e^{-\sigma^2\omega^2/2}\) を示せ。</li>
+<li>畳み込み定理を使って \(g_{\sigma_1}*g_{\sigma_2}=g_\sigma\)、\(\sigma=\sqrt{\sigma_1^2+\sigma_2^2}\) を示せ。</li>
+<li>画像に \(\sigma=2\) 画素のガウスぼかしを2回かけるのは、何画素のぼかしを1回かけるのと同じか。また、この結果が「独立な正規分布に従う確率変数の和は正規分布に従い、分散は足し算になる」ことと同じ内容である理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-7">
+<div class="phead"><span class="pnum">問 9.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">2次系の共振</span></div>
+<p>ばねとおもりと減衰器からなる振動系(スピーカーの振動板やセンサーのモデル)を、角周波数を規格化して \(y''+2\zeta y'+y=x\)(\(0\lt\zeta\lt\frac1{\sqrt2}\))で表す。</p>
+<ol class="sublist">
+<li>周波数応答 \(H(\omega)\) を求めよ。</li>
+<li>\(|H(\omega)|^2\) の分母を \(\omega^2\) の2次関数とみて、\(|H|\) が最大になる \(\omega\) と最大値を求めよ。</li>
+<li>\(\zeta=0.05\) のとき、最大値と \(\omega=1\) での値を求めよ。減衰の小さい系に共振周波数の近くの成分が入ると何が起きるかを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-8">
+<div class="phead"><span class="pnum">問 9.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">理想低域通過フィルタは実現できない</span></div>
+<p>周波数応答が \(H(\omega)=\operatorname{rect}_W(\omega)\)(\(|\omega|\lt W\) を通し、それ以外を完全に除く)の理想低域通過フィルタを考える。問8.4より、インパルス応答は \(h(t)=\dfrac{\sin Wt}{\pi t}\) である。</p>
+<ol class="sublist">
+<li>\(h\) は因果的でないことを示し、それが「入力が来る前に出力が出る」ことを意味する理由を説明せよ。</li>
+<li>\(\int|h|\,dt=\infty\) を示せ(問7.7(3) を参照)。さらに、\(|x|\le1\) を満たす入力のうち、\(t=0\) での出力 \(|y(0)|\) をいくらでも大きくできるものがあることを示し、このフィルタが BIBO 安定でないことを結論せよ。(ヒント:\(|t|\le T\) で \(x_T(t)=\operatorname{sgn}h(-t)\)、それ以外で \(0\) とする。)</li>
+<li>実際のフィルタは、理想特性をどのように近似して作られるか。遅延・打ち切り・窓関数の考え方(問5.7・5.8)を使って説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q9-9">
+<div class="phead"><span class="pnum">問 9.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">全直線の熱方程式とガウス核</span></div>
+<p>熱方程式 \(u_t=\kappa u_{xx}\)(\(-\infty\lt x\lt\infty\)、\(t\gt0\))を、初期条件 \(u(x,0)=f(x)\) で解く。\(x\) についてのフーリエ変換を \(\hat u(\xi,t)=\int u(x,t)e^{-i\xi x}dx\) とし、必要な微分と積分の交換は許されるものとする。</p>
+<ol class="sublist">
+<li>\(\hat u_t=-\kappa\xi^2\hat u\) を示し、\(\hat u(\xi,t)=e^{-\kappa\xi^2t}\hat f(\xi)\) を導け。</li>
+<li>問9.6を使って、\(u(\cdot,t)=G_t*f\)、\(G_t(x)=\dfrac1{\sqrt{4\pi\kappa t}}e^{-x^2/(4\kappa t)}\) を示せ。</li>
+<li>\(G_t*G_s=G_{t+s}\) を示し、その意味を述べよ。</li>
+<li>(1)〜(3) の結果を、(i) 細かい模様ほど速く消えること(問6.2と比べよ)、(ii) 画像のガウスぼかし、(iii) 粒子のランダムな拡散(\(G_t\) は分散 \(2\kappa t\) の正規分布の密度)の3つの見方で解釈せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>畳み込みを定義どおりに計算でき、畳み込み定理で検算できる</li>
+<li>線形性と時不変性を判定し、LTI システムがインパルス応答との畳み込みで表されることを説明できる</li>
+<li>複素指数関数が LTI システムの固有関数であることから、周波数応答の意味を説明できる</li>
+<li>移動平均・ガウスぼかし・2次系の周波数特性を求め、応用の言葉で解釈できる</li>
+<li>理想低域通過フィルタが因果的でも安定でもないことを示せる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch10">
+<p class="chnum">第10章</p>
+<h2>デルタ関数と超関数の入口</h2>
+<p class="chsub">— 周期信号と標本化への橋</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>定数や正弦波はいつまでも続くので積分可能でなく、第7章の定義ではフーリエ変換が計算できません。しかし直観的には、\(\cos\omega_0t\) のスペクトルは \(\pm\omega_0\) の「1点に集中した」ものであるはずです。この「1点に集中した、面積 \(1\) の無限に鋭いパルス」を表すのが<b>デルタ関数</b> \(\delta(t)\) です。\(\delta\) は普通の意味の関数ではなく、「ほかの関数に掛けて積分すると、その関数の1点の値を取り出す」という働きとして定義されます(<b>超関数</b>)。\(\delta\) を使うと、インパルス応答の意味がはっきりし、周期信号の線スペクトルがフーリエ変換の枠に収まり、標本化(第12章)を「くし形関数との掛け算」として扱えるようになります。連続と離散をつなぐ橋がこの章です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>\(\delta\) のふるい分け性を使って、積分や畳み込みを計算できる</li>
+<li>定数・正弦波・周期信号のフーリエ変換を、\(\delta\) を使って書ける</li>
+<li>\(\delta\) を「面積 \(1\) で幅が \(0\) に近づく関数」の極限として理解し、短いパルスのスペクトルが平坦になる理由を説明できる</li>
+<li>単位ステップの微分が \(\delta\) であることを部分積分の意味で説明し、インパルス応答とステップ応答を結びつけられる</li>
+<li>くし形関数のフーリエ変換とポアソンの和公式を導き、時間の周期化と周波数の標本化の対応を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">デルタ関数</b>:連続な関数 \(\varphi\) に対して \(\displaystyle\int_{-\infty}^{\infty}\delta(t-t_0)\varphi(t)\,dt=\varphi(t_0)\)(<b>ふるい分け性</b>)。「\(t\ne0\) で \(0\)、全体の積分が \(1\)」は直観的な言い換えで、\(\delta\) は普通の関数ではない。本書では \(\delta\) を含む計算をこの性質にもとづいて形式的に行う</li>
+<li><b class="term">性質</b>:\(\delta(ct)=\dfrac{\delta(t)}{|c|}\)(\(c\ne0\))。\(f(t)\delta(t-t_0)=f(t_0)\delta(t-t_0)\)(\(f\) は連続)。\(f*\delta=f\)、\(f*\delta(\cdot-t_0)=f(t-t_0)\)</li>
+<li><b class="term">変換対</b>:\(\delta(t-t_0)\leftrightarrow e^{-i\omega t_0}\)(特に \(\hat\delta=1\))、\(1\leftrightarrow2\pi\delta(\omega)\)、\(e^{i\omega_0t}\leftrightarrow2\pi\delta(\omega-\omega_0)\)、\(\cos\omega_0t\leftrightarrow\pi\bigl(\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\bigr)\)</li>
+<li><b class="term">周期信号</b>:\(\displaystyle f(t)=\sum_nc_ne^{in\omega_0t}\ \leftrightarrow\ \hat f(\omega)=2\pi\sum_nc_n\delta(\omega-n\omega_0)\)</li>
+<li><b class="term">くし形関数</b>:\(\displaystyle\operatorname{comb}_T(t)=\sum_{n=-\infty}^{\infty}\delta(t-nT)\ \leftrightarrow\ \omega_0\operatorname{comb}_{\omega_0}(\omega)=\omega_0\sum_{k=-\infty}^{\infty}\delta(\omega-k\omega_0)\)(\(\omega_0=\frac{2\pi}T\))</li>
+<li><b class="term">ポアソンの和公式</b>:\(\displaystyle\sum_{n=-\infty}^{\infty}f(nT)=\frac1T\sum_{k=-\infty}^{\infty}\hat f\Bigl(\frac{2\pi k}T\Bigr)\)(\(f\) と \(\hat f\) が十分に速く減衰するとき)</li>
+<li><b class="term">ステップの微分</b>:\(u'=\delta\)。速く減衰する滑らかな \(\varphi\) について \(\int u'\varphi\,dt=-\int u\varphi'\,dt=\varphi(0)\) という意味</li>
+</ul>
+</div>
+
+<section class="prob" id="q10-1">
+<div class="phead"><span class="pnum">問 10.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">ふるい分け性</span></div>
+<ol class="sublist">
+<li>次の積分を求めよ:(a) \(\displaystyle\int(t^2+1)\delta(t-2)\,dt\)  (b) \(\displaystyle\int\cos t\,\delta(t-\pi)\,dt\)  (c) \(\displaystyle\int_0^1e^t\delta(t-2)\,dt\)  (d) \(\displaystyle\int e^{-t}\delta(2t-1)\,dt\)</li>
+<li>\(\bigl(f*\delta(\cdot-t_0)\bigr)(t)=f(t-t_0)\) を示せ。これを使って、問9.3(a) の遅延 \(y(t)=x(t-1)\) のインパルス応答を \(\delta\) で書け。</li>
+<li>\(\delta(t-t_0)\) のフーリエ変換が \(e^{-i\omega t_0}\)、特に \(\hat\delta=1\) であることを示せ。「スペクトルが平坦」であることの意味を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-2">
+<div class="phead"><span class="pnum">問 10.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">正弦波と定数の線スペクトル</span></div>
+<ol class="sublist">
+<li>反転公式に \(\hat f(\omega)=2\pi\delta(\omega-\omega_0)\) を(形式的に)代入して、\(e^{i\omega_0t}\) が得られることを確かめよ。これを \(e^{i\omega_0t}\leftrightarrow2\pi\delta(\omega-\omega_0)\) と読む。</li>
+<li>(1) から、\(1\)、\(\cos\omega_0t\)、\(\sin\omega_0t\) のフーリエ変換を求めよ。</li>
+<li>周期 \(T\) の信号 \(f(t)=\sum c_ne^{in\omega_0t}\) のフーリエ変換が \(2\pi\sum c_n\delta(\omega-n\omega_0)\) であることを示し、問3.1の矩形波(周期 \(2\pi\))について具体的に書け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-3">
+<div class="phead"><span class="pnum">問 10.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">デルタ関数への近似列とインパルス応答の測定</span></div>
+<p>\(\varepsilon\gt0\) について \(g_\varepsilon(t)=\dfrac1{\sqrt{2\pi}\,\varepsilon}e^{-t^2/(2\varepsilon^2)}\)(面積 \(1\) のガウス関数)とする。</p>
+<ol class="sublist">
+<li>有界で連続な \(\varphi\) について、\(\displaystyle\int g_\varepsilon(t)\varphi(t)\,dt\to\varphi(0)\)(\(\varepsilon\to0\))を示せ。(\(t=\varepsilon s\) と置換し、極限と積分の交換を認めてよい。)</li>
+<li>\(\hat g_\varepsilon(\omega)=e^{-\varepsilon^2\omega^2/2}\)(問9.6)が各 \(\omega\) で \(1\) に近づくことを確かめよ。振幅が \(\frac1{\sqrt2}\) に下がる周波数 [Hz] を、\(\varepsilon=1\) ms と \(\varepsilon=10\) µs について求めよ(\(\sqrt{\log2}\approx0.833\))。</li>
+<li>部屋の音響特性(インパルス応答)を、手をたたく・風船を割るといった短く鋭い音を鳴らして録音することで測ることがある。(2) の結果を使ってその理由を説明せよ。また、この方法の弱点を、短いパルスがもつエネルギーの大きさから述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-4">
+<div class="phead"><span class="pnum">問 10.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">ステップの微分とステップ応答</span></div>
+<ol class="sublist">
+<li>滑らかで、\(|t|\to\infty\) で速く \(0\) に近づく \(\varphi\) について、\(\displaystyle\int u(t)\varphi'(t)\,dt=-\varphi(0)\) を示し、これが「\(u'=\delta\)」の意味であることを説明せよ(部分積分の公式 \(\int u'\varphi=-\int u\varphi'\) がそのまま成り立つように \(u'\) を定める)。</li>
+<li>インパルス応答 \(h\) の LTI システムにステップ \(u\) を入れたときの出力(ステップ応答)が \(\displaystyle s(t)=\int_{-\infty}^{t}h(\tau)\,d\tau\) であり、\(s'=h\) となることを示せ。</li>
+<li>RC 回路(\(h(t)=\frac1\tau e^{-t/\tau}u(t)\))のステップ応答を求めよ。出力が最終値の10%から90%に達するまでの時間(立ち上がり時間)\(t_r\) を \(\tau\) で表し、遮断周波数 \(f_c=\frac1{2\pi\tau}\)(問1.7)との積 \(t_rf_c\) がおよそ \(0.35\) になることを示せ(\(\log9\approx2.197\))。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-5">
+<div class="phead"><span class="pnum">問 10.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">くし形関数と周期化</span></div>
+<ol class="sublist">
+<li>くし形関数 \(\operatorname{comb}_T\) を周期 \(T\) の「関数」とみなして、複素フーリエ係数を形式的に計算すると \(c_n=\frac1T\) になることを示せ。</li>
+<li>(1) と問10.2(3) から、\(\widehat{\operatorname{comb}_T}=\omega_0\operatorname{comb}_{\omega_0}\)(\(\omega_0=\frac{2\pi}T\))を導け。時間の間隔 \(T\) を狭くすると、周波数のくしの間隔はどうなるか。</li>
+<li>\(f\) が \([-\frac T2,\frac T2]\) の外で \(0\) なら、\(f*\operatorname{comb}_T\) は \(f\) を周期 \(T\) で延長した関数であることを示せ。畳み込み定理を使ってそのフーリエ変換を求め、問7.6の \(c_n=\frac1T\hat f(n\omega_0)\) と一致することを確かめよ。この結果を「時間の周期化 ↔ 周波数の標本化」と言い表す理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-6">
+<div class="phead"><span class="pnum">問 10.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ポアソンの和公式</span></div>
+<ol class="sublist">
+<li>\(f\) は積分可能とし、\(F(t)=\sum_nf(t+nT)\)(周期 \(T\) の関数)のフーリエ級数が \(t=0\) で \(F(0)\) に収束すると仮定する。\(F\) の複素フーリエ係数が \(\frac1T\hat f\bigl(\frac{2\pi k}T\bigr)\) であることを示し、ポアソンの和公式を導け。</li>
+<li>\(f(t)=e^{-a|t|}\)(\(a\gt0\))、\(T=1\) に適用して、\(\displaystyle\coth\frac a2=\sum_{k=-\infty}^{\infty}\frac{2a}{a^2+4\pi^2k^2}\) を導け。この等式が問4.7(2) の結果と同じ内容であることを確かめよ(\(a=2\pi b\) とおく)。</li>
+<li>\(f(t)=e^{-t^2/2}\)、\(T=1\) に適用すると、\(\displaystyle\sum_{n}e^{-n^2/2}=\sqrt{2\pi}\Bigl(1+2\sum_{k=1}^\infty e^{-2\pi^2k^2}\Bigr)\) となることを示せ。左辺(約 \(2.50662829\))と \(\sqrt{2\pi}\)(約 \(2.50662827\))が小数第7位まで一致する理由を、右辺の \(k\ne0\) の項の大きさ(\(e^{-2\pi^2}\approx2.7\times10^{-9}\))から説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q10-7">
+<div class="phead"><span class="pnum">問 10.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">単位ステップのフーリエ変換</span></div>
+<p>\(u(t)\) は積分可能でないので、\(\varepsilon\gt0\) について \(f_\varepsilon(t)=e^{-\varepsilon t}u(t)\) を考え、\(\varepsilon\to0\) の極限をとる。</p>
+<ol class="sublist">
+<li>\(\hat f_\varepsilon(\omega)=\dfrac\varepsilon{\varepsilon^2+\omega^2}-\dfrac{i\omega}{\varepsilon^2+\omega^2}\) を示せ。</li>
+<li>\(\displaystyle\int\frac\varepsilon{\varepsilon^2+\omega^2}d\omega=\pi\) を示し、有界で連続な \(\varphi\) について \(\displaystyle\int\frac\varepsilon{\varepsilon^2+\omega^2}\varphi(\omega)\,d\omega\to\pi\varphi(0)\) となること(\(\omega=\varepsilon s\) と置換し、極限と積分の交換を認めてよい)から、実部が \(\pi\delta(\omega)\) に近づくことを説明せよ。</li>
+<li>虚部が \(\omega\ne0\) で \(\frac1{i\omega}\) に近づくことを確かめ、\(\hat u(\omega)=\pi\delta(\omega)+\dfrac1{i\omega}\) を導け(\(\frac1{i\omega}\) は \(\omega=0\) の近くを対称に除いた積分の意味で扱う)。\(u=\frac12+\frac12\operatorname{sgn}t\) と、\(\operatorname{sgn}t\leftrightarrow\frac2{i\omega}\)(認めてよい)から得られる結果と一致することを確かめよ。</li>
+<li>積分器 \(\displaystyle y(t)=\int_{-\infty}^{t}x(s)\,ds=(u*x)(t)\) の周波数の側での働きを (3) から読み取れ。微分則 \(\widehat{f'}=i\omega\hat f\) と比べて、\(\pi\hat x(0)\delta(\omega)\) の項が何を表すかを述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>\(\delta\) を「積分で1点の値を取り出す働き」として説明し、ふるい分け性で計算できる</li>
+<li>定数・正弦波・周期信号のフーリエ変換を \(\delta\) で書ける</li>
+<li>短いパルスのスペクトルが平坦になる理由を、\(\delta\) への近似列で説明できる</li>
+<li>インパルス応答・ステップ応答・\(\delta\)・\(u\) の関係を説明できる</li>
+<li>くし形関数の変換とポアソンの和公式を導き、時間の周期化と周波数の標本化の対応を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch11">
+<p class="chnum">第11章</p>
+<h2>時間周波数解析</h2>
+<p class="chsub">— 不確定性原理とスペクトログラム</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>音声や音楽では、周波数の成分が時間とともに変わります(メロディ、母音と子音の移り変わり)。信号全体のフーリエ変換からは「いつ、どの周波数が鳴ったか」が分かりません。そこで信号を短い区間(窓)で切り出してフーリエ変換し、区間をずらしながら並べたものが<b>短時間フーリエ変換(STFT)</b>、その絶対値の2乗を濃淡の画像にしたものが<b>スペクトログラム</b>です。ところが、窓を短くすると時間の分解能は上がる代わりに周波数の分解能は下がります。この取引には越えられない下限があり、それが<b>不確定性原理</b> \(\Delta t\,\Delta\omega\ge\frac12\) です。この章では、窓関数の選び方、音声の倍音とフォルマントの読み方、そして時間と周波数を柔軟に分けるウェーブレットの入口までを扱います。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>信号の時間幅と周波数幅を定義に従って計算できる</li>
+<li>伸縮で幅の積が変わらないことを示し、不確定性原理を証明できる</li>
+<li>有限長の観測によるスペクトルのにじみと、窓関数による改善を説明できる</li>
+<li>STFT とスペクトログラムの意味を説明し、窓の長さを選ぶ基準を述べられる</li>
+<li>音声のスペクトルを、音源(声帯)とフィルタ(声道)の積として読める</li>
+<li>ハール・ウェーブレットによる多重解像度の分解を計算できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">時間幅と周波数幅</b>(\(|f|^2\) と \(|\hat f|^2\) の重心がどちらも \(0\) とする):\(\displaystyle\Delta t^2=\frac{\int t^2|f|^2dt}{\int|f|^2dt}\)、\(\displaystyle\Delta\omega^2=\frac{\int\omega^2|\hat f|^2d\omega}{\int|\hat f|^2d\omega}\)</li>
+<li><b class="term">不確定性原理</b>:\(\Delta t\,\Delta\omega\ge\frac12\)。等号はガウス関数 \(f=Ce^{-\alpha t^2}\)(\(\alpha\gt0\))のとき</li>
+<li><b class="term">窓をかける</b>:\(x(t)w(t)\leftrightarrow\frac1{2\pi}(\hat x*\hat w)(\omega)\)。スペクトルは窓のスペクトルで「ぼかされる」</li>
+<li><b class="term">矩形窓とハン窓</b>(長さ \(2T\)):矩形窓 \(\operatorname{rect}_T\) のスペクトル \(\frac{2\sin T\omega}\omega\) は主ローブの半幅 \(\frac\pi T\)、最大のサイドローブは主ローブの頂点の約 \(-13\) dB。ハン窓 \(w(t)=\frac12\bigl(1+\cos\frac{\pi t}T\bigr)\)(\(|t|\le T\))は主ローブの半幅が \(\frac{2\pi}T\)(2倍)、最大のサイドローブは約 \(-31\) dB</li>
+<li><b class="term">短時間フーリエ変換</b>:\(\displaystyle X(\tau,\omega)=\int x(t)w(t-\tau)e^{-i\omega t}dt\)、スペクトログラムは \(|X(\tau,\omega)|^2\)。長さ \(L\) の窓では、およそ \(\frac1L\) Hz より近い2つの周波数は分離しにくく、およそ \(L\) より短い時間の変化は見分けにくい</li>
+<li><b class="term">ハール・ウェーブレット</b>:\(\psi(t)=1\)(\(0\le t\lt\frac12\))、\(-1\)(\(\frac12\le t\lt1\))、それ以外 \(0\)。\(\psi_{j,k}(t)=2^{j/2}\psi(2^jt-k)\)(\(j,k\) は整数)は正規直交系をなす</li>
+</ul>
+</div>
+
+<section class="prob" id="q11-1">
+<div class="phead"><span class="pnum">問 11.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">ガウス関数の時間幅と周波数幅</span></div>
+<p>\(\sigma\gt0\) とし、\(f(t)=e^{-t^2/(2\sigma^2)}\) を考える。正規分布の分散の公式 \(\displaystyle\int t^2\frac{e^{-t^2/(2s^2)}}{\sqrt{2\pi}\,s}dt=s^2\) を用いてよい。</p>
+<ol class="sublist">
+<li>\(|f|^2\) が分散 \(\frac{\sigma^2}2\) の正規分布の密度に比例することから、\(\Delta t=\dfrac\sigma{\sqrt2}\) を示せ。</li>
+<li>\(\hat f(\omega)=\sqrt{2\pi}\,\sigma e^{-\sigma^2\omega^2/2}\)(問7.4)を使って、\(\Delta\omega=\dfrac1{\sqrt2\,\sigma}\) を示せ。</li>
+<li>\(\Delta t\,\Delta\omega\) を求め、\(\sigma\) によらないことを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-2">
+<div class="phead"><span class="pnum">問 11.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">伸縮と幅の積</span></div>
+<ol class="sublist">
+<li>\(c\gt0\) について \(g(t)=f(ct)\) とすると、\(\Delta t_g=\dfrac{\Delta t_f}c\)、\(\Delta\omega_g=c\,\Delta\omega_f\) であることを示せ(問8.1の伸縮の性質を使う)。</li>
+<li>録音した音を2倍の速さで再生すると、音の長さと周波数はどう変わるか。(1) を使って、再生の速さを変えても「時間幅 × 周波数幅」は変わらないことを説明せよ。</li>
+<li>矩形パルス \(\operatorname{rect}_a\) では \(\Delta\omega=\infty\) となることを示せ(\(|\hat f|^2\) が \(\frac1{\omega^2}\) 程度でしか減らないことを使う)。この定義の幅が、跳びのある信号には向かない理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-3">
+<div class="phead"><span class="pnum">問 11.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">有限長の観測と窓関数</span></div>
+<ol class="sublist">
+<li>正弦波 \(\cos\omega_0t\) を \(|t|\le T\) の間だけ観測した信号(矩形窓をかけた信号)のフーリエ変換を求め、\(\pm\omega_0\) を中心とする主ローブの幅を答えよ(問8.2)。</li>
+<li>2つの正弦波の周波数がどれだけ離れていれば、スペクトルの上で別々の山として見分けられるかを、主ローブの幅から見積もれ。窓の長さ \(L=2T\) が \(20\) ms のとき、およそ何 Hz より近い2つの周波数は分離しにくいか。</li>
+<li>ハン窓 \(w(t)=\frac12\bigl(1+\cos\frac{\pi t}T\bigr)\)(\(|t|\le T\))について、\(R(\omega)=\frac{2\sin T\omega}\omega\) として \(\hat w(\omega)=\frac12R(\omega)+\frac14R\bigl(\omega-\frac\pi T\bigr)+\frac14R\bigl(\omega+\frac\pi T\bigr)\) を示せ。\(R\) の零点の位置を使って、\(\hat w\) の最初の零点が \(\omega=\frac{2\pi}T\) にあることを確かめよ。</li>
+<li>最大のサイドローブは、矩形窓で主ローブの頂点の約 \(-13\) dB、ハン窓で約 \(-31\) dB である(認めてよい)。強い音のすぐそばにある弱い音を見つけたいとき、どちらの窓が有利か。2つの窓の長所と短所を「主ローブの幅」と「サイドローブの高さ」の言葉でまとめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-4">
+<div class="phead"><span class="pnum">問 11.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">短時間フーリエ変換とスペクトログラム</span></div>
+<p>\(t\lt0\) で \(\cos\omega_1t\)、\(t\ge0\) で \(\cos\omega_2t\)(\(\omega_1=2\pi\cdot440\)、\(\omega_2=2\pi\cdot660\))と、途中で音の高さが変わる信号 \(x(t)\) を、長さ \(L=2T\) の矩形窓の STFT で調べる。窓の長さ \(L\) は、両方の周期より十分長いとする。</p>
+<ol class="sublist">
+<li>窓の中心 \(\tau\) が \(\tau\lt-T\) または \(\tau\gt T\) のとき、窓の中には1つの音しかない。\(|X(\tau,\omega)|\) がどの周波数で山になり、山の高さがおよそいくらかを答えよ(\(\omega_0T\gg1\) なら、\(\cos\omega_0t\) に長さ \(\ell\) の矩形窓をかけたスペクトルの山の高さはおよそ \(\frac\ell2\))。</li>
+<li>\(|\tau|\lt T\) のとき、\(\omega_1\) と \(\omega_2\) の山の高さはそれぞれおよそいくらか。窓の中心が \(\tau=-T\) から \(T\) まで動く間に、2つの山の高さがどう変わるかを述べ、この STFT で音の切り替わりの時刻を読み取れる精度がおよそ \(L\) であることを説明せよ。</li>
+<li>\(440\) Hz と \(660\) Hz を別々の山として見分けるには、問11.3(2) の見積もりで \(L\) はおよそ何 ms 以上必要か。基本周波数 \(120\) Hz の声の倍音を1本ずつ見分けるにはどうか。一方、子音の破裂のような約 \(5\) ms の出来事の時刻を見たいときは、\(L\) をどう選ぶべきか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-5">
+<div class="phead"><span class="pnum">問 11.5</span><span class="lv lv3">★★★ 応用</span><span class="ptag">不確定性原理の証明</span></div>
+<p>\(f\) は実数値の滑らかな関数で、\(f\) と \(f'\) は \(|t|\to\infty\) で十分速く \(0\) に近づき、\(\int f^2dt=1\) とする。\(|f|^2\) と \(|\hat f|^2\) の重心はどちらも \(0\) とする。</p>
+<ol class="sublist">
+<li>部分積分で \(\displaystyle\int tf(t)f'(t)\,dt=-\frac12\) を示せ。(ヒント:\(ff'=\frac12(f^2)'\)。)</li>
+<li>コーシー・シュワルツの不等式を使って \(\displaystyle\frac14\le\int t^2f^2dt\cdot\int f'^2dt=\Delta t^2\int f'^2dt\) を示せ。</li>
+<li>パーセバルの等式と微分則(問8.5)を使って \(\displaystyle\int f'^2dt=\frac1{2\pi}\int\omega^2|\hat f|^2d\omega=\Delta\omega^2\) を示し、\(\Delta t\,\Delta\omega\ge\frac12\) を結論せよ。</li>
+<li>等号が成り立つのは \(f'(t)=-\lambda tf(t)\)(\(\lambda\) は定数)のときに限ることを説明し、そのような \(f\) がガウス関数(\(\lambda\gt0\))であることを示せ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-6">
+<div class="phead"><span class="pnum">問 11.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">音源フィルタモデルとフォルマント</span></div>
+<p>有声音(母音)の生成を、声帯が周期 \(T_0=\frac1{F_0}\) で出すパルス列 \(p(t)=\operatorname{comb}_{T_0}(t)\) が、声道という線形なフィルタ(インパルス応答 \(h\)、周波数応答 \(H\))を通る、というモデルで考える:\(s=h*p\)。</p>
+<ol class="sublist">
+<li>\(\hat s(\omega)=\omega_0\sum_kH(k\omega_0)\delta(\omega-k\omega_0)\)(\(\omega_0=2\pi F_0\))を示し、声のスペクトルが「基本周波数の整数倍の位置に立つ線の高さが、声道の周波数特性 \(|H|\) をなぞる」形になることを説明せよ。</li>
+<li>\(|H|\) が \(700\) Hz と \(1200\) Hz に山(フォルマント)をもつとする。\(F_0=125\) Hz の声で、それぞれの山に最も近い倍音は第何倍音か。\(F_0=250\) Hz の高い声ではどうか。高い声ではフォルマントの位置をスペクトルから読み取りにくくなる理由を述べよ。</li>
+<li>(1) の対数をとると \(\log|\hat s|\) は「なめらかに変わる \(\log|H|\)」と「間隔 \(F_0\) で並ぶ線の構造」の和になる。対数スペクトルをもう一度フーリエ変換する(ケプストラム)と、この2つを分けられる理由を、「周波数の軸の上での変化の速さ」の違いから説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q11-7">
+<div class="phead"><span class="pnum">問 11.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ハール・ウェーブレットと多重解像度</span></div>
+<ol class="sublist">
+<li>\(\|\psi_{j,k}\|=1\) を示せ。また、\(j\) が同じで \(k\) が違う2つは直交し、\(j\) が違う2つも直交することを示せ。(ヒント:\(j\lt j'\) なら、\(\psi_{j',k'}\) が \(0\) でない区間では \(\psi_{j,k}\) は一定である。)</li>
+<li>8個の標本 \(x=(4,6,10,12,8,6,5,5)\) に、隣り合う2個の平均 \(\frac{a+b}2\) と差の半分 \(\frac{a-b}2\) をとる操作をくり返し(平均の列にだけ次の段の操作をする)、最後に「全体の平均1個」と「各段の差の係数7個」を求めよ。</li>
+<li>差の係数のうち絶対値が \(1\) 以下のものをすべて \(0\) にして元に戻すと(\(\frac{a+b}2=m\)、\(\frac{a-b}2=d\) から \(a=m+d\)、\(b=m-d\))、どんな8個の値になるか。元の信号との誤差の2乗和を求め、元の信号の2乗和に対する割合を求めよ。</li>
+<li>ウェーブレットによる分解が、STFT と比べて「時間と周波数の分け方」がどう違うかを、粗い段(低い周波数)と細かい段(高い周波数)の窓の長さの違いから説明せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>時間幅・周波数幅を定義から計算し、ガウス関数で積が \(\frac12\) になることを示せる</li>
+<li>不確定性原理の証明を、コーシー・シュワルツの不等式とパーセバルの等式の2段で再現できる</li>
+<li>観測時間と周波数分解能の関係、窓関数の主ローブとサイドローブの取引を説明できる</li>
+<li>スペクトログラムで、窓の長さによって見えるもの(倍音か、時間の変化か)が変わる理由を説明できる</li>
+<li>音声のスペクトルを音源とフィルタの積として読み、ハール・ウェーブレットの分解を計算できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch12">
+<p class="chnum">第12章</p>
+<h2>標本化定理とエイリアシング</h2>
+<p class="chsub">— 連続から離散へ</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>計算機は連続な信号をそのまま扱えないので、一定の間隔 \(T\) で値を拾い(<b>標本化</b>)、数の列にして処理します。このとき情報は失われないのでしょうか。<b>標本化定理</b>は、信号の帯域が有限なら、標本化周波数を帯域の上端の2倍以上にすれば、標本の列から元の信号を完全に復元できることを保証します。逆にこの条件が破れると、高い周波数の成分が低い周波数の成分に化けて混ざる<b>エイリアシング</b>が起き、後から取り除くことはできません。CD の 44.1 kHz、電話の 8 kHz、写真のモアレ、映画の中で逆回転して見える車輪 — どれもこの章の数学で説明できます。第10章のくし形関数が、ここで主役になります。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>ナイキスト周波数を計算し、標本化周波数の選び方を説明できる</li>
+<li>エイリアスとして現れる周波数を計算できる</li>
+<li>標本化した信号のスペクトルが、元のスペクトルの周期的なくり返しになることを導ける</li>
+<li>sinc 関数による補間で元の信号を復元する公式を導き、その意味を説明できる</li>
+<li>アンチエイリアシングフィルタ・帯域通過標本化・ゼロ次ホールドなど、実際の A/D・D/A 変換の考え方を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">標本化</b>:\(x[n]=x(nT)\)。標本化周波数 \(f_s=\frac1T\) [Hz](\(\omega_s=\frac{2\pi}T\))。\(\frac{f_s}2\) を<b>ナイキスト周波数</b>という</li>
+<li><b class="term">標本化した信号のスペクトル</b>:\(\displaystyle x_s(t)=\sum_nx(nT)\delta(t-nT)=x(t)\operatorname{comb}_T(t)\ \leftrightarrow\ \hat x_s(\omega)=\frac1T\sum_{k=-\infty}^{\infty}\hat x(\omega-k\omega_s)\)(周期 \(\omega_s\) のくり返し)</li>
+<li><b class="term">標本化定理</b>:\(|\omega|\ge W\) で \(\hat x(\omega)=0\)(帯域制限)なら、\(\omega_s\ge2W\)(すなわち \(T\le\frac\pi W\))で標本化すれば \(\displaystyle x(t)=\sum_{n=-\infty}^{\infty}x(nT)\operatorname{sinc}\frac{\pi(t-nT)}T\) と復元できる(\(\operatorname{sinc}x=\frac{\sin x}x\))</li>
+<li><b class="term">エイリアシング</b>:周波数 \(f\) の正弦波を \(f_s\) で標本化した列は、\(|f-kf_s|\)(\(k\) は整数)の正弦波を標本化した列と区別できない。\(0\) から \(\frac{f_s}2\) の範囲に折り返した周波数として現れる</li>
+<li><b class="term">ゼロ次ホールド</b>:各標本値を次の標本まで保持して階段状の波形を作る D/A 変換。\(h_0(t)=1\)(\(0\le t\lt T\))、\(H_0(\omega)=Te^{-i\omega T/2}\operatorname{sinc}\dfrac{\omega T}2\)</li>
+</ul>
+</div>
+
+<section class="prob" id="q12-1">
+<div class="phead"><span class="pnum">問 12.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">ナイキスト周波数</span></div>
+<ol class="sublist">
+<li>CD の標本化周波数は \(44.1\) kHz である。ナイキスト周波数を求め、人が聞き取れる周波数の上限(およそ \(20\) kHz)と比べて、この値が選ばれた理由を推測せよ。</li>
+<li>電話の音声の標本化周波数は \(8\) kHz である。ナイキスト周波数を求め、電話の伝送帯域 \(300\)〜\(3400\) Hz が収まることを確かめよ。</li>
+<li>\(5\) kHz 以上の成分を含まない信号を、標本化定理に従って標本化するのに必要な最小の標本化周波数を答えよ。実際にはそれより高い周波数を選ぶ理由を、問12.6を先取りして述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-2">
+<div class="phead"><span class="pnum">問 12.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">エイリアス周波数の計算</span></div>
+<p>標本化周波数 \(f_s=10\) Hz(\(T=0.1\) s)で正弦波を標本化する。</p>
+<ol class="sublist">
+<li>\(\cos(2\pi\cdot7t)\) の標本 \(x[n]=\cos(2\pi\cdot0.7n)\) が、\(3\) Hz の正弦波 \(\cos(2\pi\cdot3t)\) の標本と一致することを示せ。</li>
+<li>\(\sin(2\pi\cdot7t)\) の標本は、\(3\) Hz の正弦波のどのような標本と一致するか(符号に注意せよ)。</li>
+<li>\(9\) Hz、\(10\) Hz、\(13\) Hz の余弦波は、それぞれ何 Hz の余弦波に見えるか。\(0\) から \(\frac{f_s}2\) の範囲に「折り返す」規則を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-3">
+<div class="phead"><span class="pnum">問 12.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">逆回転して見える車輪</span></div>
+<p>同じ形のスポークが8本ある車輪が毎秒 \(r\) 回転しているところを、毎秒24コマで撮影する。スポークの模様は \(\frac18\) 回転ごとに同じ形に戻るので、模様の「周波数」は \(8r\) Hz である。</p>
+<ol class="sublist">
+<li>\(r=3\) のとき、映像の中で車輪はどう見えるか。</li>
+<li>\(r=2.9\) のとき、映像の中で車輪はどちら向きに、毎秒何回転しているように見えるか。</li>
+<li>\(r=3.1\) のときはどうか。回転では、正弦波の場合と違って「負の周波数」が区別できる(逆回転として見える)理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-4">
+<div class="phead"><span class="pnum">問 12.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">標本化した信号のスペクトル</span></div>
+<ol class="sublist">
+<li>\(x_s=x\cdot\operatorname{comb}_T\)、積の変換 \(\widehat{fg}=\frac1{2\pi}\hat f*\hat g\)、くし形関数の変換(問10.5)から、\(\hat x_s(\omega)=\frac1T\sum_k\hat x(\omega-k\omega_s)\) を導け。</li>
+<li>\(\hat x(\omega)=\max\bigl(0,1-\frac{|\omega|}W\bigr)\)(三角形のスペクトル)とする。\(\omega_s=3W\) と \(\omega_s=1.5W\) のそれぞれについて、\(\hat x_s\) を \(\omega=0\) と \(\omega=\frac{\omega_s}2\) で求め、スペクトルの概形を描いて比べよ。</li>
+<li>くり返しが重ならないための条件を \(\omega_s\) と \(W\) で書け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-5">
+<div class="phead"><span class="pnum">問 12.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">sinc 補間による復元</span></div>
+<p>\(|\omega|\ge W\) で \(\hat x(\omega)=0\) とし、\(\omega_s=\frac{2\pi}T\ge2W\) とする。</p>
+<ol class="sublist">
+<li>\(\hat x_s\) に、\(|\omega|\lt\frac{\omega_s}2\) で \(T\)、それ以外で \(0\) の関数を掛けると \(\hat x\) に戻ることを示せ。このフィルタのインパルス応答が \(h(t)=\operatorname{sinc}\frac{\pi t}T\) であることを問8.4から確かめ、\(\displaystyle x(t)=\sum_nx(nT)\operatorname{sinc}\frac{\pi(t-nT)}T\) を導け。</li>
+<li>この式に \(t=mT\)(\(m\) は整数)を代入すると、右辺が \(x(mT)\) になることを確かめよ。</li>
+<li>各標本が sinc 関数のパルスを1つずつ受け持つと考えると、ある時刻の値の復元にはどの範囲の標本が効くか。sinc 関数が \(\frac1{|t|}\) 程度でしか減らないことから、この復元を実時間でそのまま行うことの難しさを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-6">
+<div class="phead"><span class="pnum">問 12.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">アンチエイリアシングとオーバーサンプリング</span></div>
+<p>音声を標本化周波数 \(44.1\) kHz で A/D 変換する。聞かせたい帯域は \(20\) kHz までとする。</p>
+<ol class="sublist">
+<li>マイクの信号に \(30\) kHz の超音波の成分が混じっていると、標本化した後で何 kHz の音として現れるか。これは聞こえるか。</li>
+<li>\(0\)〜\(20\) kHz の帯域に折り返してくる成分を防ぐには、標本化の前に何 kHz より上の成分を十分に弱めておく必要があるか。通過させる \(20\) kHz と弱める周波数の比から、アナログのフィルタに求められる急峻さを論じよ。</li>
+<li>いったん4倍の \(176.4\) kHz で標本化し、そのあとディジタルのフィルタで帯域を絞ってから \(44.1\) kHz に間引く方法(オーバーサンプリング)をとると、アナログのフィルタは何 kHz より上を弱めればよいか。この方法の利点を述べよ。また、エイリアシングが標本化の後では取り除けない理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-7">
+<div class="phead"><span class="pnum">問 12.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">画像のモアレ</span></div>
+<p>撮像素子の画素が、像の上で \(1\) cm あたり \(100\) 個並んでいる(空間の標本化周波数 \(100\) 本/cm)とする。1方向の縞模様 \(\cos(2\pi\nu x)\)(\(\nu\) は \(1\) cm あたりの縞の本数)の標本化で考える。</p>
+<ol class="sublist">
+<li>この撮像素子で正しく写せる縞の細かさの上限は何本/cm か。</li>
+<li>像の上で \(120\) 本/cm の細かい縞を写すと、画像には何本/cm の縞(モアレ)が現れるか。標本の式 \(\cos(2\pi\cdot1.2n)\) を使って示せ。</li>
+<li>カメラを近づけて像の上の縞が \(90\) 本/cm になると、モアレの縞はどうなるか。デジタルカメラの多くが撮像素子の前に、像をわずかにぼかす光学的な低域通過フィルタを置いている理由と、その代償を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-8">
+<div class="phead"><span class="pnum">問 12.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">帯域通過標本化</span></div>
+<p>\(22\) kHz から \(26\) kHz の帯域だけに成分をもつ実数値の信号(帯域幅 \(B=4\) kHz)を考える。スペクトルは正の側の帯域 \(P=[22,26]\) と負の側の帯域 \(N=[-26,-22]\)(単位 kHz)にある。</p>
+<ol class="sublist">
+<li>\(f_s=10.5\) kHz で標本化したとき、\(P\) と \(N\) を \(f_s\) の整数倍だけずらしたコピーが互いに重ならないことを、\(-\frac{f_s}2\) から \(\frac{f_s}2\) の範囲に入るコピーを求めて確かめよ。</li>
+<li>\(f_s=12\) kHz では、コピーが重なってしまうことを示せ。</li>
+<li>一般に、帯域 \([f_L,f_H]\) の信号は、整数 \(n\)(\(1\le n\le\lfloor f_H/B\rfloor\))について \(\dfrac{2f_H}n\le f_s\le\dfrac{2f_L}{n-1}\) を満たす \(f_s\) で標本化すれば重なりが生じないことが知られている(\(n=1\) の右辺は \(\infty\) とみなす)。この例で \(n=4,5,6\) の範囲を求め、(1)(2) の結果と照合せよ。ナイキスト周波数の考え方(\(f_s\ge2f_H=52\) kHz)と比べて、何が節約できるかを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q12-9">
+<div class="phead"><span class="pnum">問 12.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ゼロ次ホールドと D/A 変換</span></div>
+<p>D/A 変換器が、各標本値 \(x(nT)\) を次の標本の時刻まで保持して、階段状の波形 \(\displaystyle y(t)=\sum_nx(nT)h_0(t-nT)\)(\(h_0(t)=1\)(\(0\le t\lt T\))、それ以外 \(0\))を出力するとする。</p>
+<ol class="sublist">
+<li>\(y=h_0*x_s\) と書けることを示し、\(\hat y=H_0\hat x_s\)、\(H_0(\omega)=Te^{-i\omega T/2}\operatorname{sinc}\dfrac{\omega T}2\) を導け。</li>
+<li>\(\frac{|H_0(\omega)|}T\) を \(\omega=\frac{\omega_s}2\)(ナイキスト周波数)と \(\omega=\frac{\omega_s}4\) で求め、デシベルで表せ。理想的な復元(問12.5)と比べて、高い周波数の成分がどうなるかを述べよ。</li>
+<li>周波数 \(\frac{\omega_s}4\) の正弦波を出力するとき、階段状の波形には \(\omega_s-\frac{\omega_s}4=\frac34\omega_s\) のイメージ(像)の成分も含まれる。像の振幅は目的の成分の振幅の何倍か。D/A 変換の後にも低域通過フィルタ(再構成フィルタ)が必要な理由を述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>ナイキスト周波数と標本化周波数の関係を説明し、CD や電話の例で確かめられる</li>
+<li>エイリアスの周波数を計算し、エイリアシングが標本化の後では除けない理由を説明できる</li>
+<li>標本化した信号のスペクトルが周期的にくり返すことを、くし形関数と積の変換から導ける</li>
+<li>sinc 補間による復元公式を導き、その実用上の難しさを説明できる</li>
+<li>アンチエイリアシングフィルタ・オーバーサンプリング・帯域通過標本化・ゼロ次ホールドの役割を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch13">
+<p class="chnum">第13章</p>
+<h2>離散時間フーリエ変換とディジタルフィルタ</h2>
+<p class="chsub">— 数列のスペクトル</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>標本化した数列 \(x[n]\) は、それ自体が1つの信号です。数列のフーリエ変換(<b>離散時間フーリエ変換、DTFT</b>)\(X(\Omega)=\sum x[n]e^{-i\Omega n}\) は周期 \(2\pi\) の連続な関数で、\(\Omega\) は「1標本あたりの角周波数」[rad/sample] です。計算機の中のフィルタ(<b>ディジタルフィルタ</b>)は数列の畳み込みで、DTFT の世界では周波数応答 \(H(\Omega)\) との掛け算になります。移動平均で雑音をならす、差分で輪郭を強調する、過去の出力を再利用して少ない計算で鋭い特性を作る(IIR フィルタ)、係数を左右対称にして波形を崩さない(線形位相 FIR)— 音声・画像・センサー信号の処理の基本形を、この章の数学で理解します。<b>z 変換</b>は DTFT を複素平面に広げたもので、フィルタの安定性を極の位置で判定できます。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>数列の DTFT を計算し、周期 \(2\pi\) であることと標本化周波数との関係を説明できる</li>
+<li>離散畳み込みを計算し、多項式の積との対応を説明できる</li>
+<li>移動平均・差分・指数平滑の周波数特性を求め、低域通過・高域通過として解釈できる</li>
+<li>z 変換を使って、再帰的なフィルタの周波数応答と安定性(極の位置)を調べられる</li>
+<li>線形位相 FIR フィルタの条件と、窓関数法による設計の考え方を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">DTFT</b>:\(\displaystyle X(\Omega)=\sum_{n=-\infty}^{\infty}x[n]e^{-i\Omega n}\)(\(\sum|x[n]|\lt\infty\) なら収束)。周期 \(2\pi\)。逆変換 \(\displaystyle x[n]=\frac1{2\pi}\int_{-\pi}^{\pi}X(\Omega)e^{i\Omega n}d\Omega\)。標本化周期 \(T\) なら \(\Omega=\omega T\) で、\(\Omega=\pi\) がナイキスト周波数にあたる</li>
+<li><b class="term">標本化との関係</b>:\(x[n]=x_c(nT)\) なら \(\displaystyle X(\Omega)=\frac1T\sum_k\hat x_c\Bigl(\frac{\Omega-2\pi k}T\Bigr)\)</li>
+<li><b class="term">離散畳み込み</b>:\(\displaystyle(h*x)[n]=\sum_kh[k]x[n-k]\ \leftrightarrow\ H(\Omega)X(\Omega)\)。有限の長さの列どうしの畳み込みは、多項式の積の係数</li>
+<li><b class="term">パーセバルの等式</b>:\(\displaystyle\sum_n|x[n]|^2=\frac1{2\pi}\int_{-\pi}^{\pi}|X(\Omega)|^2d\Omega\)</li>
+<li><b class="term">FIR と IIR</b>:FIR は \(y[n]=\sum_{k=0}^{M-1}h[k]x[n-k]\)(インパルス応答が有限の長さ)。IIR は \(y[n]=ay[n-1]+bx[n]\) のように過去の出力を使う(インパルス応答が無限に続く)</li>
+<li><b class="term">z 変換</b>:\(X(z)=\sum x[n]z^{-n}\)。DTFT は単位円の上 \(z=e^{i\Omega}\) での値。因果的で有理関数の伝達関数 \(H(z)\) は、すべての極が単位円の内側(\(|z|\lt1\))にあれば BIBO 安定</li>
+</ul>
+</div>
+
+<section class="prob" id="q13-1">
+<div class="phead"><span class="pnum">問 13.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">DTFT の計算</span></div>
+<ol class="sublist">
+<li>\(|a|\lt1\) とし、\(x[n]=a^nu[n]\)(\(n\ge0\) で \(a^n\)、\(n\lt0\) で \(0\))の DTFT が \(\dfrac1{1-ae^{-i\Omega}}\) であることを示せ。</li>
+<li>\(0\le n\le N-1\) で \(x[n]=1\)、それ以外で \(0\) の列の DTFT が \(e^{-i\Omega(N-1)/2}\dfrac{\sin(N\Omega/2)}{\sin(\Omega/2)}\)(\(\Omega\) が \(2\pi\) の整数倍のときは \(N\))であることを示せ(問1.6と比べよ)。</li>
+<li>一般に \(X(\Omega+2\pi)=X(\Omega)\) であることを示し、\(-\pi\lt\Omega\le\pi\) の範囲だけを考えれば十分な理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-2">
+<div class="phead"><span class="pnum">問 13.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">正規化周波数と標本化</span></div>
+<ol class="sublist">
+<li>標本化周波数 \(8\) kHz で \(1\) kHz の正弦波を標本化すると、\(\Omega\) はいくらか。\(\Omega=\pi\) と \(\Omega=\frac\pi2\) はそれぞれ何 kHz にあたるか。</li>
+<li>標本化周波数 \(48\) kHz では、\(\Omega=0.1\pi\) は何 kHz か。</li>
+<li>\(x_s(t)=\sum_nx[n]\delta(t-nT)\) のフーリエ変換が \(X(\omega T)\) であることを示し、問12.4の結果から \(X(\Omega)=\frac1T\sum_k\hat x_c\bigl(\frac{\Omega-2\pi k}T\bigr)\) を導け。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-3">
+<div class="phead"><span class="pnum">問 13.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">離散畳み込みと多項式の積</span></div>
+<ol class="sublist">
+<li>\(h=(1,2,1)\)、\(x=(1,-1)\)(どちらも番号 \(0\) から並べる)の畳み込み \(h*x\) を求めよ。</li>
+<li>(1) の結果が、多項式の積 \((1+2z+z^2)(1-z)\) の係数に一致することを確かめ、その理由を説明せよ。</li>
+<li>長さ \(L\) と長さ \(M\) の列の畳み込みの長さと、定義どおりに計算するのに必要な掛け算の回数を答えよ(問15.5で高速化する)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-4">
+<div class="phead"><span class="pnum">問 13.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">移動平均フィルタ</span></div>
+<p>\(M\) 個の標本の移動平均 \(y[n]=\frac1M\sum_{k=0}^{M-1}x[n-k]\) を考える。</p>
+<ol class="sublist">
+<li>周波数応答が \(H(\Omega)=e^{-i\Omega(M-1)/2}\dfrac{\sin(M\Omega/2)}{M\sin(\Omega/2)}\) であることを示せ。</li>
+<li>\(|H|=0\) となる \(\Omega\)(\(0\lt\Omega\lt2\pi\))を求めよ。\(M=4\) のときはどこか。</li>
+<li>標本化周波数 \(1\) kHz で \(M=20\) とすると、どの周波数の成分が完全に除かれるか。問9.5の連続時間の移動平均と比べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-5">
+<div class="phead"><span class="pnum">問 13.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">差分とラプラシアンによる強調</span></div>
+<ol class="sublist">
+<li>差分 \(y[n]=x[n]-x[n-1]\) の周波数応答を求め、\(|H(\Omega)|=2|\sin\frac\Omega2|\) を示せ。これが高い周波数を強める(高域通過の)フィルタであること、\(\Omega\) が小さいとき微分 \(\frac{d}{dt}\)(\(T=1\))の周波数応答 \(i\omega\) に近いことを説明せよ。</li>
+<li>2階差分 \(y[n]=x[n+1]-2x[n]+x[n-1]\) の周波数応答が \(-4\sin^2\frac\Omega2\) であることを示し、2階微分の周波数応答 \(-\omega^2\) と比べよ。</li>
+<li>画像の鮮鋭化では、2階差分を引く \(y=x-\alpha\,(\text{2階差分})\)(\(\alpha\gt0\))がよく使われる。周波数応答を求め、\(\alpha=0.5\) のとき \(\Omega=\pi\) の成分が何倍になるかを答えよ。この処理で雑音がどうなるかも述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-6">
+<div class="phead"><span class="pnum">問 13.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">指数平滑と z 変換・安定性</span></div>
+<p>センサーの値をならすのによく使われる指数平滑 \(y[n]=ay[n-1]+(1-a)x[n]\)(\(0\lt a\lt1\))を考える。</p>
+<ol class="sublist">
+<li>インパルス応答 \(h[n]\) と周波数応答 \(H(\Omega)\) を求めよ。\(H(0)\) と \(|H(\pi)|\) を求めよ。</li>
+<li>伝達関数 \(H(z)\) を求め、極の位置を答えよ。\(a=1.2\) なら何が起きるかを、インパルス応答と極の位置の両方から説明せよ。</li>
+<li>入力が分散 \(\sigma^2\) の白色雑音(各標本が独立で平均 \(0\))のとき、出力の分散は \(\sigma^2\sum h[n]^2\) である(認めてよい)。これが \(\sigma^2\frac{1-a}{1+a}\) であることを示し、\(a=0.9\) のときの値を求めよ。また、インパルス応答の重心 \(\sum nh[n]\)(平均の遅れ)が \(\frac a{1-a}\) 標本であることを示し、平滑化の強さと遅れの取引を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-7">
+<div class="phead"><span class="pnum">問 13.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">線形位相 FIR フィルタ</span></div>
+<ol class="sublist">
+<li>係数が左右対称 \(h[n]=h[M-1-n]\)(\(0\le n\le M-1\)、実数)の FIR フィルタについて、\(H(\Omega)=e^{-i\Omega(M-1)/2}A(\Omega)\)(\(A\) は実数値の関数)と書けることを示せ。</li>
+<li>このフィルタの群遅延 \(-\frac{d}{d\Omega}\arg H\) は、\(A(\Omega)\) の符号が変わらない範囲で \(\frac{M-1}2\) 標本で一定であることを確かめよ。\(h=\frac14(1,2,1)\) について \(H\) を求めよ。</li>
+<li>問13.6の指数平滑の群遅延は \(\tau_g(\Omega)=\dfrac{a\cos\Omega-a^2}{1-2a\cos\Omega+a^2}\) である(認めてよい)。\(a=0.9\) のとき \(\Omega=0\) と \(\Omega=\pi\) での値を求め、問8.7と結びつけて、線形位相のフィルタが音響や通信で好まれる理由を説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q13-8">
+<div class="phead"><span class="pnum">問 13.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">窓関数法による FIR フィルタの設計</span></div>
+<ol class="sublist">
+<li>理想低域通過フィルタ \(H_d(\Omega)=1\)(\(|\Omega|\lt\Omega_c\))、\(0\)(\(\Omega_c\lt|\Omega|\le\pi\))のインパルス応答が \(h_d[n]=\dfrac{\sin\Omega_cn}{\pi n}\)(\(n\ne0\))、\(h_d[0]=\dfrac{\Omega_c}\pi\) であることを示せ。</li>
+<li>\(\Omega_c=\frac\pi2\) のとき、\(n=-3,\dots,3\) の \(h_d[n]\) を求めよ。</li>
+<li>\(|n|\le K\) の範囲で打ち切り、\(K\) 標本だけ遅らせると、長さ \(2K+1\) の因果的な線形位相 FIR フィルタになる。その周波数応答が理想特性とディリクレ核(問1.6)の畳み込み(を \(\frac1{2\pi}\) 倍したもの)であることを説明し、第5章の結果から、\(K\) を大きくしても遮断周波数の近くの誤差が約9%のまま減らない理由を述べよ。</li>
+<li>打ち切る前にハン窓 \(w[n]=\frac12\bigl(1+\cos\frac{\pi n}{K+1}\bigr)\) を掛けると、通過域と阻止域の誤差の最大値は約 \(0.09\)(\(-21\) dB)から約 \(0.006\)(\(-44\) dB)に下がる一方、遷移帯域の幅はおよそ2倍になる(数値計算の結果として認めてよい)。この取引を、問5.8と問11.3の結果と結びつけて説明せよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>DTFT を計算し、周期 \(2\pi\) と正規化周波数の意味を説明できる</li>
+<li>離散畳み込みを計算し、多項式の積との対応を説明できる</li>
+<li>移動平均・差分・指数平滑の周波数特性を求め、低域通過・高域通過として解釈できる</li>
+<li>z 変換の極の位置から、再帰的なフィルタの安定性を判定できる</li>
+<li>線形位相 FIR の条件と、窓関数法の設計の取引(誤差と遷移帯域)を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch14">
+<p class="chnum">第14章</p>
+<h2>離散フーリエ変換(DFT)</h2>
+<p class="chsub">— 有限個のデータのスペクトル</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>計算機が扱えるのは有限個の数だけです。DTFT は連続な周波数の関数なので、そのままでは計算機に載りません。そこで周波数の側も \(N\) 個の点で標本化したものが<b>離散フーリエ変換(DFT)</b>です。DFT は「\(N\) 個のデータ → \(N\) 個のスペクトル」という行列とベクトルの積で、その行列は1の \(N\) 乗根からできたユニタリ行列(の \(\sqrt N\) 倍)です。音声の周波数分析、画像処理、通信、数値計算のあらゆる場面で使われる道具ですが、正しく使うには「DFT はデータを周期的に延長したものとみなしている」ことと、それが生む<b>スペクトル漏れ</b>を理解する必要があります。この章では、DFT を線形代数の言葉で捉え直し、連続のフーリエ変換との関係を整理します。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>小さな \(N\) の DFT を手で計算し、逆変換で元に戻せる</li>
+<li>DFT 行列がユニタリ行列の \(\sqrt N\) 倍であることを、1の \(N\) 乗根の性質から示せる</li>
+<li>DFT の番号 \(k\) を実際の周波数 [Hz] に換算し、周波数の分解能を答えられる</li>
+<li>巡回畳み込みと線形畳み込みの違いを説明し、ゼロ詰めで一致させられる</li>
+<li>4種類のフーリエ変換の関係(標本化と周期化の対応)を説明できる</li>
+<li>スペクトル漏れの原因を説明し、窓関数でそれを抑えられる</li>
+<li>巡回行列が DFT で対角化されることを示し、逆畳み込みに使える</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">DFT</b>:\(\displaystyle X[k]=\sum_{n=0}^{N-1}x[n]W_N^{kn}\)(\(W_N=e^{-2\pi i/N}\)、\(k=0,\dots,N-1\))。逆変換 \(\displaystyle x[n]=\frac1N\sum_{k=0}^{N-1}X[k]W_N^{-kn}\)。NumPy の <code>np.fft.fft</code>/<code>ifft</code> と同じ規約</li>
+<li><b class="term">行列で書くと</b>:\(\mathbf X=F_N\mathbf x\)、\((F_N)_{kn}=W_N^{kn}\)。\(F_N^*F_N=NI\)(\(*\) は共役転置)なので、\(\frac1{\sqrt N}F_N\) はユニタリ行列で、\(F_N^{-1}=\frac1NF_N^*\)</li>
+<li><b class="term">パーセバルの等式</b>:\(\displaystyle\sum_n|x[n]|^2=\frac1N\sum_k|X[k]|^2\)</li>
+<li><b class="term">周期性と巡回</b>:\(X[k]\) と、逆変換で定めた \(x[n]\) はどちらも周期 \(N\)。巡回シフト \(x[(n-m)\bmod N]\leftrightarrow W_N^{km}X[k]\)。巡回畳み込み \(\displaystyle(h\circledast x)[n]=\sum_{m=0}^{N-1}h[m]x[(n-m)\bmod N]\leftrightarrow H[k]X[k]\)</li>
+<li><b class="term">実数値のデータ</b>:\(X[N-k]=\overline{X[k]}\)。\(X[0]\) と(\(N\) が偶数なら)\(X[N/2]\) は実数</li>
+<li><b class="term">周波数との対応</b>:標本化周波数 \(f_s\) なら、番号 \(k\) は周波数 \(\frac{k}{N}f_s\)(\(k\le\frac N2\))、\(k\gt\frac N2\) は負の周波数 \(\frac{k-N}Nf_s\) にあたる。間隔(ビンの幅)は \(\frac{f_s}N\)(観測時間 \(\frac N{f_s}\) の逆数)</li>
+<li><b class="term">DTFT との関係</b>:長さ \(N\) の列の DFT は、その DTFT を \(\Omega=\frac{2\pi k}N\) で拾った値。列の後ろに \(0\) を足して長くする(ゼロ詰め)と、同じ DTFT をより細かく拾える</li>
+</ul>
+</div>
+
+<section class="prob" id="q14-1">
+<div class="phead"><span class="pnum">問 14.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">4点 DFT の計算</span></div>
+<ol class="sublist">
+<li>\(N=4\) では \(W_4=e^{-\pi i/2}=-i\) である。\(x=(1,2,3,4)\) の DFT を計算し、\(X=(10,\ -2+2i,\ -2,\ -2-2i)\) となることを確かめよ。</li>
+<li>逆変換の式を使って、\(X\) から \(x[1]=2\) が戻ることを確かめよ。</li>
+<li>\(X[0]\) と \(X[2]\) はそれぞれデータのどんな量を表しているか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-2">
+<div class="phead"><span class="pnum">問 14.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">DFT 行列とユニタリ性</span></div>
+<ol class="sublist">
+<li>\(N=4\) の DFT 行列 \(F_4\) を成分で書け。</li>
+<li>問1.4の1の \(N\) 乗根の和を使って、一般の \(N\) で \(F_N^*F_N=NI\) を示せ。(ヒント:\((F_N^*F_N)_{mn}=\sum_k\overline{W_N^{km}}W_N^{kn}\)。)</li>
+<li>(2) から逆変換の公式とパーセバルの等式を導け。\(\frac1{\sqrt N}F_N\) がユニタリ行列であることの、線形代数での意味を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-3">
+<div class="phead"><span class="pnum">問 14.3</span><span class="lv lv1">★ 基礎</span><span class="ptag">周波数ビンと分解能</span></div>
+<p>標本化周波数 \(f_s=1000\) Hz で \(N=256\) 個の標本をとり、DFT を計算する。</p>
+<ol class="sublist">
+<li>隣り合う番号 \(k\) の周波数の間隔(ビンの幅)と、観測時間を求めよ。</li>
+<li>\(125\) Hz の正弦波は何番の \(k\) に現れるか。\(k=128\) と \(k=200\) はそれぞれ何 Hz にあたるか。</li>
+<li>ビンの幅を \(1\) Hz にしたいとき、\(N\)(と観測時間)をどうすればよいか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-4">
+<div class="phead"><span class="pnum">問 14.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">実数値のデータの対称性</span></div>
+<ol class="sublist">
+<li>\(x[n]\) が実数なら \(X[N-k]=\overline{X[k]}\) であることを示せ(\(W_N^{(N-k)n}=\overline{W_N^{kn}}\) を使う)。</li>
+<li>\(X[0]\) と、\(N\) が偶数のときの \(X[N/2]\) が実数であることを示し、問14.1の結果で確かめよ。</li>
+<li>実数値のデータ \(N\) 個のスペクトルは、\(X[0],\dots,X[N/2]\)(\(N\) は偶数)だけで決まることを示せ。この \(\frac N2+1\) 個の複素数が含む実数の個数を数え、データの個数 \(N\) と一致することを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-5">
+<div class="phead"><span class="pnum">問 14.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">巡回畳み込みとゼロ詰め</span></div>
+<p>\(x=(1,2,3,4)\)、\(h=(1,1,0,0)\)(\(N=4\))とする。</p>
+<ol class="sublist">
+<li>巡回畳み込み \(h\circledast x\) を定義どおりに計算せよ。線形畳み込み \(h*x\)(長さ5)と比べて、どこが違うか。</li>
+<li>\(H[k]X[k]\) を計算し、その逆 DFT が (1) の巡回畳み込みに一致することを確かめよ。</li>
+<li>\(x\) と \(h\) の後ろに \(0\) を足して長さ \(N'\) にしてから巡回畳み込みをとると、線形畳み込みと一致する。そのために必要な最小の \(N'\) を、長さ \(L,M\) の一般の場合について答えよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-6">
+<div class="phead"><span class="pnum">問 14.6</span><span class="lv lv2">★★ 標準</span><span class="ptag">DFT は DTFT の標本・ゼロ詰め</span></div>
+<ol class="sublist">
+<li>長さ \(N\) の列の DFT が、その DTFT を \(\Omega=\frac{2\pi k}N\) で拾った値に等しいことを示せ。</li>
+<li>\(x=(1,1,1,1)\) の \(N=4\) の DFT を求めよ。\(X[1]=X[2]=X[3]=0\) となる理由を、問13.1(2) の DTFT の零点の位置から説明せよ。</li>
+<li>\(x\) の後ろに \(0\) を4個足して \(N=8\) にした DFT の絶対値を、\(k=0,1,2,3\) について求めよ(\(|1-(1+\sqrt2)i|\approx2.613\)、\(|1-(\sqrt2-1)i|\approx1.082\))。ゼロ詰めで何が分かるようになり、何は改善されないかを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-7">
+<div class="phead"><span class="pnum">問 14.7</span><span class="lv lv2">★★ 標準</span><span class="ptag">4つのフーリエ変換の関係</span></div>
+<ol class="sublist">
+<li>逆 DFT の式で \(n\) を整数全体に広げると、\(x[n+N]=x[n]\) となることを示せ。DFT がデータを「周期 \(N\) でくり返す列」とみなしていることを説明せよ。</li>
+<li>次の表の空欄を、「周期的」「離散的」「連続」「非周期」の語で埋めよ。<br>フーリエ級数:時間は(ア)かつ連続、周波数は(イ)。フーリエ変換:時間・周波数とも(ウ)かつ非周期。DTFT:時間は(エ)、周波数は(オ)かつ連続。DFT:時間・周波数とも(カ)かつ周期的。</li>
+<li>「一方の側を標本化すると、もう一方の側が周期的になる」という原理(問10.5・12.4)で、(2) の表の4つの関係をすべて説明せよ。連続な信号を標本化して、有限個を取り出して DFT すると、連続のフーリエ変換に対して2種類の近似(エイリアシングと窓による影響)が入ることを説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-8">
+<div class="phead"><span class="pnum">問 14.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">スペクトル漏れ</span></div>
+<p>\(N=16\) とし、\(x[n]=\cos\frac{2\pi k_0n}N\)(\(n=0,\dots,15\))の DFT を考える。</p>
+<ol class="sublist">
+<li>\(k_0=3\) のとき、\(X[3]=X[13]=8\)、それ以外の \(X[k]=0\) であることを示せ。</li>
+<li>\(k_0=3.5\) のとき、\(\displaystyle X[k]=\frac12\Bigl(D\bigl(\tfrac{2\pi(k_0-k)}N\bigr)+D\bigl(\tfrac{2\pi(-k_0-k)}N\bigr)\Bigr)\)、\(D(\theta)=\sum_{n=0}^{N-1}e^{i\theta n}\) と書けることを示せ。数値計算によると \(|X[3]|\approx5.03\)、\(|X[4]|\approx5.22\)、\(|X[7]|\approx1.06\) で、すべての \(k\) で \(X[k]\ne0\) になる。山の高さが \(k_0=3\) の場合の \(8\) より低いこと(約 \(-4\) dB)と、遠いビンまで値が「漏れる」ことを説明せよ。</li>
+<li>\(k_0=3.5\) の正弦波を16個取り出して周期的にくり返すと、つなぎ目で何が起きるか。これと (2) のスペクトル漏れを、問3.7と同じ「跳びと係数の減り方」の観点から結びつけよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-9">
+<div class="phead"><span class="pnum">問 14.9</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ハン窓の DFT</span></div>
+<p>周期的なハン窓 \(w[n]=\frac12-\frac12\cos\frac{2\pi n}N\)(\(n=0,\dots,N-1\))を考える。</p>
+<ol class="sublist">
+<li>\(w\) の DFT が \(W[0]=\frac N2\)、\(W[1]=W[N-1]=-\frac N4\)、それ以外 \(0\) であることを示せ。</li>
+<li>\(x[n]=e^{2\pi ik_0n/N}\)(\(k_0\) は整数)に窓をかけた \(x[n]w[n]\) の DFT が \(W[k-k_0]\)(番号は \(N\) を法とする)であることを示し、\(N=16\)、\(x[n]=\cos\frac{2\pi\cdot3n}{16}\) のとき、窓をかけた DFT の \(k=2,3,4\) の値を求めよ。主ローブが3本のビンに広がることを確かめよ。</li>
+<li>\(k_0=3.5\) のとき、窓をかけた DFT の絶対値は数値計算によると \(k=3,4\) でそれぞれ約 \(3.40\)、\(3.39\)、\(k=7\) で約 \(0.025\) である。問14.8の窓をかけない場合(\(k=7\) で約 \(1.06\))と比べ、ハン窓の効果と代償を説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q14-10">
+<div class="phead"><span class="pnum">問 14.10</span><span class="lv lv3">★★★ 応用</span><span class="ptag">巡回行列の対角化と逆畳み込み</span></div>
+<p>\(\mathbf c=(c_0,\dots,c_{N-1})\) から作る巡回行列 \(C\)(\(C_{nm}=c_{(n-m)\bmod N}\))を考える。\(C\mathbf x=\mathbf c\circledast\mathbf x\) である。</p>
+<ol class="sublist">
+<li>巡回畳み込み定理を使って、\(C=F_N^{-1}\operatorname{diag}(\hat c)F_N\)(\(\hat c=F_N\mathbf c\))を示せ。\(C\) の固有値と固有ベクトルを答えよ。</li>
+<li>周期的な画像(1次元で考える)が、2画素の平均 \(\mathbf c=(\frac12,\frac12,0,\dots,0)\) でぼけたとする(\(N\) は偶数)。\(\hat c[k]\) を求め、\(\hat c[k]=0\) となる \(k\) があることから、ぼけた画像 \(\mathbf y=C\mathbf x\) から \(\mathbf x\) を一意に戻せないことを示せ。</li>
+<li>一般に、\(\hat c[k]\ne0\) なら \(\hat x[k]=\hat y[k]/\hat c[k]\) で戻せるが、\(\mathbf y\) に雑音が加わると \(|\hat c[k]|\) の小さい \(k\) で雑音が \(\frac1{|\hat c[k]|}\) 倍に拡大される。代わりに \(\hat x[k]=\dfrac{\overline{\hat c[k]}\,\hat y[k]}{|\hat c[k]|^2+\lambda}\)(\(\lambda\gt0\))を使うと、何が改善されるかを述べよ。条件数(『線形代数』第10・11章)との関係にも触れよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>小さな \(N\) の DFT と逆 DFT を手で計算できる</li>
+<li>DFT 行列がユニタリ行列の \(\sqrt N\) 倍であることを示し、逆変換とパーセバルの等式を導ける</li>
+<li>番号 \(k\) と実際の周波数の対応、ビンの幅と観測時間の関係を説明できる</li>
+<li>巡回畳み込みと線形畳み込みの違いを説明し、ゼロ詰めで一致させられる</li>
+<li>スペクトル漏れの原因と、窓関数による改善とその代償を説明できる</li>
+<li>巡回行列の固有値が DFT で求まることを示し、逆畳み込みの難しさを説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch15">
+<p class="chnum">第15章</p>
+<h2>高速フーリエ変換(FFT)</h2>
+<p class="chsub">— 分割統治で O(N log N)</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>DFT を定義どおりに計算すると、\(N\) 個の出力のそれぞれに \(N\) 回の掛け算が要り、全体で \(N^2\) 回になります。\(N\) が100万なら \(10^{12}\) 回で、とても実用になりません。<b>高速フーリエ変換(FFT)</b>は、DFT を「偶数番目の半分」と「奇数番目の半分」の2つの DFT に分け、1の \(N\) 乗根の対称性を使ってそれらを組み合わせる<b>分割統治</b>のアルゴリズムで、手間を \(\frac N2\log_2N\) 回程度の掛け算に減らします。この劇的な高速化によって、フーリエ解析は理論から日常の道具になりました。音声・画像・通信の処理に加え、畳み込み・多項式の掛け算・巨大な整数の掛け算まで、FFT で速くなります。この章は、アルゴリズムとしてのフーリエ解析です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>DFT を偶数番目と奇数番目に分ける「バタフライ」の式を導ける</li>
+<li>8点 FFT の計算の流れ(ビット反転の並べ替えとバタフライ)を手で追える</li>
+<li>計算量の漸化式を解いて、\(O(N\log N)\) を示せる</li>
+<li>FFT を使って、畳み込み・多項式の積・大きな整数の積を高速に計算できる</li>
+<li>長い信号の高速畳み込み(重ね合わせ法)と、時間領域のエイリアシングの注意点を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">偶奇への分割(時間間引き)</b>:\(N\) を偶数とし、\(E[k]\)、\(O[k]\) を偶数番目 \((x[0],x[2],\dots)\) と奇数番目 \((x[1],x[3],\dots)\) の \(\frac N2\) 点 DFT とすると、\(k=0,\dots,\frac N2-1\) について \(X[k]=E[k]+W_N^kO[k]\)、\(X[k+\frac N2]=E[k]-W_N^kO[k]\)(<b>バタフライ</b>)。\(W_N^2=W_{N/2}\)、\(W_N^{k+N/2}=-W_N^k\) を使う</li>
+<li><b class="term">計算量</b>:\(N=2^m\) なら、複素数の掛け算はおよそ \(\frac N2\log_2N\) 回(定義どおりなら \(N^2\) 回)。漸化式 \(T(N)=2T(\frac N2)+cN\) の解は \(T(N)=cN\log_2N\)</li>
+<li><b class="term">ビット反転</b>:入力を、番号の2進数表示を逆から読んだ順に並べ替えると、バタフライを順に「その場で」計算できる</li>
+<li><b class="term">逆変換</b>:\(\mathbf x=\frac1N\overline{F_N\overline{\mathbf X}}\)。逆 DFT も正変換の FFT で計算できる</li>
+<li><b class="term">高速畳み込み</b>:長さ \(L,M\) の線形畳み込みは、長さ \(N\ge L+M-1\) にゼロ詰めして \(y=\mathrm{IFFT}\bigl(\mathrm{FFT}(x)\cdot\mathrm{FFT}(h)\bigr)\)。手間は \(O(N\log N)\)</li>
+<li><b class="term">重ね合わせ法</b>:長い入力をブロックに分け、各ブロックとフィルタの畳み込みを FFT で求めて、はみ出した部分を重ねて足す</li>
+</ul>
+</div>
+
+<section class="prob" id="q15-1">
+<div class="phead"><span class="pnum">問 15.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">計算量の比較</span></div>
+<ol class="sublist">
+<li>\(N=1024\) のとき、定義どおりの DFT(\(N^2\) 回の掛け算)と FFT(\(\frac N2\log_2N\) 回)の掛け算の回数を求め、比を答えよ。</li>
+<li>\(N=2^{20}\)(約100万)ではどうか。1秒に \(10^9\) 回の掛け算ができる計算機で、それぞれおよそ何秒かかるか。</li>
+<li>\(48\) kHz の音声1秒分を、\(N=1024\) の区間を \(512\) 標本ずつずらしながら(およそ \(48000/512\approx94\) 区間)FFT で分析すると、掛け算はおよそ何回か。実時間の処理が楽にできる理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-2">
+<div class="phead"><span class="pnum">問 15.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">バタフライの導出</span></div>
+<p>\(N\) を偶数とする。</p>
+<ol class="sublist">
+<li>DFT の和を \(n=2m\)(偶数番目)と \(n=2m+1\)(奇数番目)に分け、\(W_N^2=W_{N/2}\) を使って \(X[k]=E[k]+W_N^kO[k]\) を導け。</li>
+<li>\(E[k]\)、\(O[k]\) が周期 \(\frac N2\) をもつことと \(W_N^{k+N/2}=-W_N^k\) を使って、\(X[k+\frac N2]=E[k]-W_N^kO[k]\) を示せ。\(N\) 点の DFT を2つの \(\frac N2\) 点の DFT から組み立てるのに、追加で必要な掛け算は何回か。</li>
+<li>逆 DFT が \(\mathbf x=\frac1N\overline{F_N\overline{\mathbf X}}\) と、正変換の DFT で計算できることを示せ(問14.2の \(F_N^{-1}=\frac1NF_N^*\) を使う)。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-3">
+<div class="phead"><span class="pnum">問 15.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">8点 FFT の手計算</span></div>
+<p>\(x=(1,1,1,1,0,0,0,0)\) の DFT を FFT の手順で計算する。\(W_8=e^{-i\pi/4}=\frac{1-i}{\sqrt2}\)。</p>
+<ol class="sublist">
+<li>入力をビット反転の順に並べ替えよ(番号 \(0\)〜\(7\) の3桁の2進数を逆から読む)。</li>
+<li>偶数番目 \((x[0],x[2],x[4],x[6])\) と奇数番目 \((x[1],x[3],x[5],x[7])\) の4点 DFT \(E,O\) を求めよ。</li>
+<li>バタフライで \(X[0],\dots,X[7]\) を求め、問14.6(3) の結果と一致することを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-4">
+<div class="phead"><span class="pnum">問 15.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">計算量の漸化式</span></div>
+<ol class="sublist">
+<li>\(T(N)=2T(\frac N2)+cN\)、\(T(1)=0\)、\(N=2^m\) とする。漸化式をくり返し使う(または帰納法)で \(T(N)=cN\log_2N\) を示せ。</li>
+<li>同じ漸化式をもつ、よく知られた別の分割統治アルゴリズムを1つ挙げよ。</li>
+<li>\(N\) が2のべきでない場合(たとえば \(N=1000\))に FFT を使う方法を2つ挙げ、それぞれの注意点を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-5">
+<div class="phead"><span class="pnum">問 15.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">FFT による多項式と整数の掛け算</span></div>
+<ol class="sublist">
+<li>\(p(x)=1+2x+3x^2\)、\(q(x)=4+5x\) の係数を長さ4にゼロ詰めした \(a=(1,2,3,0)\)、\(b=(4,5,0,0)\) の DFT \(A,B\) を求め、\(C=A\cdot B\)(成分ごとの積)の逆 DFT が \(p(x)q(x)\) の係数になることを確かめよ。</li>
+<li>長さ3の DFT で同じことをすると、どの係数がどう狂うか。</li>
+<li>\(123\times45\) を、各桁を係数とする多項式(1の位から並べて \(3+2x+x^2\) と \(5+4x\))の積と、\(x=10\) での繰り上がりの処理で計算せよ。\(n\) 桁どうしの掛け算に FFT を使うと計算量がどうなるかを、筆算(\(O(n^2)\))と比べて述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-6">
+<div class="phead"><span class="pnum">問 15.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">長い信号の高速畳み込み</span></div>
+<p>コンサートホールで測ったインパルス応答(\(48\) kHz で1秒分、\(M=48000\) 標本)を、\(10\) 秒の録音(\(L=480000\) 標本)に畳み込んで、ホールの残響をつける。</p>
+<ol class="sublist">
+<li>定義どおりの畳み込みに必要な掛け算の回数を見積もれ。</li>
+<li>入力全体を1回の FFT で畳み込むとき、必要な FFT の長さ(2のべき)と、掛け算の回数(FFT を3回と成分ごとの積)を見積もり、(1) と比べよ。</li>
+<li>重ね合わせ法では、入力を長さ \(B\) のブロック \(x_j\) に分け、各ブロックとインパルス応答の畳み込み(長さ \(B+M-1\))を FFT で求め、ずらして足し合わせる。この方法で正しい畳み込みが得られる理由を、畳み込みの線形性と時不変性から説明せよ。FFT の長さを \(2^{17}=131072\) にするとき、\(B\) はいくつにとれるか。</li>
+<li>重ね合わせ法の利点を、計算量と記憶量、および「入力の一部が届いた時点で出力を始められる」点から述べよ。ブロックを長くすることの欠点も挙げよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q15-7">
+<div class="phead"><span class="pnum">問 15.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">時間領域のエイリアシング</span></div>
+<ol class="sublist">
+<li>\(x=(1,2,3)\)、\(h=(1,1)\) の線形畳み込みを求めよ。次に長さ3の DFT の積を逆変換して得られる巡回畳み込みを求め、両者の関係を述べよ。</li>
+<li>一般に、長さ \(N\) の DFT の積 \(X[k]H[k]\) の逆変換は、線形畳み込み \(y\) を周期 \(N\) で重ね合わせた \(\displaystyle\sum_ry[n+rN]\) に等しいことを示せ。これが「周波数の側の標本化 ↔ 時間の側の周期化」(問10.5)の例であることを説明せよ。</li>
+<li>信号の DFT のうち、ある周波数より上のビンを \(0\) にしてから逆変換する「周波数の側での理想フィルタ」を考える。これは時間の側では何との巡回畳み込みにあたるか。ブロックの両端に不自然な振動(リンギング)が出る理由を (2) を使って説明し、どう対処すればよいかを述べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>バタフライの式を、1の \(N\) 乗根の性質から導ける</li>
+<li>8点 FFT の計算を、ビット反転の並べ替えから手で追える</li>
+<li>計算量の漸化式を解いて \(O(N\log N)\) を示せる</li>
+<li>FFT で畳み込み・多項式の積・大きな整数の積を計算する手順を説明できる</li>
+<li>必要なゼロ詰めの長さを決め、時間領域のエイリアシングを避けられる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch16">
+<p class="chnum">第16章</p>
+<h2>2次元フーリエ変換と画像</h2>
+<p class="chsub">— 空間周波数・フィルタ・圧縮</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>画像は、位置 \((x,y)\) の明るさの関数、つまり2次元の信号です。2次元のフーリエ変換は、画像を「いろいろな向きと細かさの縞模様(2次元の正弦波)の重ね合わせ」に分解します。空間周波数の低い成分は全体の明るさのゆるやかな変化、高い成分は輪郭や細かい模様です。ぼかし・鮮鋭化・エッジ検出は空間周波数ごとの掛け算として設計でき、JPEG は 8×8 画素のブロックを離散コサイン変換(DCT)して、目立ちにくい高い空間周波数の係数を粗く表すことでデータを減らします。CT や MRI では、測ったデータがそのまま画像のフーリエ変換の一部になっています。この章で、1次元で学んだことを2次元に広げ、画像処理の言葉にします。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>2次元の DFT を計算し、行と列の1次元 DFT に分けて計算できる</li>
+<li>縞模様の空間周波数(向きと細かさ)を、DFT のピークの位置から読める</li>
+<li>ぼかし・ラプラシアン・鮮鋭化の周波数特性を求めて解釈できる</li>
+<li>DCT と対称な延長の関係を説明し、JPEG がエネルギーの集中を利用していることを計算で示せる</li>
+<li>投影切断定理を導き、CT の画像再構成の原理を説明できる</li>
+<li>位相限定相関で、2枚の画像のずれを求める原理を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">2次元フーリエ変換</b>:\(\displaystyle\hat f(\xi,\eta)=\iint f(x,y)e^{-i(\xi x+\eta y)}dx\,dy\)。逆変換は \(\frac1{4\pi^2}\iint\hat f(\xi,\eta)e^{i(\xi x+\eta y)}d\xi\,d\eta\)。\(f(x,y)=g(x)h(y)\)(分離可能)なら \(\hat f(\xi,\eta)=\hat g(\xi)\hat h(\eta)\)</li>
+<li><b class="term">2次元 DFT</b>(\(M\times N\) の画像):\(\displaystyle X[k,l]=\sum_{m=0}^{M-1}\sum_{n=0}^{N-1}x[m,n]W_M^{km}W_N^{ln}\)。行列で書くと \(X=F_MxF_N\)(各列と各行に1次元 DFT をかける)。逆変換は \(\frac1{MN}\) を付けて共役の向きで</li>
+<li><b class="term">2次元の畳み込み定理</b>:\(\widehat{f*g}=\hat f\,\hat g\)。フィルタの周波数応答は \(H(\xi,\eta)\)(離散なら \(H(u,v)\)、\(u,v\) は rad/画素)</li>
+<li><b class="term">回転</b>:画像を角 \(\theta\) だけ回すと、スペクトルも同じ角だけ回る</li>
+<li><b class="term">DCT-II</b>(正規直交):\(\displaystyle X[k]=\alpha_k\sum_{n=0}^{N-1}x[n]\cos\frac{\pi(n+\frac12)k}N\)、\(\alpha_0=\sqrt{\tfrac1N}\)、\(\alpha_k=\sqrt{\tfrac2N}\)(\(k\ge1\))。直交変換なので \(\sum x[n]^2=\sum X[k]^2\)。データを鏡に映すように対称に延長した DFT にあたる</li>
+<li><b class="term">投影切断定理</b>:角 \(\theta\) の方向の投影 \(p_\theta(s)\)(\(s\) 方向に垂直な直線に沿った \(f\) の積分)の1次元フーリエ変換は \(\hat f(\rho\cos\theta,\rho\sin\theta)\)(原点を通る直線の上の \(\hat f\) の値)</li>
+</ul>
+</div>
+
+<section class="prob" id="q16-1">
+<div class="phead"><span class="pnum">問 16.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">2×2 画像の2次元 DFT</span></div>
+<p>画素値 \(x=\begin{pmatrix}1 &amp; 2\\ 3 &amp; 4\end{pmatrix}\)(\(x[m,n]\) の \(m\) が行、\(n\) が列)の 2×2 画像を考える。\(W_2=-1\) である。</p>
+<ol class="sublist">
+<li>2次元 DFT \(X[k,l]\)(\(k,l=0,1\))をすべて求めよ。</li>
+<li>4つの係数がそれぞれ画像のどんな「模様」の大きさを表しているかを述べよ(全体の明るさ・左右の差・上下の差・市松模様)。</li>
+<li>逆変換で \(x[0,0]=1\) が戻ることを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-2">
+<div class="phead"><span class="pnum">問 16.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">分離可能性と計算量</span></div>
+<ol class="sublist">
+<li>\(f(x,y)=g(x)h(y)\) なら \(\hat f(\xi,\eta)=\hat g(\xi)\hat h(\eta)\) であることを示せ。これを使って、\(\operatorname{rect}_a(x)\operatorname{rect}_b(y)\)(長方形の板)のフーリエ変換を書け。</li>
+<li>\(M\times N\) の画像 \(x\) の2次元 DFT が、各列に \(M\) 点の DFT をかけたあと各行に \(N\) 点の DFT をかけたもの、すなわち \(X=F_MxF_N\) であることを示せ(\(F_N\) は対称行列)。</li>
+<li>\(N\times N\) の画像で、2次元 DFT を定義どおり計算する掛け算の回数(\(N^4\))と、行と列に分けて FFT を使う場合の回数を比べよ。\(N=1024\) ではそれぞれおよそ何回か。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-3">
+<div class="phead"><span class="pnum">問 16.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">縞模様の空間周波数</span></div>
+<p>\(64\times64\) の画像 \(f[m,n]=\cos\dfrac{2\pi(3m+4n)}{64}\) を考える。</p>
+<ol class="sublist">
+<li>2次元 DFT が \(0\) でないのは \((k,l)=(3,4)\) と \((61,60)\) だけで、値はどちらも \(\frac{64^2}2=2048\) であることを示せ。</li>
+<li>縞(明るさが等しい線)は \(3m+4n=\) 一定 の直線である。縞の向きと、縞に垂直な方向に測った縞の間隔(周期)を求めよ。</li>
+<li>この画像を90°回転した画像 \(f[n,-m]\)(番号は64を法とする)の DFT のピークはどこに移るか。「画像を回すとスペクトルも回る」ことを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-4">
+<div class="phead"><span class="pnum">問 16.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">ぼかし・ラプラシアン・鮮鋭化</span></div>
+<p>画像 \(x[m,n]\) に 3×3 の係数(カーネル)を畳み込むフィルタを考え、周波数応答を \(H(u,v)\)(\(u,v\) は縦・横の rad/画素)で表す。</p>
+<ol class="sublist">
+<li>9画素の平均をとる箱型のぼかし(係数がすべて \(\frac19\))の周波数応答が \(H(u,v)=\frac19(1+2\cos u)(1+2\cos v)\) であることを示せ。\(H(\pi,\pi)\) と \(H(\frac{2\pi}3,0)\) を求め、このぼかしが最も細かい模様を完全には消さず、かえって途中の周波数で \(0\) になることを説明せよ。</li>
+<li>ラプラシアンのカーネル \(\begin{pmatrix}0 &amp; 1 &amp; 0\\ 1 &amp; -4 &amp; 1\\ 0 &amp; 1 &amp; 0\end{pmatrix}\) の周波数応答が \(-4\sin^2\frac u2-4\sin^2\frac v2\) であることを示し、原点の近くで連続のラプラシアン \(\partial_x^2+\partial_y^2\) の周波数応答 \(-(\xi^2+\eta^2)\) に近いことを確かめよ。</li>
+<li>アンシャープマスク \(y=x+\alpha\,(x-g*x)\)(\(g\) はぼかしのカーネル)の周波数応答を \(G(u,v)\) で表せ。\(g\) を (1) の箱型、\(\alpha=1\) とするとき、直流と \((\pi,\pi)\) での値を求め、この処理が何をしているかを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-5">
+<div class="phead"><span class="pnum">問 16.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">DCT と対称な延長</span></div>
+<ol class="sublist">
+<li>長さ \(N\) のデータ \(x\) を、鏡に映すように延長した長さ \(2N\) の列 \(y=(x[0],\dots,x[N-1],x[N-1],\dots,x[0])\) を考える。\(y\) の \(2N\) 点 DFT が \(\displaystyle Y[k]=2e^{i\pi k/(2N)}\sum_{n=0}^{N-1}x[n]\cos\frac{\pi(n+\frac12)k}N\) となることを示せ。</li>
+<li>DFT がデータを周期的に延長するのに対し、対称な延長では両端で跳びが生じないことを説明し、問3.7(半区間展開)の結果と結びつけて、DCT の係数が DFT の係数より速く小さくなりやすい理由を述べよ。</li>
+<li>\(N=2\) の正規直交な DCT-II の行列を書き、直交行列であることを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-6">
+<div class="phead"><span class="pnum">問 16.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">JPEG とエネルギーの集中</span></div>
+<p>明るさが一定の割合で変わる(ランプ状の)4画素のデータ \(x=(1,2,3,4)\) を考える。\(\cos\frac\pi8\approx0.9239\)、\(\cos\frac{3\pi}8\approx0.3827\) を用いてよい。</p>
+<ol class="sublist">
+<li>正規直交な DCT-II の係数 \(X[0],\dots,X[3]\) を求めよ(\(X[1]=-\frac{3\cos(\pi/8)+\cos(3\pi/8)}{\sqrt2}\)、\(X[3]=\frac{\cos(\pi/8)-3\cos(3\pi/8)}{\sqrt2}\) となることを示せ)。</li>
+<li>\(\sum x[n]^2=\sum X[k]^2\) を数値で確かめよ。</li>
+<li>\(X[2],X[3]\) を \(0\) にして(係数2個だけ残して)戻したときの誤差のエネルギーを求め、全体の何%かを答えよ。一方、DFT(問14.1)で \(X[0]\) と \(X[1],X[3]\)(実数にして3個分)だけ残したときの誤差のエネルギーを求めよ。2つの結果の違いを、延長のしかた(周期的か対称か)の違いで説明せよ。</li>
+<li>JPEG は画像を 8×8 のブロックに分けて2次元 DCT をかけ、高い空間周波数ほど粗く量子化(丸め)する。この方法でデータが減る理由と、強く圧縮したときにブロックの境目が見える(ブロックノイズ)理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-7">
+<div class="phead"><span class="pnum">問 16.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">投影切断定理と CT</span></div>
+<p>2次元の関数 \(f(x,y)\)(体の断面の X 線の吸収の強さ)を考える。</p>
+<ol class="sublist">
+<li>\(y\) 方向に積分した投影 \(p_0(x)=\int f(x,y)\,dy\) の1次元フーリエ変換が \(\hat f(\rho,0)\) であることを示せ。</li>
+<li>座標を角 \(\theta\) だけ回した \(s=x\cos\theta+y\sin\theta\)、\(t=-x\sin\theta+y\cos\theta\) を使い、\(t\) 方向に積分した投影 \(p_\theta(s)\) の1次元フーリエ変換が \(\hat f(\rho\cos\theta,\rho\sin\theta)\) であることを示せ(回転のヤコビアンは \(1\))。</li>
+<li>\(f\) が半径 \(1\) の円板の上で \(1\)、それ以外で \(0\) のとき、\(p_\theta(s)\) を求め、\(\theta\) によらないことを確かめよ。</li>
+<li>多くの角度で投影を測ると、2次元のフーリエ平面のどこが分かるか。そこから \(f\) を再構成する原理を説明せよ。MRI では何を直接測っていると言えるか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q16-8">
+<div class="phead"><span class="pnum">問 16.8</span><span class="lv lv3">★★★ 応用</span><span class="ptag">位相限定相関による位置合わせ</span></div>
+<ol class="sublist">
+<li>2次元の画像 \(g(\mathbf x)=f(\mathbf x-\mathbf x_0)\)(\(\mathbf x=(x,y)\))について、\(\hat g(\boldsymbol\xi)=e^{-i\boldsymbol\xi\cdot\mathbf x_0}\hat f(\boldsymbol\xi)\) を示せ。</li>
+<li>\(\hat f(\boldsymbol\xi)\ne0\) の点で、正規化した相互パワースペクトル \(R=\dfrac{\hat g\,\overline{\hat f}}{|\hat g\,\overline{\hat f}|}\) が \(e^{-i\boldsymbol\xi\cdot\mathbf x_0}\) になることを示し、その逆変換が \(\delta(\mathbf x-\mathbf x_0)\) であることから、ずれ \(\mathbf x_0\) を求める方法を説明せよ。</li>
+<li>1次元の離散の例で確かめる。\(f=(2,1,0,0)\) を巡回的に1つずらした \(g=(0,2,1,0)\) について、\(F,G\)(4点 DFT)と \(R[k]=\frac{G[k]\overline{F[k]}}{|G[k]\overline{F[k]}|}\) を求め、\(R\) の逆 DFT が \((0,1,0,0)\) になることを確かめよ。</li>
+<li>この方法が明るさの変化に強い理由を述べ、相関(問2.7)や相互情報量(『確率・統計』第16章)による位置合わせと比べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>2次元 DFT を行と列の1次元 DFT に分けて計算できる</li>
+<li>縞模様の向きと細かさを、DFT のピークの位置から読める</li>
+<li>ぼかし・ラプラシアン・鮮鋭化の周波数特性を求めて解釈できる</li>
+<li>DCT が対称な延長による DFT であることと、JPEG がエネルギーの集中を利用していることを説明できる</li>
+<li>投影切断定理と位相限定相関を、推移と回転の性質から導ける</li>
+</ul>
+</div>
+
+<header class="chap" id="ch17">
+<p class="chnum">第17章</p>
+<h2>変調と通信</h2>
+<p class="chsub">— 周波数で信号を運ぶ</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>音声の周波数はせいぜい数 kHz ですが、電波として遠くまで送り、多くの利用者で分け合うには、はるかに高い周波数(数百 kHz〜数 GHz)が必要です。そこで信号を高い周波数の搬送波に「載せて」送ります。これが<b>変調</b>で、フーリエ変換の変調の性質(問8.2)そのもの — スペクトルを搬送波の周波数まで平行移動する操作です。局ごとに違う周波数を使えば、同じ空間を共有できます(<b>周波数分割多重</b>)。受信側では同じ操作でスペクトルを元に戻し(<b>復調</b>)、フィルタで不要な成分を除きます。さらに、Wi-Fi や携帯電話で使われる <b>OFDM</b> は、DFT を使って多数の搬送波を一度に作り、建物での反射による干渉を周波数ごとの割り算で打ち消します。帯域幅と雑音が伝送速度の上限を決めること(<b>シャノン・ハートレーの定理</b>)も、この章で扱います。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>AM 変調のスペクトルを求め、帯域幅と電力効率を計算できる</li>
+<li>周波数分割多重で必要な帯域を見積もれる</li>
+<li>同期検波の原理と、搬送波の位相や周波数のずれの影響を説明できる</li>
+<li>解析信号とヒルベルト変換を使って、包絡線を求められる</li>
+<li>シャノン・ハートレーの定理で通信路容量を計算し、帯域と電力の役割を比べられる</li>
+<li>ナイキストの条件から、伝送速度と必要な帯域の関係を説明できる</li>
+<li>OFDM で、巡回プレフィクスが通信路の畳み込みを巡回畳み込みに変える仕組みを説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">変調</b>:\(x(t)\cos\omega_ct\leftrightarrow\frac12\bigl(\hat x(\omega-\omega_c)+\hat x(\omega+\omega_c)\bigr)\)。スペクトルを \(\pm\omega_c\) へ平行移動する</li>
+<li><b class="term">AM(振幅変調)</b>:\(s(t)=(A+m(t))\cos\omega_ct\)。\(m\) が \(|\omega|\lt W\) に帯域制限されていれば、\(s\) は \(\omega_c\pm W\) の範囲(帯域幅 \(2W\))を占める。\(A+m(t)\ge0\) なら、包絡線 \(A+m(t)\) を整流と低域通過で取り出せる(包絡線検波)</li>
+<li><b class="term">同期検波</b>:\(m(t)\cos\omega_ct\) に \(2\cos(\omega_ct+\varphi)\) を掛けて低域通過フィルタに通すと \(m(t)\cos\varphi\)</li>
+<li><b class="term">ヒルベルト変換と解析信号</b>:ヒルベルト変換 \(\mathcal H\) は周波数応答 \(-i\operatorname{sgn}\omega\) のフィルタで、\(\mathcal H[\cos\omega_0t]=\sin\omega_0t\)(\(\omega_0\gt0\))。解析信号 \(z=x+i\mathcal H[x]\) のスペクトルは、正の周波数では \(2\hat x\)、負の周波数では \(0\)。\(|z(t)|\) が包絡線、\(\arg z(t)\) が瞬時位相</li>
+<li><b class="term">シャノン・ハートレーの定理</b>:帯域幅 \(B\) [Hz]、信号の電力と雑音の電力の比(信号対雑音比)\(\frac SN\) の白色ガウス雑音の通信路の容量は \(C=B\log_2\bigl(1+\frac SN\bigr)\) [bit/s]</li>
+<li><b class="term">ナイキストの条件</b>:間隔 \(T\) で送るパルス \(p\) が互いに干渉しない(\(p(nT)=0\)、\(n\ne0\))ための帯域は最小で \(\frac1{2T}\) Hz(sinc パルスのとき)</li>
+<li><b class="term">OFDM</b>:\(N\) 本の副搬送波で送る記号 \(X[k]\) から、時間の標本 \(x=\mathrm{IDFT}(X)\) を作って送る。通信路のインパルス応答の長さを \(L\) とすると、末尾の \(L-1\) 標本以上を先頭に付ける(<b>巡回プレフィクス</b>)ことで、受信信号の DFT が \(Y[k]=H[k]X[k]\) になる</li>
+</ul>
+</div>
+
+<section class="prob" id="q17-1">
+<div class="phead"><span class="pnum">問 17.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">AM のスペクトルと電力効率</span></div>
+<p>正弦波で振幅変調した信号 \(s(t)=(1+\mu\cos\omega_mt)\cos\omega_ct\)(\(0\lt\mu\le1\)、\(\omega_m\ll\omega_c\))を考える。</p>
+<ol class="sublist">
+<li>\(s(t)\) を3つの余弦波の和に書き直し、スペクトルの線の位置と高さ、帯域幅を答えよ。</li>
+<li>搬送波の成分と、側波(上下の2本)の平均電力をそれぞれ求めよ。情報を運ぶのは側波だけであることから、電力効率(側波の電力 / 全電力)が \(\frac{\mu^2}{2+\mu^2}\) であることを示し、\(\mu=1\) のときの値を答えよ。</li>
+<li>音声を \(4.5\) kHz までに制限して AM で送ると、電波はどれだけの周波数の幅を占めるか。日本の中波の AM 放送の局の周波数が \(9\) kHz 間隔に割り当てられていることと比べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-2">
+<div class="phead"><span class="pnum">問 17.2</span><span class="lv lv1">★ 基礎</span><span class="ptag">周波数分割多重</span></div>
+<p>\(4\) kHz までに帯域制限した3本の音声を、搬送波を除いた両側波帯の変調(DSB、\(m(t)\cos\omega_ct\))で、それぞれ別の搬送波に載せて1本の伝送路で送る。隣り合う通話の帯域の間には \(1\) kHz の隙間(ガードバンド)をあける。</p>
+<ol class="sublist">
+<li>1本の通話が占める帯域幅を答え、最も低い搬送波を \(20\) kHz としたとき、残り2本の搬送波の周波数と、3本全体が占める帯域を求めよ。</li>
+<li>片側の側波帯だけを送る方式(SSB)なら、全体の帯域はどれだけになるか。</li>
+<li>受信側で1本の通話を取り出す手順を述べ、ガードバンドが必要な理由を問9.8と結びつけて説明せよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-3">
+<div class="phead"><span class="pnum">問 17.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">同期検波と位相誤差</span></div>
+<p>\(|\omega|\lt W\) に帯域制限された \(m(t)\) を、\(s(t)=m(t)\cos\omega_ct\)(\(\omega_c\gt W\))で送る。</p>
+<ol class="sublist">
+<li>受信側で \(2\cos(\omega_ct+\varphi)\) を掛けると \(m(t)\bigl(\cos\varphi+\cos(2\omega_ct+\varphi)\bigr)\) になることを示し、低域通過フィルタ(遮断周波数を \(W\) と \(2\omega_c-W\) の間にとる)を通した出力が \(m(t)\cos\varphi\) であることを導け。</li>
+<li>\(\varphi=\frac\pi3\) と \(\varphi=\frac\pi2\) のとき、出力はどうなるか。受信機が搬送波の位相を正確に再現する必要がある理由を述べよ。</li>
+<li>掛ける波の周波数が \(\Delta\omega\) だけずれていた(\(2\cos(\omega_c+\Delta\omega)t\))場合、出力はどうなるか。\(\Delta\omega=2\pi\times1\) rad/s なら何が聞こえるかを、問1.3のうなりと比べて述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-4">
+<div class="phead"><span class="pnum">問 17.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">解析信号とヒルベルト変換</span></div>
+<ol class="sublist">
+<li>周波数応答 \(-i\operatorname{sgn}\omega\) と問10.2の線スペクトルを使って、\(\omega_0\gt0\) のとき \(\mathcal H[\cos\omega_0t]=\sin\omega_0t\)、\(\mathcal H[\sin\omega_0t]=-\cos\omega_0t\) を示せ。</li>
+<li>解析信号 \(z=x+i\mathcal H[x]\) のスペクトルが、\(\omega\gt0\) で \(2\hat x(\omega)\)、\(\omega\lt0\) で \(0\) であることを示せ。</li>
+<li>\(|\omega|\lt W\) に帯域制限された実数値の \(m(t)\) と \(\omega_c\gt W\) について、\(\mathcal H[m(t)\cos\omega_ct]=m(t)\sin\omega_ct\) を示せ。これを使って、AM 信号 \(x(t)=(1+\mu\cos\omega_mt)\cos\omega_ct\)(\(0\lt\mu\lt1\)、\(\omega_m\lt\omega_c\))の解析信号と、その絶対値(包絡線)・偏角(瞬時位相)を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-5">
+<div class="phead"><span class="pnum">問 17.5</span><span class="lv lv2">★★ 標準</span><span class="ptag">シャノン・ハートレーの通信路容量</span></div>
+<p>電話回線を、帯域幅 \(B=3.1\) kHz、信号対雑音比 \(30\) dB(\(\frac SN=1000\))の白色ガウス雑音の通信路とみなす。雑音の電力は帯域幅に比例する(\(N=N_0B\))とする。\(\log_2x=\frac{\log_{10}x}{\log_{10}2}\) を用いよ。</p>
+<ol class="sublist">
+<li>通信路容量 \(C\) を求めよ(\(\log_{10}1001\approx3.0004\)、\(\log_{10}2\approx0.30103\))。アナログの電話回線どうしを結ぶモデムの規格(V.34)の最高速度 \(33.6\) kbit/s と比べよ。</li>
+<li>信号の電力を変えずに帯域幅を2倍にする場合と、帯域幅を変えずに信号の電力を2倍にする場合の容量をそれぞれ求めよ(\(\log_2501\approx8.969\)、\(\log_22001\approx10.967\))。信号対雑音比が大きいとき、どちらが容量を増やすのに有効か。</li>
+<li>信号の電力 \(S\) と \(N_0\) を固定して \(B\to\infty\) とすると、容量は \(\frac S{N_0\log2}\) に近づくことを示せ(\(\log(1+u)\approx u\) を使う)。この結果から、帯域を広げるだけでは容量をいくらでも増やせない理由を述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-6">
+<div class="phead"><span class="pnum">問 17.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ナイキストの無 ISI 条件と最小帯域</span></div>
+<p>記号 \(a_n\) を間隔 \(T\) で、パルス \(p\) に載せて \(s(t)=\sum_na_np(t-nT)\) と送る。受信側は \(t=mT\) で標本をとる。</p>
+<ol class="sublist">
+<li>\(p(t)=\operatorname{sinc}\frac{\pi t}T\) なら \(s(mT)=a_m\) となり、ほかの記号の影響(符号間干渉、ISI)がないことを示せ。</li>
+<li>このパルスのスペクトルが \(T\operatorname{rect}_{\pi/T}(\omega)\)(問12.5)で、帯域幅が \(\frac1{2T}\) Hz であることを確かめよ。パーセバルの等式を使って、\(\int p(t-mT)p(t-nT)\,dt=T\delta_{mn}\)(互いに直交)を示せ。</li>
+<li>一般のパルスについて、「\(p(nT)=\delta_{n0}\)」と「\(\sum_k\hat p\bigl(\omega-\frac{2\pi k}T\bigr)=T\)(すべての \(\omega\))」が同値であることを、問13.2(3) の標本化の関係を使って示せ(ナイキストの条件)。これから、帯域幅が \(\frac1{2T}\) Hz より狭いパルスでは ISI を避けられないことを説明せよ。</li>
+<li>sinc パルスは \(\frac1{|t|}\) でしか減らず、標本をとる時刻のわずかなずれに弱い。実際には、スペクトルの端をなめらかにしたレイズドコサインのパルス(帯域幅 \(\frac{1+\beta}{2T}\)、\(0\lt\beta\le1\))が使われる。\(1\) 秒あたり \(10^6\) 個の記号を \(\beta=0.25\) で送るのに必要な帯域幅を求めよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q17-7">
+<div class="phead"><span class="pnum">問 17.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">OFDM とサイクリックプレフィクス</span></div>
+<p>\(N=4\) 本の副搬送波で記号 \(X=(X[0],\dots,X[3])\) を送る。送信側は \(x=\mathrm{IDFT}(X)\) を作り、通信路は直接波と1標本遅れた反射波からなる \(h=(h_0,h_1)\) との畳み込みで表されるとする(雑音は考えない)。</p>
+<ol class="sublist">
+<li>送信側が \(x\) の末尾の1標本を先頭に付けた \((x[3],x[0],x[1],x[2],x[3])\) を送ると、受信側で最初の1標本を捨てた残りが \(y[n]=h_0x[n]+h_1x[(n-1)\bmod4]\)(巡回畳み込み)になることを示せ。</li>
+<li>(1) から \(Y[k]=H[k]X[k]\) を導き、受信側では各副搬送波ごとに \(H[k]\) で割るだけで記号を取り戻せる(1タップ等化)ことを説明せよ。巡回プレフィクスを付けないと何が起きるか。</li>
+<li>\(h=(1,0.5)\) のとき \(H[k]\) を求めよ。どの副搬送波が最も弱まるか(何 dB か)。雑音がある場合、その副搬送波では等化の後に何が起きるか。</li>
+<li>無線 LAN の規格(IEEE 802.11a)では、\(N=64\) 点の FFT(20 MHz の標本化で 3.2 µs)に 16 標本(0.8 µs)の巡回プレフィクスを付ける。伝送の効率(全体のうち本来の記号に使う時間の割合)を求め、0.8 µs が電波の行路の差にして何 m の反射まで吸収できる長さかを求めよ(光速 \(3\times10^8\) m/s)。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら次章へ)</h3>
+<ul>
+<li>変調がスペクトルの平行移動であることを示し、AM の帯域幅と電力効率を計算できる</li>
+<li>同期検波の手順と、搬送波の位相・周波数のずれの影響を説明できる</li>
+<li>解析信号とヒルベルト変換で、包絡線と瞬時位相を求められる</li>
+<li>シャノン・ハートレーの定理で容量を計算し、帯域と電力の役割の違いを説明できる</li>
+<li>ナイキストの条件から、伝送速度と最小帯域の関係を説明できる</li>
+<li>OFDM の巡回プレフィクスが、等化を副搬送波ごとの割り算にする理由を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="ch18">
+<p class="chnum">第18章</p>
+<h2>不規則信号のスペクトル</h2>
+<p class="chsub">— 雑音を周波数で見る</p>
+</header>
+
+<div class="why">
+<h3>なぜ学ぶのか</h3>
+<p>雑音や話し声のような不規則な信号は、測るたびに違う波形になるので、ある1回の波形のフーリエ変換にはあまり意味がありません。意味があるのは「平均的に、どの周波数にどれだけの電力があるか」— <b>パワースペクトル密度</b>です。性質が時間によって変わらない(定常な)確率過程では、自己相関関数(時間をずらした自分自身との相関)のフーリエ変換がパワースペクトル密度になります(<b>ウィーナー・ヒンチンの定理</b>)。白色雑音はすべての周波数に同じ密度で電力をもつ雑音で、フィルタを通すと出力のスペクトルは \(|H|^2\) 倍になります。この章では、雑音の帯域と電力の計算、データからスペクトルを推定するときの落とし穴(ピリオドグラムのばらつき)、DFT による正弦波の検出、信号と雑音のスペクトルから最適なフィルタを作るウィーナーフィルタまでを扱います。『確率・統計』の期待値・分散・共分散と、本書の周波数の考え方が合流する章です。</p>
+</div>
+
+<div class="learn">
+<h3>この章で身につくこと</h3>
+<ul>
+<li>定常過程の自己相関関数の性質を導き、ランダムな位相をもつ正弦波で計算できる</li>
+<li>ウィーナー・ヒンチンの定理を使って、パワースペクトル密度と自己相関関数を行き来できる</li>
+<li>LTI システムに不規則信号を通したときの出力のスペクトル \(|H|^2S_X\) を使える</li>
+<li>ピリオドグラムが一致推定量でないことを示し、平均化による改善を説明できる</li>
+<li>DFT の処理利得を計算し、雑音に埋もれた正弦波を検出できる</li>
+<li>ウィーナーフィルタを導き、その意味を説明できる</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>この章の要点</h3>
+<ul>
+<li><b class="term">弱定常過程</b>:平均 \(E[X(t)]\) が一定で、自己相関関数 \(R_X(\tau)=E[X(t+\tau)X(t)]\) が \(t\) によらない実数値の確率過程(本章では平均 \(0\) とする)。\(R(-\tau)=R(\tau)\)、\(|R(\tau)|\le R(0)=E[X^2]\)(平均電力)</li>
+<li><b class="term">ウィーナー・ヒンチンの定理</b>:パワースペクトル密度は \(\displaystyle S_X(\omega)=\int R_X(\tau)e^{-i\omega\tau}d\tau\)(\(\ge0\)、偶関数)。平均電力は \(\displaystyle E[X^2]=R(0)=\frac1{2\pi}\int S_X(\omega)\,d\omega\)</li>
+<li><b class="term">白色雑音</b>:\(S(\omega)=\frac{N_0}2\)(一定)、\(R(\tau)=\frac{N_0}2\delta(\tau)\)。すべての周波数で同じ電力密度をもつ理想化</li>
+<li><b class="term">フィルタの出力</b>:\(Y=h*X\) なら \(S_Y(\omega)=|H(\omega)|^2S_X(\omega)\)</li>
+<li><b class="term">離散時間</b>:\(R[m]=E[x[n+m]x[n]]\)、\(\displaystyle S(\Omega)=\sum_mR[m]e^{-i\Omega m}\)(周期 \(2\pi\))、\(\displaystyle E[x^2]=\frac1{2\pi}\int_{-\pi}^{\pi}S(\Omega)\,d\Omega\)。分散 \(\sigma^2\) の白色雑音では \(R[m]=\sigma^2\delta[m]\)、\(S=\sigma^2\)。フィルタの出力は \(S_y=|H(\Omega)|^2S_x\)</li>
+<li><b class="term">ピリオドグラム</b>:長さ \(N\) のデータの DFT \(X[k]\) から作る \(P[k]=\frac{|X[k]|^2}N\)。平均はおよそ \(S(\frac{2\pi k}N)\) だが、ばらつきは \(N\) を増やしても小さくならない</li>
+</ul>
+</div>
+
+<section class="prob" id="q18-1">
+<div class="phead"><span class="pnum">問 18.1</span><span class="lv lv1">★ 基礎</span><span class="ptag">自己相関とランダムな位相の正弦波</span></div>
+<ol class="sublist">
+<li>弱定常過程について、\(R(-\tau)=R(\tau)\) と \(|R(\tau)|\le R(0)\) を示せ(後者はコーシー・シュワルツの不等式 \(|E[UV]|\le\sqrt{E[U^2]E[V^2]}\) を使う)。</li>
+<li>\(A,\omega_0\gt0\) を定数、\(\Theta\) を区間 \([0,2\pi)\) の一様分布に従う確率変数として、\(X(t)=A\cos(\omega_0t+\Theta)\) を考える。\(E[X(t)]=0\)、\(R(\tau)=\frac{A^2}2\cos\omega_0\tau\) を示し、弱定常であることを確かめよ。</li>
+<li>\(X\) のパワースペクトル密度を求め、\(\frac1{2\pi}\int S\,d\omega\) が平均電力 \(R(0)\) に一致することを確かめよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-2">
+<div class="phead"><span class="pnum">問 18.2</span><span class="lv lv2">★★ 標準</span><span class="ptag">白色雑音と RC フィルタ</span></div>
+<p>パワースペクトル密度 \(\frac{N_0}2\) の白色雑音を、RC 回路 \(H(\omega)=\frac1{1+i\omega\tau}\)(問1.7)に通す。</p>
+<ol class="sublist">
+<li>出力のパワースペクトル密度 \(S_Y\) と、自己相関関数 \(R_Y(s)=\frac{N_0}{4\tau}e^{-|s|/\tau}\) を求めよ(問7.3の変換対を使う)。</li>
+<li>出力の平均電力を求めよ。\(\tau\) を小さくする(帯域を広げる)と雑音の電力はどうなるか。</li>
+<li>理想的な低域通過フィルタ(\(|f|\lt B\) で \(1\))に白色雑音を通したときの出力の電力は \(N_0B\) である。RC 回路と同じ電力になる \(B\)(等価雑音帯域幅)を求め、\(-3\) dB の遮断周波数 \(f_c=\frac1{2\pi\tau}\) の何倍かを答えよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-3">
+<div class="phead"><span class="pnum">問 18.3</span><span class="lv lv2">★★ 標準</span><span class="ptag">AR(1) 過程とウィーナー・ヒンチンの定理</span></div>
+<p>\(|a|\lt1\) とし、分散 \(\sigma^2\) の白色雑音 \(w[n]\) から \(x[n]=ax[n-1]+w[n]\) で作る定常な過程 \(x[n]=\sum_{k\ge0}a^kw[n-k]\)(1次の自己回帰過程)を考える。</p>
+<ol class="sublist">
+<li>\(R[m]=\dfrac{\sigma^2a^{|m|}}{1-a^2}\) を示せ。</li>
+<li>パワースペクトル密度を、(1) の和から、また \(H(\Omega)=\frac1{1-ae^{-i\Omega}}\) を使った \(|H|^2\sigma^2\) から求め、どちらも \(\dfrac{\sigma^2}{1-2a\cos\Omega+a^2}\) になることを確かめよ。</li>
+<li>\(\displaystyle\int_{-\pi}^{\pi}\frac{d\Omega}{1-2a\cos\Omega+a^2}=\frac{2\pi}{1-a^2}\) を用いて、\(\frac1{2\pi}\int S\,d\Omega=R[0]\) を確かめよ。\(a\gt0\) と \(a\lt0\) で、スペクトルの形と信号の見た目(ゆっくり変わるか、細かく振動するか)がどう違うかを述べよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-4">
+<div class="phead"><span class="pnum">問 18.4</span><span class="lv lv2">★★ 標準</span><span class="ptag">平均化による雑音の低減</span></div>
+<p>分散 \(\sigma^2\) の白色雑音 \(w[n]\) を考える。</p>
+<ol class="sublist">
+<li>2点の平均 \(y[n]=\frac12(w[n]+w[n-1])\) の自己相関 \(R_y[m]\) をすべての \(m\) について求めよ。</li>
+<li>\(y\) のパワースペクトル密度を (1) から求め、\(|H(\Omega)|^2\sigma^2\)(\(H\) は2点平均の周波数応答)と一致することを確かめよ。</li>
+<li>\(M\) 点の移動平均の出力の分散が \(\frac{\sigma^2}M\) であることを、パーセバルの等式 \(\frac1{2\pi}\int|H|^2d\Omega=\sum h[n]^2\) を使って示せ。周波数の言葉では、平均化で雑音が減るのはなぜか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-5">
+<div class="phead"><span class="pnum">問 18.5</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ピリオドグラムのばらつき</span></div>
+<p>\(w[0],\dots,w[N-1]\) を独立に正規分布 \(N(0,\sigma^2)\) に従う確率変数とし、DFT を \(W[k]\)、ピリオドグラムを \(P[k]=\frac{|W[k]|^2}N\) とする。\(0\lt k\lt\frac N2\) とする。</p>
+<ol class="sublist">
+<li>\(\operatorname{Re}W[k]=\sum_nw[n]\cos\frac{2\pi kn}N\) と \(\operatorname{Im}W[k]=-\sum_nw[n]\sin\frac{2\pi kn}N\) が、どちらも \(N\bigl(0,\frac{N\sigma^2}2\bigr)\) に従い、互いに独立であることを示せ。(\(\sum_n\cos^2\frac{2\pi kn}N=\sum_n\sin^2\frac{2\pi kn}N=\frac N2\)、\(\sum_n\cos\frac{2\pi kn}N\sin\frac{2\pi kn}N=0\) を問1.4から導き、正規分布に従う変数の一次結合は、共分散が \(0\) なら独立であることを使う。)</li>
+<li>\(\frac{P[k]}{\sigma^2}\) が平均 \(1\) の指数分布に従うことを示し、\(P[k]\) の平均と標準偏差を求めよ。\(N\) を大きくしてもばらつきが小さくならないことを説明せよ。</li>
+<li>データを長さ \(L\) の \(K\) 個の区間に分け、区間ごとのピリオドグラムを平均する(バートレット法、区間を重ねればウェルチ法)。\(N=4096\)、\(K=16\) のとき、標準偏差は平均の何倍になるか。代わりに何が犠牲になるか。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-6">
+<div class="phead"><span class="pnum">問 18.6</span><span class="lv lv3">★★★ 応用</span><span class="ptag">DFT の処理利得と正弦波の検出</span></div>
+<p>\(x[n]=A\cos\frac{2\pi k_0n}N+w[n]\)(\(k_0\) は \(0\lt k_0\lt\frac N2\) の整数)、\(w\) は問18.5の白色雑音とする。</p>
+<ol class="sublist">
+<li>\(E\bigl[|X[k_0]|^2\bigr]=\bigl(\frac{AN}2\bigr)^2+N\sigma^2\)、\(k\ne k_0\)(\(0\lt k\lt\frac N2\))では \(E\bigl[|X[k]|^2\bigr]=N\sigma^2\) を示せ。</li>
+<li>時間の側での信号対雑音比 \(\frac{A^2/2}{\sigma^2}\) と、ビン \(k_0\) での信号対雑音比 \(\frac{(AN/2)^2}{N\sigma^2}\) の比(処理利得)を求めよ。</li>
+<li>\(A=0.2\)、\(\sigma=1\)、\(N=4096\) のとき、時間の側とビンでの信号対雑音比を dB で求めよ。雑音だけのビンで \(|X[k]|^2\gt12N\sigma^2\) となる確率を問18.5を使って求め、正の周波数の約2000本のビンのうち、雑音だけで閾値を超えるビンの数の期待値を見積もれ。この閾値で正弦波を見つけられるかを論じよ。</li>
+</ol>
+</section>
+
+<section class="prob" id="q18-7">
+<div class="phead"><span class="pnum">問 18.7</span><span class="lv lv3">★★★ 応用</span><span class="ptag">ウィーナーフィルタ</span></div>
+<p>観測 \(Y=S+N\) から信号 \(S\) を推定する。\(S\) と \(N\) は独立な平均 \(0\) の定常過程で、パワースペクトル密度を \(S_s,S_n\) とする。推定は \(\hat S=h*Y\)(因果性は問わない)とし、平均二乗誤差 \(E\bigl[(S-\hat S)^2\bigr]\) を最小にする \(h\) を求める。</p>
+<ol class="sublist">
+<li>誤差 \(e=S-h*Y\) のパワースペクトル密度が \(S_e=|1-H|^2S_s+|H|^2S_n\) であることを説明せよ(独立な過程の和のスペクトルは足し算になることを使う)。</li>
+<li>平均二乗誤差 \(\frac1{2\pi}\int S_e\,d\omega\) を最小にするには、各 \(\omega\) で \(S_e\) を最小にすればよい。\(a,b\gt0\) について \(|1-H|^2a+|H|^2b=(a+b)\bigl|H-\frac a{a+b}\bigr|^2+\frac{ab}{a+b}\) を示し、最適な \(H=\dfrac{S_s}{S_s+S_n}\) と、そのときの平均二乗誤差を求めよ。</li>
+<li>\(S_s=\frac2{1+\omega^2}\)(自己相関 \(e^{-|\tau|}\)、平均電力 \(1\))、\(S_n=c\)(白色雑音)とする。\(H(\omega)\) を求め、\(H=\frac12\) となる \(\omega\) を \(c\) で表せ。\(c=0.02\) のときの平均二乗誤差 \(\sqrt{\frac c{2+c}}\) を求め(\(\int\frac{d\omega}{\alpha+c\omega^2}=\frac\pi{\sqrt{\alpha c}}\) を用いてよい)、信号の平均電力と比べよ。</li>
+<li>ウィーナーフィルタと、『確率・統計』第15章のカルマンフィルタを、扱える信号の性質(定常か)・計算のしかた(周波数の側か時間の側の逐次計算か)の観点から比べよ。</li>
+</ol>
+</section>
+
+<div class="check">
+<h3>到達確認(自分の言葉で答えられたら修了)</h3>
+<ul>
+<li>自己相関関数の性質と、ランダムな位相の正弦波の自己相関・スペクトルを導ける</li>
+<li>ウィーナー・ヒンチンの定理で、パワースペクトル密度と自己相関関数を行き来できる</li>
+<li>フィルタを通した雑音のスペクトル \(|H|^2S\) を使って、出力の電力や等価雑音帯域幅を求められる</li>
+<li>ピリオドグラムのばらつきの原因と、平均化による改善とその代償を説明できる</li>
+<li>DFT の処理利得を計算し、ウィーナーフィルタが周波数ごとに信号と雑音の比で重みをつける理由を説明できる</li>
+</ul>
+</div>
+
+<header class="chap" id="appendix">
+<p class="chnum">付録</p>
+<h2>公式集</h2>
+<p class="chsub">— 規約の換算・変換対・性質の早見表</p>
+</header>
+
+<div class="why">
+<h3>この付録の使い方</h3>
+<p>本文で繰り返し使う規約と公式を表にまとめました。かっこ内や「問題」の欄は、その式を導く問題か、使う問題の番号です。式を思い出すための索引として使い、成り立つ条件(積分可能性、区分的な滑らかさ、帯域制限など)は各章の要点と問題で確かめてください。\(\delta\) を含む式は、第10章と同じく形式的な計算の意味で使います。</p>
+</div>
+
+<div class="keybox">
+<h3>A.1 規約の換算</h3>
+<p>フーリエ変換の定義は、本によって \(2\pi\) の置き場所と指数の符号が違う。本書の \(\hat f(\omega)\) から、ほかの規約の値は次のように得られる(換算の練習は問7.3・7.8)。</p>
+<div class="tscroll"><table>
+<tr><th>規約</th><th>正変換</th><th>逆変換</th></tr>
+<tr><td>本書(角周波数 \(\omega\))</td><td>\(\hat f(\omega)=\int f(t)e^{-i\omega t}dt\)</td><td>\(f(t)=\frac1{2\pi}\int\hat f(\omega)e^{i\omega t}d\omega\)</td></tr>
+<tr><td>周波数 \(f\) [Hz]</td><td>\(X(f)=\int x(t)e^{-i2\pi ft}dt=\hat x(2\pi f)\)</td><td>\(x(t)=\int X(f)e^{i2\pi ft}df\)</td></tr>
+<tr><td>ユニタリ(角周波数)</td><td>\(F_u(\omega)=\frac1{\sqrt{2\pi}}\int f(t)e^{-i\omega t}dt=\frac{\hat f(\omega)}{\sqrt{2\pi}}\)</td><td>\(f(t)=\frac1{\sqrt{2\pi}}\int F_u(\omega)e^{i\omega t}d\omega\)</td></tr>
+</table></div>
+<p>\(2\pi\) の置き場所が違うので、パーセバルの等式や畳み込みの式の係数も規約ごとに変わる(問8.6・第9章)。</p>
+<div class="tscroll"><table>
+<tr><th>規約</th><th>パーセバルの等式</th><th>畳み込みと積</th><th>\(\operatorname{rect}_a\) の変換</th></tr>
+<tr><td>本書</td><td>\(\displaystyle\int|f|^2dt=\frac1{2\pi}\int|\hat f|^2d\omega\)</td><td>\(f*g\leftrightarrow\hat f\,\hat g\)<br>\(fg\leftrightarrow\frac1{2\pi}\hat f*\hat g\)</td><td>\(\dfrac{2\sin a\omega}\omega\)</td></tr>
+<tr><td>周波数 [Hz]</td><td>\(\displaystyle\int|x|^2dt=\int|X|^2df\)</td><td>\(x*y\leftrightarrow XY\)<br>\(xy\leftrightarrow X*Y\)</td><td>\(\dfrac{\sin2\pi af}{\pi f}\)</td></tr>
+<tr><td>ユニタリ</td><td>\(\displaystyle\int|f|^2dt=\int|F_u|^2d\omega\)</td><td>\(f*g\leftrightarrow\sqrt{2\pi}\,F_uG_u\)<br>\(fg\leftrightarrow\frac1{\sqrt{2\pi}}F_u*G_u\)</td><td>\(\sqrt{\dfrac2\pi}\,\dfrac{\sin a\omega}\omega\)</td></tr>
+</table></div>
+<ul>
+<li><b class="term">虚数単位と符号</b>:電気・通信の本の \(j\) は本書の \(i\)。指数の符号が逆の規約 \(\int f(t)e^{i\omega t}dt\) の値は \(\hat f(-\omega)\)。確率の特性関数は、密度 \(p\) について \(\varphi(s)=E[e^{isX}]=\hat p(-s)\)(問8.5)</li>
+<li><b class="term">sinc</b>:本書の \(\operatorname{sinc}x=\frac{\sin x}x\)。NumPy の <code>np.sinc(x)</code> は \(\frac{\sin\pi x}{\pi x}\) なので、本書の \(\operatorname{sinc}x\) は <code>np.sinc(x/np.pi)</code> で計算できる(問7.1・12.5)</li>
+<li><b class="term">フーリエ級数</b>:周期 \(2\pi\) では \(\displaystyle c_n=\frac1{2\pi}\int_{-\pi}^{\pi}f(x)e^{-inx}dx\)、周期 \(T\) では \(\displaystyle c_n=\frac1T\int_{-T/2}^{T/2}f(t)e^{-in\omega_0t}dt\)(\(\omega_0=\frac{2\pi}T\))。実形式とは \(c_0=\frac{a_0}2\)、\(c_{\pm n}=\frac{a_n\mp ib_n}2\)(\(n\ge1\)、問4.3)</li>
+<li><b class="term">離散時間の周波数</b>:標本化周期 \(T\)(標本化周波数 \(f_s=\frac1T\))なら \(\Omega=\omega T=\frac{2\pi f}{f_s}\) [rad/sample] で、\(\Omega=\pi\) がナイキスト周波数 \(\frac{f_s}2\)(問13.2)。\(N\) 点 DFT の番号 \(k\) は周波数 \(\frac kNf_s\)(\(k\le\frac N2\))、\(k\gt\frac N2\) は \(\frac{k-N}Nf_s\)(問14.3)</li>
+<li><b class="term">DFT と NumPy</b>:<code>np.fft.fft</code> と <code>np.fft.ifft</code> は本書の \(X[k]\) と逆変換。<code>norm="ortho"</code> を指定すると両方に \(\frac1{\sqrt N}\) が付き、ユニタリ行列 \(\frac1{\sqrt N}F_N\) による変換になる(問14.1・14.2)</li>
+<li><b class="term">デシベル</b>:電力比 \(p\) は \(10\log_{10}p\)、振幅比 \(r\) は \(20\log_{10}r\)。電力が半分で約 \(-3.0\) dB、振幅が半分で約 \(-6.0\) dB(問3.9・7.8)</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>A.2 フーリエ級数の例と級数の値</h3>
+<p>周期 \(2\pi\)(パルス列は周期 \(T\))で延長した関数の級数。跳びの点では、級数は左右の極限の平均に収束する(ディリクレの定理、問5.1)。</p>
+<div class="tscroll"><table>
+<tr><th>関数(\(-\pi\lt x\lt\pi\) での形)</th><th>フーリエ級数</th><th>係数の減り方</th></tr>
+<tr><td>矩形波 \(\operatorname{sgn}x\)</td><td>\(\displaystyle\frac4\pi\sum_{k=1}^\infty\frac{\sin(2k-1)x}{2k-1}\)(問3.1)。複素形式では、奇数の \(n\) で \(c_n=-\frac{2i}{\pi n}\)、それ以外で \(0\)(問4.1)</td><td>\(\frac1n\)(跳びがある)</td></tr>
+<tr><td>のこぎり波 \(x\)</td><td>\(\displaystyle2\sum_{n=1}^\infty\frac{(-1)^{n+1}}n\sin nx\)(問3.2)</td><td>\(\frac1n\)(跳びがある)</td></tr>
+<tr><td>三角波 \(|x|\)</td><td>\(\displaystyle\frac\pi2-\frac4\pi\sum_{k=1}^\infty\frac{\cos(2k-1)x}{(2k-1)^2}\)(問3.3)</td><td>\(\frac1{n^2}\)(連続で折れ目がある)</td></tr>
+<tr><td>\(x^2\)</td><td>\(\displaystyle\frac{\pi^2}3+4\sum_{n=1}^\infty\frac{(-1)^n}{n^2}\cos nx\)(問3.8)</td><td>\(\frac1{n^2}\)(連続で折れ目がある)</td></tr>
+<tr><td>\(e^{ax}\)(\(a\ne0\))</td><td>\(\displaystyle c_n=\frac{(-1)^n\sinh a\pi}{\pi(a-in)}\)(問4.7)</td><td>\(\frac1n\)(跳びがある)</td></tr>
+<tr><td>パルス列(周期 \(T\)、\(|t|\lt\frac\tau2\) で \(1\)、\(d=\frac\tau T\))</td><td>\(\frac{a_0}2=d\)、\(a_n=2d\operatorname{sinc}(n\pi d)\)、\(b_n=0\)(問3.5)</td><td>\(\frac1n\)(跳びがある)</td></tr>
+</table></div>
+<ul>
+<li><b class="term">級数の値</b>:\(1-\frac13+\frac15-\frac17+\cdots=\frac\pi4\)(問3.6)、\(\displaystyle\sum_{k=1}^\infty\frac1{(2k-1)^2}=\frac{\pi^2}8\)(問3.6・5.2)、\(\displaystyle\sum_{n=1}^\infty\frac1{n^2}=\frac{\pi^2}6\)(問3.6・3.8・4.7・5.2)、\(\displaystyle\sum_{n=1}^\infty\frac{(-1)^{n+1}}{n^2}=\frac{\pi^2}{12}\)(問3.8)、\(\displaystyle\sum_{n=1}^\infty\frac1{n^4}=\frac{\pi^4}{90}\)(問5.3)、\(\displaystyle\sum_{n=-\infty}^\infty\frac1{a^2+n^2}=\frac\pi a\coth a\pi\)(問4.7・10.6)</li>
+<li><b class="term">性質</b>(周期 \(2\pi\)):\(f(x-x_0)\to c_ne^{-inx_0}\)、\(f(-x)\to c_{-n}\)(問4.4)。\(f'\to in\,c_n\)(\(f\) が連続で区分的に滑らかなとき、問4.5)。周期的畳み込み \(\frac1{2\pi}\int_{-\pi}^{\pi}f(y)g(x-y)\,dy\to c_n(f)\,c_n(g)\)(問4.6)。実数値なら \(c_{-n}=\overline{c_n}\)(問4.3)</li>
+<li><b class="term">パーセバルの等式</b>:\(\displaystyle\frac1{2\pi}\int_{-\pi}^{\pi}|f|^2dx=\sum_n|c_n|^2\)。実形式では \(\displaystyle\frac1\pi\int_{-\pi}^{\pi}f^2dx=\frac{a_0^2}2+\sum_{n=1}^\infty(a_n^2+b_n^2)\)(問5.2)</li>
+<li><b class="term">核</b>:ディリクレ核 \(\displaystyle D_N(y)=\sum_{|n|\le N}e^{iny}=\frac{\sin(N+\frac12)y}{\sin\frac y2}\)(問1.6・5.5)、フェイェール核 \(\displaystyle F_N(y)=\frac1N\sum_{k=0}^{N-1}D_k(y)=\frac1N\Bigl(\frac{\sin(Ny/2)}{\sin(y/2)}\Bigr)^2\)(問5.8)。どちらも \(\frac1{2\pi}\int_{-\pi}^{\pi}\) で積分すると \(1\)</li>
+<li><b class="term">ギブス現象</b>:大きさ \(J\) の跳びの近くでの行き過ぎは \(\displaystyle\Bigl(\frac1\pi\int_0^\pi\frac{\sin t}t\,dt-\frac12\Bigr)J\approx0.0895J\)(問5.7)</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>A.3 フーリエ変換の対</h3>
+<p>\(a,W,T\gt0\)、\(\omega_0\) は実数(くし形関数では \(\omega_0=\frac{2\pi}T\))。</p>
+<div class="tscroll"><table>
+<tr><th>\(f(t)\)</th><th>\(\hat f(\omega)\)</th><th>問題</th></tr>
+<tr><td>\(\operatorname{rect}_a(t)\)</td><td>\(\dfrac{2\sin a\omega}\omega=2a\operatorname{sinc}(a\omega)\)</td><td>問7.1</td></tr>
+<tr><td>\(\operatorname{tri}(t)\)(\(|t|\le1\) で \(1-|t|\))</td><td>\(\operatorname{sinc}^2\dfrac\omega2\)</td><td>問7.5・9.1</td></tr>
+<tr><td>\(\dfrac{\sin Wt}{\pi t}\)</td><td>\(\operatorname{rect}_W(\omega)\)</td><td>問8.4・9.8</td></tr>
+<tr><td>\(e^{-at}u(t)\)</td><td>\(\dfrac1{a+i\omega}\)</td><td>問7.2</td></tr>
+<tr><td>\(e^{-a|t|}\)</td><td>\(\dfrac{2a}{a^2+\omega^2}\)</td><td>問7.3</td></tr>
+<tr><td>\(\dfrac1{1+t^2}\)</td><td>\(\pi e^{-|\omega|}\)</td><td>問8.4</td></tr>
+<tr><td>\(e^{-at^2}\)</td><td>\(\sqrt{\dfrac\pi a}\,e^{-\omega^2/(4a)}\)</td><td>問7.4</td></tr>
+<tr><td>\(\dfrac1{\sqrt{2\pi}\,\sigma}e^{-t^2/(2\sigma^2)}\)(\(\sigma\gt0\))</td><td>\(e^{-\sigma^2\omega^2/2}\)</td><td>問9.6</td></tr>
+<tr><td>\(te^{-t^2/2}\)</td><td>\(-i\sqrt{2\pi}\,\omega e^{-\omega^2/2}\)</td><td>問8.5</td></tr>
+<tr><td>\(\delta(t-t_0)\)</td><td>\(e^{-i\omega t_0}\)</td><td>問10.1</td></tr>
+<tr><td>\(1\)、\(e^{i\omega_0t}\)</td><td>\(2\pi\delta(\omega)\)、\(2\pi\delta(\omega-\omega_0)\)</td><td>問10.2</td></tr>
+<tr><td>\(\cos\omega_0t\)</td><td>\(\pi\bigl(\delta(\omega-\omega_0)+\delta(\omega+\omega_0)\bigr)\)</td><td>問10.2</td></tr>
+<tr><td>\(\sin\omega_0t\)</td><td>\(\dfrac\pi i\bigl(\delta(\omega-\omega_0)-\delta(\omega+\omega_0)\bigr)\)</td><td>問10.2</td></tr>
+<tr><td>\(\operatorname{comb}_T(t)\)</td><td>\(\omega_0\operatorname{comb}_{\omega_0}(\omega)\)</td><td>問10.5</td></tr>
+<tr><td>\(u(t)\)</td><td>\(\pi\delta(\omega)+\dfrac1{i\omega}\)</td><td>問10.7</td></tr>
+<tr><td>\(\operatorname{sgn}t\)</td><td>\(\dfrac2{i\omega}\)</td><td>問10.7</td></tr>
+<tr><td>\(h_0(t)\)(\(0\le t\lt T\) で \(1\))</td><td>\(Te^{-i\omega T/2}\operatorname{sinc}\dfrac{\omega T}2\)</td><td>問12.9</td></tr>
+</table></div>
+<p>ヒルベルト変換は周波数応答 \(-i\operatorname{sgn}\omega\) のフィルタで、\(\omega_0\gt0\) なら \(\cos\omega_0t\mapsto\sin\omega_0t\)、\(\sin\omega_0t\mapsto-\cos\omega_0t\)(問17.4)。</p>
+</div>
+
+<div class="keybox">
+<h3>A.4 フーリエ変換の性質</h3>
+<div class="tscroll"><table>
+<tr><th>性質</th><th>時間の側</th><th>周波数の側</th><th>問題</th></tr>
+<tr><td>推移</td><td>\(f(t-t_0)\)</td><td>\(e^{-i\omega t_0}\hat f(\omega)\)</td><td>問8.1</td></tr>
+<tr><td>変調</td><td>\(e^{i\omega_0t}f(t)\)</td><td>\(\hat f(\omega-\omega_0)\)</td><td>問8.2</td></tr>
+<tr><td>余弦による変調</td><td>\(f(t)\cos\omega_0t\)</td><td>\(\frac12\bigl(\hat f(\omega-\omega_0)+\hat f(\omega+\omega_0)\bigr)\)</td><td>問8.2・17.1</td></tr>
+<tr><td>伸縮</td><td>\(f(ct)\)(\(c\ne0\))</td><td>\(\dfrac1{|c|}\hat f\Bigl(\dfrac\omega c\Bigr)\)</td><td>問8.1</td></tr>
+<tr><td>実数値</td><td>\(f\) が実数値</td><td>\(\hat f(-\omega)=\overline{\hat f(\omega)}\)(実の偶関数なら \(\hat f\) も実の偶関数)</td><td>問8.3</td></tr>
+<tr><td>双対性</td><td>\(\hat f(t)\)</td><td>\(2\pi f(-\omega)\)</td><td>問8.4</td></tr>
+<tr><td>微分</td><td>\(f'(t)\)</td><td>\(i\omega\hat f(\omega)\)</td><td>問8.5</td></tr>
+<tr><td>モーメント</td><td>\(tf(t)\)</td><td>\(i\hat f'(\omega)\)</td><td>問8.5</td></tr>
+<tr><td>積分</td><td>\(\displaystyle\int_{-\infty}^tf(s)\,ds\)<br>\(=(u*f)(t)\)</td><td>\(\dfrac{\hat f(\omega)}{i\omega}+\pi\hat f(0)\delta(\omega)\)</td><td>問10.7</td></tr>
+<tr><td>畳み込み</td><td>\(f*g\)</td><td>\(\hat f\,\hat g\)</td><td>問9.1・9.2</td></tr>
+<tr><td>積(窓をかける)</td><td>\(f(t)g(t)\)</td><td>\(\dfrac1{2\pi}(\hat f*\hat g)(\omega)\)</td><td>問11.3・12.4</td></tr>
+<tr><td>標本化</td><td>\(x(t)\operatorname{comb}_T(t)\)</td><td>\(\displaystyle\frac1T\sum_k\hat x(\omega-k\omega_s)\)(\(\omega_s=\frac{2\pi}T\))</td><td>問12.4</td></tr>
+<tr><td>周期化</td><td>\((f*\operatorname{comb}_T)(t)\)</td><td>\(\displaystyle\omega_0\sum_k\hat f(k\omega_0)\delta(\omega-k\omega_0)\)(\(\omega_0=\frac{2\pi}T\))</td><td>問10.5</td></tr>
+</table></div>
+<ul>
+<li><b class="term">パーセバルの等式</b>:\(\displaystyle\int|f|^2dt=\frac1{2\pi}\int|\hat f|^2d\omega\)。一般に \(\displaystyle\int f\bar g\,dt=\frac1{2\pi}\int\hat f\,\overline{\hat g}\,d\omega\)(問8.6)</li>
+<li><b class="term">級数との関係</b>:\([-\frac T2,\frac T2]\) の外で \(0\) の \(f\) を周期 \(T\) で延長すると、複素フーリエ係数は \(c_n=\frac1T\hat f(n\omega_0)\)(問7.6・10.5)</li>
+<li><b class="term">ポアソンの和公式</b>:\(\displaystyle\sum_nf(nT)=\frac1T\sum_k\hat f\Bigl(\frac{2\pi k}T\Bigr)\)(問10.6)</li>
+<li><b class="term">不確定性原理</b>:\(\Delta t\,\Delta\omega\ge\frac12\)。等号はガウス関数のとき(問11.1・11.5)</li>
+<li><b class="term">LTI システム</b>:\(y=h*x\)、\(\hat y=H\hat x\)、\(H=\hat h\)。入力 \(e^{i\omega t}\) の出力は \(H(\omega)e^{i\omega t}\)(問9.4)。群遅延は \(\tau_g=-\frac{d}{d\omega}\arg H(\omega)\)(問8.7)</li>
+<li><b class="term">標本化定理</b>:\(|\omega|\ge W\) で \(\hat x=0\) のとき、\(\omega_s=\frac{2\pi}T\ge2W\) なら \(\displaystyle x(t)=\sum_nx(nT)\operatorname{sinc}\frac{\pi(t-nT)}T\)(問12.5)</li>
+</ul>
+</div>
+
+<div class="keybox">
+<h3>A.5 4つのフーリエ変換と離散の公式</h3>
+<div class="tscroll"><table>
+<tr><th>変換</th><th>時間の側</th><th>周波数の側</th><th>本書の章</th></tr>
+<tr><td>フーリエ級数</td><td>連続・周期 \(T\)</td><td>離散(\(n\omega_0\))・非周期</td><td>第3〜6章</td></tr>
+<tr><td>フーリエ変換</td><td>連続・非周期</td><td>連続・非周期</td><td>第7〜11章</td></tr>
+<tr><td>DTFT</td><td>離散・非周期</td><td>連続・周期 \(2\pi\)</td><td>第13章</td></tr>
+<tr><td>DFT</td><td>離散・周期 \(N\)</td><td>離散・周期 \(N\)</td><td>第14・15章</td></tr>
+</table></div>
+<div class="tscroll"><table>
+<tr><th>変換</th><th>正変換</th><th>逆変換</th></tr>
+<tr><td>フーリエ級数</td><td>\(\displaystyle c_n=\frac1T\int_{-T/2}^{T/2}f(t)e^{-in\omega_0t}dt\)</td><td>\(\displaystyle f(t)=\sum_nc_ne^{in\omega_0t}\)</td></tr>
+<tr><td>フーリエ変換</td><td>\(\displaystyle\hat f(\omega)=\int f(t)e^{-i\omega t}dt\)</td><td>\(\displaystyle f(t)=\frac1{2\pi}\int\hat f(\omega)e^{i\omega t}d\omega\)</td></tr>
+<tr><td>DTFT</td><td>\(\displaystyle X(\Omega)=\sum_nx[n]e^{-i\Omega n}\)</td><td>\(\displaystyle x[n]=\frac1{2\pi}\int_{-\pi}^{\pi}X(\Omega)e^{i\Omega n}d\Omega\)</td></tr>
+<tr><td>DFT</td><td>\(\displaystyle X[k]=\sum_{n=0}^{N-1}x[n]W_N^{kn}\)</td><td>\(\displaystyle x[n]=\frac1N\sum_{k=0}^{N-1}X[k]W_N^{-kn}\)</td></tr>
+</table></div>
+<div class="tscroll"><table>
+<tr><th>変換</th><th>パーセバルの等式</th><th>畳み込み</th><th>問題</th></tr>
+<tr><td>フーリエ級数</td><td>\(\displaystyle\frac1T\int_{-T/2}^{T/2}|f|^2dt=\sum_n|c_n|^2\)</td><td>周期的畳み込み \(\to c_n(f)\,c_n(g)\)</td><td>問4.6・5.2</td></tr>
+<tr><td>フーリエ変換</td><td>\(\displaystyle\int|f|^2dt=\frac1{2\pi}\int|\hat f|^2d\omega\)</td><td>\(f*g\to\hat f\,\hat g\)</td><td>問8.6・9.1</td></tr>
+<tr><td>DTFT</td><td>\(\displaystyle\sum_n|x[n]|^2=\frac1{2\pi}\int_{-\pi}^{\pi}|X|^2d\Omega\)</td><td>\(h*x\to H(\Omega)X(\Omega)\)</td><td>問13.1・13.3</td></tr>
+<tr><td>DFT</td><td>\(\displaystyle\sum_n|x[n]|^2=\frac1N\sum_k|X[k]|^2\)</td><td>巡回畳み込み \(h\circledast x\to H[k]X[k]\)</td><td>問14.2・14.5</td></tr>
+</table></div>
+<p>周期 \(T\) の周期的畳み込みは \(\frac1T\int_{-T/2}^{T/2}f(s)g(t-s)\,ds\)(周期 \(2\pi\) なら問4.6の形)。</p>
+<ul>
+<li><b class="term">標本化と周期化</b>:一方の側を間隔 \(T\) で標本化すると、もう一方の側が周期 \(\frac{2\pi}T\) でくり返される(問10.5・12.4・14.7)。\(x[n]=x_c(nT)\) なら \(\displaystyle X(\Omega)=\frac1T\sum_k\hat x_c\Bigl(\frac{\Omega-2\pi k}T\Bigr)\)(問13.2)。長さ \(N\) の列の DFT は DTFT の標本 \(X[k]=X\bigl(\frac{2\pi k}N\bigr)\)(問14.6)。DFT の積の逆変換は、線形畳み込み \(y\) を周期 \(N\) で重ね合わせた \(\sum_ry[n+rN]\)(問15.7)</li>
+<li><b class="term">DFT の性質</b>:\(F_N^*F_N=NI\)(問14.2)。巡回シフト \(x[(n-m)\bmod N]\leftrightarrow W_N^{km}X[k]\)(第14章の要点)、巡回畳み込み \(h\circledast x\leftrightarrow H[k]X[k]\)(問14.5)。実数値なら \(X[N-k]=\overline{X[k]}\)(問14.4)。周期的なハン窓 \(w[n]=\frac12-\frac12\cos\frac{2\pi n}N\) の DFT は \(W[0]=\frac N2\)、\(W[1]=W[N-1]=-\frac N4\)、それ以外 \(0\)(問14.9)</li>
+<li><b class="term">FFT</b>:\(X[k]=E[k]+W_N^kO[k]\)、\(X[k+\frac N2]=E[k]-W_N^kO[k]\)(問15.2)。\(N=2^m\) なら掛け算はおよそ \(\frac N2\log_2N\) 回(問15.1・15.4)。長さ \(L,M\) の線形畳み込みは、長さ \(L+M-1\) 以上にゼロ詰めして FFT で計算する(問15.5・15.6)</li>
+<li><b class="term">z 変換と安定性</b>:\(X(z)=\sum_nx[n]z^{-n}\) で、DTFT は \(z=e^{i\Omega}\) での値。因果的で有理関数の \(H(z)\) は、極がすべて \(|z|\lt1\) にあれば BIBO 安定(問13.6)</li>
+<li><b class="term">2次元</b>:\(M\times N\) の画像の DFT は \(X=F_MxF_N\)(問16.1・16.2)。正規直交な DCT-II は \(\displaystyle X[k]=\alpha_k\sum_{n=0}^{N-1}x[n]\cos\frac{\pi(n+\frac12)k}N\)、\(\alpha_0=\sqrt{\tfrac1N}\)、\(\alpha_k=\sqrt{\tfrac2N}\)(\(k\ge1\)、問16.5)</li>
+<li><b class="term">不規則信号</b>:\(\displaystyle S_X(\omega)=\int R_X(\tau)e^{-i\omega\tau}d\tau\)、\(\displaystyle E[X^2]=\frac1{2\pi}\int S_X\,d\omega\)(ウィーナー・ヒンチンの定理、問18.1・18.3)。フィルタの出力は \(S_Y=|H|^2S_X\)(問18.2・18.4)。白色雑音のピリオドグラム \(\frac{P[k]}{\sigma^2}\) は平均 \(1\) の指数分布に従う(問18.5)。DFT の処理利得は \(\frac N2\)(問18.6)。ウィーナーフィルタは \(H=\frac{S_s}{S_s+S_n}\)(問18.7)</li>
+</ul>
+</div>
+
+</main>
+
+<footer class="book">
+<p class="booknav"><a href="#top">ページ先頭へ</a><a href="#toc">目次へ</a><a href="../index.html">収録タイトル一覧</a><a href="solutions.html" target="_blank" rel="noopener">解答解説集を別タブで開く</a></p>
+<p>『情報系のためのフーリエ解析 問題集』 全18章・143問+付録。姉妹編『解答解説集』とセットで学習してください。</p>
+<p>Copyright © 2026 情報系のための数学 問題集シリーズ. All Rights Reserved.</p>
+</footer>
+</div>
+<script>
+// --- 学習用のUI(相互リンク・進捗・しおり) -----------------------------------
+// 各問題の見出しに「もう一方の冊への行き先」「解いた印」「しおり」を実行時に足す。
+// 問題側のHTMLには手を入れていないので、問題を増減しても追随する。
+//
+//   mathworkbooks.bookmark.v1 … 1冊に1つ。「前回の続き」の位置
+//   mathworkbooks.progress.v1 … 1分野に問題番号の集合。「解いた問題」
+//
+// 進捗を分野単位にしてあるのは、問 3.4 と 解 3.4 が同じ1問だから。
+// どちらの冊でチェックしても同じ状態を指す。
+// どちらのキーも全冊分をまとめて持ち、index.html も同じものを読む。
+// 全冊の HTML と index.html に同じ実装が複製されている(共有JSファイルを持たない方針のため)。
+(function () {
+  var BKEY = "mathworkbooks.bookmark.v1";
+  var PKEY = "mathworkbooks.progress.v1";
+  var book = document.body.getAttribute("data-book");   // 例 "linear-algebra/workbook"
+  if (!book) return;
+  var subject = book.split("/")[0];                     // "linear-algebra"
+  var kind = book.split("/")[1];                        // "workbook" | "solutions"
+  var other = kind === "workbook" ? "solutions" : "workbook";
+
+  var secs = document.querySelectorAll("main section.prob[id], main section.sol[id]");
+  var head = document.querySelector("header.book");
+  if (!secs.length || !head) return;
+
+  function labelOf(sec) {
+    var n = sec.querySelector(".pnum");
+    return n ? n.textContent.trim() : sec.id;
+  }
+  function tagOf(sec) {
+    var t = sec.querySelector(".ptag");
+    return t ? t.textContent.trim() : "";
+  }
+  // 問題番号だけを取り出す。"q3-4" も "a3-4" も "3-4" になる。
+  // 2冊で共通の鍵であり、相手の冊の id を組み立てる材料でもある。
+  function numOf(sec) { return sec.id.slice(1); }
+
+  // === 1. 見出しの操作欄と、もう一方の冊への相互リンク ===
+  // localStorage を使わないので、保存が使えない環境でもここまでは動く。
+  var XREF = other === "workbook" ? "問題" : "解説";
+  var OTHER_ID = other === "workbook" ? "q" : "a";
+  // 名前付きのタブにして、押すたびにタブが増えていかないようにする
+  var WIN = "mathworkbooks-" + subject + "-" + other;
+
+  var ctl = {};   // sec.id -> 見出し右端の操作欄(span.pctl)
+  Array.prototype.forEach.call(secs, function (sec) {
+    var phead = sec.querySelector(".phead");
+    if (!phead) return;
+
+    // 問題番号は span なので、見出し要素としては読み上げられない。
+    // section 自身に名前を与えて「問 1.1 ベクトルの演算」と読ませる。
+    var pn = phead.querySelector(".pnum"), pt = phead.querySelector(".ptag"), ids = [];
+    if (pn) { pn.id = sec.id + "-t"; ids.push(pn.id); }
+    if (pt) { pt.id = sec.id + "-g"; ids.push(pt.id); }
+    if (ids.length) { sec.setAttribute("aria-labelledby", ids.join(" ")); }
+
+    var box = document.createElement("span");
+    box.className = "pctl";
+    var a = document.createElement("a");
+    a.className = "xref";
+    a.href = other + ".html#" + OTHER_ID + numOf(sec);
+    a.target = WIN;
+    // rel="noopener" は付けない。noopener を指定すると、ブラウザはタブの名前を
+    // 無視して毎回新しいタブを開くため、使い回しが成立しなくなる。
+    // 行き先は同一オリジンの姉妹編なので、window.opener が渡っても困らない。
+    a.innerHTML = XREF + '<span class="arw">→</span>';
+    a.setAttribute("aria-label", labelOf(sec) + " の" + XREF + "を開く");
+    box.appendChild(a);
+    phead.appendChild(box);
+    ctl[sec.id] = box;
+  });
+
+  // localStorage が使えない環境(プライベートモード等)では、
+  // 進捗としおりのUIは出さない。相互リンクはここまでで完成している。
+  try {
+    localStorage.setItem(BKEY + ":probe", "1");
+    localStorage.removeItem(BKEY + ":probe");
+  } catch (e) { return; }
+
+  function loadAll(key) {
+    var v;
+    try { v = JSON.parse(localStorage.getItem(key)); } catch (e) { v = null; }
+    return (v && typeof v === "object") ? v : {};
+  }
+  function saveAll(key, all) {
+    try { localStorage.setItem(key, JSON.stringify(all)); } catch (e) {}
+  }
+
+  var RIBBON = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path d="M5.5 2.5h13v19l-6.5-5.6-6.5 5.6z" stroke-linejoin="round"/></svg>';
+  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true">' +
+    '<circle cx="12" cy="12" r="8.6"/>' +
+    '<path d="M8.2 12.4l2.6 2.5 5-5.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  // === 2. 解いた問題(進捗) ===
+  function getDone() {
+    var d = loadAll(PKEY)[subject];
+    return (d && typeof d === "object") ? d : {};
+  }
+  function setDone(done) {
+    var all = loadAll(PKEY);
+    if (Object.keys(done).length) { all[subject] = done; } else { delete all[subject]; }
+    saveAll(PKEY, all);
+  }
+
+  // 章ごとの問題数は目次の文字列ではなく実際の id から数える
+  // (解答解説集の目次は「解 1.1〜1.10」形式で、問題数が書かれていないため)。
+  var chapTotal = {}, total = 0;
+  Array.prototype.forEach.call(secs, function (sec) {
+    var ch = numOf(sec).split("-")[0];
+    chapTotal[ch] = (chapTotal[ch] || 0) + 1;
+    total++;
+  });
+
+  // 目次の各章に「7/10」を出す。問題のない序章・付録には出さない
+  var chapCell = {};
+  Array.prototype.forEach.call(
+    document.querySelectorAll('nav.toc a[href^="#ch"]'), function (a) {
+      var ch = a.getAttribute("href").slice(3);
+      var li = a.parentNode;
+      if (!chapTotal[ch] || !li) return;
+      var s = document.createElement("span");
+      s.className = "prog";
+      li.appendChild(s);
+      chapCell[ch] = s;
+    });
+
+  // 表紙に置く、分野全体の進捗
+  var pbox = document.createElement("div");
+  pbox.className = "progbar";
+  pbox.innerHTML = '<span class="ttl">解いた</span>' +
+    '<span class="num"><b>0</b> / ' + total + ' 問</span>' +
+    '<span class="pbar"><span></span></span>' +
+    '<button type="button" class="reset">リセット</button>';
+  head.appendChild(pbox);
+  var pnum = pbox.querySelector(".num b");
+  var pfill = pbox.querySelector(".pbar span");
+  var preset = pbox.querySelector(".reset");
+
+  // 各問題の見出しに、チェックボタンを足す
+  var chks = {};
+  Array.prototype.forEach.call(secs, function (sec) {
+    var box = ctl[sec.id];
+    if (!box) return;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chk";
+    b.innerHTML = CHECK;
+    b.addEventListener("click", function () {
+      var done = getDone(), n = numOf(sec);
+      if (done[n]) { delete done[n]; } else { done[n] = Date.now(); }
+      setDone(done);
+      renderProg();
+    });
+    box.appendChild(b);
+    chks[sec.id] = b;
+  });
+
+  function renderProg() {
+    var done = getDone(), n = 0, per = {};
+    Array.prototype.forEach.call(secs, function (sec) {
+      var on = !!done[numOf(sec)];
+      sec.classList.toggle("is-done", on);
+      var b = chks[sec.id];
+      if (b) {
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+        b.setAttribute("aria-label",
+          labelOf(sec) + (on ? " の「解いた」を取り消す" : " を解いた問題にする"));
+        b.title = on ? "「解いた」を取り消す" : "解いた問題にする";
+      }
+      if (!on) return;
+      n++;
+      var ch = numOf(sec).split("-")[0];
+      per[ch] = (per[ch] || 0) + 1;
+    });
+    pnum.textContent = n;
+    pfill.style.width = total ? (n / total * 100) + "%" : "0";
+    Object.keys(chapCell).forEach(function (ch) {
+      var d = per[ch] || 0;
+      chapCell[ch].textContent = d + "/" + chapTotal[ch];
+      chapCell[ch].className = d ? "prog" : "prog none";
+    });
+  }
+
+  // 取り消しのきかない操作なので確認を挟む。ただし確認ダイアログは
+  // ページの組版を止めてしまうため、ボタンの2度押しで代える
+  var armed = null;
+  function disarm() {
+    clearTimeout(armed);
+    armed = null;
+    preset.textContent = "リセット";
+    preset.classList.remove("armed");
+  }
+  preset.addEventListener("click", function () {
+    if (!armed) {
+      preset.textContent = "本当に消す";
+      preset.classList.add("armed");
+      armed = setTimeout(disarm, 5000);
+      return;
+    }
+    disarm();
+    setDone({});
+    renderProg();
+  });
+  preset.addEventListener("blur", disarm);
+
+  // === 3. しおり(前回の続き) ===
+  // 1冊につき1つだけ(別の問題に挟むと前のしおりは外れる)。
+  function getMark() {
+    var v = loadAll(BKEY)[book];
+    return v && v.id ? v : null;
+  }
+  function setMark(mark) {
+    var all = loadAll(BKEY);
+    if (mark) { all[book] = mark; } else { delete all[book]; }
+    saveAll(BKEY, all);
+  }
+
+  // --- 表紙に置く、しおりバーと(しおりが無いときの)案内 ---
+  var bar = document.createElement("div");
+  bar.className = "bmkbar";
+  bar.hidden = true;
+  bar.innerHTML = RIBBON + '<span class="ttl">しおり</span>' +
+    '<span class="lab"></span><span class="tag"></span>' +
+    '<button type="button" class="go">続きから開く</button>' +
+    '<button type="button" class="off">はずす</button>';
+  var hint = document.createElement("p");
+  hint.className = "bmkhint";
+  hint.innerHTML = '各問題の見出しにある ' + RIBBON +
+    ' を押すと、ここに「前回の続き」が残ります(この端末のブラウザにだけ保存されます)。';
+  head.appendChild(bar);
+  head.appendChild(hint);
+
+  // --- 各問題の見出しに、しおりボタンを足す ---
+  var buttons = {};
+  Array.prototype.forEach.call(secs, function (sec) {
+    var box = ctl[sec.id];
+    if (!box) return;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "bmk";
+    b.innerHTML = RIBBON;
+    b.addEventListener("click", function () {
+      var cur = getMark();
+      if (cur && cur.id === sec.id) {
+        setMark(null);
+      } else {
+        setMark({ id: sec.id, label: labelOf(sec), tag: tagOf(sec), t: Date.now() });
+      }
+      render();
+    });
+    box.appendChild(b);
+    buttons[sec.id] = b;
+  });
+
+  function render() {
+    var cur = getMark();
+    Array.prototype.forEach.call(secs, function (sec) {
+      var on = !!cur && cur.id === sec.id;
+      sec.classList.toggle("is-marked", on);
+      var b = buttons[sec.id];
+      if (!b) return;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.setAttribute("aria-label", labelOf(sec) + (on ? " のしおりをはずす" : " にしおりを挟む"));
+      b.title = on ? "しおりをはずす" : "ここにしおりを挟む";
+    });
+    if (cur) {
+      bar.querySelector(".lab").textContent = cur.label || cur.id;
+      bar.querySelector(".tag").textContent = cur.tag || "";
+    }
+    bar.hidden = !cur;
+    hint.hidden = !!cur;
+  }
+
+  // --- 組版によるずれの補正 ---
+  // MathJax の組版が終わるまで本文は縦に伸び続けるため、その間に合わせた位置は必ずずれる
+  // (なめらかスクロールに至っては目的地が動くので途中で止まってしまう)。
+  // そこで移動は即時に行い、組版の完了時点でもう一度だけ合わせ直す。
+  // 完了は #mjx-status(組版中の通知)が消えることで分かる。
+  var MOVES = ["wheel", "touchmove", "keydown"];
+  var observer = null, timer = null, userMoved = false;
+  function onUserMove() { userMoved = true; }
+
+  function scheduleFix(sec) {
+    var status = document.getElementById("mjx-status");
+    if (!status || status.hidden) return;      // 組版済み。もうずれない
+    if (observer) { observer.disconnect(); observer = null; }
+    clearTimeout(timer);
+    userMoved = false;
+    // きっかけになったクリックやキー操作自体を「利用者の操作」と数えないよう、次の周回から見張る
+    setTimeout(function () {
+      MOVES.forEach(function (ev) { window.addEventListener(ev, onUserMove, { passive: true }); });
+    }, 0);
+
+    var done = function () {
+      if (observer) { observer.disconnect(); observer = null; }
+      clearTimeout(timer);
+      MOVES.forEach(function (ev) { window.removeEventListener(ev, onUserMove); });
+      // 利用者が自分で読み進めていたら、勝手に動かさない
+      if (!userMoved) { sec.scrollIntoView({ block: "start" }); }
+    };
+    if (window.MutationObserver) {
+      observer = new MutationObserver(function () { if (status.hidden) { done(); } });
+      observer.observe(status, { attributes: true, attributeFilter: ["hidden"] });
+    }
+    timer = setTimeout(done, 90000);           // 通知が消えなかった場合の保険
+  }
+
+  function goTo(sec) {
+    sec.scrollIntoView({ block: "start" });
+    // 履歴を増やさずにハッシュだけ合わせる(リロードしても同じ位置に戻れるように)
+    if (history.replaceState) { history.replaceState(null, "", "#" + sec.id); }
+    scheduleFix(sec);
+  }
+
+  bar.querySelector(".go").addEventListener("click", function () {
+    var cur = getMark();
+    var sec = cur && document.getElementById(cur.id);
+    if (sec) { goTo(sec); }
+  });
+  bar.querySelector(".off").addEventListener("click", function () {
+    setMark(null);
+    render();
+  });
+
+  render();
+  renderProg();
+
+  // 問題集と解答解説集は別タブで開く導線がある。他のタブでの変更を取り込む
+  window.addEventListener("storage", function (e) {
+    if (!e.key || e.key === BKEY) { render(); }
+    if (!e.key || e.key === PKEY) { renderProg(); }
+  });
+
+  // index.html や、もう一方の冊から "workbook.html#q3-4" のように開かれた場合。
+  // ブラウザ自身のジャンプは組版前に済んでいるので、こちらも合わせ直しの対象にする。
+  if (location.hash.length > 1) {
+    var target = document.getElementById(location.hash.slice(1));
+    if (target) { scheduleFix(target); }
+  }
+})();
+</script>
+</body>
+</html>
