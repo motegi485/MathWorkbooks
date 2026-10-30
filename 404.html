@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1f4e8c">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2032%2032'%3E%3Crect%20width%3D'32'%20height%3D'32'%20rx%3D'6'%20fill%3D'%231f4e8c'%2F%3E%3Cpath%20d%3D'M11%207.5H8.5v17H11'%20stroke%3D'%23fff'%20stroke-width%3D'2'%20fill%3D'none'%20stroke-linecap%3D'round'%2F%3E%3Cpath%20d%3D'M21%207.5h2.5v17H21'%20stroke%3D'%23fff'%20stroke-width%3D'2'%20fill%3D'none'%20stroke-linecap%3D'round'%2F%3E%3Ccircle%20cx%3D'13.4'%20cy%3D'13'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'18.6'%20cy%3D'13'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'13.4'%20cy%3D'19'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3Ccircle%20cx%3D'18.6'%20cy%3D'19'%20r%3D'1.7'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E">
+<title>ページが見つかりません — 情報系のための数学 問題集シリーズ</title>
+<style>
+/* index.html と同じ配色・書体。共有ファイルを持たない方針なので値を複製してある */
+:root{
+  color-scheme:light;
+  --ink:#22262e; --sub:#5a6070; --paper:#fcfcfa; --card:#ffffff;
+  --accent:#1f4e8c; --accent-soft:#eef2f8;
+  --rule:#d8d8d2;
+  --serif:"Yu Mincho","YuMincho","Hiragino Mincho ProN","Noto Serif JP",serif;
+  --sans:"Yu Gothic Medium","Yu Gothic","Hiragino Kaku Gothic ProN","Noto Sans JP",Meiryo,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.95;font-feature-settings:"palt";}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.15rem 5rem}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+h1,h2{font-family:var(--serif);font-weight:600;line-height:1.5;letter-spacing:.02em}
+header.book{padding:4.2rem 0 2.2rem;border-bottom:3px double var(--accent)}
+header.book .series{color:var(--accent);font-weight:700;
+  letter-spacing:.35em;font-size:.8rem;margin:0 0 .9rem}
+header.book h1{font-size:2.05rem;margin:0 0 .5rem}
+header.book .subtitle{color:var(--sub);margin:0;font-size:1.02rem}
+/* 開こうとしたURL。長いパスでもページ全体を横スクロールさせない */
+header.book .path{margin:1rem 0 0;font-size:.85rem;color:var(--sub);overflow-wrap:anywhere}
+header.book .path[hidden]{display:none}
+header.book .path code{background:var(--accent-soft);color:var(--ink);border-radius:3px;
+  padding:.1rem .4rem}
+.home{margin:2.2rem 0}
+.go{display:inline-block;padding:.62rem 1.35rem;border-radius:4px;color:#fff;
+  font-weight:700;font-size:.95rem;letter-spacing:.05em;text-decoration:none;
+  background:var(--accent);box-shadow:0 2px 0 #143560,0 2px 5px rgba(34,38,46,.18)}
+.go .arw{margin-left:.5em;font-weight:400}
+.go:hover{text-decoration:none;filter:brightness(1.08)}
+.go:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.books{margin:2rem 0;padding:1.1rem 1.35rem;border-radius:6px;
+  background:var(--card);border:1px solid var(--rule)}
+.books h2{margin:0 0 .7rem;font-size:1.02rem;color:var(--accent);
+  border-bottom:1px solid var(--rule);padding-bottom:.35rem}
+.books ul{margin:.2rem 0;padding-left:1.35rem}
+.books li{margin:.3rem 0;font-size:.95rem}
+footer.book{margin-top:4rem;padding-top:1.2rem;border-top:3px double var(--accent);
+  color:var(--sub);font-size:.82rem;line-height:1.9}
+@media (max-width:520px){
+  body{font-size:15.5px}
+  header.book{padding:3rem 0 1.8rem}
+  header.book h1{font-size:1.65rem}
+  .wrap{padding:0 .9rem 4rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="book">
+<p class="series">情報系のための数学</p>
+<h1>ページが見つかりません</h1>
+<p class="subtitle">お探しのページは移動したか、URL が間違っている可能性があります。</p>
+<p class="path" id="path" hidden>開こうとしたURL: <code></code></p>
+</header>
+
+<main>
+<p class="home"><a class="go" href="/">トップページへ<span class="arw">→</span></a></p>
+
+<!-- Pages は存在しないどのパスにもこのファイルを返すので、リンクはルートからの絶対パスで書く -->
+<div class="books">
+<h2>収録タイトル</h2>
+<ul>
+<li>情報系のための線形代数 — <a href="/linear-algebra/workbook.html">問題集</a> / <a href="/linear-algebra/solutions.html">解答解説集</a></li>
+<li>情報系のための微分積分・最適化 — <a href="/calculus-optimization/workbook.html">問題集</a> / <a href="/calculus-optimization/solutions.html">解答解説集</a></li>
+<li>情報系のための確率・統計 — <a href="/probability-statistics/workbook.html">問題集</a> / <a href="/probability-statistics/solutions.html">解答解説集</a></li>
+<li>情報系のためのフーリエ解析 — <a href="/fourier-analysis/workbook.html">問題集</a> / <a href="/fourier-analysis/solutions.html">解答解説集</a></li>
+</ul>
+</div>
+</main>
+
+<footer class="book">
+<p>Copyright © 2026 情報系のための数学 問題集シリーズ. All Rights Reserved.</p>
+</footer>
+
+</div>
+<script>
+// 開こうとしたURLを示す(リンク切れの報告に使える)。textContent で入れるのでURL中の記号はそのまま文字として出る
+(function () {
+  var p = document.getElementById("path");
+  p.querySelector("code").textContent = location.pathname + location.search + location.hash;
+  p.hidden = false;
+})();
+</script>
+</body>
+</html>

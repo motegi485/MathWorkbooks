@@ -10,6 +10,7 @@ This file provides guidance to Codex (OpenAI Codex CLI) when working with code i
 
 ```
 index.html                          トップページ（4分野へのリンクカードを描画）
+404.html                            公開サイトで存在しないURLを開いたときのページ
 linear-algebra/
   workbook.html                     問題集（全11章103問）
   solutions.html                    解答解説集
@@ -55,8 +56,10 @@ fourier-analysis/
 
 `index.html` 末尾の `<script>` 内 `BOOKS` 配列にオブジェクトを1つ追加するだけでトップページにカードが増える（`id` がそのままディレクトリ名になる）。対応する `<id>/workbook.html` と `<id>/solutions.html` を先に配置しておくこと。`levels` 配列や `chapters`/`problems` はカード表示の統計値であり、実際のHTML内容と手動で一致させる必要がある（自動検証は行われない）。
 
-**公開サイト（Cloudflare Pages `mathworkbooks`、`main` への push で自動デプロイ）は、配信するディレクトリをビルドコマンドで列挙している。** 分野を足したら、ダッシュボードの Settings > Build > Build configuration のビルドコマンドにも新しいディレクトリ名を足すこと（設定はリポジトリ外にあり、Git には残らない）。足し忘れても**ビルドは成功する**が、新しい分野のファイルが配信されず、`404.html` が無いため Pages がトップページを返す。結果として「問題集を開く」を押すとトップページが開く（『フーリエ解析』の追加時に実際に起きた）。push 後は `/<id>/workbook` を開いて、トップページではなく本文が出ることを確かめる。
-現在のビルドコマンド（出力先 `dist`）: `mkdir -p dist && cp index.html dist/ && cp -r linear-algebra calculus-optimization probability-statistics fourier-analysis dist/`
+**公開サイト（Cloudflare Pages `mathworkbooks`、`main` への push で自動デプロイ）は、配信するディレクトリをビルドコマンドで列挙している。** 分野を足したら、ダッシュボードの Settings > Build > Build configuration のビルドコマンドにも新しいディレクトリ名を足すこと（設定はリポジトリ外にあり、Git には残らない）。足し忘れても**ビルドは成功する**が、新しい分野のファイルが配信されず、「問題集を開く」を押すと `404.html`（「ページが見つかりません」）が出る（『フーリエ解析』の追加時に実際に起きた。当時は `404.html` が無く、Pages がトップページを返したため原因に気づきにくかった）。push 後は `/<id>/workbook` を開いて本文が出ることを確かめる。
+現在のビルドコマンド（出力先 `dist`）: `mkdir -p dist && cp index.html 404.html dist/ && cp -r linear-algebra calculus-optimization probability-statistics fourier-analysis dist/`
+
+`404.html` は、存在しないどのパスにも返る。そのため中のリンクは、相対パスではなくルートからの絶対パス（`/linear-algebra/workbook.html`）で書く。分野を足したら、ここの「収録タイトル」にも1行足すこと。ルートの絶対パスはサーバ上でしか正しく解決しないので、`file://` で開いた確認はできない。
 
 ## 実行時に挿し込む画面専用UI（相互リンク・進捗・しおり）
 
