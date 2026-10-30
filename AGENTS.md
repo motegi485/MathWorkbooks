@@ -4,12 +4,12 @@ This file provides guidance to Codex (OpenAI Codex CLI) when working with code i
 
 ## プロジェクト概要
 
-情報系の大学生・大学院進学をめざす人向けの独学用数学問題集シリーズ（線形代数／微分積分・最適化／確率・統計、全3分野・全48章・416問）。**純粋な静的HTMLサイトで、ビルド工程は一切ない。** `index.html` をブラウザで直接開けばそのまま動作する。
+情報系の大学生・大学院進学をめざす人向けの独学用数学問題集シリーズ（線形代数／微分積分・最適化／確率・統計／フーリエ解析、全4分野・全66章・559問）。**純粋な静的HTMLサイトで、ビルド工程は一切ない。** `index.html` をブラウザで直接開けばそのまま動作する。
 
 ## リポジトリ構成
 
 ```
-index.html                          トップページ（3分野へのリンクカードを描画）
+index.html                          トップページ（4分野へのリンクカードを描画）
 linear-algebra/
   workbook.html                     問題集（全11章103問）
   solutions.html                    解答解説集
@@ -18,6 +18,9 @@ calculus-optimization/
   solutions.html
 probability-statistics/
   workbook.html                     問題集（全18章154問＋付録「数表」）
+  solutions.html
+fourier-analysis/
+  workbook.html                     問題集（全18章143問＋付録「公式集」）
   solutions.html
 ```
 
@@ -39,6 +42,15 @@ probability-statistics/
 - 表は `<div class="tscroll">` で包む。本文幅に収まらない表がページ全体を横スクロールさせる（スマートフォンで本文が読めなくなる）のを防ぐため。`section.prob`/`section.sol`/各囲みにも同じ目的で `overflow-x:auto` を入れてある。
 - 本文は `<main>` で囲む。`header.book`（`id="top"`）と `nav.toc`（`id="toc"`）はその外側。
 
+## 『フーリエ解析』の記法の規約
+
+全章で統一してあり、序章の記号表と付録 A.1 に明記している。問題や解説を足すときもこれに合わせる（他の本の式を写すと、`2π` の置き場所や指数の符号がずれやすい）。
+- 虚数単位は `i`（工学書の `j` は併記するだけ）。フーリエ変換は `\hat f(\omega)=\int f(t)e^{-i\omega t}dt` で、逆変換に `1/2π` を付ける。周波数 [Hz] で書くときは `X(f)=\hat x(2\pi f)`。
+- `\operatorname{sinc}x=\sin x/x`。NumPy の `np.sinc` は `\sin\pi x/(\pi x)` なので、使う箇所では注記する。`\operatorname{rect}_a` は幅 `2a`、`\operatorname{comb}_T` はくし形関数、`u(t)` は単位ステップ。
+- DFT は `X[k]=\sum x[n]W_N^{kn}`（`W_N=e^{-2\pi i/N}`）で、逆変換に `1/N` を付ける（`np.fft` と同じ）。離散時間の角周波数は `\Omega` [rad/sample]。周期的畳み込みは `1/(2π)`（周期 `T` なら `1/T`）付き。
+- 他の冊への参照は章単位で書く（例「『確率・統計』第15章」）。他の冊の問題番号は書かない。
+- 付録「公式集」は問題集にだけあり、各行に本書の問題番号を付けてある。公式を足すときは、参照先の問題が実在して内容が合っているかを確かめる。
+
 ## `index.html` への分野追加
 
 `index.html` 末尾の `<script>` 内 `BOOKS` 配列にオブジェクトを1つ追加するだけでトップページにカードが増える（`id` がそのままディレクトリ名になる）。対応する `<id>/workbook.html` と `<id>/solutions.html` を先に配置しておくこと。`levels` 配列や `chapters`/`problems` はカード表示の統計値であり、実際のHTML内容と手動で一致させる必要がある（自動検証は行われない）。
@@ -49,7 +61,7 @@ probability-statistics/
 
 - スクリプトは2段構成。前半（相互リンクと `aria-labelledby`）は `localStorage` を使わないので、保存が使えない環境（プライベートモード等）でも動く。後半（進捗としおり）は書き込みプローブに失敗した時点で return する。**この順序を崩さないこと。**
 - 冊の識別子は `<body data-book="linear-algebra/workbook">`。これが無いとスクリプトは何もしない。
-- CSS も JS も、共有ファイルを持たない方針にあわせて**7ファイルに同一の内容を複製してある**。手を入れるときは全ファイルを揃えること（`.pctl` / `.xref` / `.chk` / `.bmk` / `.bmkbar` / `.bmkhint` / `.progbar` / `nav.toc .prog` / `section.is-marked` / `section.is-done` / `.skip` / `index.html` 側の `.resume` と `.prog-card`）。
+- CSS も JS も、共有ファイルを持たない方針にあわせて**9ファイルに同一の内容を複製してある**。手を入れるときは全ファイルを揃えること（`.pctl` / `.xref` / `.chk` / `.bmk` / `.bmkbar` / `.bmkhint` / `.progbar` / `nav.toc .prog` / `section.is-marked` / `section.is-done` / `.skip` / `index.html` 側の `.resume` と `.prog-card`）。
 - 画面専用のUIなので、`@media print` と `tools/paged.css` の**両方**で隠す必要がある（Paged.js は画面メディアで組版するため `@media print` が効かない）。`build_pdf.py` はJSを有効にしたヘッドレスChromeで刷るため、ここが漏れると紙面に焼き付く。
 
 ### 問題 ⇄ 解答の相互リンク
@@ -66,9 +78,9 @@ probability-statistics/
 
 ### しおり（前回の続き）
 
-- 保存キーは `mathworkbooks.bookmark.v1` の1つだけで、6冊分をまとめて持つ。値は `{"<分野>/<workbook|solutions>": {id, label, tag, t}}`。`index.html` が同じキーを読んでカードに「続きから」を出す。
+- 保存キーは `mathworkbooks.bookmark.v1` の1つだけで、8冊分をまとめて持つ。値は `{"<分野>/<workbook|solutions>": {id, label, tag, t}}`。`index.html` が同じキーを読んでカードに「続きから」を出す。
 - 1冊につき1つだけ（別の問題に挟むと前のしおりは外れる）。
-- **どちらの保存キーも、名前とデータ形式を変えるときは7ファイルすべてを同時に直すこと。**
+- **どちらの保存キーも、名前とデータ形式を変えるときは9ファイルすべてを同時に直すこと。**
 - MathJax の組版中は本文が縦に伸び続けるため、`#q3-4` 付きで開いた直後の位置は必ずずれる。組版完了（`#mjx-status` が消える）を `MutationObserver` で待って合わせ直している。同じ理由で移動は即時スクロールにしてある（なめらかスクロールは目的地が動いて途中で止まる）。相互リンクで新しいタブに飛んだときも、この仕組みがそのまま効く。
 
 ## 動作確認
