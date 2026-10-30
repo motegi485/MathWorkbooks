@@ -55,6 +55,9 @@ fourier-analysis/
 
 `index.html` 末尾の `<script>` 内 `BOOKS` 配列にオブジェクトを1つ追加するだけでトップページにカードが増える（`id` がそのままディレクトリ名になる）。対応する `<id>/workbook.html` と `<id>/solutions.html` を先に配置しておくこと。`levels` 配列や `chapters`/`problems` はカード表示の統計値であり、実際のHTML内容と手動で一致させる必要がある（自動検証は行われない）。
 
+**公開サイト（Cloudflare Pages `mathworkbooks`、`main` への push で自動デプロイ）は、配信するディレクトリをビルドコマンドで列挙している。** 分野を足したら、ダッシュボードの Settings > Build > Build configuration のビルドコマンドにも新しいディレクトリ名を足すこと（設定はリポジトリ外にあり、Git には残らない）。足し忘れても**ビルドは成功する**が、新しい分野のファイルが配信されず、`404.html` が無いため Pages がトップページを返す。結果として「問題集を開く」を押すとトップページが開く（『フーリエ解析』の追加時に実際に起きた）。push 後は `/<id>/workbook` を開いて、トップページではなく本文が出ることを確かめる。
+現在のビルドコマンド（出力先 `dist`）: `mkdir -p dist && cp index.html dist/ && cp -r linear-algebra calculus-optimization probability-statistics fourier-analysis dist/`
+
 ## 実行時に挿し込む画面専用UI（相互リンク・進捗・しおり）
 
 各冊の末尾にある1つのスクリプトが、問題の見出し `.phead` の右端に操作欄 `.pctl` を作り、そこへ「もう一方の冊への行き先」「解いた印」「しおり」を実行時に挿し込む。**問題側のHTMLには手を入れていない**ので、問題を増減しても追随する。サーバもビルドも不要な、純粋なクライアント側の機能。
